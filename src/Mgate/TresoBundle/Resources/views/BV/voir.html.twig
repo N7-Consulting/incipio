@@ -67,7 +67,7 @@
                 <td>{{ ((cotisation.surBaseURSSAF ? bv.assietteDesCotisations : bv.remunerationBrute) * cotisation.tauxPartEtu) | money(false) }}</td>
             </tr>
         {% endfor %}
-        <tr class="active">
+        <tr class="active money">
             <th style="text-align: left;">{{ 'treso.total_cotisations_dues'|trans({}, 'treso') }}<br>(indexées sur l'assiette de cotisation)</th>
             <th class="money">{{ bv.assietteDesCotisations | money }}&nbsp;€</th>
             <th class="money">{{ (bv.tauxPartJunior['baseURSSAF'] * 100) | money }}&nbsp;%</th>
@@ -75,7 +75,7 @@
             <th class="money">{{ (bv.tauxPartEtu['baseURSSAF'] * 100) | money }}&nbsp;%</th>
             <th class="money">{{ bv.partEtudiant(true)['baseURSSAF'] | money }}&nbsp;€</th>
         </tr>
-        <tr class="active">
+        <tr class="active money">
             <th style="text-align: left;">{{ 'treso.total_cotisations_dues'|trans({}, 'treso') }}<br>({{ 'treso.indexes_remunerations_brutes'|trans({}, 'treso') }})</th>
             <th class="money">{{ bv.remunerationBrute  | money }}&nbsp;€</th>
             <th class="money">{{ (bv.tauxPartJunior['baseBrute']*100) }}&nbsp;%</th>
