@@ -231,25 +231,16 @@ class LoadCotisationURSSAFData implements FixtureInterface
         $cotisations[] = array(
             'libelle' => 'Contribution pour le financement des organisations professionnelles',
             'isBaseUrssaf' => true,
-            'tauxJE' => 0.0002,
+            'tauxJE' => 0.00016,
             'tauxEtu' => 0,
             'dateDebut' => new \DateTime('2017-01-01'),
             'dateFin' => new \DateTime('2017-12-31'),
             );
 
         $cotisations[] = array(
-            'libelle' => 'Cotisation de base au tire de la pénibilité',
+            'libelle' => 'Cotisation de base au titre de la pénibilité',
             'isBaseUrssaf' => true,
             'tauxJE' => 0.0001,
-            'tauxEtu' => 0.024,
-            'dateDebut' => new \DateTime('2017-01-01'),
-            'dateFin' => new \DateTime('2017-12-31'),
-            );
-
-        $cotisations[] = array(
-            'libelle' => 'AGS',
-            'isBaseUrssaf' => false,
-            'tauxJE' => 0.02,
             'tauxEtu' => 0,
             'dateDebut' => new \DateTime('2017-01-01'),
             'dateFin' => new \DateTime('2017-12-31'),
@@ -259,6 +250,15 @@ class LoadCotisationURSSAFData implements FixtureInterface
             'libelle' => 'Assurance chômage',
             'isBaseUrssaf' => false,
             'tauxJE' => 0.04,
+            'tauxEtu' => 0.024,
+            'dateDebut' => new \DateTime('2017-01-01'),
+            'dateFin' => new \DateTime('2017-12-31'),
+            );
+
+        $cotisations[] = array(
+            'libelle' => 'AGS',
+            'isBaseUrssaf' => false,
+            'tauxJE' => 0.002,
             'tauxEtu' => 0,
             'dateDebut' => new \DateTime('2017-01-01'),
             'dateFin' => new \DateTime('2017-12-31'),
