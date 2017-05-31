@@ -344,7 +344,10 @@ class Etude
 
     public function getNumero()
     {
-        return $this->mandat * 100 + $this->num;
+        //return $this->mandat * 100 + $this->num;
+        // Numero est maintenant unique et contient mandat
+
+        return $this->num;
     }
 
     public function getMontantJEHHT()
