@@ -67,21 +67,21 @@
                 <td>{{ ((cotisation.surBaseURSSAF ? bv.assietteDesCotisations : bv.remunerationBrute) * cotisation.tauxPartEtu) | money(false) }}</td>
             </tr>
         {% endfor %}
-        <tr class="active money">
+        <tr class="active">
             <th style="text-align: left;">{{ 'treso.total_cotisations_dues'|trans({}, 'treso') }}<br>(indexées sur l'assiette de cotisation)</th>
-            <th>{{ bv.assietteDesCotisations | money }}&nbsp;€</th>
-            <th>{{ (bv.tauxPartJunior['baseURSSAF'] * 100) | money }}&nbsp;%</th>
-            <th>{{ bv.partJunior(true)['baseURSSAF'] | money }}&nbsp;€</th>
-            <th>{{ (bv.tauxPartEtu['baseURSSAF'] * 100) | money }}&nbsp;%</th>
-            <th>{{ bv.partEtudiant(true)['baseURSSAF'] | money }}&nbsp;€</th>
+            <th class="money">{{ bv.assietteDesCotisations | money }}&nbsp;€</th>
+            <th class="money">{{ (bv.tauxPartJunior['baseURSSAF'] * 100) | money }}&nbsp;%</th>
+            <th class="money">{{ bv.partJunior(true)['baseURSSAF'] | money }}&nbsp;€</th>
+            <th class="money">{{ (bv.tauxPartEtu['baseURSSAF'] * 100) | money }}&nbsp;%</th>
+            <th class="money">{{ bv.partEtudiant(true)['baseURSSAF'] | money }}&nbsp;€</th>
         </tr>
-        <tr class="active money">
+        <tr class="active">
             <th style="text-align: left;">{{ 'treso.total_cotisations_dues'|trans({}, 'treso') }}<br>({{ 'treso.indexes_remunerations_brutes'|trans({}, 'treso') }})</th>
-            <th>{{ bv.remunerationBrute  | money }}&nbsp;€</th>
-            <th>{{ (bv.tauxPartJunior['baseBrute']*100) }}&nbsp;%</th>
-            <th>{{ bv.partJunior(true)['baseBrute'] | money }}&nbsp;€</th>
-            <th>{{ (bv.tauxPartEtu['baseBrute']*100) }}&nbsp;%</th>
-            <th>{{ bv.partEtudiant(true)['baseBrute'] | money }}&nbsp;€</th>
+            <th class="money">{{ bv.remunerationBrute  | money }}&nbsp;€</th>
+            <th class="money">{{ (bv.tauxPartJunior['baseBrute']*100) }}&nbsp;%</th>
+            <th class="money">{{ bv.partJunior(true)['baseBrute'] | money }}&nbsp;€</th>
+            <th class="money">{{ (bv.tauxPartEtu['baseBrute']*100) }}&nbsp;%</th>
+            <th class="money">{{ bv.partEtudiant(true)['baseBrute'] | money }}&nbsp;€</th>
         </tr>
 
         <tr>
