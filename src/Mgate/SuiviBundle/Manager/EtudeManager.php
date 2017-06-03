@@ -33,9 +33,7 @@ class EtudeManager extends \Twig_Extension
         }
 
         if ($keyValueStore->exists('namingConvention')) {
-            $namingConvention = $keyValueStore->get('namingConvention');
-            $this->namingConvention = ($namingConvention === 'nom' || $namingConvention === 'numero' ?
-                $namingConvention : 'id');
+            $this->namingConvention = $keyValueStore->get('namingConvention');
         } else {
             $this->namingConvention = 'id';
         }
@@ -163,8 +161,7 @@ class EtudeManager extends \Twig_Extension
     public function getRefDoc(Etude $etude, $type, $key = -1)
     {
         $type = strtoupper($type);
-        $name = ($this->namingConvention === 'nom' ? $etude->getNom() :
-            $this->namingConvention === 'numero' ? $etude->getNumero() : $etude->getId());
+        $name = $etude->getReference($this->namingConvention);
         if ($type == 'AP') {
             if ($etude->getAp()) {
                 return $name . '-' . $type . '-' . $etude->getAp()->getVersion();
