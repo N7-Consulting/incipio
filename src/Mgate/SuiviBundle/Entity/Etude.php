@@ -315,6 +315,13 @@ class Etude
     /**
      * ADDITIONAL GETTERS/SETTERS.
      */
+
+    /**
+     * @return string
+     * @deprecated Should not be used in your doctypes, will be removed in version 3.
+     * Because of different naming conventions between, reference should not be used anymore. References should be
+     * manually handed in your doctypes.
+     */
     public function getReference()
     {
         return $this->getNom();
@@ -344,7 +351,7 @@ class Etude
 
     public function getNumero()
     {
-        return $this->mandat * 100 + $this->num;
+        return $this->num;
     }
 
     public function getMontantJEHHT()
