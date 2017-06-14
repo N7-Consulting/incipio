@@ -488,6 +488,7 @@ class EtudeManager extends \Twig_Extension
         $infos = array();
         // Recontacter client
         $DateAvertContactClient = new \DateInterval('P15D');
+        $now = new \DateTime('now');
         if ($this->getDernierContact($etude) !== null && $now->sub($DateAvertContactClient) > $this->getDernierContact($etude)) {
             $warning = array('titre' => 'Contact client :', 'message' => 'Recontacter le client');
             array_push($warnings, $warning);
@@ -602,9 +603,7 @@ class EtudeManager extends \Twig_Extension
      */
     public function mandatToString($idMandat)
     {
-        // Mandat 0 => 2007/2008
-
-        return strval(2007 + $idMandat) . '/' . strval(2008 + $idMandat);
+        return strval($this->anneeCreation + $idMandat) . '/' . strval($this->anneeCreation + 1 + $idMandat);
     }
 
     /**
@@ -667,15 +666,16 @@ class EtudeManager extends \Twig_Extension
 
     /**
      * Converti le numero de mandat en année.
+     * @param \DateTime $date
+     * @return int
      */
     public function dateToMandat(\DateTime $date)
     {
-        // Mandat 0 => 2007/2008
         $interval = new \DateInterval('P2M20D');
         $date2 = clone $date;
         $date2->sub($interval);
 
-        return intval($date2->format('Y')) - 2007;
+        return intval($date2->format('Y')) - $this->anneeCreation;
     }
 
     /**
