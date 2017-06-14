@@ -22,6 +22,7 @@ class EtudeManager extends \Twig_Extension
     protected $em;
     protected $tva;
     protected $namingConvention;
+    protected $anneeCreation;
 
     public function __construct(EntityManager $em, KeyValueStore $keyValueStore)
     {
@@ -36,6 +37,12 @@ class EtudeManager extends \Twig_Extension
             $this->namingConvention = $keyValueStore->get('namingConvention');
         } else {
             $this->namingConvention = 'id';
+        }
+
+        if ($keyValueStore->exists('anneeCreation')) {
+            $this->anneeCreation = intval($keyValueStore->get('anneeCreation'));
+        } else {
+            throw new \LogicException('Parameter Année Creation is undefined.');
         }
 
     }
@@ -132,7 +139,6 @@ class EtudeManager extends \Twig_Extension
         return round($etude->getMontantHT() * (1 + $this->tva), 2);
     }
 
-
     /**
      * Get référence du document
      * Params : Etude $etude, mixed $doc, string $type (the type of doc)
@@ -225,43 +231,6 @@ class EtudeManager extends \Twig_Extension
         }
     }
 
-    /**
-     * Get nouveau numéro pour FactureVente (auto incrémentation).
-     */
-    public function getNouveauNumeroFactureVente()
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $mandat = 2007 + $this->getMaxMandat();
-
-        $mandatComptable = \DateTime::createFromFormat('d/m/Y', '31/03/' . $mandat);
-
-        $query = $qb->select('e.num')
-            ->from('MgateSuiviBundle:FactureVente', 'e')
-            ->andWhere('e.dateSignature > :mandatComptable')
-            ->setParameter('mandatComptable', $mandatComptable)
-            ->orderBy('e.num', 'DESC');
-
-        $value = $query->getQuery()->setMaxResults(1)->getOneOrNullResult();
-        if ($value) {
-            return $value['num'] + 1;
-        } else {
-            return 1;
-        }
-    }
-
-    public function getExerciceComptable($FactureVente)
-    {
-        if ($FactureVente) {
-            $dateAn = (int)$FactureVente->getDateSignature()->format('y');
-            $exercice = ((int)$FactureVente->getDateSignature()->format('m') < 4 ? $dateAn - 8 : $dateAn - 7);
-
-            return $exercice;
-        } else {
-            return 0;
-        }
-    }
-
     public function getDernierContact(Etude $etude)
     {
         $dernierContact = array();
@@ -277,11 +246,6 @@ class EtudeManager extends \Twig_Extension
         } else {
             return;
         }
-    }
-
-    public function getRepository()
-    {
-        return $this->em->getRepository('MgateSuiviBundle:Etude');
     }
 
     public function getErrors(Etude $etude)
@@ -720,11 +684,10 @@ class EtudeManager extends \Twig_Extension
     public function getTauxConversion()
     {
         $tauxConversion = array();
-        $tauxConversionCalc = array();
 
         //recup toute les etudes
-
-        foreach ($this->getRepository()->findAll() as $etude) {
+        $etudes = $this->em->getRepository('MgateSuiviBundle:Etude')->findAll();
+        foreach ($etudes as $etude) {
             $mandat = $etude->getMandat();
             if ($etude->getAp() !== null) {
                 if ($etude->getAp()->getSpt2()) {
