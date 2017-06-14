@@ -12,7 +12,9 @@
 namespace Mgate\SuiviBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
+use Mgate\PersonneBundle\Entity\Membre;
 use Mgate\SuiviBundle\Entity\Etude as Etude;
+use Mgate\SuiviBundle\Entity\Mission;
 use Mgate\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Webmozart\KeyValueStore\Api\KeyValueStore;
@@ -128,20 +130,12 @@ class EtudeManager extends \Twig_Extension
     }
 
     /**
-     * Get montant total TTC.
-     *
-     * @param Etude $etude
-     *
-     * @return float
-     */
-    public function getTotalTTC(Etude $etude)
-    {
-        return round($etude->getMontantHT() * (1 + $this->tva), 2);
-    }
-
-    /**
      * Get référence du document
      * Params : Etude $etude, mixed $doc, string $type (the type of doc)
+     * @param Etude $etude
+     * @param $type
+     * @param int $key
+     * @return string
      */
     public function getRefDoc(Etude $etude, $type, $key = -1)
     {
@@ -243,9 +237,8 @@ class EtudeManager extends \Twig_Extension
         }
         if (count($dernierContact) > 0) {
             return max($dernierContact);
-        } else {
-            return;
         }
+        return null;
     }
 
     public function getErrors(Etude $etude)
@@ -320,7 +313,9 @@ class EtudeManager extends \Twig_Extension
 
         // CE <= RM
         foreach ($etude->getMissions() as $mission) {
+            /** @var Mission $mission */
             if ($intervenant = $mission->getIntervenant()) {
+                /** @var Membre $intervenant */
                 $dateSignature = $dateDebutOm = null;
                 if ($mission->getDateSignature() !== null) {
                     $dateSignature = clone $mission->getDateSignature();
@@ -578,7 +573,8 @@ class EtudeManager extends \Twig_Extension
         return $ok;
     }
 
-    //Copie de getEtatDoc pour les factures. Les factures n'étendant pas Doctype, le relu, rédigé ... n'est pas pertinent. On ne teste donc que l'existence et loe versement.
+    //Copie de getEtatDoc pour les factures. Les factures n'étendant pas Doctype, le relu, rédigé ...
+    // n'est pas pertinent. On ne teste donc que l'existence et loe versement.
 
     /**
      * @param $doc
