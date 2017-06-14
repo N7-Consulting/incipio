@@ -132,29 +132,8 @@ class EtudeManager extends \Twig_Extension
         return round($etude->getMontantHT() * (1 + $this->tva), 2);
     }
 
+
     /**
-     * Get nombre de JEH.
-     *
-     * @param Etude $etude
-     *
-     * @return float
-     */
-    public function getMontantVerse(Etude $etude)
-    {
-        $total = 0;
-
-        foreach ($etude->getMissions() as $mission) {
-            foreach ($etude->getPhases() as $phase) {
-                $prix = $phase->getPrixJEH();
-                //TO DO faire le cas des prix de jeh différent
-            }
-            $total = 0.6 * $mission->getNbjeh() * $prix;
-        }
-
-        return round($total);
-    }
-
-    /*
      * Get référence du document
      * Params : Etude $etude, mixed $doc, string $type (the type of doc)
      */
