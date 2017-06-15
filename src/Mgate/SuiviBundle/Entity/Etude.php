@@ -220,6 +220,7 @@ class Etude
     private $phases;
 
     /**
+     * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="Mission", mappedBy="etude", cascade={"persist","remove"}, orphanRemoval=true)
      */
     private $missions;

@@ -6,6 +6,7 @@
             <div class="col-xs-12 col-sm-4 worker">
                 {{ form_label(form.intervenant) }}
                 {{ form_widget(form.intervenant, {'attr': {'class': 'select2-multiple'}}) }}
+                {{ form_errors(form.intervenant) }}
             </div>
         </div>
     </div>
@@ -18,38 +19,46 @@
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         {{ form_label(form.debutOm) }}<br>
                         {{ form_widget(form.debutOm) }}
+                        {{ form_errors(form.debutOm) }}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         {{ form_label(form.finOm) }}<br>
                         {{ form_widget(form.finOm) }}
+                        {{ form_errors(form.finOm) }}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         {{ form_label(form.pourcentageJunior) }}<br>
                         {{ form_widget(form.pourcentageJunior) }}
+                        {{ form_errors(form.pourcentageJunior) }}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         {{ form_label(form.referentTechnique) }}<br>
                         {{ form_widget(form.referentTechnique, {'attr': {'class': 'select2-multiple'}}) }}
+                        {{ form_errors(form.referentTechnique) }}
                     </div>
                 </div>
                 <div class="row" style="margin-top: 10px">
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         {{ form_label(form.version) }}<br>
                         {{ form_widget(form.version) }}
+                        {{ form_errors(form.version) }}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         {{ form_label(form.dateSignature) }}<br>
                         {{ form_widget(form.dateSignature) }}
+                        {{ form_errors(form.dateSignature) }}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         {{ form_label(form.signataire1) }}<br>
                         {{ form_widget(form.signataire1, {'attr': {'class': 'select2-multiple'}}) }}
+                        {{ form_errors(form.signataire1) }}
                     </div>
                 </div>
                 <div class="row" style="margin-top: 25px">
                     <div class="col-md-12 col-xs-12">
                         {{ form_label(form.phases) }}
                         {{ form_widget(form.phases, {'attr': {'style': 'width:100%'}}) }}
+                        {{ form_errors(form.phases) }}
 
                     </div>
                 </div>
@@ -91,9 +100,11 @@
                                         <th>{{ form_label(repartitionJEH.prixJEH) }}</th>
                                     </tr>
                                     <tr>
-                                        <td>{{ form_widget(repartitionJEH.nbrJEH) }}</td>
+                                        <td>{{ form_widget(repartitionJEH.nbrJEH) }}
+                                            {{ form_errors(repartitionJEH.nbrJEH) }}</td>
 
-                                        <td>{{ form_widget(repartitionJEH.prixJEH) }}</td>
+                                        <td>{{ form_widget(repartitionJEH.prixJEH) }}
+                                            {{ form_errors(repartitionJEH.prixJEH) }}</td>
                                     </tr>
                                 </table>
                             </td>
