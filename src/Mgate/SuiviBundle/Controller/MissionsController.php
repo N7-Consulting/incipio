@@ -29,27 +29,17 @@ class MissionsController extends Controller
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
      *
+     * @param Request $request
      * @param Etude $etude
      * @return RedirectResponse|Response
-     *
      */
     public function modifierAction(Request $request, Etude $etude)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($this->get('Mgate.etude_manager')->confidentielRefus($etude, $this->getUser(), $this->get('security.authorization_checker'))) {
+        if ($this->get('Mgate.etude_manager')->confidentielRefus($etude, $this->getUser(),
+            $this->get('security.authorization_checker'))) {
             throw new AccessDeniedException('Cette étude est confidentielle');
-        }
-
-        //save missions and repartition before form handling
-        $missionList = new ArrayCollection();
-        foreach ($etude->getMissions() as $mission) {
-            $missionList->add($mission);
-        }
-
-        $repartitionList = new ArrayCollection();
-        foreach ($missionList as $mission) {
-            $repartitionList->add($mission->getRepartitionsJEH());
         }
 
         /* Form handling */
@@ -58,35 +48,26 @@ class MissionsController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                //if a new missions set is created
-                if ($request->get('add')) {
-                    $missionNew = new Mission(); // add a new empty mission to mission set.
-                    $missionNew->setEtude($etude);
-                    $etude->addMission($missionNew);
-                }
 
-                //if a repartition is added to a mission
-                if ($request->get('addRepartition')) {
-                    $repartitionNew = new RepartitionJEH();
-
-                    if ($request->get('idMission') !== null && $request->get('idMission') !== '') {
-                        $idMission = intval($request->get('idMission'));
-                        if ($etude->getMissions()->get($idMission)) {
-                            $mission = $etude->getMissions()->get($request->get('idMission'));
-                            $mission->addRepartitionsJEH($repartitionNew);
-                            $repartitionNew->setMission($mission);
-
-                            $repartitionNew->setNbrJEH(0);
-                            $repartitionNew->setPrixJEH(340);
-                        }
+                foreach ($form->get('missions') as $missionForm){
+                    $m = $missionForm->getData();
+                    foreach ($missionForm->get('repartitionsJEH') as $repartitionForm){
+                        $r = $repartitionForm->getData();
+                        /** @var RepartitionJEH $r */
+                        $r->setMission($m);
                     }
+                    /** @var Mission $m  */
+                    $m->setEtude($etude);
                 }
 
                 $em->persist($etude);
                 $em->flush();
+                $this->addFlash('success', 'Mission enregistrée');
 
-                return $this->redirect($this->generateUrl('MgateSuivi_missions_modifier', array('id' => $etude->getId())));
+
+                return $this->redirectToRoute('MgateSuivi_missions_modifier', ['id' => $etude->getId()]);
             }
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
         return $this->render('MgateSuiviBundle:Mission:missions.html.twig', array(

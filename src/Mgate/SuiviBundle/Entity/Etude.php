@@ -220,7 +220,7 @@ class Etude
     private $phases;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mission", mappedBy="etude", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Mission", mappedBy="etude", cascade={"persist","remove"}, orphanRemoval=true)
      */
     private $missions;
 
