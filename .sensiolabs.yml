@@ -1,0 +1,5 @@
+commit_failure_conditions:
+    - "pr.severity.critical > 0"
+    - "pr.severity.major > 0"
+    - "pr.severity.minor > 0"
+    - "pr.severity.info > 0"
