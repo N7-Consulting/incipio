@@ -11,7 +11,6 @@
 
 namespace Mgate\SuiviBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Mgate\SuiviBundle\Entity\Mission;
 use Mgate\SuiviBundle\Entity\Etude;
 use Mgate\SuiviBundle\Entity\RepartitionJEH;
