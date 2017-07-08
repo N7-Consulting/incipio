@@ -18,6 +18,7 @@ use Mgate\SuiviBundle\Entity\Etude;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -47,8 +48,10 @@ class DocumentController extends Controller
 
     /**
      * @Security("has_role('ROLE_CA')")
+     *
      * @param Document $documentType (ParamConverter) The document to be downloaded.
      * @return BinaryFileResponse
+     *
      * @throws \Exception
      */
     public function voirAction(Document $documentType)
@@ -66,9 +69,11 @@ class DocumentController extends Controller
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
+     *
      * @param Request $request
      * @param Etude $etude
-     * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @return Response
      */
     public function uploadEtudeAction(Request $request, Etude $etude)
     {
@@ -77,11 +82,10 @@ class DocumentController extends Controller
         }
 
         if (!$response = $this->upload($request, false, ['etude' => $etude])) {
-            $this->addFlash('success','Document mis en ligne');
+            $this->addFlash('success', 'Document mis en ligne');
             return $this->redirect($this->generateUrl('MgateSuivi_etude_voir', array('nom' => $etude->getNom())));
-        } else {
-            return $response;
         }
+        return $response;
     }
 
     /**
@@ -115,6 +119,10 @@ class DocumentController extends Controller
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function uploadDoctypeAction(Request $request)
     {
@@ -128,8 +136,10 @@ class DocumentController extends Controller
 
     /**
      * @Security("has_role('ROLE_CA')")
+     *
      * @param Document $doc
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @return Response
      */
     public function deleteAction(Document $doc)
     {
