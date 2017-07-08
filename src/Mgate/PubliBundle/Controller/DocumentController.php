@@ -14,6 +14,7 @@ namespace Mgate\PubliBundle\Controller;
 use Mgate\PubliBundle\Entity\Document;
 use Mgate\PubliBundle\Entity\RelatedDocument;
 use Mgate\PubliBundle\Form\Type\DocumentType;
+use Mgate\SuiviBundle\Entity\Etude;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -52,7 +53,7 @@ class DocumentController extends Controller
      */
     public function voirAction(Document $documentType)
     {
-        $documentStoragePath = $this->get('kernel')->getRootDir(). '' . Document::DOCUMENT_STORAGE_ROOT;
+        $documentStoragePath = $this->get('kernel')->getRootDir() . '' . Document::DOCUMENT_STORAGE_ROOT;
         if (file_exists($documentStoragePath . '/' . $documentType->getPath())) {
             $response = new BinaryFileResponse($documentStoragePath . '/' . $documentType->getPath());
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
@@ -65,24 +66,18 @@ class DocumentController extends Controller
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
+     * @param Request $request
+     * @param Etude $etude
+     * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function uploadEtudeAction(Request $request, $etude_id)
+    public function uploadEtudeAction(Request $request, Etude $etude)
     {
-        $em = $this->getDoctrine()->getManager();
-        $etude = $em->getRepository('MgateSuiviBundle:Etude')->getByNom($etude_id);
-
-        if (!$etude) {
-            throw $this->createNotFoundException('Le document ne peut être lié à une étude qui n\'existe pas!');
-        }
-
         if ($this->get('Mgate.etude_manager')->confidentielRefus($etude, $this->getUser(), $this->get('security.authorization_checker'))) {
             throw new AccessDeniedException('Cette étude est confidentielle !');
         }
 
-        $options['etude'] = $etude;
-
-        if (!$response = $this->upload($request, false, $options)) {
-            // Si tout est ok
+        if (!$response = $this->upload($request, false, ['etude' => $etude])) {
+            $this->addFlash('success','Document mis en ligne');
             return $this->redirect($this->generateUrl('MgateSuivi_etude_voir', array('nom' => $etude->getNom())));
         } else {
             return $response;
@@ -104,7 +99,7 @@ class DocumentController extends Controller
         $options['etudiant'] = $membre;
 
         if (!$response = $this->upload($request, false, $options)) {
-            $this->addFlash('success','Document mis en ligne');
+            $this->addFlash('success', 'Document mis en ligne');
             return $this->redirect($this->generateUrl('MgatePersonne_membre_voir', array('id' => $membre_id)));
         } else {
             return $response;
@@ -133,23 +128,21 @@ class DocumentController extends Controller
 
     /**
      * @Security("has_role('ROLE_CA')")
+     * @param Document $doc
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id, Request $request)
+    public function deleteAction(Document $doc)
     {
         $em = $this->getDoctrine()->getManager();
-
-        if (!$doc = $em->getRepository('MgatePubliBundle:Document')->find($id)) {
-            throw $this->createNotFoundException('Le Document n\'existe pas !');
-        }
         $doc->setRootDir($this->get('kernel')->getRootDir());
 
         if ($doc->getRelation()) { // Cascade sucks
             $relation = $doc->getRelation()->setDocument();
-            $doc->setRelation();
+            $doc->setRelation(null);
             $em->remove($relation);
             $em->flush();
         }
-        $request->getSession()->getFlashBag()->add('success', 'Document supprimé');
+        $this->addFlash('success', 'Document supprimé');
         $em->remove($doc);
         $em->flush();
 
