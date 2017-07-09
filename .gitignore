@@ -239,5 +239,5 @@ $RECYCLE.BIN/
 
 var/sessions/*
 var/documents/*
-var/key_value_store/config.json
+config.json.dist
 docker-compose.yml
