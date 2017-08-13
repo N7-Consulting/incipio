@@ -306,7 +306,7 @@ class CreateDataCommand extends ContainerAwareCommand
                 $em->persist($mi);
             }
 
-                //manage PVR
+            //manage PVR
             if ($etude['statut'] > 1 && $etude['statut'] < 5) {
                 $pv = new ProcesVerbal();
                 $pv->setEtude($e);

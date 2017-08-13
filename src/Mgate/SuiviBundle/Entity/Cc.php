@@ -36,9 +36,9 @@ class Cc extends DocType
      */
     protected $etude;
 
-   /*
-    * ADDITIONAL
-    */
+    /*
+     * ADDITIONAL
+     */
     public function getReference()
     {
         return $this->etude->getReference() . '/' . $this->getDateSignature()->format('Y') . '/CC/' . $this->getVersion();

@@ -37,7 +37,7 @@ class AvType extends DocTypeType
                 'prototype' => true,
                 'by_reference' => false,
                 ]);
-                /*->add('avenantsMissions', 'collection', array(
+        /*->add('avenantsMissions', 'collection', array(
             'type' => new AvMissionType,
             'allow_add' => true,
             'allow_delete' => true,

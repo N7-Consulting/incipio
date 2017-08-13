@@ -111,7 +111,7 @@ class DocType
         $this->setVersion(1);
     }
 
-/// rajout à la main
+    // rajout à la main
     public function isKnownSignataire2()
     {
         return $this->knownSignataire2;
@@ -132,7 +132,7 @@ class DocType
         $this->newSignataire2 = $var;
     }
 
-/// fin rajout
+    // fin rajout
 
     /**
      * Set version.
