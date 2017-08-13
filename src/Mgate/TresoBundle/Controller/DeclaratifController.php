@@ -113,7 +113,7 @@ class DeclaratifController extends Controller
                     if (!in_array($tauxTVA, $tvas) && $tauxTVA !== null) {
                         $tvas[] = $tauxTVA;
                     }
-                    if (!key_exists($tauxTVA, $totalTvaDeductible)) {
+                    if (!array_key_exists($tauxTVA, $totalTvaDeductible)) {
                         $totalTvaDeductible[$tauxTVA] = $entityDeductibled->getMontantTVA();
                     } else {
                         $totalTvaDeductible[$tauxTVA] += $entityDeductibled->getMontantTVA();
@@ -145,7 +145,7 @@ class DeclaratifController extends Controller
                     $montantTvaParType[$tauxTVA] = $fvd->getMontantTVA();
                 }
 
-                if (!key_exists($tauxTVA, $totalTvaCollectee)) {
+                if (!array_key_exists($tauxTVA, $totalTvaCollectee)) {
                     $totalTvaCollectee[$tauxTVA] = $fvd->getMontantTVA();
                 } else {
                     $totalTvaCollectee[$tauxTVA] += $fvd->getMontantTVA();
@@ -164,7 +164,7 @@ class DeclaratifController extends Controller
                     $montantTvaParType[$tauxTVA] = -$md->getMontantTVA();
                 }
 
-                if (!key_exists($tauxTVA, $totalTvaCollectee)) {
+                if (!array_key_exists($tauxTVA, $totalTvaCollectee)) {
                     $totalTvaCollectee[$tauxTVA] = -$md->getMontantTVA();
                 } else {
                     $totalTvaCollectee[$tauxTVA] -= $md->getMontantTVA();
