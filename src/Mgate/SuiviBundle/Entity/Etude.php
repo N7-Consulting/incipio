@@ -21,8 +21,8 @@ use Mgate\PersonneBundle\Entity\Prospect;
 use Mgate\PubliBundle\Entity\RelatedDocument;
 use Mgate\TresoBundle\Entity\Facture;
 use N7consulting\RhBundle\Entity\Competence;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Mgate\SuiviBundle\Entity\Etude.

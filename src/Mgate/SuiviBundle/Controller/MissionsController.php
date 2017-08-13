@@ -11,8 +11,8 @@
 
 namespace Mgate\SuiviBundle\Controller;
 
-use Mgate\SuiviBundle\Entity\Mission;
 use Mgate\SuiviBundle\Entity\Etude;
+use Mgate\SuiviBundle\Entity\Mission;
 use Mgate\SuiviBundle\Entity\RepartitionJEH;
 use Mgate\SuiviBundle\Form\Type\MissionsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
