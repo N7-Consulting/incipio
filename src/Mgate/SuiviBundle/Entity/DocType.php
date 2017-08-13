@@ -116,6 +116,7 @@ class DocType
     {
         return $this->knownSignataire2;
     }
+
     public function setKnownSignataire2($boolean)
     {
         $this->knownSignataire2 = $boolean;
@@ -125,10 +126,12 @@ class DocType
     {
         return $this->newSignataire2;
     }
+
     public function setNewSignataire2($var)
     {
         $this->newSignataire2 = $var;
     }
+
 /// fin rajout
 
     /**

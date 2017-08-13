@@ -56,7 +56,7 @@ class ProcesVerbal extends DocType
     */
     public function getReference()
     {
-        return $this->etude->getReference().'/'.$this->etude->getCc()->getDateSignature()->format('Y').'/PVR/'.$this->getVersion();
+        return $this->etude->getReference() . '/' . $this->etude->getCc()->getDateSignature()->format('Y') . '/PVR/' . $this->getVersion();
     }
 
     /**
@@ -167,6 +167,6 @@ class ProcesVerbal extends DocType
 
     public function __toString()
     {
-        return $this->etude->getReference().'/PVR/';
+        return $this->etude->getReference() . '/PVR/';
     }
 }

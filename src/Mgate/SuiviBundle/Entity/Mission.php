@@ -141,20 +141,20 @@ class Mission extends DocType
      */
     public function getRemuneration()
     {
-        $nbrJEHRemuneration = (int)0;
-        $prixRemuneration = (float)0;
+        $nbrJEHRemuneration = (int) 0;
+        $prixRemuneration = (float) 0;
         foreach ($this->getRepartitionsJEH() as $repartitionJEH) {
             $nbrJEHRemuneration += $repartitionJEH->getNbrJEH();
             $prixRemuneration += $repartitionJEH->getNbrJEH() * $repartitionJEH->getPrixJEH();
         }
         $prixRemuneration *= 1 - $this->getPourcentageJunior();
 
-        return array('jehRemuneration' => $nbrJEHRemuneration, 'montantRemuneration' => $prixRemuneration);
+        return ['jehRemuneration' => $nbrJEHRemuneration, 'montantRemuneration' => $prixRemuneration];
     }
 
     public function getRemunerationBrute()
     {
-        $prixRemuneration = (float)0;
+        $prixRemuneration = (float) 0;
         foreach ($this->getRepartitionsJEH() as $repartitionJEH) {
             $prixRemuneration += $repartitionJEH->getNbrJEH() * $repartitionJEH->getPrixJEH();
         }
