@@ -37,7 +37,7 @@ class LoadBaseURSSAFData implements FixtureInterface
         ];
         for ($y = 2009; $y < 2018; ++$y) {
             $baseURSSAF = new BaseURSSAF();
-            if (key_exists($y, $base)) {
+            if (array_key_exists($y, $base)) {
                 $baseURSSAF->setBaseURSSAF($base[$y])->setDateDebut(new \DateTime("$y-01-01"))->setDateFin(new \DateTime("$y-12-31"));
                 $manager->persist($baseURSSAF);
             }

@@ -170,10 +170,10 @@ class DocumentController extends Controller
             $relatedDocument = new RelatedDocument();
             $relatedDocument->setDocument($document);
             $document->setRelation($relatedDocument);
-            if (key_exists('etude', $options)) {
+            if (array_key_exists('etude', $options)) {
                 $relatedDocument->setEtude($options['etude']);
             }
-            if (key_exists('etudiant', $options)) {
+            if (array_key_exists('etudiant', $options)) {
                 $relatedDocument->setMembre($options['etudiant']);
             }
         }

@@ -353,7 +353,7 @@ class IndicateursController extends Controller
         foreach ($etudes as $etude) {
             if ($etude->getStateID() == self::STATE_ID_EN_COURS_X || $etude->getStateID() == self::STATE_ID_TERMINEE_X) {
                 $clientID = $etude->getProspect()->getId();
-                if (key_exists($clientID, $clients)) {
+                if (array_key_exists($clientID, $clients)) {
                     ++$clients[$clientID];
                 } else {
                     $clients[$clientID] = 1;
@@ -364,7 +364,7 @@ class IndicateursController extends Controller
         $repartitions = [];
         $nombreClient = count($clients);
         foreach ($clients as $clientID => $nombreEtude) {
-            if (key_exists($nombreEtude, $repartitions)) {
+            if (array_key_exists($nombreEtude, $repartitions)) {
                 ++$repartitions[$nombreEtude];
             } else {
                 $repartitions[$nombreEtude] = 1;
