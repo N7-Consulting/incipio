@@ -147,7 +147,7 @@ class Membre
 
     /**
      * @ORM\ManyToMany(targetEntity="N7consulting\RhBundle\Entity\Competence", mappedBy="membres", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, name="competence_id")
      */
     private $competences;
 
