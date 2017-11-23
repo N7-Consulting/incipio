@@ -145,19 +145,8 @@ class EtudeController extends Controller
 
         $etude->setMandat($this->get('Mgate.etude_manager')->getMaxMandat());
         $etude->setNum($this->get('Mgate.etude_manager')->getNouveauNumero());
-
-        $keyValueStore = $this->get('app.json_key_value_store');
-        if ($keyValueStore->exists('fraisDossierDefaut')) {
-            $etude->setFraisDossier($keyValueStore->get('fraisDossierDefaut'));
-        } else {
-            throw new \LogicException('Parameter Frais Dossier Defaut is undefined.');
-        }
-
-        if ($keyValueStore->exists('pourcentageAcompteDefaut')) {
-            $etude->setPourcentageAcompte($keyValueStore->get('pourcentageAcompteDefaut'));
-        } else {
-            throw new \LogicException('Parameter Pourcentage Acompte Defaut is undefined.');
-        }
+        $etude->setFraisDossier($this->get('Mgate.etude_manager')->getDefaultFraisDossier());
+        $etude->setPourcentageAcompte($this->get('Mgate.etude_manager')->getDefaultPourcentageAcompte());
 
         $user = $this->getUser();
         if (is_object($user) && $user instanceof User) {
