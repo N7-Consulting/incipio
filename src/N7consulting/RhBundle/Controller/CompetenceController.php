@@ -49,7 +49,7 @@ class CompetenceController extends Controller
      */
     public function indexAction()
     {
-        $entities = $this->getDoctrine()->getManager()->getRepository('N7consultingRhBundle:Competence')->findAll();
+        $entities = $this->getDoctrine()->getManager()->getRepository('N7consultingRhBundle:Competence')->findBy([], ['nom' => 'asc']);
 
         return $this->render('N7consultingRhBundle:Competence:index.html.twig', [
             'competences' => $entities,
