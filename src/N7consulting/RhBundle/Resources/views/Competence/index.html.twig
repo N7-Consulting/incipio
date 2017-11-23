@@ -37,13 +37,14 @@
             </ul>
         </div>
         <div class="col-md-9 col-xs-12">
-            <div id="graphHolder"></div>
-            <div id="nodeInfos"></div>
+            <div id="graphHolder" style="border: 1px solid #e6e6e6;"></div>
+            <div class="well">Détails: <span id="nodeInfos"></span></div>
         </div>
     </div>
 {% endblock %}
 
 {% block javascript %}
+    {{ parent() }}
     <script src="{{ asset('js/d3/d3.min.js') }}"></script>
     <script src="{{ asset('js/d3/competencesNet.js') }}"></script>
     <script src="{{ path('N7consultingRh_competence_visualiser') }}"></script>
