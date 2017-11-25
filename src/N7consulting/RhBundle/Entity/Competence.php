@@ -30,8 +30,6 @@ class Competence
 
     /**
      * @ORM\ManyToMany(targetEntity="Mgate\PersonneBundle\Entity\Membre", inversedBy="competences")
-     * @ORM\JoinTable(name="competence_membre")
-     * @ORM\JoinColumn(name="membre_id")
      */
     private $membres;
 
