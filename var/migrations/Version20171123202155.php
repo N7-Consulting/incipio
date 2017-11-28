@@ -20,10 +20,10 @@ class Version20171123202155 extends AbstractMigration
 
         $this->addSql('INSERT INTO `AdminParam` (`id`, `name`, `paramType`, `defaultValue`, `required`, `paramLabel`, 
 `paramDescription`, `priority`) VALUES (NULL, \'fraisDossierDefaut\', \'string\', \'90\', \'1\', 
-\'Frais de dossier par défaut\', \'Valeur par défaut des frais de dossier à la création de l\Avant-Projet, mais qui reste modifiable\', \'810\')');
+\'Frais de dossier par défaut\', \'Valeur par défaut des frais de dossier à la création de l Avant-Projet\', \'810\')');
         $this->addSql('INSERT INTO `AdminParam` (`id`, `name`, `paramType`, `defaultValue`, `required`, `paramLabel`, 
 `paramDescription`, `priority`) VALUES (NULL, \'pourcentageAcompteDefaut\', \'number\', \'0.4\', \'1\', 
-\'Acompte par défaut\', \'Valeur par défaut de l\acompte dans la Convention Client, mais qui reste modifiable\', \'800\')');
+\'Acompte par défaut\', \'Valeur par défaut de l acompte à la création de la Convention Client\', \'800\')');
     }
 
     /**
