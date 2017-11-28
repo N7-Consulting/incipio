@@ -45,6 +45,10 @@ class LoadAdminParamData implements FixtureInterface
         ['name' => 'gaTracking', 'paramType' => 'string', 'defaultValue' => '', 'required' => false, 'paramLabel' => 'Code de suivi Google Analytics'],
         ['name' => 'namingConvention', 'paramType' => 'string', 'defaultValue' => 'nom', 'required' => true, 'paramLabel' => 'Convention de nommage',
             'paramDescription' => 'Quel champ d\'une étude doit être utilisé dans les reférences à un document ? Accepte les valeurs numero ou nom', ],
+        ['name' => 'fraisDossierDefaut', 'paramType' => 'string', 'defaultValue' => '90', 'required' => true, 'paramLabel' => 'Frais de dossier par défaut',
+            'paramDescription' => 'Valeur par défaut des frais de dossier à la création de l\'Avant-Projet, mais qui reste modifiable', ],
+        ['name' => 'pourcentageAcompteDefaut', 'paramType' => 'number', 'defaultValue' => 0.4, 'required' => true, 'paramLabel' => 'Acompte par défaut',
+            'paramDescription' => 'Valeur par défaut de l\'acompte dans la Convention Client, mais qui reste modifiable', ],
         ];
 
         $i = 0;
