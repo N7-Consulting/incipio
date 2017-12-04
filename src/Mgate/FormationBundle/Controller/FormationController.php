@@ -67,6 +67,8 @@ class FormationController extends Controller
     /**
      * @Security("has_role('ROLE_CA')")
      *
+     * @param Request $request
+     *
      * @return Response
      *                  Manage creation of a training
      */
@@ -84,11 +86,6 @@ class FormationController extends Controller
                 $em->flush();
                 $form = $this->createForm(FormationType::class, $formation);
                 $this->addFlash('success', 'Formation créée');
-            } else {
-                $errors = $this->get('validator')->validate($formation);
-                foreach ($errors as $error) {
-                    $this->addFlash('warning', $error->getPropertyPath() . ' : ' . $error->getMessage());
-                }
             }
         }
 
@@ -100,18 +97,14 @@ class FormationController extends Controller
     /**
      * @Security("has_role('ROLE_CA')")
      *
-     * @param $id mixed valid id : modify an existing training; unknown id : display a creation form
+     * @param Formation $formation The training to modify
      *
      * @return Response
      *                  Manage creation and update of a training
      */
-    public function modifierAction(Request $request, $id)
+    public function modifierAction(Request $request, Formation $formation)
     {
         $em = $this->getDoctrine()->getManager();
-        if (!$formation = $em->getRepository('Mgate\FormationBundle\Entity\Formation')->find($id)) {
-            $formation = new Formation();
-        }
-
         $form = $this->createForm(FormationType::class, $formation);
 
         if ('POST' == $request->getMethod()) {
@@ -123,12 +116,6 @@ class FormationController extends Controller
 
                 $form = $this->createForm(FormationType::class, $formation);
                 $this->addFlash('success', 'Formation modifiée');
-            } else {
-                //constitution du tableau d'erreurs
-                $errors = $this->get('validator')->validate($formation);
-                foreach ($errors as $error) {
-                    $this->addFlash('warning', $error->getPropertyPath() . ' : ' . $error->getMessage());
-                }
             }
         }
 
@@ -140,12 +127,12 @@ class FormationController extends Controller
     /**
      * @Security("has_role('ROLE_CA')")
      *
-     * @param Request $request
+     * @param $mandat The mandat during which trainings were given
      *
      * @return Response
-     *                  Manage particpant present to a training
+     *                  Manage participant present to a training
      */
-    public function participationAction(Request $request, $mandat = null)
+    public function participationAction($mandat = null)
     {
         $em = $this->getDoctrine()->getManager();
         $formationsParMandat = $em->getRepository('MgateFormationBundle:Formation')->findAllByMandat();
