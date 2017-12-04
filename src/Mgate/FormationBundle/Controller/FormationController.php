@@ -67,6 +67,39 @@ class FormationController extends Controller
     /**
      * @Security("has_role('ROLE_CA')")
      *
+     * @return Response
+     *                  Manage creation of a training
+     */
+    public function ajouterAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $formation = new Formation();
+        $form = $this->createForm(FormationType::class, $formation);
+
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->persist($formation);
+                $em->flush();
+                $form = $this->createForm(FormationType::class, $formation);
+                $this->addFlash('success', 'Formation créée');
+            } else {
+                $errors = $this->get('validator')->validate($formation);
+                foreach ($errors as $error) {
+                    $this->addFlash('warning', $error->getPropertyPath() . ' : ' . $error->getMessage());
+                }
+            }
+        }
+
+        return $this->render('MgateFormationBundle:Gestion:ajouter.html.twig', ['form' => $form->createView(),
+            'formation' => $formation,
+        ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     *
      * @param $id mixed valid id : modify an existing training; unknown id : display a creation form
      *
      * @return Response
