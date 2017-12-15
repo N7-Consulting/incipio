@@ -28,9 +28,13 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class EtudeController extends Controller
 {
     const STATE_ID_EN_NEGOCIATION = 1;
+
     const STATE_ID_EN_COURS = 2;
+
     const STATE_ID_EN_PAUSE = 3;
+
     const STATE_ID_TERMINEE = 4;
+
     const STATE_ID_AVORTEE = 5;
 
     /**
