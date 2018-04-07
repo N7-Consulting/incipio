@@ -67,6 +67,12 @@ Feature: formations
     Given I am on "/formations/admin/participation"
     Then the response status code should be 200
     Then I should see "Présence aux formations"
+  
+  Scenario: I can see Participation to a Formation
+    Given I am logged in as "admin"
+    Given I am on "/formations/admin/participation/2018"
+    Then the response status code should be 200
+    Then I should see "Présence aux formations 2018"
     
   @dropSchema
   Scenario: Void
