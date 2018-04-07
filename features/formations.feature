@@ -8,19 +8,11 @@ Feature: formations
     Then the response status code should be 200
     Then I should see "Liste des formations"
   
-  Scenario: I can see Formations Homepage
+  Scenario: I can see Formations admin page
     Given I am logged in as "admin"
     Given I am on "/formations/admin"
     Then the response status code should be 200
     Then I should see "Formations - Espace Admin"
-  
-  Scenario: I can see a Formation
-    Given I am logged in as "admin"
-    Given I am on "/formations/3"
-    Then the response status code should be 200
-    Then I should see "Modifier une formation"
-    And I should see "Télécharger les documents"
-    and I should see "Supprimer la formation"
     
   Scenario: I can add a Formation
     Given I am logged in as "admin"
@@ -41,6 +33,14 @@ Feature: formations
     And I should see "Télécharger les documents"
     and I should see "Supprimer la formation"
     
+  Scenario: I can see a Formation
+    Given I am logged in as "admin"
+    Given I am on "/formations/1"
+    Then the response status code should be 200
+    Then I should see "Modifier une formation"
+    And I should see "Télécharger les documents"
+    And I should see "Supprimer la formation"
+  
   Scenario: I can edit a Formation
     Given I am logged in as "admin"
     Given I am on "/formations/admin/modifier/1"
@@ -68,12 +68,9 @@ Feature: formations
     Then the response status code should be 200
     Then I should see "Présence aux formations"
   
+  @dropSchema
   Scenario: I can see Participation to a Formation
     Given I am logged in as "admin"
     Given I am on "/formations/admin/participation/2018"
     Then the response status code should be 200
-    Then I should see "Présence aux formations 2018"
-    
-  @dropSchema
-  Scenario: Void
-    Given I am logged in as "admin"
+    Then I should see "Présence aux formations 2018" 
