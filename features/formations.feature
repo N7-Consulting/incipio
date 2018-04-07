@@ -62,7 +62,7 @@ Feature: formations
     Then the url should match "/formation"
     And I should not see "Formation GitLab"
     
-  Scenarion: I can see Participation to a Formation
+  Scenario: I can see Participation to a Formation
     Given I am logged in as "admin"
     Given I am on "/formations/admin/participation"
     Then the response status code should be 200
