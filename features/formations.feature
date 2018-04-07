@@ -1,4 +1,4 @@
-Feature : formations
+Feature: formations
   As an admin I am able to CRUD a Formation
   
   @createSchema
