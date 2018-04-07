@@ -31,7 +31,7 @@ Feature: formations
     And I should see "Formation Git"
     And I should see "Modifier une formation"
     And I should see "Télécharger les documents"
-    and I should see "Supprimer la formation"
+    And I should see "Supprimer la formation"
     
   Scenario: I can see a Formation
     Given I am logged in as "admin"
@@ -52,7 +52,7 @@ Feature: formations
     And I should see "Formation GitLab"
     And I should see "Modifier une formation"
     And I should see "Télécharger les documents"
-    and I should see "Supprimer la formation"
+    And I should see "Supprimer la formation"
     
   Scenario: I can delete a Formation
     Given I am logged in as "admin"
