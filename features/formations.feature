@@ -53,11 +53,12 @@ Feature: formations
     And I should see "Supprimer la formation"
     
   Scenario: I can delete a Formation
-    Given I am logged in as "admin"
-    Given I am on "/formations/admin/supprimer/1"
-    Then the response status code should be 200
-    Then the url should match "/formations"
-    And I should not see "Formation GitLab"
+     Given I am logged in as "admin"
+     Given I am on "/formations/1"
+     Then the response status code should be 200
+-    And I press "Supprimer la Formation"
+     Then the url should match "/formations"
+     And I should not see "Formation GitLab"
     
   Scenario: I can see Participation to a Formation
     Given I am logged in as "admin"
