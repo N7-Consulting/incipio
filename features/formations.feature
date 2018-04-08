@@ -22,8 +22,6 @@ Feature: formations
     When I fill in "Mandat" with "2018"
     When I fill in "Description" with "Introduction à GitLab"
     When I fill in "Categories" with "0"
-    When I fill in "Date de début" with "2017-04-14 18:00"
-    When I fill in "Date de fin" with "2017-04-14 19:00"
     And I press "Enregistrer la Formation"
     # it will create the formation id 1
     Then the url should match "/formations/1"
