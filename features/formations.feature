@@ -56,7 +56,7 @@ Feature: formations
     Given I am logged in as "admin"
     Given I am on "/formations/1"
     Then the response status code should be 200
-    And I press "/formations/admin/supprimer/1"
+    And I press "Supprimer la Formation"
     Then the url should match "/formation"
     And I should not see "Formation GitLab"
     
