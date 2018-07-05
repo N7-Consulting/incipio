@@ -2,6 +2,7 @@
 
 namespace Application\Migrations;
 
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
@@ -17,6 +18,24 @@ class Version20170302213410 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+
+        /**
+         * Jeyser got migrations quite late in the project. And at the beginning, they were used as a way to execute
+         * SQL and were not thought to be used to manage the whole schema.
+         * This migration has been added much later after the first migration. Therefore, we have to ensure that every
+         * deployed version at the time of the update will behave well.
+         *
+         * This migration is supposed to create the schema. Thus we check if table fos_user is available or not.
+         * If it is, we are running the migration on an already created database, then we return because those tables are
+         *      already in place.
+         * If it isn't, the database hasn't been created, so let's run this migration
+         */
+        try {
+            $this->connection->executeQuery('SELECT 1 FROM fos_user LIMIT 1;')->execute();
+            return;
+        } catch (TableNotFoundException $e) {
+            // table not available, do nothing, just keep on and create the tables.
+        }
 
         $this->addSql('CREATE TABLE ext_translations (id INT AUTO_INCREMENT NOT NULL, locale VARCHAR(8) NOT NULL, object_class VARCHAR(255) NOT NULL, field VARCHAR(32) NOT NULL, foreign_key VARCHAR(64) NOT NULL, content LONGTEXT DEFAULT NULL, INDEX translations_lookup_idx (locale, object_class, foreign_key), UNIQUE INDEX lookup_unique_idx (locale, object_class, field, foreign_key), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE ext_log_entries (id INT AUTO_INCREMENT NOT NULL, action VARCHAR(8) NOT NULL, logged_at DATETIME NOT NULL, object_id VARCHAR(64) DEFAULT NULL, object_class VARCHAR(255) NOT NULL, version INT NOT NULL, data LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:array)\', username VARCHAR(255) DEFAULT NULL, INDEX log_class_lookup_idx (object_class), INDEX log_date_lookup_idx (logged_at), INDEX log_user_lookup_idx (username), INDEX log_version_lookup_idx (object_id, object_class, version), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
