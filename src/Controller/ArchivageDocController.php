@@ -13,7 +13,7 @@ class ArchivageDocController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('archivage_doc/index.html.twig', [
+        return $this->render('GestionDocuments/archivage_doc/index.html.twig', [
             'controller_name' => 'ArchivageDocController',
         ]);
     }

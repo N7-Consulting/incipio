@@ -35,7 +35,7 @@ dashboard:
   gestion_associative: Gestion Associative
   gestion_doc: Gestion des documents
   gestion_utilisateurs_clients: Gestion des Clients et des Utilisateurs
-  generation_doc: Génération des documents
+  generation_doc: Génération de document
   guide_utilisateur: Guide utilisateur
   impayes_lister: Lister les impayés
   indicateurs: Indicateurs
