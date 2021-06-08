@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArchivageDocController extends AbstractController
 {
     /**
-     * @Route("/archivage/doc", name="archivage_doc")
+     * @Route("archivage/doc", name="archivage_doc")
      */
     public function index(): Response
     {
