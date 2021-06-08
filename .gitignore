@@ -10,6 +10,7 @@ config.json.dist
 docker-compose.yml
 /docker/mysql
 /.env
+/.env.local
 /public/bundles/
 /public/tmp/
 !/public/tmp/.gikeep
