@@ -257,3 +257,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Traeffik
+acme.json
