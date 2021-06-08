@@ -52,7 +52,7 @@ RUN /usr/bin/composer.sh \
 
 # Add dependencies (before app to make a better cache usage)
 WORKDIR /app
-ARG APP_ENV=prod
+ARG APP_ENV=dev
 COPY ./composer.json ./composer.lock /app/
 RUN mkdir -p var/cache var/sessions public/tmp \
     # Install dependencies
