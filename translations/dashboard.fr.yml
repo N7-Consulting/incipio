@@ -5,6 +5,7 @@ dashboard:
   ajouter: Ajouter
   annuaire: Annuaire
   annuaire_global: Annuaire global
+  archive_doc : Archivage des documents
   autres: Autres
   bordereau_cotisations: Bordereau Récapitulatif des Cotisations
   brc: BRC
@@ -32,7 +33,9 @@ dashboard:
   formations_gerer: Gérer les formations
   formations_voir: Voir les formations
   gestion_associative: Gestion Associative
+  gestion_doc: Gestion des documents
   gestion_utilisateurs_clients: Gestion des Clients et des Utilisateurs
+  generation_doc: Génération des documents
   guide_utilisateur: Guide utilisateur
   impayes_lister: Lister les impayés
   indicateurs: Indicateurs
