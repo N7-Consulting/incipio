@@ -9,4 +9,24 @@
 {% block breadcrumb_active %}
     Bouton
 {% endblock %}
+{% block content_bundle %}
+     <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">{{ 'suivi.etudes_negociations'|trans({}, 'project') }}
+                    
+                    </a></li>
+            <li><a href="#tab2" data-toggle="tab">{{ 'suivi.etudes_en_cours'|trans({}, 'project') }}
+                    
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1" style="min-height: 400px;">
+            {% include "GestionDocuments/archivage_doc/test.html.twig" %}
+        </div>
+        <div class="tab-pane" id="tab2" style="min-height: 400px;">
+            {% include "GestionDocuments/archivage_doc/test.html.twig" %}
+        </div>
+    </div>
+{% endblock %}
 
