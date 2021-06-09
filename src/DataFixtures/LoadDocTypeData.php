@@ -27,6 +27,7 @@ class LoadDocTypeData extends Fixture
         $cc = new Document();
         $cc->setName('CC');
         $cc->setPath('CC.docx');
+        $cc->setPole('actico');
         $cc->setSize(31000);
         $manager->persist($cc);
 

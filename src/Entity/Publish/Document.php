@@ -80,6 +80,11 @@ class Document
      */
     private $file;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pole;
+
     public function __toString()
     {
         return 'Document ' . $this->getId() . ' ' . $this->path;
@@ -335,6 +340,18 @@ class Document
     public function setProjectDir($projectDir)
     {
         $this->projectDir = $projectDir;
+
+        return $this;
+    }
+
+    public function getPole(): ?string
+    {
+        return $this->pole;
+    }
+
+    public function setPole(?string $pole): self
+    {
+        $this->pole = $pole;
 
         return $this;
     }

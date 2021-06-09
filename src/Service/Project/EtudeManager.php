@@ -33,11 +33,11 @@ class EtudeManager
     public function __construct(ObjectManager $em, KeyValueStore $keyValueStore)
     {
         $this->em = $em;
-        if ($keyValueStore->exists('tva')) {
-            $this->tva = $keyValueStore->get('tva');
-        } else {
-            throw new \LogicException('Parameter TVA is undefined.');
-        }
+        // if ($keyValueStore->exists('tva')) {
+        //     $this->tva = $keyValueStore->get('tva');
+        // } else {
+        //     throw new \LogicException('Parameter TVA is undefined.');
+        // }
 
         if ($keyValueStore->exists('namingConvention')) {
             $this->namingConvention = $keyValueStore->get('namingConvention');
@@ -45,23 +45,23 @@ class EtudeManager
             $this->namingConvention = 'id';
         }
 
-        if ($keyValueStore->exists('anneeCreation')) {
-            $this->anneeCreation = intval($keyValueStore->get('anneeCreation'));
-        } else {
-            throw new \LogicException('Parameter Année Creation is undefined.');
-        }
+        // if ($keyValueStore->exists('anneeCreation')) {
+        //     $this->anneeCreation = intval($keyValueStore->get('anneeCreation'));
+        // } else {
+        //     throw new \LogicException('Parameter Année Creation is undefined.');
+        // }
 
-        if ($keyValueStore->exists('fraisDossierDefaut')) {
-            $this->defaultFraisDossier = $keyValueStore->get('fraisDossierDefaut');
-        } else {
-            throw new \LogicException('Parameter Frais Dossier Defaut is undefined.');
-        }
+        // if ($keyValueStore->exists('fraisDossierDefaut')) {
+        //     $this->defaultFraisDossier = $keyValueStore->get('fraisDossierDefaut');
+        // } else {
+        //     throw new \LogicException('Parameter Frais Dossier Defaut is undefined.');
+        // }
 
-        if ($keyValueStore->exists('pourcentageAcompteDefaut')) {
-            $this->defaultPourcentageAcompte = $keyValueStore->get('pourcentageAcompteDefaut');
-        } else {
-            throw new \LogicException('Parameter Pourcentage Acompte Defaut is undefined.');
-        }
+        // if ($keyValueStore->exists('pourcentageAcompteDefaut')) {
+        //     $this->defaultPourcentageAcompte = $keyValueStore->get('pourcentageAcompteDefaut');
+        // } else {
+        //     throw new \LogicException('Parameter Pourcentage Acompte Defaut is undefined.');
+        // }
     }
 
     /**
