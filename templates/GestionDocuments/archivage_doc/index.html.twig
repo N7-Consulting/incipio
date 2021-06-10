@@ -126,7 +126,7 @@
                         <th>Taille</th>
                         <th>Action</th>
                     </tr>
-                    {% for doc in docs | reverse %}
+                    {% for doc in docs |filter(doc => doc.type =="sociaux")| reverse %}
                         <tr>
                             <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
                             <td>{{ doc.author ? doc.author.prenomNom }}</td>
@@ -150,7 +150,7 @@
                         <th>Taille</th>
                         <th>Action</th>
                     </tr>
-                    {% for doc in docs | reverse %}
+                    {% for doc in docs | filter(doc => doc.type =="fiscaux")| reverse %}
                         <tr>
                             <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
                             <td>{{ doc.author ? doc.author.prenomNom }}</td>
@@ -170,21 +170,36 @@
             <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
                 <thead>
                 <tr>
-                    <th>Date d'upload</th>
-                    <th>Titre</th>
-                    <th>Taille</th>
-                    <th>Action</th>
+                    <th>Nom de l'étude</th>
+                    <th>CdC</th>
+                    <th>PC</th>
+                    <th>CE</th>
+                    <th>CCa</th>
+                    <th>Bdc</th>
+                    <th>RM</th>
+                    <th>AVRM</th>
+                    <th>AVCE</th>
+                    <th>PVRI</th>
+                    <th>PVFR</th>
+                    <th>QS</th>
                 </tr>
                 </thead>
-             {% for doc in docs | reverse %}
+             {% for doc in docs |filter(doc => doc.pole =="actico")|  reverse %}
             <tr>
-                <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
+                <td>titre</td>
                 <td>
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">{{ doc.name }}</a>
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
                 </td>
-                <td>{{ (doc.size / 1024) | number_format(2, ',', ' ') }} Ko</td>
-                <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i
-                                class="fa fa-times text-danger"></i></a></td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
             </tr>
             {% endfor %}
             </table>
