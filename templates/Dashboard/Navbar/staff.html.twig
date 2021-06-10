@@ -153,13 +153,14 @@
             </a>
             <ul class="treeview-menu">
                 <li class="dropdown-header">{{ 'dashboard.saisie_informations'| trans }}</li>
-                <li><a href="{{ path('treso_Facture_index') }}"><span
-                                class="fa fa-credit-card"></span> {{ 'dashboard.factures'| trans }}</a>
+                <li><a href="{{ path('treso_Facture_index') }}"><span class="fa fa-credit-card"></span> {{ 'dashboard.factures'| trans }}</a>
                 </li>
-                <li><a href="{{ path('treso_BV_index') }}"><span
-                                class="fa fa-id-card-o"></span> {{ 'dashboard.bv'| trans }}</a></li>
-                <li><a href="{{ path('treso_NoteDeFrais_index') }}"><span
-                                class="fa fa-sticky-note-o"></span> {{ 'dashboard.ndf'| trans }}</a>
+                <li><a href="{{ path('treso_BV_index') }}"><span class="fa fa-id-card-o"></span> {{ 'dashboard.bv'| trans }}</a></li>
+                <li><a href="{{ path('treso_NoteDeFrais_index') }}"><span class="fa fa-sticky-note-o"></span> {{ 'dashboard.ndf'| trans }}</a>
+                <li><a href="{{ path('treso_Facture_ajouter') }}"><span class="fa fa-plus"></span> {{ 'dashboard.facture_ajouter'| trans }}</a>
+                <li><a href="{{ path('treso_BV_ajouter') }}"><span class="fa fa-plus"></span> {{ 'dashboard.bv_ajouter'| trans }}</a></li>
+                </li>
+                <li><a href="{{ path('treso_NoteDeFrais_ajouter') }}"><span class="fa fa-plus"></span> {{ 'dashboard.ndf_ajouter'| trans }}</a>
                 </li>
                 <li class="divider"></li>
                 <li class="dropdown-header">{{ 'dashboard.tableaux_suivi'| trans }}</li>
@@ -179,7 +180,7 @@
                 <li><a href="{{ path('treso_Compte_index') }}"><span
                                 class="fa fa-list"></span> {{ 'dashboard.comptes'| trans }}</a></li>
                 <li><a href="{{ path('treso_BaseURSSAF_index') }}"><span
-                                class="fa fa-list"></span> {{ 'dashboard.Base_urssaf'| trans }}</a></li>
+                                class="fa fa-list"></span> {{ 'dashboard.base_urssaf'| trans }}</a></li>
                 <li><a href="{{ path('treso_CotisationURSSAF_index') }}"><span
                                 class="fa fa-list"></span> {{ 'dashboard.cotisations'| trans }}</a></li>
             </ul>
@@ -285,7 +286,7 @@
     {% endif %}
 
     <!-- GENERATION DE DOCUMENTS -->
-     
+
     {% if is_granted('ROLE_SUIVEUR') %}
         <li>
             <a href="#">
@@ -297,7 +298,7 @@
                 <li><a href="{{ path('generation_doc') }}"><span
                                 class="fa fa-plus"></span> {{ 'dashboard.generation_doc'| trans }}</a>
                 </li>
-                
+
                 <li><a href="{{ path('archivage_doc') }}"><span
                                 class="fa fa-list"></span> {{ 'dashboard.archive_doc'| trans }}</a>
                 </li>

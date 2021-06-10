@@ -1,5 +1,5 @@
 dashboard:
-  Base_urssaf: B. URSSAF
+  base_urssaf: Bases URSSAF
   administration: Administration
   administration_bdd: Administration BDD
   ajouter: Ajouter
@@ -10,6 +10,7 @@ dashboard:
   bordereau_cotisations: Bordereau Récapitulatif des Cotisations
   brc: BRC
   bv: BV
+  bv_ajouter: Ajouter un BV
   charges: Charges
   compte_utilisateur: Compte d'Utilisateur
   comptes: Comptes
@@ -25,6 +26,7 @@ dashboard:
   etude_creer: Créer une étude
   etudes_voir: Voir les études
   factures: Factures
+  facture_ajouter: Ajouter une facture
   filiere_ajouter: Ajouter une filière
   filieres: Filieres
   filieres_lister: Lister les filières
@@ -51,6 +53,7 @@ dashboard:
   membres_lister: Lister les membres
   motdepasse_modifier: Modifier mon mot de pas
   ndf: NDF
+  ndf_ajouter: Ajouter une NDF
   parameters: Paramètres
   particpants_voir: Voir les participants
   pilotage_je: Pilotage de la J.E.
