@@ -25,7 +25,7 @@ class LoadDocTypeData extends Fixture
 
         //convention client
         $cc = new Document();
-        $cc->setName('CC');
+        $cc->setName('CCtest');
         $cc->setPath('CC.docx');
         $cc->setPole('actico');
         $cc->setSize(31000);
@@ -72,6 +72,14 @@ class LoadDocTypeData extends Fixture
         $bv->setPath('BV.docx');
         $bv->setSize(25490);
         $manager->persist($bv);
+
+        //convention client
+        $cctest = new Document();
+        $cctest->setName('CCtest2');
+        $cctest->setPath('CCtest2.docx');
+        $cctest->setPole('actico');
+        $cctest->setSize(61000);
+        $manager->persist($cctest);
 
         $manager->flush();
     }
