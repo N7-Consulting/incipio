@@ -186,20 +186,42 @@
                 </thead>
              {% for doc in docs |filter(doc => doc.pole =="actico")|  reverse %}
             <tr>
-                <td>titre</td>
+                <td>{{ doc.name }}</td>
                 <td>
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% if doc.type =="CDC" %}
+                     <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}
                 </td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
-                <td>s</td>
+                <td>{% if doc.type =="PC" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="CE" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="CCA" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="BDC" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="RM" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="AVRM" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="AVCE" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="PVRI" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="PVRF" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
+                <td>{% if doc.type =="QS" %}
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                    {% endif %}</td>
             </tr>
             {% endfor %}
             </table>
