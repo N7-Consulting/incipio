@@ -35,7 +35,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-             {% for doc in docs | reverse %}
+             {% for doc in docs | filter(doc => doc.type =="devis")| reverse %}
             <tr>
                 <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
                 <td>
