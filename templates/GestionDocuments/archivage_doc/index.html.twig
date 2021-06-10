@@ -7,31 +7,239 @@
 {% block content_title %}
     {{ 'gestiondoc.gestiondoc'|trans({}, 'gestiondoc') }}
 {% endblock %}
-
- 
-
  
 {% block content_bundle %}
-     <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-        {% if is_granted('ROLE_SUIVEUR') %}
-            <li class="active"><a href="#tab1" data-toggle="tab">Activité Commerciale </a></li>
-        {% endif %}
-            <li><a href="#tab2" data-toggle="tab">Trésorerie</a></li>
-            <li><a href="#tab3" data-toggle="tab">Chiffrage</a></li>
+    <div class="nav-tabs-custom">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+                <a href="#chiffrage"data-toggle="tab"> {{ 'gestiondoc.chiffrage'|trans({}, 'gestiondoc') }}</a>
+            </li>
+            <li >
+                <a href="#treso" data-toggle="tab">{{ 'gestiondoc.treso'|trans({}, 'gestiondoc') }}</a>
+            </li>
+            <li>
+                <a href="#actico" data-toggle="tab">{{ 'gestiondoc.actico'|trans({}, 'gestiondoc') }}</a>
+            </li>
         </ul>
     </div>
 
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab1" style="min-height: 400px;">
-            {% include "GestionDocuments/archivage_doc/actico.html.twig" %}
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade  active in" id="chiffrage">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">
+                <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
+                <thead>
+                <tr>
+                    <th>Date d'upload</th>
+                    <th>Titre</th>
+                    <th>Taille</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+             {% for doc in docs | filter(doc => doc.type =="devis")| reverse %}
+            <tr>
+                <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">{{ doc.name }}</a>
+                </td>
+                <td>{{ (doc.size / 1024) | number_format(2, ',', ' ') }} Ko</td>
+                <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i
+                                class="fa fa-times text-danger"></i></a></td>
+            </tr>
+            {% endfor %}
+            </table>
         </div>
-        <div class="tab-pane" id="tab2" style="min-height: 400px;">
-            {% include "GestionDocuments/archivage_doc/treso.html.twig" %}
+
+         
+        <div class="tab-pane fade" id="treso">
+            <p>{{ 'treso.facture_achat'|trans({}, 'treso') }}</p>
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
+                <thead>
+                <tr>
+                    <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.delai'|trans({}, 'treso') }}</th>
+                </tr>
+                </thead>
+                {% set totalDelai = 0 %}
+                {% for facture in factures | filter(facture => facture.type == 1) %}
+                    {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
+                    {% set totalDelai = delai + totalDelai %}
+                    <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
+                        <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
+                        </td>
+                        <td>{{ facture.objet }}</td>
+                        <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
+                        <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
+                        <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
+                        <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
+                        <td>{{ delai }} jour{% if delai > 1 %}s{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <p>{{ 'treso.facture_vente'|trans({}, 'treso') }}</p>
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="FVtable">
+                <thead>
+                <tr>
+                    <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.delai'|trans({}, 'treso') }}</th>
+                </tr>
+                </thead>
+                {% set totalDelai = 0 %}
+                {% for facture in factures | filter(facture => facture.type == 1) %}
+                    {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
+                    {% set totalDelai = delai + totalDelai %}
+                    <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
+                        <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
+                        </td>
+                        <td>{{ facture.objet }}</td>
+                        <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
+                        <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
+                        <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
+                        <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
+                        <td>{{ delai }} jour{% if delai > 1 %}s{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+             <p>Déclaratifs sociaux</p>
+            <div id="myTabContent" class="tab-content">
+                <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
+                    <tr>
+                        <th>Date d'upload</th>
+                        <th>Mis en ligne par</th>
+                        <th>Titre</th>
+                        <th>Taille</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for doc in docs |filter(doc => doc.type =="sociaux")| reverse %}
+                        <tr>
+                            <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
+                            <td>{{ doc.author ? doc.author.prenomNom }}</td>
+                            <td>
+                                <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">{{ doc.name }}</a>
+                            </td>
+                            <td>{{ (doc.size / 1024) | number_format(2, ',', ' ') }} Ko</td>
+                            <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i
+                                            class="fa fa-times text-danger"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <p>Déclaratifs fiscaux</p>
+            <div id="myTabContent" class="tab-content">
+                <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
+                    <tr>
+                        <th>Date d'upload</th>
+                        <th>Mis en ligne par</th>
+                        <th>Titre</th>
+                        <th>Taille</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for doc in docs | filter(doc => doc.type =="fiscaux")| reverse %}
+                        <tr>
+                            <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
+                            <td>{{ doc.author ? doc.author.prenomNom }}</td>
+                            <td>
+                                <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">{{ doc.name }}</a>
+                            </td>
+                            <td>{{ (doc.size / 1024) | number_format(2, ',', ' ') }} Ko</td>
+                            <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i
+                                            class="fa fa-times text-danger"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-        <div class="tab-pane" id="tab3" style="min-height: 400px;">
-            {% include "GestionDocuments/archivage_doc/chiffrage.html.twig" %}
+
+        <div class="tab-pane fade" id="actico">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
+                <thead>
+                <tr>
+                    <th>Nom de l'étude</th>
+                    <th>CdC</th>
+                    <th>PC</th>
+                    <th>CE</th>
+                    <th>CCa</th>
+                    <th>Bdc</th>
+                    <th>RM</th>
+                    <th>AVRM</th>
+                    <th>AVCE</th>
+                    <th>PVRI</th>
+                    <th>PVFR</th>
+                    <th>QS</th>
+                </tr>
+                </thead>
+             {% for doc in docs |filter(doc => doc.pole =="actico")|  reverse %}
+            <tr>
+                <td>titre</td>
+                <td>
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
+                </td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+                <td>s</td>
+            </tr>
+            {% endfor %}
+            </table>
         </div>
     </div>
+
+
+
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.fontAwesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
+
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#FAtable').dataTable({
+                "bPaginate": true,
+                "iDisplayLength": 50,
+                "aaSorting": [[1, 'desc']],
+            });
+            $('#FVtable').dataTable({
+                "bPaginate": true,
+                "iDisplayLength": 50,
+                "aaSorting": [[1, 'desc']],
+            });
+        });
+    </script>
+{% endblock %}
+
+
 
