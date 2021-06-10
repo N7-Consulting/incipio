@@ -9,29 +9,99 @@
 {% endblock %}
 
  
-
  
 {% block content_bundle %}
-     <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-        {% if is_granted('ROLE_SUIVEUR') %}
-            <li class="active"><a href="#tab1" data-toggle="tab">Activité Commerciale </a></li>
-        {% endif %}
-            <li><a href="#tab2" data-toggle="tab">Trésorerie</a></li>
-            <li><a href="#tab3" data-toggle="tab">Chiffrage</a></li>
+    <div class="nav-tabs-custom">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+                <a href="#chiffrage"data-toggle="tab"> {{ 'gestiondoc.chiffrage'|trans({}, 'gestiondoc') }}</a>
+            </li>
+            <li >
+                <a href="#treso" data-toggle="tab">{{ 'gestiondoc.treso'|trans({}, 'gestiondoc') }}</a>
+            </li>
+            <li>
+                <a href="#actico" data-toggle="tab">{{ 'gestiondoc.actico'|trans({}, 'gestiondoc') }}</a>
+            </li>
         </ul>
     </div>
 
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab1" style="min-height: 400px;">
-            {% include "GestionDocuments/archivage_doc/actico.html.twig" %}
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade  active in" id="chiffrage">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">
+                <thead>
+                <tr>
+                    <th>Categorie</th>
+                    <th>Titre</th>
+                    
+                </tr>
+                </thead>
+                
+            </table>
         </div>
-        <div class="tab-pane" id="tab2" style="min-height: 400px;">
-            {% include "GestionDocuments/archivage_doc/treso.html.twig" %}
+        <div class="tab-pane fade" id="treso">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="tresotable">
+                <thead>
+                <tr>
+                    <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
+                    <th>{{ 'treso.delai'|trans({}, 'treso') }}</th>
+                </tr>
+                </thead>
+                {% set totalDelai = 0 %}
+                {% for facture in factures  %}
+                    {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
+                    {% set totalDelai = delai + totalDelai %}
+                    <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
+                        <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
+                        </td>
+                        <td>{{ facture.objet }}</td>
+                        <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
+                        <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
+                        <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
+                        <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
+                        <td>{{ delai }} jour{% if delai > 1 %}s{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
-        <div class="tab-pane" id="tab3" style="min-height: 400px;">
-            {% include "GestionDocuments/archivage_doc/chiffrage.html.twig" %}
+
+        <div class="tab-pane fade" id="actico">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
+                <thead>
+                <tr>
+            <th>Date d'upload</th>
+            <th>Mis en ligne par</th>
+            <th>Titre</th>
+            <th>Taille</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        {% for doc in docs | reverse %}
+            <tr>
+                <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
+                <td>{{ doc.author ? doc.author.prenomNom }}</td>
+                <td>
+                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">{{ doc.name }}</a>
+                </td>
+                <td>{{ (doc.size / 1024) | number_format(2, ',', ' ') }} Ko</td>
+                <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i
+                                class="fa fa-times text-danger"></i></a></td>
+            </tr>
+        {% endfor %}
+            </table>
         </div>
     </div>
+
+
+
 {% endblock %}
+
+
 
