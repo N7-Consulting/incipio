@@ -1,6 +1,9 @@
+ {% extends "GestionDocuments/layout.html.twig" %}
+
 {% block content_bundle %}
 
-    <table class="table table-bordered table-striped">
+    <div id="myTabContent" class="tab-content">
+    <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
         <tr>
             <th>Date d'upload</th>
             <th>Mis en ligne par</th>
@@ -21,4 +24,5 @@
             </tr>
         {% endfor %}
     </table>
+    </div>
 {% endblock %}

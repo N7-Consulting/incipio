@@ -12,6 +12,14 @@
     {{ 'gestiondoc.gestiondoc'|trans({}, 'gestiondoc') }}
 {% endblock %}
 
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.fontAwesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
+{% endblock %}
+
  
 {% block content_bundle %}
     <div class="nav-tabs-custom">
@@ -62,11 +70,6 @@
                     <tr>
                         <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
                         <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
                     </tr>
                     </thead>
                     {% for facture in factures | filter(facture => facture.type == 1) %}
@@ -76,11 +79,7 @@
                             <td>
                                 <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
                             </td>
-                            <td>{{ facture.objet }}</td>
-                            <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
-                            <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
-                            <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
-                            <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
+                            
                         </tr>
                     {% endfor %}
                 </table>
@@ -93,12 +92,6 @@
                     <tr>
                         <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
                         <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.delai'|trans({}, 'treso') }}</th>
                     </tr>
                     </thead>
                     {% set totalDelai = 0 %}
@@ -110,12 +103,6 @@
                             <td>
                                 <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
                             </td>
-                            <td>{{ facture.objet }}</td>
-                            <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
-                            <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
-                            <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
-                            <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
-                            <td>{{ delai }} jour{% if delai > 1 %}s{% endif %}</td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -227,14 +214,6 @@
 
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.fontAwesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
-{% endblock %}
-
- 
 {% block javascript %}
     {{ parent() }}
     <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
