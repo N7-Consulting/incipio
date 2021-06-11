@@ -1,70 +1,16 @@
-{% extends 'GestionDocuments/layout.html.twig' %}
+{% extends 'StockDocuments/layout.html.twig' %}
 
 {% block title %}
-    {{ 'gestiondoc.gestiondoc'|trans({}, 'gestiondoc') }} - {{ parent() }}
+    {{ 'dashboard.actico'|trans({}, 'dashboard') }} - {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'gestiondoc.gestiondoc'|trans({}, 'gestiondoc') }}
+    {{ 'dashboard.actico'|trans({}, 'dashboard') }}
 {% endblock %}
 
-{% block breadcrumb_active %}
-    {{ 'gestiondoc.gestiondoc'|trans({}, 'gestiondoc') }}
-{% endblock %}
-
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.fontAwesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
-{% endblock %}
-
- 
 {% block content_bundle %}
-    <div class="nav-tabs-custom">
-        <ul id="myTab" class="nav nav-tabs">
-            <li class="active">
-                <a href="#chiffrage"data-toggle="tab"> {{ 'gestiondoc.chiffrage'|trans({}, 'gestiondoc') }}</a>
-            </li>
-            <li >
-                <a href="#treso" data-toggle="tab">{{ 'gestiondoc.treso'|trans({}, 'gestiondoc') }}</a>
-            </li>
-            <li>
-                <a href="#actico" data-toggle="tab">{{ 'gestiondoc.actico'|trans({}, 'gestiondoc') }}</a>
-            </li>
-        </ul>
-    </div>
-
-    <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade  active in" id="chiffrage">
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">                
-                <thead>
-                <tr>
-                    <th>Date d'upload</th>
-                    <th>Titre</th>
-                    <th>Taille</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-             {% for doc in docs | filter(doc => doc.type =="devis")| reverse %}
-            <tr>
-                <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s') }}</td>
-                <td>
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">{{ doc.name }}</a>
-                </td>
-                <td>{{ (doc.size / 1024) | number_format(2, ',', ' ') }} Ko</td>
-                <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i
-                                class="fa fa-times text-danger"></i></a></td>
-            </tr>
-            {% endfor %}
-            </table>
-        </div>
-
-         
-        <div class="tab-pane fade" id="treso">
-            <p>{{ 'treso.facture_achat'|trans({}, 'treso') }}</p>
-            <div class="tab-pane fade" id="FA">
+     
+         <p>{{ 'treso.facture_achat'|trans({}, 'treso') }}</p>
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
                     <thead>
                     <tr>
@@ -83,10 +29,8 @@
                         </tr>
                     {% endfor %}
                 </table>
-            </div>
 
             <p>{{ 'treso.facture_vente'|trans({}, 'treso') }}</p>
-            <div class="tab-pane fade active in" id="FV">
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FVtable">
                     <thead>
                     <tr>
@@ -106,7 +50,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-            </div>
+
              <p>Déclaratifs sociaux</p>
             <div id="myTabContent" class="tab-content">
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
@@ -155,63 +99,9 @@
                     {% endfor %}
                 </table>
             </div>
-        </div>
+    
 
-        <div class="tab-pane fade" id="actico">
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
-                <thead>
-                <tr>
-                    <th>Nom étude</th>
-                    {% for doc in docEtude %}
-                        <th>{{doc}}</th>
-                    {% endfor %}
-                    
-                </tr>
-                </thead>
-             {% for etude in etudes  |  reverse %}
-            <tr>
-                <td>{{etude.nom}}</td>
-                {% if etude.CDC != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CDC}) }}">{{etude.CDC}}</a></td> 
-                {% else %}<td></td>{% endif %}
-                {% if etude.PC != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PC}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.CE != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CE}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.CCA != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CCA}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.BDC != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.BDC}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.RM != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.RM}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.AVRM != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.AVRM}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.AVCE != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.AVCE}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.PVRI != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PVRI}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.PVRF != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PVRF}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.QS != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.QS}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-            </tr>
-            {% endfor %}
-            </table>
-        </div>
-    </div>
-
-
-
+     
 {% endblock %}
 
 {% block javascript %}
@@ -224,11 +114,6 @@
 
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
-            $('#chiffragetable').dataTable({
-                "bPaginate": true,
-                "iDisplayLength": 50,
-                "aaSorting": [[1, 'desc']],
-            });
             $('#FAtable').dataTable({
                 "bPaginate": false,
                 "iDisplayLength": 50,

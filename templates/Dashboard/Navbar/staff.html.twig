@@ -285,22 +285,26 @@
         </li>
     {% endif %}
 
-    <!-- GENERATION DE DOCUMENTS -->
+    <!-- ARCHIVAGE DE DOCUMENTS -->
 
     {% if is_granted('ROLE_SUIVEUR') %}
         <li>
             <a href="#">
                 <i class="icon-mini fa fa-book"></i>
-                <span class="nav-label">{{ 'dashboard.gestion_doc'| trans }}</span>
+                <span class="nav-label">{{ 'dashboard.stock_doc'| trans }}</span>
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ path('generation_doc') }}"><span
-                                class="fa fa-plus"></span> {{ 'dashboard.generation_doc'| trans }}</a>
+                <li><a href="{{ path('chiffrage') }}"><span
+                                class="fa fa-list"></span> {{ 'dashboard.chiffrage'| trans }}</a>
                 </li>
 
-                <li><a href="{{ path('archivage_doc') }}"><span
-                                class="fa fa-list"></span> {{ 'dashboard.archive_doc'| trans }}</a>
+                <li><a href="{{ path('actico') }}"><span
+                                class="fa fa-list"></span> {{ 'dashboard.actico'| trans }}</a>
+                </li>
+
+                <li><a href="{{ path('treso') }}"><span
+                                class="fa fa-list"></span> {{ 'dashboard.tresorerie'| trans }}</a>
                 </li>
             </ul>
         </li>
