@@ -7,6 +7,11 @@
 {% block content_title %}
     {{ 'gestiondoc.gestiondoc'|trans({}, 'gestiondoc') }}
 {% endblock %}
+
+{% block breadcrumb_active %}
+    {{ 'gestiondoc.gestiondoc'|trans({}, 'gestiondoc') }}
+{% endblock %}
+
  
 {% block content_bundle %}
     <div class="nav-tabs-custom">
@@ -25,8 +30,7 @@
 
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade  active in" id="chiffrage">
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">
-                <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">                
                 <thead>
                 <tr>
                     <th>Date d'upload</th>
@@ -52,70 +56,70 @@
          
         <div class="tab-pane fade" id="treso">
             <p>{{ 'treso.facture_achat'|trans({}, 'treso') }}</p>
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
-                <thead>
-                <tr>
-                    <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.delai'|trans({}, 'treso') }}</th>
-                </tr>
-                </thead>
-                {% set totalDelai = 0 %}
-                {% for facture in factures | filter(facture => facture.type == 1) %}
-                    {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
-                    {% set totalDelai = delai + totalDelai %}
-                    <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
-                        <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
-                        <td>
-                            <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
-                        </td>
-                        <td>{{ facture.objet }}</td>
-                        <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
-                        <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
-                        <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
-                        <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
-                        <td>{{ delai }} jour{% if delai > 1 %}s{% endif %}</td>
+            <div class="tab-pane fade" id="FA">
+                <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
+                    <thead>
+                    <tr>
+                        <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
                     </tr>
-                {% endfor %}
-            </table>
+                    </thead>
+                    {% for facture in factures | filter(facture => facture.type == 1) %}
+                        {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
+                        <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
+                            <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
+                            <td>
+                                <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
+                            </td>
+                            <td>{{ facture.objet }}</td>
+                            <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
+                            <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
+                            <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
+                            <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
 
             <p>{{ 'treso.facture_vente'|trans({}, 'treso') }}</p>
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="FVtable">
-                <thead>
-                <tr>
-                    <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
-                    <th>{{ 'treso.delai'|trans({}, 'treso') }}</th>
-                </tr>
-                </thead>
-                {% set totalDelai = 0 %}
-                {% for facture in factures | filter(facture => facture.type == 1) %}
-                    {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
-                    {% set totalDelai = delai + totalDelai %}
-                    <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
-                        <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
-                        <td>
-                            <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
-                        </td>
-                        <td>{{ facture.objet }}</td>
-                        <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
-                        <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
-                        <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
-                        <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
-                        <td>{{ delai }} jour{% if delai > 1 %}s{% endif %}</td>
+            <div class="tab-pane fade active in" id="FV">
+                <table class="display dataTable table table-bordered table-striped dt-responsive" id="FVtable">
+                    <thead>
+                    <tr>
+                        <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.objet'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.montant_ht'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.montant_tva'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.montant_ttc'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.statut'|trans({}, 'treso') }}</th>
+                        <th>{{ 'treso.delai'|trans({}, 'treso') }}</th>
                     </tr>
-                {% endfor %}
-            </table>
+                    </thead>
+                    {% set totalDelai = 0 %}
+                    {% for facture in factures | filter(facture => facture.type > 1) %}
+                        {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
+                        {% set totalDelai = delai + totalDelai %}
+                        <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
+                            <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
+                            <td>
+                                <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
+                            </td>
+                            <td>{{ facture.objet }}</td>
+                            <td style="text-align: right;">{{ facture.montantHT |number_format(2, ',', ' ') }} €</td>
+                            <td style="text-align: right;">{{ facture.montantTVA |number_format(2, ',', ' ') }} €</td>
+                            <td style="text-align: right;">{{ facture.montantTTC |number_format(2, ',', ' ') }} €</td>
+                            <td>{{ facture.dateVersement ? facture.dateVersement |date('d/m/Y') : 'Impayée' }}</td>
+                            <td>{{ delai }} jour{% if delai > 1 %}s{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
              <p>Déclaratifs sociaux</p>
             <div id="myTabContent" class="tab-content">
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
@@ -170,58 +174,49 @@
             <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
                 <thead>
                 <tr>
-                    <th>Nom de l'étude</th>
-                    <th>CdC</th>
-                    <th>PC</th>
-                    <th>CE</th>
-                    <th>CCa</th>
-                    <th>Bdc</th>
-                    <th>RM</th>
-                    <th>AVRM</th>
-                    <th>AVCE</th>
-                    <th>PVRI</th>
-                    <th>PVFR</th>
-                    <th>QS</th>
+                    <th>Nom étude</th>
+                    {% for doc in docEtude %}
+                        <th>{{doc}}</th>
+                    {% endfor %}
+                    
                 </tr>
                 </thead>
-             {% for doc in docs |filter(doc => doc.pole =="actico")|  reverse %}
+             {% for etude in etudes  |  reverse %}
             <tr>
-                <td>{{ doc.name }}</td>
-                <td>
-                    {% if doc.type =="CDC" %}
-                     <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}
-                </td>
-                <td>{% if doc.type =="PC" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="CE" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="CCA" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="BDC" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="RM" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="AVRM" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="AVCE" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="PVRI" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="PVRF" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
-                <td>{% if doc.type =="QS" %}
-                    <a href="{{ path('publish_document_voir', {'id': doc.id}) }}">v</a>
-                    {% endif %}</td>
+                <td>{{etude.nom}}</td>
+                {% if etude.CDC != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CDC}) }}">{{etude.CDC}}</a></td> 
+                {% else %}<td></td>{% endif %}
+                {% if etude.PC != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PC}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.CE != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CE}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.CCA != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CCA}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.BDC != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.BDC}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.RM != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.RM}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.AVRM != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.AVRM}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.AVCE != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.AVCE}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.PVRI != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PVRI}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.PVRF != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PVRF}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
+                {% if etude.QS != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.QS}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %}
             </tr>
             {% endfor %}
             </table>
@@ -239,6 +234,7 @@
     <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
 {% endblock %}
 
+ 
 {% block javascript %}
     {{ parent() }}
     <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
@@ -249,8 +245,13 @@
 
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
-            $('#FAtable').dataTable({
+            $('#chiffragetable').dataTable({
                 "bPaginate": true,
+                "iDisplayLength": 50,
+                "aaSorting": [[1, 'desc']],
+            });
+            $('#FAtable').dataTable({
+                "bPaginate": false,
                 "iDisplayLength": 50,
                 "aaSorting": [[1, 'desc']],
             });
@@ -262,6 +263,3 @@
         });
     </script>
 {% endblock %}
-
-
-

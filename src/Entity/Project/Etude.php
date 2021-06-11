@@ -333,6 +333,61 @@ class Etude
     private $newProspect;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CDC;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $PC;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CE;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CCA;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $BDC;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $RM;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AVRM;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AVCE;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $PVRI;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $PVRF;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $QS;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
@@ -1733,5 +1788,125 @@ class Etude
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    public function getCDC(): ?string
+    {
+        return $this->CDC;
+    }
+
+    public function setCDC(?string $CDC): self
+    {
+        $this->CDC = $CDC;
+
+        return $this;
+    }
+
+    public function getPC(): ?string
+    {
+        return $this->PC;
+    }
+
+    public function setPC(?string $PC): self
+    {
+        $this->PC = $PC;
+
+        return $this;
+    }
+
+    public function getCCA(): ?string
+    {
+        return $this->CCA;
+    }
+
+    public function setCCA(?string $CCA): self
+    {
+        $this->CCA = $CCA;
+
+        return $this;
+    }
+
+    public function getBDC(): ?string
+    {
+        return $this->BDC;
+    }
+
+    public function setBDC(?string $BDC): self
+    {
+        $this->BDC = $BDC;
+
+        return $this;
+    }
+
+    public function getRM(): ?string
+    {
+        return $this->RM;
+    }
+
+    public function setRM(?string $RM): self
+    {
+        $this->RM = $RM;
+
+        return $this;
+    }
+
+    public function getAVRM(): ?string
+    {
+        return $this->AVRM;
+    }
+
+    public function setAVRM(?string $AVRM): self
+    {
+        $this->AVRM = $AVRM;
+
+        return $this;
+    }
+
+    public function getAVCE(): ?string
+    {
+        return $this->AVCE;
+    }
+
+    public function setAVCE(?string $AVCE): self
+    {
+        $this->AVCE = $AVCE;
+
+        return $this;
+    }
+
+    public function getPVRI(): ?string
+    {
+        return $this->PVRI;
+    }
+
+    public function setPVRI(?string $PVRI): self
+    {
+        $this->PVRI = $PVRI;
+
+        return $this;
+    }
+
+    public function getPVRF(): ?string
+    {
+        return $this->PVRF;
+    }
+
+    public function setPVRF(?string $PVRF): self
+    {
+        $this->PVRF = $PVRF;
+
+        return $this;
+    }
+
+    public function getQS(): ?string
+    {
+        return $this->QS;
+    }
+
+    public function setQS(?string $QS): self
+    {
+        $this->QS = $QS;
+
+        return $this;
     }
 }

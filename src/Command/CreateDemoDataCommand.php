@@ -284,6 +284,8 @@ class CreateDemoDataCommand extends Command
             $e->setPresentationProjet('Presentation ' . $etude['description']);
             $e->setDescriptionPrestation('Describe what we will do here');
             $e->setSourceDeProspection(rand(1, 10));
+            $e->setPVRF("2");
+            $e->setPC("3");
             $this->validateObject('New Etude', $e);
             $this->em->persist($e);
             $c = $this->competences[array_rand($this->competences)];
