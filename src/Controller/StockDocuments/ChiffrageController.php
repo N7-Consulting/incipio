@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\GestionDocuments;
+namespace App\Controller\StockDocuments;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
