@@ -20,12 +20,14 @@ class TabProcessController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $processus = new Processus();
-
+        $listProcess = $em->getRepository(Processus::class)->findAll();
+        
         $form = $this->createForm(ProcessType::class, $processus);
         
         return $this->render('Stat/tab_process/index.html.twig', [
             'controller_name' => 'TabProcessController',
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'listProcess' => $listProcess
         ]);
     }
 
@@ -39,17 +41,17 @@ class TabProcessController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $poste = new Poste();
+        $processus = new Processus();
 
-        $form = $this->createForm(PosteType::class, $poste);
+        $form = $this->createForm(ProcessusType::class, $processus);
 
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em->persist($poste);
+                $em->persist($processus);
                 $em->flush();
-                $this->addFlash('success', 'Poste ajouté');
+                $this->addFlash('success', 'Processus ajouté');
 
                 return $this->redirectToRoute('tab_process');
             }

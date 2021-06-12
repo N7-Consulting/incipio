@@ -31,15 +31,14 @@
                     
                 </tr>
                 </thead>
-                {# {% for facture in factures | filter(facture => facture.type == 1) %}
-                    {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %} #}
+                {% for process in listProcess %}
                     <tr>
                         <td> </td>
                         <td> </td>
                         <td> </td>
 
                     </tr>
-                {# {% endfor %} #}
+                {% endfor %}
             </table>
         </div>
         
