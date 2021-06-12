@@ -1,0 +1,51 @@
+{% extends "Stat/layout.html.twig" %}
+
+{% block title %}
+    {{ 'dashboard.tabProcess'|trans({}, 'dashboard') }} - {{ parent() }}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'dashboard.tabProcess'|trans({}, 'dashboard') }}
+{% endblock %}
+
+{% block content_bundle %}
+    <div class="nav-tabs-custom">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+                <a href="#tableau" data-toggle="tab">{{ 'dashboard.tabProcess'|trans({}, 'dashboard') }}</a>
+            </li>
+            <li>
+                <a href="#processus" data-toggle="tab">{{ 'dashboard.ajouterProcess'|trans({}, 'dashboard') }}</a>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="tableau">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
+                <thead>
+                <tr>
+                    <th>Nom du processus</th>
+                    <th>Pilote</th>
+                    <th>Document</th>
+                    
+                </tr>
+                </thead>
+                {# {% for facture in factures | filter(facture => facture.type == 1) %}
+                    {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %} #}
+                    <tr>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+
+                    </tr>
+                {# {% endfor %} #}
+            </table>
+        </div>
+        
+        <div class="tab-pane fade" id="processus">
+                
+         
+        </div>
+    </div>
+{% endblock %}

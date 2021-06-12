@@ -13,7 +13,7 @@ class TabProcessController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('tab_process/index.html.twig', [
+        return $this->render('Stat/tab_process/index.html.twig', [
             'controller_name' => 'TabProcessController',
         ]);
     }

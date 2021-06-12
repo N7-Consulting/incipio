@@ -4,6 +4,7 @@ dashboard:
   administration: Administration
   administration_bdd: Administration BDD
   ajouter: Ajouter
+  ajouterProcess :  Ajouter un processus
   annuaire: Annuaire
   annuaire_global: Annuaire global
   archive_doc : Archivage des documents
@@ -40,6 +41,7 @@ dashboard:
   gestion_doc: Gestion des documents
   gestion_utilisateurs_clients: Gestion des Clients et des Utilisateurs
   generation_doc: Génération de document
+  gestion_proc: Gestion des processus
   guide_utilisateur: Guide utilisateur
   impayes_lister: Lister les impayés
   indicateurs: Indicateurs
