@@ -69,12 +69,14 @@ dashboard:
   prospection: Prospection
   prospects_voir: Voir les prospects
   pseudo_modifier: Modifier mon pseudo
+  qualite : Qualité
   rechercher: Rechercher...
   rh_competences: RH & compétences
   saisie_informations: Saisie des informations
   stock_doc : Archivage des documents
   suivi_etudes: Suivi d'Etude
   tableaux_suivi: Tableaux de Suivi
+  tabProcess: Tableau des processus
   template: Template
   tresorerie: Trésorerie
   vie_privee: Vie privée

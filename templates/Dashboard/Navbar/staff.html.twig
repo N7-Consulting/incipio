@@ -218,17 +218,21 @@
         </li>
     {% endif %}
 
-    <!-- PILOTAGE DE LA J.E. -->
+    <!-- QUALITE -->
     {% if is_granted('ROLE_CA') %}
         <li>
             <a href="#">
                 <i class="icon-mini fa fa-paper-plane"></i>
-                <span class="nav-label">{{ 'dashboard.pilotage_je'| trans }}</span>
+                <span class="nav-label">{{ 'dashboard.qualite'| trans }}</span>
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
                 <li><a href="{{ path('stat_index') }}"><span
                                 class="fa fa-globe"></span> {{ 'dashboard.indicateurs'| trans }}</a></li>
+            </ul>
+            <ul class="treeview-menu">
+                <li><a href="{{ path('tab_process') }}"><span
+                                class="fa fa-tasks"></span> {{ 'dashboard.tabProcess'| trans }}</a></li>
             </ul>
         </li>
     {% endif %}
