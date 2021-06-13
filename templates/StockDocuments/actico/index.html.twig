@@ -10,56 +10,40 @@
 
 {% block content_bundle %}
 
-     <div id="myTabContent" class="tab-content">
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
-                <thead>
+    <div id="myTabContent" class="tab-content">
+        <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
+            <thead>
                 <tr>
                     <th>Nom étude</th>
-                    {% for doc in docEtude %}
-                        <th>{{doc}}</th>
-                    {% endfor %}
-
+                        {% for doc,_ in docEtude %}
+                            <th>{{doc}}</th>
+                        {% endfor %}
                 </tr>
-                </thead>
-             {% for etude in etudes  |  reverse %}
-            <tr>
-                <td>{{etude.nom}}</td>
-                {% if etude.cdc != NULL %}
-                <td><a href="Documents/Publiposter/CDC/etude/{{etude.CDC}}">{{etude.CDC}}</a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.pc != NULL %}
-                <td><a href="Documents/Publiposter/CDC/etude/{{etude.PC}}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.ce != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.ce}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.cca != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.cca}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.bdc != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.bdc}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {# {% if etude.RM != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.RM}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %} #}
-                {# {% if etude.AVRM != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.AVRM}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.AVCE != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.AVCE}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.PVRI != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PVRI}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.PVRF != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PVRF}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %} #}
-                {% if etude.qs != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.qs}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-            </tr>
+            </thead>
+        {% for etude in etudes  |  reverse %}
+        <tr>
+            <td>{{ etude.nom }}</td>
+            {% for nomDoc, etudeAttr in docEtude %}
+            <td>
+                {# On récupére l'ensemble de documents (eg: l'ensemble des Avenants) #}
+                {% set docs = attribute(etude, etudeAttr) %}
+                {% for doc in docs %}
+                <p>{{doc}}</p>
+                    {% if doc != NULL %}
+                    <a href="Documents/Publiposter/{{nomDoc}}/etude/{{doc.id}}"><span class="fa fa-download"></a>
+                    {% endif %}
+                {% else %}
+                    {# On tombe dans ce cas là si on a pas une collection (eg: Convention) ou si la collection est vide. On évite ce cas. #}
+                    {% if docs is not empty %}
+                    <p>{{docs}}</p>
+                    <a href="Documents/Publiposter/{{nomDoc}}/etude/{{docs.id}}"><span class="fa fa-download"></a>
+                    {% endif %}
+                {% endfor %}
+            </td>
             {% endfor %}
-            </table>
+        </tr>
+        {% endfor %}
+        </table>
     </div>
 
 {% endblock %}
