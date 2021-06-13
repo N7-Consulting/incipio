@@ -1,7 +1,7 @@
 {% extends 'StockDocuments/layout.html.twig' %}
 
 {% block title %}
-    {{ 'dashboard.actico'|trans({}, 'dashboard') }} - {{ parent() }}
+    {{ 'dashboard.actico'|trans({}, 'dashboard') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content_bundle %}
-     
+
          <p>{{ 'treso.facture_achat'|trans({}, 'treso') }}</p>
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
                     <thead>
@@ -25,7 +25,7 @@
                             <td>
                                 <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
                             </td>
-                            
+
                         </tr>
                     {% endfor %}
                 </table>
@@ -99,9 +99,9 @@
                     {% endfor %}
                 </table>
             </div>
-    
 
-     
+
+
 {% endblock %}
 
 {% block javascript %}

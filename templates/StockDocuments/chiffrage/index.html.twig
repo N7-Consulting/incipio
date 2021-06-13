@@ -1,7 +1,7 @@
 {% extends 'StockDocuments/layout.html.twig' %}
 
 {% block title %}
-    {{ 'dashboard.chiffrage'|trans({}, 'dashboard') }} - {{ parent() }}
+    {{ 'dashboard.chiffrage'|trans({}, 'dashboard') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
@@ -16,11 +16,11 @@
     <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
 {% endblock %}
 
- 
+
 {% block content_bundle %}
    <div id="myTabContent" class="tab-content">
-         
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">                
+
+            <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">
                 <thead>
                 <tr>
                     <th>Date d'upload</th>
@@ -41,7 +41,7 @@
             </tr>
             {% endfor %}
             </table>
-         
+
 
 {% endblock %}
 
@@ -60,7 +60,7 @@
                 "iDisplayLength": 50,
                 "aaSorting": [[1, 'desc']],
             });
-            
+
         });
     </script>
 {% endblock %}

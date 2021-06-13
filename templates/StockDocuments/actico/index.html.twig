@@ -1,7 +1,7 @@
 {% extends 'StockDocuments/layout.html.twig' %}
 
 {% block title %}
-    {{ 'dashboard.actico'|trans({}, 'dashboard') }} - {{ parent() }}
+    {{ 'dashboard.actico'|trans({}, 'dashboard') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
@@ -18,31 +18,31 @@
                     {% for doc in docEtude %}
                         <th>{{doc}}</th>
                     {% endfor %}
-                    
+
                 </tr>
                 </thead>
              {% for etude in etudes  |  reverse %}
             <tr>
                 <td>{{etude.nom}}</td>
-                {% if etude.CDC != NULL %}
-                <td><a href="Documents/Publiposter/CDC/etude/{{etude.CDC}}">{{etude.CDC}}</a></td> 
+                {% if etude.cdc != NULL %}
+                <td><a href="Documents/Publiposter/CDC/etude/{{etude.CDC}}">{{etude.CDC}}</a></td>
                 {% else %}<td></td>{% endif %}
-                {% if etude.PC != NULL %}
+                {% if etude.pc != NULL %}
                 <td><a href="Documents/Publiposter/CDC/etude/{{etude.PC}}"><span class="fa fa-plus"></span></a></td>
                 {% else %}<td></td>{% endif %}
-                {% if etude.CE != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CE}) }}"><span class="fa fa-plus"></span></a></td>
+                {% if etude.ce != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.ce}) }}"><span class="fa fa-plus"></span></a></td>
                 {% else %}<td></td>{% endif %}
-                {% if etude.CCA != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.CCA}) }}"><span class="fa fa-plus"></span></a></td>
+                {% if etude.cca != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.cca}) }}"><span class="fa fa-plus"></span></a></td>
                 {% else %}<td></td>{% endif %}
-                {% if etude.BDC != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.BDC}) }}"><span class="fa fa-plus"></span></a></td>
+                {% if etude.bdc != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.bdc}) }}"><span class="fa fa-plus"></span></a></td>
                 {% else %}<td></td>{% endif %}
-                {% if etude.RM != NULL %}
+                {# {% if etude.RM != NULL %}
                 <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.RM}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.AVRM != NULL %}
+                {% else %}<td></td>{% endif %} #}
+                {# {% if etude.AVRM != NULL %}
                 <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.AVRM}) }}"><span class="fa fa-plus"></span></a></td>
                 {% else %}<td></td>{% endif %}
                 {% if etude.AVCE != NULL %}
@@ -53,15 +53,15 @@
                 {% else %}<td></td>{% endif %}
                 {% if etude.PVRF != NULL %}
                 <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.PVRF}) }}"><span class="fa fa-plus"></span></a></td>
-                {% else %}<td></td>{% endif %}
-                {% if etude.QS != NULL %}
-                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.QS}) }}"><span class="fa fa-plus"></span></a></td>
+                {% else %}<td></td>{% endif %} #}
+                {% if etude.qs != NULL %}
+                <td><a href="{{ path('project_etude_voir', {'nom': etude.nom,'_fragment': etude.qs}) }}"><span class="fa fa-plus"></span></a></td>
                 {% else %}<td></td>{% endif %}
             </tr>
             {% endfor %}
             </table>
     </div>
-     
+
 {% endblock %}
 
 {% block javascript %}

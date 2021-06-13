@@ -1,7 +1,7 @@
 {% extends "Treso/layout.html.twig" %}
 
 {% block title %}
-    {{ 'treso.factures_liste'|trans({}, 'treso') }} - {{ parent() }}
+    {{ 'treso.factures_liste'|trans({}, 'treso') }} {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -31,7 +31,7 @@
             </li>
         </ul>
     </div>
-    
+
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade" id="FA">
             <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
