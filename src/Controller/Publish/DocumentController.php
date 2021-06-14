@@ -139,15 +139,7 @@ class DocumentController extends AbstractController
      *
      * @return Response
      */
-    public function uploadDoctype(Request $request, DocumentManager $documentManager, KernelInterface $kernel)
-    {
-        if (!$response = $this->upload($request, true, [], $documentManager, $kernel)) {
-            // Si tout est ok
-            return $this->redirectToRoute('publish_documenttype_index');
-        } else {
-            return $response;
-        }
-    }
+   
 
     /**
      * @Security("has_role('ROLE_CA')")

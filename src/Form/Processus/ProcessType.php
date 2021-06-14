@@ -18,6 +18,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
+use App\Entity\Publish\Document;
+
 class ProcessType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -25,7 +27,7 @@ class ProcessType extends AbstractType
         $builder
             ->add('nom', TextType::class, ['required' => true])
             ->add('pilote', TextType::class, ['required' => true])
-            // ->add('file', FileType::class, ['label' => 'Fichier', 'required' => true, 'attr' => ['cols' => '100%', 'rows' => 5]]);
+            ->add('fiche', FileType::class, ['label' => 'Fichier', 'required' => true, 'attr' => ['cols' => '100%', 'rows' => 5]]);
             // ->add('template', FileType::class, [
             //     'required' => true,
             //     'label' => 'dashboard.template',

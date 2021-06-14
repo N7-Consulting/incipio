@@ -22,7 +22,7 @@
     
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="tableau">
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
+            <table class="display dataTable table table-bordered table-striped dt-responsive" >
                 <thead>
                 <tr>
                     <th>Nom du processus</th>
@@ -35,7 +35,7 @@
                     <tr>
                         <td>{{process.nom}}</td>
                         <td>{{process.pilote}} </td>
-                        {# <td><a href="{{ path('processus_voir', {'id': 1}) }}">{{ process.nom }}</a> </td> #}
+                        <td><a href="{{ path('processus_voir', {'id': 1}) }}">{{ process.nom }}</a> </td>  
 
                     </tr>
                 {% endfor %}
@@ -56,11 +56,11 @@
                         <td>{{ form_widget(form.pilote) }} {{ form_errors(form.pilote) }}</td>
                     </tr>
                     <tr>
-                         {# <td>
-                          {{ form_label(form.template) }}
-                          {{ form_errors(form.template) }}
-                        </td> #}
-                        {# <td>{{ form_widget(form.template,{'attr' : {'onChange':'selectHelper()'} }) }}</td> #}
+                         <td>
+                          {{ form_label(form.fiche) }}
+                          {{ form_errors(form.fiche) }}
+                        </td>
+                        <td>{{ form_widget(form.fiche,{'attr' : {'onChange':'selectHelper()'} }) }}</td>
                     </tr>
                     <tr>
                         <td colspan="2">

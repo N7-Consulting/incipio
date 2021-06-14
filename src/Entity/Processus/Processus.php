@@ -33,10 +33,9 @@ class Processus
     ////////
 
     /**
-     * @var Document 
+     * @var UploadedFile 
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Publish\Document")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * 
      */
     private $fiche;
 
@@ -49,6 +48,19 @@ class Processus
     {
         return $this->id;
     }
+
+    public function getFiche(): ?UploadedFile
+    {
+        return $this->fiche;
+
+    }public function setFiche(UploadedFile $fiche = null): self
+    {
+        $this->fiche = $fiche;
+
+        return $this;
+    }
+
+    
 
     public function getNom(): ?string
     {
