@@ -31,37 +31,16 @@ class Processus
     private $pilote;
     /////////
     ////////
-       /**
-     * @var Document Avant projet
+
+    /**
+     * @var Document 
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Publish\Document")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $fiche;
 
-    /**
-     * Set fiche.
-     *
-     * @param Fiche $fiche
-     *
-     * @return Processus
-     */
-    public function setFiche(?Fiche $fiche = null)
-    {
-        $this->fiche = $fiche;
-        return $this;
-    }
-
-    /**
-     * Get fiche.
-     *
-     * @return Fiche
-     */
-    public function getFiche()
-    {
-        return $this->fiche;
-    }
-
+    
 
     //////
     /////
