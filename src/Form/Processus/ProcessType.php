@@ -16,6 +16,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProcessType extends AbstractType
 {
@@ -23,18 +24,25 @@ class ProcessType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, ['required' => true])
-            ->add('pilote', TextType::class, ['required' => false]);
+            ->add('pilote', TextType::class, ['required' => true])
+            // ->add('file', FileType::class, ['label' => 'Fichier', 'required' => true, 'attr' => ['cols' => '100%', 'rows' => 5]]);
+            // ->add('template', FileType::class, [
+            //     'required' => true,
+            //     'label' => 'dashboard.template',
+            //     'translation_domain' => 'dashboard',
+            // ])
+            ;
     }
 
     public function getBlockPrefix()
     {
-        return 'personne_filieretype';
+        return 'processus_processtype';
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Processus::class,
+             'data_class' => Processus::class,
         ]);
     }
 }

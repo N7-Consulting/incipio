@@ -33,9 +33,9 @@
                 </thead>
                 {% for process in listProcess %}
                     <tr>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
+                        <td>{{process.nom}}</td>
+                        <td>{{process.pilote}} </td>
+                        {# <td><a href="{{ path('processus_voir', {'id': 1}) }}">{{ process.nom }}</a> </td> #}
 
                     </tr>
                 {% endfor %}
@@ -44,8 +44,6 @@
         
         <div class="tab-pane fade" id="processus">
                 
-
-
             <div class="table-responsive content">
                 {{ form_start(form) }}
                 <table class="table table-bordered table-striped">
@@ -56,6 +54,13 @@
                     <tr>
                         <th>{{ form_label(form.pilote) }}</th>
                         <td>{{ form_widget(form.pilote) }} {{ form_errors(form.pilote) }}</td>
+                    </tr>
+                    <tr>
+                         {# <td>
+                          {{ form_label(form.template) }}
+                          {{ form_errors(form.template) }}
+                        </td> #}
+                        {# <td>{{ form_widget(form.template,{'attr' : {'onChange':'selectHelper()'} }) }}</td> #}
                     </tr>
                     <tr>
                         <td colspan="2">
