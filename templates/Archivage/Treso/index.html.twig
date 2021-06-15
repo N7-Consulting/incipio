@@ -1,34 +1,34 @@
 {% extends 'Archivage/layout.html.twig' %}
 
 {% block title %}
-    {{ 'dashboard.actico'|trans({}, 'dashboard') }} {{ parent() }}
+    {{ 'dashboard.tresorerie'|trans({}, 'dashboard') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'dashboard.actico'|trans({}, 'dashboard') }}
+    {{ 'dashboard.tresorerie'|trans({}, 'dashboard') }}
 {% endblock %}
 
 {% block content_bundle %}
 
-         <p>{{ 'treso.facture_achat'|trans({}, 'treso') }}</p>
-                <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
-                    <thead>
-                    <tr>
-                        <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
-                        <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
-                    </tr>
-                    </thead>
-                    {% for facture in factures | filter(facture => facture.type == 1) %}
-                        {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
-                        <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
-                            <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
-                            <td>
-                                <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
-                            </td>
+        <p>{{ 'treso.facture_achat'|trans({}, 'treso') }}</p>
+        <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
+            <thead>
+            <tr>
+                <th>{{ 'treso.date_emission'|trans({}, 'treso') }}</th>
+                <th>{{ 'treso.reference'|trans({}, 'treso') }}</th>
+            </tr>
+            </thead>
+            {% for facture in factures | filter(facture => facture.type == 1) %}
+                {% set delai = (((facture.dateVersement ? facture.dateVersement |date('U') : 'now' | date('U')) - facture.dateEmission| date('U')) / 86400 ) |round %}
+                <tr class="{{ facture.dateVersement ? 'success' : ( delai > 31 ? 'danger' : 'warning') }}">
+                    <td>{{ facture.dateEmission | date('d/m/Y') }}</td>
+                    <td>
+                        <a href="{{ path('treso_Facture_voir', {'id': facture.id}) }}">{{ facture.reference }}</a>
+                    </td>
 
-                        </tr>
-                    {% endfor %}
-                </table>
+                </tr>
+            {% endfor %}
+        </table>
 
             <p>{{ 'treso.facture_vente'|trans({}, 'treso') }}</p>
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FVtable">
@@ -51,7 +51,7 @@
                     {% endfor %}
                 </table>
 
-             <p>Déclaratifs sociaux</p>
+            <p>Déclaratifs sociaux</p>
             <div id="myTabContent" class="tab-content">
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
                     <tr>
@@ -115,7 +115,7 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
             $('#FAtable').dataTable({
-                "bPaginate": false,
+                "bPaginate": true,
                 "iDisplayLength": 50,
                 "aaSorting": [[1, 'desc']],
             });
