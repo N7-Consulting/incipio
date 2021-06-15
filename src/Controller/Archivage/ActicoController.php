@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\StockDocuments;
+namespace App\Controller\Archivage;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ class ActicoController extends AbstractController
     // const docEtude = ['CDC' => 'cdc', 'PC' => 'pc', 'CETUDE' => 'ce', 'CCA' => 'cca', 'BDC' => 'bdc', 'RM' => 'missions', 'AV' => 'avs', 'PV' => 'procesVerbaux', 'QS' => 'qs'];
 
     /**
-     * @Route("actico", name="actico")
+     * @Route("archivage/actico", name="archivage_actico_index")
      */
     public function index(): Response
     {
@@ -25,7 +25,7 @@ class ActicoController extends AbstractController
         $entities = $em->getRepository(Document::class)->findAll();
         $etudes = $em->getRepository(Etude::class)->findAll();
 
-        return $this->render('StockDocuments/actico/index.html.twig', [
+        return $this->render('Archivage/Actico/index.html.twig', [
             'controller_name' => 'ActicoController',
             'docs' => $entities,
             'docEtude' => $docEtude,
