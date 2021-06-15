@@ -27,11 +27,12 @@
                     <tr>
                         <td>{{process.nom}} </td>
                         <td>{{process.pilote}} </td>
-                        <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ process.nom}}</a></td>
+                         
+                        <td><a href="{{ path('publish_document_voir', {'id': 11}) }} ">{{ process.nom}}</a></td>
                         <td><ul class="nav  navbar-nav">
                              <li><a href="{{ path('publish_document_uploadProcessus',{'nom': process.nom}) }}"><span class="fa fa-pencil"></span> {{ 'suivi.document_ajouter'|trans({}, 'project') }}</a></li>
                             </ul> </td>  
-
+                         
                     </tr>
                 {% endfor %}
             </table>
