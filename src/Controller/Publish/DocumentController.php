@@ -106,18 +106,18 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="publish_document_uploadProcessus", path="/Documents/Upload/Processus", methods={"GET","HEAD","POST"})
+     * @Route(name="publish_document_uploadProcessus", path="/Documents/Upload/Processus/{nom}", methods={"GET","HEAD","POST"})
      *
      * @return Response
      */
     public function uploadProcessus(
         Request $request,
-        Processus $processus,
+        Processus $process,
         DocumentManager $documentManager,
         KernelInterface $kernel
     ) {
 
-        if (!$response = $this->upload($request, false, ['processus' => $processus], $documentManager, $kernel)) {
+        if (!$response = $this->upload($request, false, ['processus' => $process], $documentManager, $kernel)) {
             $this->addFlash('success', 'Document mis en ligne');
 
             return $this->redirectToRoute('tab_process');
@@ -206,6 +206,9 @@ class DocumentController extends AbstractController
             }
             if (array_key_exists('etudiant', $options)) {
                 $relatedDocument->setMembre($options['etudiant']);
+            }
+            if (array_key_exists('processus', $options)) {
+                $relatedDocument->setProcessus($options['processus']);
             }
         }
 

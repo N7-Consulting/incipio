@@ -10,65 +10,31 @@
 
 {% block content_bundle %}
     <div id="myTabContent" class="tab-content">
-        
+        <div class="col-md-2 col-xs-2">
+            <a href="{{ path('ajouter_processus') }}" class="pull-right btn btn-info">{{ 'processus.ajouter_process'|trans({}, 'processus') }}</a>
+        </div>
             <table class="display dataTable table table-bordered table-striped dt-responsive" >
                 <thead>
                 <tr>
                     <th>Nom du processus</th>
                     <th>Pilote</th>
                     <th>Document</th>
+                    <th>Ajouter un document</th>
                     
                 </tr>
                 </thead>
-                {% for process in listProcess %}
+                {% for process in processus %}
                     <tr>
-                        <td>{{process.nom}}</td>
+                        <td>{{process.nom}} </td>
                         <td>{{process.pilote}} </td>
+                        <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ process.nom}}</a></td>
                         <td><ul class="nav  navbar-nav">
-                             <li><a href="{{ path('publish_document_uploadEtude', {'nom': process.id }) }}"><span class="fa fa-pencil"></span> {{ 'suivi.document_ajouter'|trans({}, 'project') }}</a></li>
+                             <li><a href="{{ path('publish_document_uploadProcessus',{'nom': process.nom}) }}"><span class="fa fa-pencil"></span> {{ 'suivi.document_ajouter'|trans({}, 'project') }}</a></li>
                             </ul> </td>  
 
                     </tr>
                 {% endfor %}
             </table>
     </div>  
-      
-        
-        {# <div class="tab-pane fade" id="processus">
-                
-            <div class="table-responsive content">
-                {{ form_start(form) }}
-                <table class="table table-bordered table-striped">
-                    <tr>
-                        <th>{{ form_label(form.nom) }}</th>
-                        <td>{{ form_widget(form.nom) }} {{ form_errors(form.nom) }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ form_label(form.pilote) }}</th>
-                        <td>{{ form_widget(form.pilote) }} {{ form_errors(form.pilote) }}</td>
-                    </tr>
-                    <tr>
-                         <td>
-                          {{ form_label(form.fiche) }}
-                          {{ form_errors(form.fiche) }}
-                        </td>
-                        <td>{{ form_widget(form.fiche,{'attr' : {'onChange':'selectHelper()'} }) }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="row">
-                                <div class="col-md-2 col-xs-4">
-                                    <button type="submit" class="btn btn-success">{{ 'generique.enregistrer'|trans({}, 'personne') }}</button>
-                                    {{ form_rest(form) }}
-                                    {{ form_end(form) }}
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-         
-        </div> #}
     
 {% endblock %}

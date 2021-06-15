@@ -29,38 +29,13 @@ class Processus
      * @ORM\Column(type="string", length=255)
      */
     private $pilote;
-    /////////
-    ////////
-
-    /**
-     * @var UploadedFile 
-     *
-     * 
-     */
-    private $fiche;
-
     
-
-    //////
-    /////
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFiche(): ?UploadedFile
-    {
-        return $this->fiche;
-
-    }public function setFiche(UploadedFile $fiche = null): self
-    {
-        $this->fiche = $fiche;
-
-        return $this;
-    }
-
-    
 
     public function getNom(): ?string
     {

@@ -13,6 +13,7 @@ namespace App\Entity\Publish;
 
 use App\Entity\Formation\Formation;
 use App\Entity\Personne\Membre;
+use App\Entity\Processus\Processus;
 use App\Entity\Personne\Prospect;
 use App\Entity\Project\Etude;
 use Doctrine\ORM\Mapping as ORM;
@@ -199,7 +200,7 @@ class RelatedDocument
         return $this->prospect;
     }
 
-        /**
+    /**
      * Set processus.
      *
      * @param Processus $processus

@@ -27,7 +27,7 @@ class ProcessType extends AbstractType
         $builder
             ->add('nom', TextType::class, ['required' => true])
             ->add('pilote', TextType::class, ['required' => true])
-            ->add('fiche', FileType::class, ['label' => 'Fichier', 'required' => true, 'attr' => ['cols' => '100%', 'rows' => 5]]);
+            
             // ->add('template', FileType::class, [
             //     'required' => true,
             //     'label' => 'dashboard.template',
