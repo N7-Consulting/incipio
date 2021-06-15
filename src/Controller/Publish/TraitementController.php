@@ -76,13 +76,13 @@ class TraitementController extends AbstractController
 
     const DOCTYPE_AVENANT = 'AV';
 
-    const DOCTYPE_CDC = 'CDC';
+    const DOCTYPE_CAHIER_CHARGES = 'CDC';
 
-    const DOCTYPE_PC = 'PC';
+    const DOCTYPE_PROPOSITION_COMMERCIALE = 'PC';
 
-    const DOCTYPE_CCA = 'CCA';
+    const DOCTYPE_CONVENTION_CADRE_AGILE = 'CCA';
 
-    const DOCTYPE_BDC = 'BDC';
+    const DOCTYPE_BON_COMMANDE = 'BDC';
 
     const DOCTYPE_QUESTIONNAIRE_SATISFACTION = 'QS';
 
