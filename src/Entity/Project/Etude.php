@@ -118,7 +118,7 @@ class Etude
 
     /**
      * @var int
-     * @Assert\Choice({1,2,3,4,5})
+     * @Assert\Choice({1,2,3,4,5,6,7})
      * @ORM\Column(name="stateID", type="integer", nullable=false)
      */
     private $stateID;
@@ -213,6 +213,7 @@ class Etude
     private $suivis;
 
     /**
+     * @deprecated Only present for backward compatibility.
      * @var Ap Avant projet
      *
      * @ORM\OneToOne(targetEntity="Ap", inversedBy="etude", cascade={"persist", "remove"})
@@ -221,6 +222,7 @@ class Etude
     private $ap;
 
     /**
+     * @deprecated Only present for backward compatibility.
      * @var Cc Convention Client
      *
      * @ORM\OneToOne(targetEntity="Cc", inversedBy="etude", cascade={"persist", "remove"})
