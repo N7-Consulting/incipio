@@ -3,6 +3,7 @@ suivi:
   a_recontacter_le: A recontacter le
   acces_rapide: Accès Rapide
   accueil: Accueil
+  acceptee: Acceptée
   acompte: Acompte
   action: Action
   ajouter: Ajouter
@@ -172,6 +173,7 @@ suivi:
   fait_par: Fait Par
   fin: Fin
   fin_le: Fin le
+  finie: Finie
   fs: FS
   gantt: Gantt
   gantt_exporter: Exporter le Gantt
