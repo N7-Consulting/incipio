@@ -63,6 +63,12 @@ class RelatedDocument
      */
     private $prospect;
 
+        /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Processus\Processus", cascade={"persist"})
+     * @ORM\JoinColumn(name="processus_id", referencedColumnName="id", nullable=true)
+     */
+    private $processus;
+
     /**
      * Get id.
      *
@@ -191,6 +197,30 @@ class RelatedDocument
     public function getProspect()
     {
         return $this->prospect;
+    }
+
+        /**
+     * Set processus.
+     *
+     * @param Processus $processus
+     *
+     * @return RelatedDocument
+     */
+    public function setProcessus(Processus $processus = null)
+    {
+        $this->processus = $processus;
+
+        return $this;
+    }
+
+    /**
+     * Get processus.
+     *
+     * @return Processus
+     */
+    public function getProcessus()
+    {
+        return $this->processus;
     }
 
     public function __toString()

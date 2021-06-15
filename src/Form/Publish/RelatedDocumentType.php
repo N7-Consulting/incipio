@@ -65,6 +65,16 @@ class RelatedDocumentType extends AbstractType
                 'attr' => ['style' => 'min-width: 300px'],
                 'configs' => ['placeholder' => 'Sélectionnez un étudiant', 'allowClear' => true], ]);
         }
+        if ($options['processus']) {
+            $builder->add('processus', Select2EntityType::class, [
+                'class' => Processus::class,
+                'choice_label' => 'titre',
+                'required' => false,
+                'label' => 'Fiche de processus',
+                'attr' => ['style' => 'min-width: 300px'],
+                'configs' => ['placeholder' => 'Sélectionnez un fichier', 'allowClear' => true],
+            ]);
+        }
     }
 
     public function getBlockPrefix()

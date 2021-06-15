@@ -14,6 +14,7 @@ namespace App\Controller\Publish;
 use App\Entity\Formation\Formation;
 use App\Entity\Personne\Membre;
 use App\Entity\Project\Etude;
+use App\Entity\Processus\Processus;
 use App\Entity\Publish\Document;
 use App\Entity\Publish\RelatedDocument;
 use App\Form\Publish\DocumentType;
@@ -79,7 +80,7 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="publish_document_uploadEtude", path="/Documents/Upload/Etude/{nom}", methods={"GET","HEAD","POST"})
+     * @Route(name="publish_document_uploadEtude", path="/publish_document_uploadEtudede/{nom}", methods={"GET","HEAD","POST"})
      *
      * @return Response
      */
@@ -105,7 +106,29 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="publish_document_uploadEtudiant", path="/Documents/Upload/Etudiant/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="publish_document_uploadProcessus", path="/Documents/Upload/Processus", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function uploadProcessus(
+        Request $request,
+        Processus $processus,
+        DocumentManager $documentManager,
+        KernelInterface $kernel
+    ) {
+
+        if (!$response = $this->upload($request, false, ['processus' => $processus], $documentManager, $kernel)) {
+            $this->addFlash('success', 'Document mis en ligne');
+
+            return $this->redirectToRoute('tab_process');
+        }
+
+        return $response;
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="publish_document_uploadEtudediant", path="/Documents/Upload/Etudiant/{id}", methods={"GET","HEAD","POST"})
      *
      * @return bool|RedirectResponse|Response
      */

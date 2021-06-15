@@ -1,27 +1,16 @@
 {% extends "Stat/layout.html.twig" %}
 
 {% block title %}
-    {{ 'dashboard.tabProcess'|trans({}, 'dashboard') }} - {{ parent() }}
+    {{ 'processus.tab_process'|trans({}, 'processus') }} - {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'dashboard.tabProcess'|trans({}, 'dashboard') }}
+    {{ 'processus.tab_process'|trans({}, 'processus') }}
 {% endblock %}
 
 {% block content_bundle %}
-    <div class="nav-tabs-custom">
-        <ul id="myTab" class="nav nav-tabs">
-            <li class="active">
-                <a href="#tableau" data-toggle="tab">{{ 'dashboard.tabProcess'|trans({}, 'dashboard') }}</a>
-            </li>
-            <li>
-                <a href="#processus" data-toggle="tab">{{ 'dashboard.ajouterProcess'|trans({}, 'dashboard') }}</a>
-            </li>
-        </ul>
-    </div>
-    
     <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade active in" id="tableau">
+        
             <table class="display dataTable table table-bordered table-striped dt-responsive" >
                 <thead>
                 <tr>
@@ -35,14 +24,17 @@
                     <tr>
                         <td>{{process.nom}}</td>
                         <td>{{process.pilote}} </td>
-                        <td><a href="{{ path('processus_voir', {'id': 1}) }}">{{ process.nom }}</a> </td>  
+                        <td><ul class="nav  navbar-nav">
+                             <li><a href="{{ path('publish_document_uploadEtude', {'nom': process.id }) }}"><span class="fa fa-pencil"></span> {{ 'suivi.document_ajouter'|trans({}, 'project') }}</a></li>
+                            </ul> </td>  
 
                     </tr>
                 {% endfor %}
             </table>
-        </div>
+    </div>  
+      
         
-        <div class="tab-pane fade" id="processus">
+        {# <div class="tab-pane fade" id="processus">
                 
             <div class="table-responsive content">
                 {{ form_start(form) }}
@@ -77,6 +69,6 @@
             </div>
 
          
-        </div>
-    </div>
+        </div> #}
+    
 {% endblock %}
