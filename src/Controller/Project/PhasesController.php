@@ -49,7 +49,16 @@ class PhasesController extends AbstractController
                     $phaseNew = new Phase();
                     $phaseNew->setPosition(count($etude->getPhases()));
                     $phaseNew->setEtude($etude);
+
+                    // Add some trivial info based on previous input
+                    $phases = array_values($etude->getPhases()->getValues());
+                    if (!empty($phases)) {
+                        $phasePrevious = end($phases);
+                        $phaseNew->setPrixJEH($phasePrevious->getPrixJEH());
+                        $phaseNew->setDateDebut($phasePrevious->getDateFin());
+                    }
                     $etude->addPhase($phaseNew);
+                    echo 'toto';
                 }
 
                 $em->persist($etude); // persist $etude / $form->getData()
