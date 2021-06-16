@@ -15,8 +15,8 @@
             <th>{{ 'formation.description'|trans({}, 'formation') }}</th>
         </tr>
         <tr>
-            <td>{{ formation.titre | title }}</td>
-            <td>{{ formation.description }}</td>
+            <td>{{ passation.titre | title }}</td>
+            <td>{{ passation.description }}</td>
         </tr>
     </table>
     <br/>
@@ -29,7 +29,7 @@
 
         </tr>
 
-        {% for relatedDocument in formation.relatedDocuments %}
+        {% for relatedDocument in passation.relatedDocuments %}
         {% set doc = relatedDocument.document %}
         <tr>
             <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ doc.name}}</a></td>
@@ -48,11 +48,11 @@
     <br/>
     <div class="row">
         <div class="col-md-2 col-xs-4">
-            <a href="{{ path('publish_document_uploadPassation',{'id': formation.id}) }}" class="btn btn-primary">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
+            <a href="{{ path('publish_document_uploadPassation',{'id': passation.id}) }}" class="btn btn-primary">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
         </div>
         {% if is_granted('ROLE_CA') %}
             <div class="col-md-2 col-xs-4">
-                <a href="{{ path('passation_modifier', {'id': formation.id}) }}" class="btn btn-warning">
+                <a href="{{ path('passation_modifier', {'id': passation.id}) }}" class="btn btn-warning">
                     {{ 'formation.passation_modifier'|trans({}, 'formation') }}
                 </a>
             </div>

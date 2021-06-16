@@ -28,7 +28,7 @@ class FormationController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="formations_index_admin", path="/formations/admin", methods={"GET","HEAD"})
+     * @Route(name="formations_index_admin", path="/Formations/Admin", methods={"GET","HEAD"})
      *
      * Display a list of all training given order by date desc
      */
@@ -44,34 +44,34 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="passation_lister", path="/passation", methods={"GET","HEAD"})
+     * @Route(name="passation_lister", path="/Passations", methods={"GET","HEAD"})
      *
      * Display a list of all training group by term.
      */
     public function lister()
     {   
         $em = $this->getDoctrine()->getManager();
-        $formationsActico = $em->getRepository(Passation::class)->findBy(['categorie' => '0']);
-        $formationsTreso = $em->getRepository(Passation::class)->findBy(['categorie' => '1']);
-        $formationsDsi = $em->getRepository(Passation::class)->findBy(['categorie' => '2']);
-        $formationsRh = $em->getRepository(Passation::class)->findBy(['categorie' => '3']);
-        $formationsQualite = $em->getRepository(Passation::class)->findBy(['categorie' => '4']);
-        $formationsCommunication = $em->getRepository(Passation::class)->findBy(['categorie' => '5']);
-        $formationsAutre = $em->getRepository(Passation::class)->findBy(['categorie' => '6']);
+        $passationActico = $em->getRepository(Passation::class)->findBy(['categorie' => '0']);
+        $passationTreso = $em->getRepository(Passation::class)->findBy(['categorie' => '1']);
+        $passationDsi = $em->getRepository(Passation::class)->findBy(['categorie' => '2']);
+        $passationRh = $em->getRepository(Passation::class)->findBy(['categorie' => '3']);
+        $passationQualite = $em->getRepository(Passation::class)->findBy(['categorie' => '4']);
+        $passationCommunication = $em->getRepository(Passation::class)->findBy(['categorie' => '5']);
+        $passationAutre = $em->getRepository(Passation::class)->findBy(['categorie' => '6']);
         return $this->render('Formation/Passations/lister.html.twig', [
-            'formationsActico' => $formationsActico,
-            'formationsTreso' => $formationsTreso,
-            'formationsDsi' => $formationsDsi,
-            'formationsRh' => $formationsRh,
-            'formationsQualite' => $formationsQualite,
-            'formationsCommunication' => $formationsCommunication,
-            'formationsAutre' => $formationsAutre,
+            'passationActico' => $passationActico,
+            'passationTreso' => $passationTreso,
+            'passationDsi' => $passationDsi,
+            'passationRh' => $passationRh,
+            'passationQualite' => $passationQualite,
+            'passationCommunication' => $passationCommunication,
+            'passationAutre' => $passationAutre,
         ]);
     }
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="formation_voir", path="/formations/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
+     * @Route(name="formation_voir", path="/Formations/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
      *
      * @param Formation $formation The training to display
      *
@@ -86,7 +86,7 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="passation_voir", path="/passation/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
+     * @Route(name="passation_voir", path="/Passation/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
      *
      * @param Passation $formation The training to display
      *
@@ -95,13 +95,13 @@ class FormationController extends AbstractController
     public function voirPassation(Passation $passation)
     {
         return $this->render('Formation/Passations/voir.html.twig', [
-            'formation' => $passation,
+            'passation' => $passation,
         ]);
     }
 
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="formation_ajouter", path="/formations/admin/ajouter", methods={"GET","HEAD","POST"})
+     * @Route(name="formation_ajouter", path="/Formations/Admin/Ajouter", methods={"GET","HEAD","POST"})
      *
      * @return Response
      */
@@ -131,7 +131,7 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="passation_ajouter", path="/passation/admin/ajouter", methods={"GET","HEAD","POST"})
+     * @Route(name="passation_ajouter", path="/Passation/Admin/Ajouter", methods={"GET","HEAD","POST"})
      *
      * @return Response
      */
@@ -161,7 +161,7 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="formation_modifier", path="/formations/admin/modifier/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
+     * @Route(name="formation_modifier", path="/Formations/Admin/Modifier/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
      *
      * @param Formation $formation The training to modify
      *
@@ -195,7 +195,7 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="passation_modifier", path="/passation/admin/modifier/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
+     * @Route(name="passation_modifier", path="/Passation/Admin/Modifier/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
      *
      * @param Passation $formation The training to modify
      *
@@ -229,7 +229,7 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="formation_participation", path="/formations/admin/participation/{mandat}", methods={"GET","HEAD"}, defaults={"mandat": ""})
+     * @Route(name="formation_participation", path="/Formations/Admin/Participation/{mandat}", methods={"GET","HEAD"}, defaults={"mandat": ""})
      *
      * @param $mandat string The mandat during which trainings were given
      *
@@ -286,7 +286,7 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route(name="formation_supprimer", path="/formations/admin/supprimer/{id}", methods={"HEAD","POST"})
+     * @Route(name="formation_supprimer", path="/Formations/Admin/Supprimer/{id}", methods={"HEAD","POST"})
      *
      * @param Formation $formation The training to delete (paramconverter from id)
      *
@@ -304,7 +304,30 @@ class FormationController extends AbstractController
             $this->addFlash('success', 'Formation supprimée');
         }
 
-        return $this->redirectToRoute('formations_lister', []);
+        return $this->redirectToRoute('formations_index_admin', []);
+    }
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @Route(name="passation_supprimer", path="/Passations/Admin/Supprimer/{id}", methods={"HEAD","POST"})
+     *
+     * @param Passation $passation The training to delete (paramconverter from id)
+     *
+     * @return RedirectResponse Delete a training
+     */
+    public function supprimerPassation(Request $request, Passation $passation)
+    {
+        $form = $this->createDeleteForm($passation->getId());
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($passation);
+            $em->flush();
+            $this->addFlash('success', 'Passation supprimée');
+        }
+
+        return $this->redirectToRoute('passation_lister', []);
     }
 
     /**

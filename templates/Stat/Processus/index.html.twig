@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{process.nom}} </td>
                         <td>{{process.pilote}} </td>
-                        <td><a href="{{ path('voir_doc_processus',{'nom': process.nom})}} "><span class="fa fa-eye"></a></td>
+                        <td><a href="{{ path('voir_doc_processus',{'nom': process.nom})}} "><span class="fa fa-eye"> ({{ process.relatedDocuments | length }})</a></td>
                         <td><form class="bootbox-confirm inline"
                                 data-content="{{ 'processus.supprimer_process_confirm'|trans({}, 'processus') }}"
                                 action="{{ path('processus_supprimer', { 'nom': process.nom}) }}" method="post">

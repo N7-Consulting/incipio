@@ -6,6 +6,7 @@ formation:
   categories: Categories
   chercher: Chercher
   confirmation_supprimer_formation: Etes-vous sûr de vouloir supprimer définitivement cette formation ?
+  confirmation_supprimer_passation: Etes-vous sûr de vouloir supprimer définitivement cette passation ?
   communication: Communication
   date: Date
   date_upload: Date de télechargement
@@ -20,7 +21,7 @@ formation:
   formation_enregistrer: Enregistrer la formation
   passation_enregistrer: Enregistrer la passation
   formation_modifier: Modifier la formation
-  formation_supprimer: Supprimer la Formation
+  formation_supprimer: Supprimer la formation
   formations: Formations
   formations_rapports : Rapports des formations
   formations_presence: Présence aux formations
@@ -31,6 +32,7 @@ formation:
   modifier: Modifier
   passation_ajouter : Ajouter une passation
   passation_modifier : Modifier la passation
+  passation_supprimer: Supprimer la passation
   personnes_presentes: Personnes présentes
   present: Présents
   qualite: Qualité
