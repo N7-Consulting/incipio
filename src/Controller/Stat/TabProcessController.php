@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use App\Controller\Stat\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
 class TabProcessController extends AbstractController
@@ -70,6 +71,60 @@ class TabProcessController extends AbstractController
                                                                                 
         );
     }
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @Route(name="processus_supprimer", path="/Processus/Supprimer/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return RedirectResponse
+     */
+    public function delete(Processus $processus, Request $request)
+    {
+        $form = $this->createDeleteForm($processus->getId());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($processus);
+            $em->flush();
+            $this->addFlash('success', 'processus supprimée');
+        }
+
+         
+        return $this->redirectToRoute('tab_process');
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(['id' => $id])
+            ->add('id', HiddenType::class)
+            ->getForm();
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="processus_document_delete", path="/Processus/Documents/Supprimer/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function deleteDoc(Document $doc, KernelInterface $kernel)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $doc->setProjectDir($kernel->getProjectDir());
+
+        if ($doc->getRelation()) { // Cascade sucks
+            $relation = $doc->getRelation()->setDocument();
+            $doc->setRelation(null);
+            $em->remove($relation);
+            $em->flush();
+        }
+        $this->addFlash('success', 'Document supprimé');
+        $em->remove($doc);
+        $em->flush();
+
+        return $this->redirectToRoute('tab_process');
+    }
+
 
     /**
      * @Route(name="voir_doc_processus", path="/Processus/Document/Associes/{nom}", methods={"GET","HEAD","POST"})

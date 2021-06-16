@@ -12,6 +12,12 @@
     <div class="col-md-2 col-xs-2">
             <a href="{{ path('publish_document_uploadProcessus',{'nom': processus.nom}) }}" class="pull-right btn btn-info">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
     </div>
+    {# <form class="bootbox-confirm inline"
+                                  data-content="{{ 'processus.supprimer_process_confirm'|trans({}, 'processus') }}"
+                                  action="{{ path('processus_supprimer', { 'nom': processus.nom}) }}" method="post">
+                                {# {{ form_widget(delete_form) }} 
+     <button class="btn btn-danger">{{ 'processus.supprimer_process'|trans({}, 'processus') }}</button>
+    </form> #}
     <table class="table table-bordered table-striped">
         <tr>
             <th>{{ 'processus.titre'|trans({}, 'processus') }}</th>
@@ -30,7 +36,7 @@
             <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s')}}</td>
             <td>{{ doc.author ? doc.author.prenomNom }}</td> #}
             {# {% if is_granted('ROLE_CA') %} #}
-            <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i class="fa fa-times"></i></a></td>
+            {# <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i class="fa fa-times"></i></a></td> #}
             {# {% endif %}  #}
         </tr>
         {# {% endfor %} #}

@@ -19,7 +19,7 @@
                     <th>{{'processus.nom_process'|trans({}, 'processus')}}</th>
                     <th>{{'processus.pilote'|trans({}, 'processus')}}</th>
                     <th>{{'processus.documents'|trans({}, 'processus')}}</th>
-                    <th>{{'processus.nom_process'|trans({}, 'processus')}}</th>
+                    <th>{{'processus.action'|trans({}, 'processus')}}</th>
                 </tr>
                 </thead>
                 {% for process in processus %}
@@ -27,11 +27,12 @@
                         <td>{{process.nom}} </td>
                         <td>{{process.pilote}} </td>
                         <td><a href="{{ path('voir_doc_processus',{'nom': process.nom})}} ">v</a></td>
-                        {# <td><a href="{{ path('publish_document_voir', {'id': 11}) }} ">{{ process.nom}}</a></td> #}
-                        <td><ul class="nav  navbar-nav">
-                             <li><a href="{{ path('publish_document_uploadProcessus',{'nom': process.nom}) }}"><span class="fa fa-pencil"></span> {{ 'suivi.document_ajouter'|trans({}, 'project') }}</a></li>
-                            </ul> </td>  
-                         
+                        <td><form class="bootbox-confirm inline"
+                                  data-content="{{ 'processus.supprimer_process_confirm'|trans({}, 'processus') }}"
+                                  action="{{ path('processus_supprimer', { 'id': process.id}) }}" method="post">
+                                {# {{ form_widget(delete_form) }} #}
+                        <button class="btn btn-danger">{{ 'processus.supprimer'|trans({}, 'processus') }}</button>
+                        </form> </td>
                     </tr>
                 {% endfor %}
             </table>
