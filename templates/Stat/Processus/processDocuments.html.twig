@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ 'processus.doc_process'|trans({}, 'processus') }}: {{ processus.nom }}
+    {{ 'processus.process'|trans({}, 'processus') }}: {{ processus.nom }}
 {% endblock %}
 
 {% block content_bundle %}
-    <div class="col-md-2 col-xs-2">
+
+    <div class="box-header with-border">
             <a href="{{ path('publish_document_uploadProcessus',{'nom': processus.nom}) }}" class="pull-right btn btn-info">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
     </div>
     {# <form class="bootbox-confirm inline"
@@ -22,23 +23,24 @@
         <tr>
             <th>{{ 'processus.titre'|trans({}, 'processus') }}</th>
             <th>{{ 'processus.date_upload'|trans({}, 'processus') }}</th>
-            {# {% if is_granted('ROLE_CA') %} #}
             <th>{{ 'processus.supprimer'|trans({}, 'processus') }}</th>
-            {# {% endif %} #} 
+
         </tr>
-        {# {% for relatedDocument in etude.relatedDocuments %}
-        {% set doc = relatedDocument.document %} #}
+
+         {% for relatedDocument in processus.relatedDocuments %}
+        {% set doc = relatedDocument.document %}
         <tr>
-             <td><a href="{{ path('publish_document_voir', {'id': 11}) }} ">{{processus.nom}}</a></td>
-            <td>da</td>
-            <td>de</td>
-            {# <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ doc.name}}</a></td>
+            <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ doc.name}}</a></td>
             <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s')}}</td>
-            <td>{{ doc.author ? doc.author.prenomNom }}</td> #}
             {# {% if is_granted('ROLE_CA') %} #}
-            {# <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i class="fa fa-times"></i></a></td> #}
-            {# {% endif %}  #}
+            <td><form class="bootbox-confirm inline"
+                                  data-content="{{ 'processus.supprimer_doc_confirm'|trans({}, 'processus') }}"
+                                  action="{{ path('publish_document_delete', { 'id': doc.id}) }}" method="post">
+                                {# {{ form_widget(delete_form) }} #}
+                        <button class="fa fa-times"></button>
+                        </form> </td>
+            {# {% endif %} #}
         </tr>
-        {# {% endfor %} #}
+        {% endfor %}
     </table>
 {% endblock %}

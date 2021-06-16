@@ -4,6 +4,8 @@ namespace App\Entity\Processus;
 
 use App\Repository\Processus\ProcessusRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Publish\RelatedDocument;
+use Doctrine\Common\Collections\Collection;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,6 +31,11 @@ class Processus
      * @ORM\Column(type="string", length=255)
      */
     private $pilote;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Publish\RelatedDocument", mappedBy="processus", cascade={"remove"})
+     */
+    private $relatedDocuments;
     
 
     public function getId(): ?int
@@ -59,5 +66,35 @@ class Processus
         $this->pilote = $pilote;
 
         return $this;
+    }
+
+    /**
+     * Add relatedDocuments.
+     *
+     * @return Processus
+     */
+    public function addRelatedDocument(RelatedDocument $relatedDocuments)
+    {
+        $this->relatedDocuments[] = $relatedDocuments;
+
+        return $this;
+    }
+
+    /**
+     * Remove relatedDocuments.
+     */
+    public function removeRelatedDocument(RelatedDocument $relatedDocuments)
+    {
+        $this->relatedDocuments->removeElement($relatedDocuments);
+    }
+
+    /**
+     * Get relatedDocuments.
+     *
+     * @return Collection
+     */
+    public function getRelatedDocuments()
+    {
+        return $this->relatedDocuments;
     }
 }

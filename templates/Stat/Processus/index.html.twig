@@ -10,7 +10,7 @@
 
 {% block content_bundle %}
     <div id="myTabContent" class="tab-content">
-        <div class="col-md-2 col-xs-2">
+        <div class="box-header with-border">
             <a href="{{ path('ajouter_processus') }}" class="pull-right btn btn-info">{{ 'processus.ajouter_process'|trans({}, 'processus') }}</a>
         </div>
             <table class="display dataTable table table-bordered table-striped dt-responsive" >
@@ -31,7 +31,7 @@
                                   data-content="{{ 'processus.supprimer_process_confirm'|trans({}, 'processus') }}"
                                   action="{{ path('processus_supprimer', { 'id': process.id}) }}" method="post">
                                 {# {{ form_widget(delete_form) }} #}
-                        <button class="btn btn-danger">{{ 'processus.supprimer'|trans({}, 'processus') }}</button>
+                        <button class="fa fa-times"></button>
                         </form> </td>
                     </tr>
                 {% endfor %}

@@ -65,7 +65,7 @@ class RelatedDocument
     private $prospect;
 
         /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Processus\Processus", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Processus\Processus", cascade={"persist"})
      * @ORM\JoinColumn(name="processus_id", referencedColumnName="id", nullable=true)
      */
     private $processus;
