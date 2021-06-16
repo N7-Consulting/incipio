@@ -12,6 +12,7 @@
 namespace App\Entity\Formation;
 
 use App\Entity\Personne\Personne;
+use App\Entity\Publish\RelatedDocument;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,9 +43,9 @@ class Formation
     private $mandat;
 
     /**
-     * @var array
+     * @var int
      *
-     * @ORM\Column(name="categorie", type="array")
+     * @ORM\Column(name="categorie", type="integer")
      */
     private $categorie;
 
@@ -73,7 +74,7 @@ class Formation
     private $formateurs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Publish\RelatedDocument", mappedBy="processus", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Publish\RelatedDocument", mappedBy="formation", cascade={"remove"})
      */
     private $relatedDocuments;
 
@@ -108,14 +109,13 @@ class Formation
     public static function getCategoriesChoice()
     {
         return [
-            '0' => 'Recrutement Formation Passation',
-            '1' => 'Activité Commerciale',
-            '2' => 'Trésorerie',
-            '3' => 'DSI',
-            '4' => 'RH',
-            '5' => 'Qualité',
-            '6' => 'Communication',
-            '7' => 'Autre', ];
+            '0' => 'Activité Commerciale',
+            '1' => 'Trésorerie',
+            '2' => 'Communication',
+            '3' => 'Qualité',
+            '4' => 'DSI',
+            '5' => 'RH',
+            '6' => 'Autre', ];
     }
 
     public static function getCategoriesChoiceToString($choice = null)
@@ -141,10 +141,10 @@ class Formation
         return $this->id;
     }
 
-    /**
-     * Set categorie.
+     /**
+     * Set categorieID.
      *
-     * @param int $categorie
+     * @param int $categorieID
      *
      * @return Formation
      */
@@ -158,7 +158,7 @@ class Formation
     /**
      * Get categorie.
      *
-     * @return array
+     * @return int
      */
     public function getCategorie()
     {

@@ -7,40 +7,35 @@
 {% block content_bundle %}
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-        
-            <li class="active"><a href="#tab1" data-toggle="tab">{{ 'formation.rfp'|trans({}, 'formation') }}</a></li>
-            <li><a href="#tab2" data-toggle="tab">{{ 'formation.actico'|trans({}, 'formation') }}</a></li>
-            <li><a href="#tab3" data-toggle="tab">{{ 'formation.treso'|trans({}, 'formation') }}</a></li>
-            <li><a href="#tab4" data-toggle="tab">{{ 'formation.communication'|trans({}, 'formation') }}</a></li>
-            <li><a href="#tab5" data-toggle="tab">{{ 'formation.qualite'|trans({}, 'formation') }}</a></li>
-            <li><a href="#tab6" data-toggle="tab">{{ 'formation.dsi'|trans({}, 'formation') }}</a></li>
-            <li><a href="#tab7" data-toggle="tab">{{ 'formation.rh'|trans({}, 'formation') }}</a></li>
-            <li><a href="#tab8" data-toggle="tab">{{ 'formation.autre'|trans({}, 'formation') }}</a></li>
+            <li class="active"><a href="#tab1" data-toggle="tab">{{ 'formation.actico'|trans({}, 'formation') }}</a></li>
+            <li><a href="#tab2" data-toggle="tab">{{ 'formation.treso'|trans({}, 'formation') }}</a></li>
+            <li><a href="#tab3" data-toggle="tab">{{ 'formation.communication'|trans({}, 'formation') }}</a></li>
+            <li><a href="#tab4" data-toggle="tab">{{ 'formation.qualite'|trans({}, 'formation') }}</a></li>
+            <li><a href="#tab5" data-toggle="tab">{{ 'formation.dsi'|trans({}, 'formation') }}</a></li>
+            <li><a href="#tab6" data-toggle="tab">{{ 'formation.rh'|trans({}, 'formation') }}</a></li>
+            <li><a href="#tab7" data-toggle="tab">{{ 'formation.autre'|trans({}, 'formation') }}</a></li>
         </ul>
     </div>
     <div class="tab-content">
-        <div class="tab-pane active" id="tab1" style="min-height: 400px;">
-            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsRfp} %}
-        </div>
-        <div class="tab-pane fade" id="tab2" style="min-height: 400px;">
+        <div class="tab-pane active in" id="tab1" style="min-height: 400px;">
             {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsActico } %}
         </div>
-        <div class="tab-pane fade" id="tab3" style="min-height: 400px;">
+        <div class="tab-pane fade" id="tab2" style="min-height: 400px;">
             {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsTreso } %}
         </div>
-        <div class="tab-pane fade" id="tab4" style="min-height: 400px;">
+        <div class="tab-pane fade" id="tab3" style="min-height: 400px;">
             {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsDsi } %}
         </div>
-        <div class="tab-pane fade" id="tab5" style="min-height: 400px;">
+        <div class="tab-pane fade" id="tab4" style="min-height: 400px;">
             {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsRh } %}
         </div>
-        <div class="tab-pane fade" id="tab6" style="min-height: 400px;">
+        <div class="tab-pane fade" id="tab5" style="min-height: 400px;">
             {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsQualite } %}
         </div>
-        <div class="tab-pane fade" id="tab7" style="min-height: 400px;">
+        <div class="tab-pane fade" id="tab6" style="min-height: 400px;">
             {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsCommunication } %}
         </div>
-        <div class="tab-pane fade" id="tab8" style="min-height: 400px;">
+        <div class="tab-pane fade" id="tab7" style="min-height: 400px;">
             {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsAutre } %}
         </div>  
     </div>

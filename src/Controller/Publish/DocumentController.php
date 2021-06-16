@@ -146,7 +146,7 @@ class DocumentController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="publish_document_uploadFormation", path="/Documents/Upload/Formation/{id}", methods={"GET","HEAD","POST"})
      *
      * @return Response
@@ -231,14 +231,14 @@ class DocumentController extends AbstractController
 
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
-
+            
             if ($form->isValid()) {
                 $documentManager->uploadDocument($document, null, $deleteIfExist);
 
                 return false;
             }
         }
-
+        
         return $this->render('Publish/Document/upload.html.twig', ['form' => $form->createView()]);
     }
 }

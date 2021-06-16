@@ -11,6 +11,13 @@
 {% block content_bundle %}
     <table class="table table-bordered table-striped">
         <tr>
+            <th>titre</th>
+            <th>date</th>
+            <th>supre</th>
+            <th>date</th>
+            <th>supre</th>
+        </tr>
+        <tr>
             <td>{{ formation.dateDebut | date("d/m/Y") }}</td>
             <td>{{ formation.titre | title }}</td>
             <td>{{ formation.description }}</td>
@@ -43,7 +50,7 @@
         {% for relatedDocument in formation.relatedDocuments %}
         {% set doc = relatedDocument.document %}
         <tr>
-            <td><a href="{{ path('publish_document_voir', {'nom': doc.name}) }} ">{{ doc.name}}</a></td>
+            <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ doc.name}}</a></td>
             <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s')}}</td>
             {# {% if is_granted('ROLE_CA') %} #}
             <td><form class="bootbox-confirm inline"

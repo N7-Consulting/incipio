@@ -52,17 +52,15 @@ class FormationController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $formations = $em->getRepository(Formation::class)
             ->getAllFormations([], ['dateDebut' => 'DESC']);
-        $formationsRfp = $em->getRepository(Formation::class)->findBy( ['categorie' => 'a:1:{i:0;i:0;}']);
-        $formationsActico = $em->getRepository(Formation::class)->findBy(['id' => '1']);
-        $formationsTreso = $em->getRepository(Formation::class)->findBy(['id' => '2']);
-        $formationsDsi = $em->getRepository(Formation::class)->findBy(['id' => '3']);
-        $formationsRh = $em->getRepository(Formation::class)->findBy(['id' => '4']);
-        $formationsQualite = $em->getRepository(Formation::class)->findBy(['id' => '5']);
-        $formationsCommunication = $em->getRepository(Formation::class)->findBy(['id' => '6']);
-        $formationsAutre = $em->getRepository(Formation::class)->findBy(['id' => '7']);
+        $formationsActico = $em->getRepository(Formation::class)->findBy(['categorie' => '0']);
+        $formationsTreso = $em->getRepository(Formation::class)->findBy(['categorie' => '1']);
+        $formationsDsi = $em->getRepository(Formation::class)->findBy(['categorie' => '2']);
+        $formationsRh = $em->getRepository(Formation::class)->findBy(['categorie' => '3']);
+        $formationsQualite = $em->getRepository(Formation::class)->findBy(['categorie' => '4']);
+        $formationsCommunication = $em->getRepository(Formation::class)->findBy(['categorie' => '5']);
+        $formationsAutre = $em->getRepository(Formation::class)->findBy(['categorie' => '6']);
         return $this->render('Formation/Formations/lister.html.twig', [
             'formations' => $formations,
-            'formationsRfp' => $formationsRfp,
             'formationsActico' => $formationsActico,
             'formationsTreso' => $formationsTreso,
             'formationsDsi' => $formationsDsi,
@@ -75,7 +73,7 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="formation_voir", path="/formations/{id}", methods={"GET","HEAD"}, requirements={"id": "\d+"})
+     * @Route(name="formation_voir", path="/formations/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
      *
      * @param Formation $formation The training to display
      *
