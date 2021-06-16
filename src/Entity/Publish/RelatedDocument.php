@@ -14,6 +14,7 @@ namespace App\Entity\Publish;
 use App\Entity\Formation\Formation;
 use App\Entity\Personne\Membre;
 use App\Entity\Processus\Processus;
+use App\Entity\Formation\Passation;
 use App\Entity\Personne\Prospect;
 use App\Entity\Project\Etude;
 use Doctrine\ORM\Mapping as ORM;
@@ -57,6 +58,12 @@ class RelatedDocument
      * @ORM\JoinColumn(name="formation_id", referencedColumnName="id", nullable=true)
      */
     private $formation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Formation\Passation", cascade={"persist"})
+     * @ORM\JoinColumn(name="passation_id", referencedColumnName="id", nullable=true)
+     */
+    private $passation;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personne\Prospect", cascade={"persist"})
@@ -222,6 +229,30 @@ class RelatedDocument
     public function getProcessus()
     {
         return $this->processus;
+    }
+
+    /**
+     * Set passation.
+     *
+     * @param Passation $passation
+     *
+     * @return RelatedDocument
+     */
+    public function setPassation(Passation $passation = null)
+    {
+        $this->passation = $passation;
+
+        return $this;
+    }
+
+    /**
+     * Get passation.
+     *
+     * @return Passation
+     */
+    public function getPassation()
+    {
+        return $this->passation;
     }
 
     public function __toString()

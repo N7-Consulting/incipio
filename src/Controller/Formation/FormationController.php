@@ -12,7 +12,9 @@
 namespace App\Controller\Formation;
 
 use App\Entity\Formation\Formation;
+use App\Entity\Formation\Passation;
 use App\Form\Formation\FormationType;
+use App\Form\Formation\PassationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -42,24 +44,21 @@ class FormationController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="formations_lister", path="/formations", methods={"GET","HEAD"})
+     * @Route(name="passation_lister", path="/passation", methods={"GET","HEAD"})
      *
      * Display a list of all training group by term.
      */
     public function lister()
     {   
         $em = $this->getDoctrine()->getManager();
-        $formations = $em->getRepository(Formation::class)
-            ->getAllFormations([], ['dateDebut' => 'DESC']);
-        $formationsActico = $em->getRepository(Formation::class)->findBy(['categorie' => '0']);
-        $formationsTreso = $em->getRepository(Formation::class)->findBy(['categorie' => '1']);
-        $formationsDsi = $em->getRepository(Formation::class)->findBy(['categorie' => '2']);
-        $formationsRh = $em->getRepository(Formation::class)->findBy(['categorie' => '3']);
-        $formationsQualite = $em->getRepository(Formation::class)->findBy(['categorie' => '4']);
-        $formationsCommunication = $em->getRepository(Formation::class)->findBy(['categorie' => '5']);
-        $formationsAutre = $em->getRepository(Formation::class)->findBy(['categorie' => '6']);
+        $formationsActico = $em->getRepository(Passation::class)->findBy(['categorie' => '0']);
+        $formationsTreso = $em->getRepository(Passation::class)->findBy(['categorie' => '1']);
+        $formationsDsi = $em->getRepository(Passation::class)->findBy(['categorie' => '2']);
+        $formationsRh = $em->getRepository(Passation::class)->findBy(['categorie' => '3']);
+        $formationsQualite = $em->getRepository(Passation::class)->findBy(['categorie' => '4']);
+        $formationsCommunication = $em->getRepository(Passation::class)->findBy(['categorie' => '5']);
+        $formationsAutre = $em->getRepository(Passation::class)->findBy(['categorie' => '6']);
         return $this->render('Formation/Rapports/lister.html.twig', [
-            'formations' => $formations,
             'formationsActico' => $formationsActico,
             'formationsTreso' => $formationsTreso,
             'formationsDsi' => $formationsDsi,
@@ -82,6 +81,21 @@ class FormationController extends AbstractController
     {
         return $this->render('Formation/Rapports/voir.html.twig', [
             'formation' => $formation,
+        ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="passation_voir", path="/passation/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
+     *
+     * @param Passation $formation The training to display
+     *
+     * @return Response
+     */
+    public function voirPassation(Passation $passation)
+    {
+        return $this->render('Formation/Rapports/voir.html.twig', [
+            'formation' => $passation,
         ]);
     }
 
@@ -112,6 +126,36 @@ class FormationController extends AbstractController
 
         return $this->render('Formation/Gestion/ajouter.html.twig', ['form' => $form->createView(),
                                                                                 'formation' => $formation,
+        ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="passation_ajouter", path="/passation/admin/ajouter", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function ajouterPassation(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $passation = new Passation();
+        $form = $this->createForm(PassationType::class, $passation);
+
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->persist($passation);
+                $em->flush();
+                $this->addFlash('success', 'Passation enregistrée');
+
+                return $this->redirectToRoute('passation_voir', ['id' => $passation->getId()]);
+            }
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
+        }
+
+        return $this->render('Formation/Rapports/ajouter.html.twig', ['form' => $form->createView(),
+                                                                                'passation' => $passation,
         ]);
     }
 

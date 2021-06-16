@@ -14,7 +14,8 @@ formation:
   duree: Durée
   espace_admin: Espace Admin
   formateurs: Formateurs
-  formation_enregistrer: Enregistrer la Formation
+  formation_enregistrer: Enregistrer la formation
+  passation_enregistrer: Enregistrer la passation
   formation_modifier: Modifier la formation
   formation_supprimer: Supprimer la Formation
   formations: Formations
@@ -25,6 +26,7 @@ formation:
   membres_present: Membres Présents
   minutes: minutes
   modifier: Modifier
+  passation_ajouter : Ajouter une passation
   personnes_presentes: Personnes présentes
   present: Présents
   qualite: Qualité
