@@ -15,6 +15,7 @@ use App\Entity\Formation\Formation;
 use App\Entity\Personne\Membre;
 use App\Entity\Project\Etude;
 use App\Entity\Processus\Processus;
+use App\Entity\Formation\Passation;
 use App\Entity\Publish\Document;
 use App\Entity\Publish\RelatedDocument;
 use App\Form\Publish\DocumentType;
@@ -106,6 +107,28 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="publish_document_uploadPassation", path="/Documents/Upload/Passation/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function uploadPassation(
+        Request $request,
+        Passation $passation,
+        DocumentManager $documentManager,
+        KernelInterface $kernel
+    ) {
+
+        if (!$response = $this->upload($request, false, ['passation' => $passation], $documentManager, $kernel)) {
+            $this->addFlash('success', 'Document mis en ligne');
+
+            return $this->redirectToRoute('passation_voir', ['id' => $passation->getId()]);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="publish_document_uploadProcessus", path="/Documents/Upload/Processus/{nom}", methods={"GET","HEAD","POST"})
      *
      * @return Response
@@ -161,7 +184,7 @@ class DocumentController extends AbstractController
         if (!$response = $this->upload($request, false, ['formation' => $formation], $documentManager, $kernel)) {
             $this->addFlash('success', 'Document mis en ligne');
 
-            return $this->redirectToRoute('formations_lister');
+            return $this->redirectToRoute('formation_voir', ['id' => $passation->getId()]);
             }
 
         return $response;
@@ -224,6 +247,9 @@ class DocumentController extends AbstractController
             }
             if (array_key_exists('formation', $options)) {
                 $relatedDocument->setFormation($options['formation']);
+            }
+            if (array_key_exists('passation', $options)) {
+                $relatedDocument->setPassation($options['passation']);
             }
         }
 

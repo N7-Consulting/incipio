@@ -37,7 +37,7 @@ class FormationController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
 
-        return $this->render('Formation/Gestion/index.html.twig', [
+        return $this->render('Formation/Formations/index.html.twig', [
             'formationsParMandat' => $formationsParMandat,
         ]);
     }
@@ -58,7 +58,7 @@ class FormationController extends AbstractController
         $formationsQualite = $em->getRepository(Passation::class)->findBy(['categorie' => '4']);
         $formationsCommunication = $em->getRepository(Passation::class)->findBy(['categorie' => '5']);
         $formationsAutre = $em->getRepository(Passation::class)->findBy(['categorie' => '6']);
-        return $this->render('Formation/Rapports/lister.html.twig', [
+        return $this->render('Formation/Passations/lister.html.twig', [
             'formationsActico' => $formationsActico,
             'formationsTreso' => $formationsTreso,
             'formationsDsi' => $formationsDsi,
@@ -79,7 +79,7 @@ class FormationController extends AbstractController
      */
     public function voir(Formation $formation)
     {
-        return $this->render('Formation/Rapports/voir.html.twig', [
+        return $this->render('Formation/Passations/voir.html.twig', [
             'formation' => $formation,
         ]);
     }
@@ -94,7 +94,7 @@ class FormationController extends AbstractController
      */
     public function voirPassation(Passation $passation)
     {
-        return $this->render('Formation/Rapports/voir.html.twig', [
+        return $this->render('Formation/Passations/voir.html.twig', [
             'formation' => $passation,
         ]);
     }
@@ -124,7 +124,7 @@ class FormationController extends AbstractController
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
-        return $this->render('Formation/Gestion/ajouter.html.twig', ['form' => $form->createView(),
+        return $this->render('Formation/Formations/ajouter.html.twig', ['form' => $form->createView(),
                                                                                 'formation' => $formation,
         ]);
     }
@@ -154,7 +154,7 @@ class FormationController extends AbstractController
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
-        return $this->render('Formation/Rapports/ajouter.html.twig', ['form' => $form->createView(),
+        return $this->render('Formation/Passations/ajouter.html.twig', ['form' => $form->createView(),
                                                                                 'passation' => $passation,
         ]);
     }
@@ -186,10 +186,44 @@ class FormationController extends AbstractController
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
-        return $this->render('Formation/Gestion/modifier.html.twig', [
+        return $this->render('Formation/Formations/modifier.html.twig', [
             'delete_form' => $deleteForm->createView(),
             'form' => $form->createView(),
             'formation' => $formation,
+        ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="passation_modifier", path="/passation/admin/modifier/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
+     *
+     * @param Passation $formation The training to modify
+     *
+     * @return Response
+     */
+    public function modifierPassation(Request $request, Passation $passation)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(PassationType::class, $passation);
+        $deleteForm = $this->createDeleteForm($passation->getId());
+
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->persist($passation);
+                $em->flush();
+                $this->addFlash('success', 'Passation enregistrée');
+
+                return $this->redirectToRoute('passation_voir', ['id' => $passation->getId()]);
+            }
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
+        }
+
+        return $this->render('Formation/Passations/modifier.html.twig', [
+            'delete_form' => $deleteForm->createView(),
+            'form' => $form->createView(),
+            'passation' => $passation,
         ]);
     }
 
@@ -242,7 +276,7 @@ class FormationController extends AbstractController
             }
         }
 
-        return $this->render('Formation/Gestion/participation.html.twig', [
+        return $this->render('Formation/Formations/participation.html.twig', [
             'form' => $form->createView(),
             'formations' => $formations,
             'presents' => $presents,

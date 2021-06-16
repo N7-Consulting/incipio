@@ -6,8 +6,8 @@
         </tr>
         {% for formation in formations %}
             <tr>
-                <td>{{ formation.titre }}</td>
-                <td><a href="{{ path('formation_voir', {'id': formation.id}) }}">{{ formation.titre | title }}</a>
+                <td><a href="{{ path('passation_voir', {'id': formation.id}) }}"><span class="fa fa-eye"></td>
+                <td>{{ formation.titre | title }}</a>
                 <td>{{ formation.description }}</td>
             </tr>
         {% endfor %}

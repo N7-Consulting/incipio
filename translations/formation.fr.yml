@@ -2,13 +2,16 @@ formation:
   actico: Activité Commerciale
   annee: Année
   autre: Autre
+  book_passation: Book de passation
   categories: Categories
   chercher: Chercher
   confirmation_supprimer_formation: Etes-vous sûr de vouloir supprimer définitivement cette formation ?
   communication: Communication
   date: Date
+  date_upload: Date de télechargement
   description: Description
   documents: Documents
+  document_passation: Documents relatifs à la passation
   documents_telecharger: Télécharger les documents
   dsi: DSI
   duree: Durée
@@ -27,6 +30,7 @@ formation:
   minutes: minutes
   modifier: Modifier
   passation_ajouter : Ajouter une passation
+  passation_modifier : Modifier la passation
   personnes_presentes: Personnes présentes
   present: Présents
   qualite: Qualité

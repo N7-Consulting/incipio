@@ -1,11 +1,11 @@
 {% extends "Formation/layout.html.twig" %}
 
 {% block content_title %}
-    {{ formation.titre }}
+    {{ 'formation.document_passation'|trans({}, 'formation') }}
 {% endblock %}
 
 {% block breadcrumb_active %}
-    {{ formation.titre }}
+    {{ 'formation.document_passation'|trans({}, 'formation') }}
 {% endblock %}
 
 {% block content_bundle %}
@@ -23,9 +23,9 @@
  
     <table class="table table-bordered table-striped">
         <tr>
-            <th>titre</th>
-            <th>date</th>
-            <th>supre</th>
+            <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
+            <th>{{ 'formation.date_upload'|trans({}, 'formation') }}</th>
+            <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
 
         </tr>
 
@@ -48,12 +48,12 @@
     <br/>
     <div class="row">
         <div class="col-md-2 col-xs-4">
-            <a href="{{ path('publish_document_uploadFormation',{'id': formation.id}) }}" class="btn btn-primary">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
+            <a href="{{ path('publish_document_uploadPassation',{'id': formation.id}) }}" class="btn btn-primary">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
         </div>
         {% if is_granted('ROLE_CA') %}
             <div class="col-md-2 col-xs-4">
-                <a href="{{ path('formation_modifier', {'id': formation.id}) }}" class="btn btn-warning">
-                    {{ 'formation.formation_modifier'|trans({}, 'formation') }}
+                <a href="{{ path('passation_modifier', {'id': formation.id}) }}" class="btn btn-warning">
+                    {{ 'formation.passation_modifier'|trans({}, 'formation') }}
                 </a>
             </div>
         {% endif %}
