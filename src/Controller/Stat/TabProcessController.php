@@ -74,23 +74,16 @@ class TabProcessController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route(name="processus_supprimer", path="/Processus/Supprimer/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="processus_supprimer", path="/Processus/Supprimer/{nom}", methods={"GET","HEAD","POST"})
      *
      * @return RedirectResponse
      */
     public function delete(Processus $processus, Request $request)
     {
-        $form = $this->createDeleteForm($processus->getId());
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($processus);
-            $em->flush();
-            $this->addFlash('success', 'processus supprimée');
-        }
-
-         
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($processus);
+        $em->flush();
+        $this->addFlash('success', 'Processus supprimé');
         return $this->redirectToRoute('tab_process');
     }
 
@@ -100,31 +93,6 @@ class TabProcessController extends AbstractController
             ->add('id', HiddenType::class)
             ->getForm();
     }
-
-    /**
-     * @Security("has_role('ROLE_CA')")
-     * @Route(name="processus_document_delete", path="/Processus/Documents/Supprimer/{id}", methods={"GET","HEAD","POST"})
-     *
-     * @return Response
-     */
-    public function deleteDoc(Document $doc, KernelInterface $kernel)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $doc->setProjectDir($kernel->getProjectDir());
-
-        if ($doc->getRelation()) { // Cascade sucks
-            $relation = $doc->getRelation()->setDocument();
-            $doc->setRelation(null);
-            $em->remove($relation);
-            $em->flush();
-        }
-        $this->addFlash('success', 'Document supprimé');
-        $em->remove($doc);
-        $em->flush();
-
-        return $this->redirectToRoute('tab_process');
-    }
-
 
     /**
      * @Route(name="voir_doc_processus", path="/Processus/Document/Associes/{nom}", methods={"GET","HEAD","POST"})

@@ -26,11 +26,10 @@
                     <tr>
                         <td>{{process.nom}} </td>
                         <td>{{process.pilote}} </td>
-                        <td><a href="{{ path('voir_doc_processus',{'nom': process.nom})}} ">v</a></td>
+                        <td><a href="{{ path('voir_doc_processus',{'nom': process.nom})}} "><span class="fa fa-eye"></a></td>
                         <td><form class="bootbox-confirm inline"
-                                  data-content="{{ 'processus.supprimer_process_confirm'|trans({}, 'processus') }}"
-                                  action="{{ path('processus_supprimer', { 'id': process.id}) }}" method="post">
-                                {# {{ form_widget(delete_form) }} #}
+                                data-content="{{ 'processus.supprimer_process_confirm'|trans({}, 'processus') }}"
+                                action="{{ path('processus_supprimer', { 'nom': process.nom}) }}" method="post">
                         <button class="fa fa-times"></button>
                         </form> </td>
                     </tr>
