@@ -49,6 +49,8 @@ class GroupePhasesController extends AbstractController
                     $groupeNew = new GroupePhases();
                     $groupeNew->setNumero(count($etude->getGroupes()));
                     $groupeNew->setEtude($etude);
+                    $groupeNew->setTitre('');
+                    $groupeNew->setDescription('');
                     $etude->addGroupe($groupeNew);
                     $message = 'Groupe ajouté';
                 }
