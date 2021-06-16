@@ -57,7 +57,7 @@ class FormationType extends AbstractType
                 'required' => true,
                 'widget' => 'choice', ])
             ->add('mandat', IntegerType::class, [
-                'label' => 'formation.mandat',
+                'label' => 'formation.annee',
                 'translation_domain' => 'formation',
                 'required' => true, ])
             ->add('formateurs', CollectionType::class, [

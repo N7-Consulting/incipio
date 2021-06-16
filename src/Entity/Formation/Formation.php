@@ -130,6 +130,7 @@ class Formation
 
         return '';
     }
+    
 
     /**
      * Get id.
@@ -435,4 +436,5 @@ class Formation
     {
         return $this->relatedDocuments;
     }
+
 }

@@ -31,7 +31,7 @@ class DocumentType extends AbstractType
                 'etudiant' => $options['etudiant'],
                 'prospect' => $options['prospect'],
                 'processus' => $options['processus'],
-                'formation' => $options['formation'], ]);
+                 ]);
         }
     }
 

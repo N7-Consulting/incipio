@@ -47,7 +47,7 @@ class FormationController extends AbstractController
      * Display a list of all training group by term.
      */
     public function lister()
-    {
+    {   
         $em = $this->getDoctrine()->getManager();
         $formations = $em->getRepository(Formation::class)
             ->getAllFormations([], ['dateDebut' => 'DESC']);
@@ -58,7 +58,7 @@ class FormationController extends AbstractController
         $formationsQualite = $em->getRepository(Formation::class)->findBy(['categorie' => '4']);
         $formationsCommunication = $em->getRepository(Formation::class)->findBy(['categorie' => '5']);
         $formationsAutre = $em->getRepository(Formation::class)->findBy(['categorie' => '6']);
-        return $this->render('Formation/Formations/lister.html.twig', [
+        return $this->render('Formation/Rapports/lister.html.twig', [
             'formations' => $formations,
             'formationsActico' => $formationsActico,
             'formationsTreso' => $formationsTreso,
@@ -80,7 +80,7 @@ class FormationController extends AbstractController
      */
     public function voir(Formation $formation)
     {
-        return $this->render('Formation/Formations/voir.html.twig', [
+        return $this->render('Formation/Rapports/voir.html.twig', [
             'formation' => $formation,
         ]);
     }

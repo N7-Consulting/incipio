@@ -59,6 +59,7 @@ dashboard:
   ndf_ajouter: Ajouter une NDF
   parameters: Paramètres
   particpants_voir: Voir les participants
+  passation: Passation
   pilotage_je: Pilotage de la J.E.
   poste_ajouter: Ajouter un poste
   postes: Postes
@@ -72,6 +73,10 @@ dashboard:
   pseudo_modifier: Modifier mon pseudo
   qualite : Qualité
   rechercher: Rechercher...
+  rapports : Rapports
+  rfp: R.F.P
+  passation_voir : Voir les Passations
+  passation_ajouter : Ajouter une passation
   rh_competences: RH & compétences
   saisie_informations: Saisie des informations
   stock_doc : Archivage des documents

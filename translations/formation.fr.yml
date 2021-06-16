@@ -1,5 +1,6 @@
 formation:
   actico: Activité Commerciale
+  annee: Année
   autre: Autre
   categories: Categories
   chercher: Chercher
@@ -17,6 +18,7 @@ formation:
   formation_modifier: Modifier la formation
   formation_supprimer: Supprimer la Formation
   formations: Formations
+  formations_rapports : Rapports des formations
   formations_presence: Présence aux formations
   mandat: Mandat
   membres: membres
