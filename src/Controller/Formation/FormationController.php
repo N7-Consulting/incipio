@@ -33,11 +33,10 @@ class FormationController extends AbstractController
     public function index()
     {
         $em = $this->getDoctrine()->getManager();
-        $formations = $em->getRepository(Formation::class)
-            ->getAllFormations([], ['dateDebut' => 'DESC']);
+        $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
 
         return $this->render('Formation/Gestion/index.html.twig', [
-            'formations' => $formations,
+            'formationsParMandat' => $formationsParMandat,
         ]);
     }
 
