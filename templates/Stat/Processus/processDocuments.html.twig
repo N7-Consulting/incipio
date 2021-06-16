@@ -1,0 +1,38 @@
+{% extends "Stat/layout.html.twig" %}
+
+{% block title %}
+    {{ 'processus.documents'|trans({}, 'processus') }} - {{ parent() }}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'processus.doc_process'|trans({}, 'processus') }}: {{ processus.nom }}
+{% endblock %}
+
+{% block content_bundle %}
+    <div class="col-md-2 col-xs-2">
+            <a href="{{ path('publish_document_uploadProcessus',{'nom': processus.nom}) }}" class="pull-right btn btn-info">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>{{ 'processus.titre'|trans({}, 'processus') }}</th>
+            <th>{{ 'processus.date_upload'|trans({}, 'processus') }}</th>
+            {# {% if is_granted('ROLE_CA') %} #}
+            <th>{{ 'processus.supprimer'|trans({}, 'processus') }}</th>
+            {# {% endif %} #} 
+        </tr>
+        {# {% for relatedDocument in etude.relatedDocuments %}
+        {% set doc = relatedDocument.document %} #}
+        <tr>
+             <td><a href="{{ path('publish_document_voir', {'id': 11}) }} ">{{processus.nom}}</a></td>
+            <td>da</td>
+            <td>de</td>
+            {# <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ doc.name}}</a></td>
+            <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s')}}</td>
+            <td>{{ doc.author ? doc.author.prenomNom }}</td> #}
+            {# {% if is_granted('ROLE_CA') %} #}
+            <td><a href="{{ path('publish_document_delete', {'id' : doc.id }) }}"><i class="fa fa-times"></i></a></td>
+            {# {% endif %}  #}
+        </tr>
+        {# {% endfor %} #}
+    </table>
+{% endblock %}

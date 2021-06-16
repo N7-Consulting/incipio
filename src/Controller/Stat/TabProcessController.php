@@ -33,7 +33,7 @@ class TabProcessController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $processus = $em->getRepository(Processus::class)->findAll();
         
-        return $this->render('Stat/tab_process/index.html.twig', [
+        return $this->render('Stat/Processus/index.html.twig', [
             'controller_name' => 'TabProcessController',
             'processus' => $processus,
         ]);
@@ -66,8 +66,20 @@ class TabProcessController extends AbstractController
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
-        return $this->render('Stat/tab_process/processus.html.twig',  ['form' => $form->createView()]
+        return $this->render('Stat/Processus/addProcessus.html.twig',  ['form' => $form->createView()]
                                                                                 
         );
+    }
+
+    /**
+     * @Route(name="voir_doc_processus", path="/Processus/Document/Associes/{nom}", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function voirDoc(Processus $processus, Request $request)
+    {
+        return $this->render('Stat/Processus/processDocuments.html.twig', [
+            'processus' => $processus,
+        ]);
     }
 }

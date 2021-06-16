@@ -1,4 +1,12 @@
 processus:
   ajouter_process :  Ajouter un processus
+  ajouter_doc :  Ajouter un Document
+  doc_process : Document du processus
   gestion_proc: Gestion des processus
   tab_process: Tableau des processus
+  nom_process : Nom du processus
+  pilote : Pilote
+  documents: Documents associés
+  titre : Titre 
+  date_upload : Date du télechargement
+  supprimer : Supprimer 
