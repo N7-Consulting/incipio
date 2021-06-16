@@ -50,10 +50,12 @@ class FormationController extends AbstractController
     public function lister()
     {
         $em = $this->getDoctrine()->getManager();
-        $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
-
+       // $formationsActico = $em->getRepository(Formation::class)->getPipeline(['categorie' => 'actico']);
+        $formations = $em->getRepository(Formation::class)
+            ->getAllFormations([], ['dateDebut' => 'DESC']);
         return $this->render('Formation/Formations/lister.html.twig', [
-            'formationsParMandat' => $formationsParMandat,
+            'formations' => $formations,
+            //'formationsActico' => $formationsActico,
         ]);
     }
 

@@ -50,6 +50,8 @@ class FormationRepository extends EntityRepository
         return $formationsParMandat;
     }
 
+    
+
     /**
      * Requete pour select l'ensemble des formations avec en jointure les différents OneToOne possibles.
      */

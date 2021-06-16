@@ -1,11 +1,15 @@
 formation:
+  actico: Activité Commerciale
+  autre: Autre
   categories: Categories
   chercher: Chercher
   confirmation_supprimer_formation: Etes-vous sûr de vouloir supprimer définitivement cette formation ?
+  communication: Communication
   date: Date
   description: Description
   documents: Documents
   documents_telecharger: Télécharger les documents
+  dsi: DSI
   duree: Durée
   espace_admin: Espace Admin
   formateurs: Formateurs
@@ -21,8 +25,12 @@ formation:
   modifier: Modifier
   personnes_presentes: Personnes présentes
   present: Présents
+  qualite: Qualité
+  rfp: RFP
+  rh: RH
   taux: Taux
   titre: Titre
+  treso: Trésorerie
   formations_liste: Liste des formations
   formation_ajouter: Ajouter une formation
   date_debut: Date de début

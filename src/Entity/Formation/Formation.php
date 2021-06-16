@@ -103,14 +103,13 @@ class Formation
     public static function getCategoriesChoice()
     {
         return [
-            '0' => 'Junior-Entreprise - Généralité',
-            '1' => 'Suivi d\'études',
-            '2' => 'Gestion Associative',
-            '3' => 'Recrutement Formation Passation',
-            '4' => 'Trésorerie',
-            '5' => 'Développement Commercial',
+            '0' => 'Recrutement Formation Passation',
+            '1' => 'Activité Commerciale',
+            '2' => 'Trésorerie',
+            '3' => 'DSI',
+            '4' => 'RH',
+            '5' => 'Qualité',
             '6' => 'Communication',
-            '7' => 'Intervenants',
             '8' => 'Autre', ];
     }
 
