@@ -29,7 +29,7 @@
                 {% set docs = attribute(etude, etudeAttr) %}
                 {% for doc in docs %}
                     {% if doc != NULL %}
-                    <a href="/Documents/Publiposter/{{nomDoc}}/etude/{{doc.id}}"><span class="fa fa-download">&nbsp</a>
+                    <a href="/Documents/Publiposter/{{nomDoc}}/{{rootName[nomDoc]}}/{{doc.id}}"><span class="fa fa-download">&nbsp</a>
                     <span>{{doc}}</span><br>
                     {% endif %}
                 {% else %}

@@ -13,6 +13,8 @@ class ActicoController extends AbstractController
     // TODO: Permettre d'afficher les éléments que l'on veut via le panel Administration
     // Correspondance colonnes tableau => nom dans l'entity Etude
     const docEtude = ['CETUDE' => 'ce','AV' => 'avs', 'PV' => 'procesVerbaux', 'RM' => 'missions'];
+    // Path pour la génération du document via le Publipostage
+    const rootName = ['CETUDE' => 'etude', 'AV' => 'etude', 'PV' => 'etude', 'RM' => 'mission'];
     // const docEtude = ['CDC' => 'cdc', 'PC' => 'pc', 'CETUDE' => 'ce', 'CCA' => 'cca', 'BDC' => 'bdc', 'RM' => 'missions', 'AV' => 'avs', 'PV' => 'procesVerbaux', 'QS' => 'qs'];
 
     /**
@@ -21,6 +23,7 @@ class ActicoController extends AbstractController
     public function index(): Response
     {
         $docEtude = self::docEtude;
+        $rootName = self::rootName;
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository(Document::class)->findAll();
         $etudes = $em->getRepository(Etude::class)->findAll();
@@ -30,6 +33,7 @@ class ActicoController extends AbstractController
             'docs' => $entities,
             'docEtude' => $docEtude,
             'etudes' => $etudes,
+            'rootName' => $rootName,
         ]);
     }
 }
