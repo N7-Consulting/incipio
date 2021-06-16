@@ -12,6 +12,7 @@ formation:
   date_upload: Date de télechargement
   description: Description
   documents: Documents
+  document_formation : Documents relatifs à la formation
   document_passation: Documents relatifs à la passation
   documents_telecharger: Télécharger les documents
   dsi: DSI

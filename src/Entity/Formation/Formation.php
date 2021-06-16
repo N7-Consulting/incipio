@@ -43,9 +43,9 @@ class Formation
     private $mandat;
 
     /**
-     * @var int
+     * @var array
      *
-     * @ORM\Column(name="categorie", type="integer")
+     * @ORM\Column(name="categorie", type="array")
      */
     private $categorie;
 
@@ -142,10 +142,10 @@ class Formation
         return $this->id;
     }
 
-     /**
-     * Set categorieID.
+        /**
+     * Set categorie.
      *
-     * @param int $categorieID
+     * @param int $categorie
      *
      * @return Formation
      */
@@ -159,7 +159,7 @@ class Formation
     /**
      * Get categorie.
      *
-     * @return int
+     * @return array
      */
     public function getCategorie()
     {
