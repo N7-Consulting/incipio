@@ -50,12 +50,26 @@ class FormationController extends AbstractController
     public function lister()
     {
         $em = $this->getDoctrine()->getManager();
-       // $formationsActico = $em->getRepository(Formation::class)->getPipeline(['categorie' => 'actico']);
         $formations = $em->getRepository(Formation::class)
             ->getAllFormations([], ['dateDebut' => 'DESC']);
+        $formationsRfp = $em->getRepository(Formation::class)->findBy( ['categorie' => 'a:1:{i:0;i:0;}']);
+        $formationsActico = $em->getRepository(Formation::class)->findBy(['id' => '1']);
+        $formationsTreso = $em->getRepository(Formation::class)->findBy(['id' => '2']);
+        $formationsDsi = $em->getRepository(Formation::class)->findBy(['id' => '3']);
+        $formationsRh = $em->getRepository(Formation::class)->findBy(['id' => '4']);
+        $formationsQualite = $em->getRepository(Formation::class)->findBy(['id' => '5']);
+        $formationsCommunication = $em->getRepository(Formation::class)->findBy(['id' => '6']);
+        $formationsAutre = $em->getRepository(Formation::class)->findBy(['id' => '7']);
         return $this->render('Formation/Formations/lister.html.twig', [
             'formations' => $formations,
-            //'formationsActico' => $formationsActico,
+            'formationsRfp' => $formationsRfp,
+            'formationsActico' => $formationsActico,
+            'formationsTreso' => $formationsTreso,
+            'formationsDsi' => $formationsDsi,
+            'formationsRh' => $formationsRh,
+            'formationsQualite' => $formationsQualite,
+            'formationsCommunication' => $formationsCommunication,
+            'formationsAutre' => $formationsAutre,
         ]);
     }
 

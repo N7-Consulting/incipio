@@ -110,7 +110,7 @@ class Formation
             '4' => 'RH',
             '5' => 'Qualité',
             '6' => 'Communication',
-            '8' => 'Autre', ];
+            '7' => 'Autre', ];
     }
 
     public static function getCategoriesChoiceToString($choice = null)

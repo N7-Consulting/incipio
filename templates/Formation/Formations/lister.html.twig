@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block content_bundle %}
-<div class="nav-tabs-custom">
+    <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
         
-            <li class=active><a href="#tab1" data-toggle="tab">{{ 'formation.rfp'|trans({}, 'formation') }}</a></li>
+            <li class="active"><a href="#tab1" data-toggle="tab">{{ 'formation.rfp'|trans({}, 'formation') }}</a></li>
             <li><a href="#tab2" data-toggle="tab">{{ 'formation.actico'|trans({}, 'formation') }}</a></li>
             <li><a href="#tab3" data-toggle="tab">{{ 'formation.treso'|trans({}, 'formation') }}</a></li>
             <li><a href="#tab4" data-toggle="tab">{{ 'formation.communication'|trans({}, 'formation') }}</a></li>
@@ -16,51 +16,32 @@
             <li><a href="#tab6" data-toggle="tab">{{ 'formation.dsi'|trans({}, 'formation') }}</a></li>
             <li><a href="#tab7" data-toggle="tab">{{ 'formation.rh'|trans({}, 'formation') }}</a></li>
             <li><a href="#tab8" data-toggle="tab">{{ 'formation.autre'|trans({}, 'formation') }}</a></li>
-
-             
         </ul>
     </div>
     <div class="tab-content">
         <div class="tab-pane active" id="tab1" style="min-height: 400px;">
-            {% include "Formation/Formations/categorie.html.twig" with  {'formation':  formations} %}
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsRfp} %}
         </div>
-        <div class="tab-pane active" id="tab2" style="min-height: 400px;">
-            {% include "Formation/Formations/categorie.html.twig" with  {'formation':  formations } %}
+        <div class="tab-pane fade" id="tab2" style="min-height: 400px;">
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsActico } %}
         </div>
-        
+        <div class="tab-pane fade" id="tab3" style="min-height: 400px;">
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsTreso } %}
+        </div>
+        <div class="tab-pane fade" id="tab4" style="min-height: 400px;">
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsDsi } %}
+        </div>
+        <div class="tab-pane fade" id="tab5" style="min-height: 400px;">
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsRh } %}
+        </div>
+        <div class="tab-pane fade" id="tab6" style="min-height: 400px;">
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsQualite } %}
+        </div>
+        <div class="tab-pane fade" id="tab7" style="min-height: 400px;">
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsCommunication } %}
+        </div>
+        <div class="tab-pane fade" id="tab8" style="min-height: 400px;">
+            {% include "Formation/Formations/categorie.html.twig" with  {'formations':  formationsAutre } %}
+        </div>  
     </div>
-
-    
-
-    {# <table class="table table-bordered table-striped">
-        <tr>
-            <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
-            <th>{{ 'formation.categories'|trans({}, 'formation') }}</th>
-            <th>{{ 'formation.date'|trans({}, 'formation') }}</th>
-            <th>{{ 'formation.titre'|trans({}, 'formation') }}</th>
-            <th>{{ 'formation.description'|trans({}, 'formation') }}</th>
-            <th>{{ 'formation.formateurs'|trans({}, 'formation') }}</th>
-            <th>{{ 'formation.duree'|trans({}, 'formation') }}</th>
-        </tr>
-        {% for mandat, formations in formationsParMandat %}
-            <tr>
-                <th colspan="7">{{ 'formation.mandat'|trans({}, 'formation') }} {{ mandat }}</th>
-            </tr>
-            {% for formation in formations | reverse %}
-                <tr>
-                    <td>{% if formation.docPath %}<a href="{{ formation.docPath }}"><i
-                                    class="fa fa-arrow-circle-down"></i></a>{% endif %}</td>
-                    <td style="min-width: 300px;">{% for cat in formation.categorie %}{{ formation.categoriesChoiceToString[cat] }}
-                            <br/> {% endfor %}</td>
-                    <td>{{ formation.dateDebut | date("d/m/Y") }}</td>
-                    <td>
-                        <a href="{{ path('formation_voir', {'id': formation.id}) }}">{{ formation.titre | title }}</a>
-                    </td>
-                    <td>{{ formation.description | nl2br }}</td>
-                    <td>{% for personne in formation.formateurs %} {{ personne.prenomNom }};{% endfor %}</td>
-                    <td>{{ (formation.dateFin | date("U") - formation.dateDebut | date("U")) / 60 }} {{ 'formation.minutes'|trans({}, 'formation') }}</td>
-                </tr>
-            {% endfor %}
-        {% endfor %}
-    </table> #}
 {% endblock %}
