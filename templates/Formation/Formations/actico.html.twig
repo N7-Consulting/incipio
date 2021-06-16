@@ -12,8 +12,9 @@
             <tr>
                 <td><i class="fa fa-arrow-circle-down"></i></td>
                 <td>{{ formation.dateDebut | date("d/m/Y") }}</td>
-                <td><a title="{{ 'formation.modifier'|trans({}, 'formation') }}"
-                     href="{{ path('formation_modifier', {'id': formation.id}) }}">{{ formation.titre | title }}</a>
+                <td><a href="{{ path('formation_voir', {'id': formation.id}) }}">{{ formation.titre | title }}</a>
+                {# <a title="{{ 'formation.modifier'|trans({}, 'formation') }}"
+                     href="{{ path('formation_modifier', {'id': formation.id}) }}">{{ formation.titre | title }}</a> #}
                 </td>
                 <td>{{ formation.description }}</td>
                 <td>{% for membre in formation.formateurs %} {{ membre.prenomNom }};{% endfor %}</td>

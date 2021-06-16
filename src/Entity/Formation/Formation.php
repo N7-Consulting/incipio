@@ -73,6 +73,11 @@ class Formation
     private $formateurs;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Publish\RelatedDocument", mappedBy="processus", cascade={"remove"})
+     */
+    private $relatedDocuments;
+
+    /**
      * @var Personne
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Personne\Personne")
@@ -399,5 +404,35 @@ class Formation
     public function getMandat()
     {
         return $this->mandat;
+    }
+
+    /**
+     * Add relatedDocuments.
+     *
+     * @return Processus
+     */
+    public function addRelatedDocument(RelatedDocument $relatedDocuments)
+    {
+        $this->relatedDocuments[] = $relatedDocuments;
+
+        return $this;
+    }
+
+    /**
+     * Remove relatedDocuments.
+     */
+    public function removeRelatedDocument(RelatedDocument $relatedDocuments)
+    {
+        $this->relatedDocuments->removeElement($relatedDocuments);
+    }
+
+    /**
+     * Get relatedDocuments.
+     *
+     * @return Collection
+     */
+    public function getRelatedDocuments()
+    {
+        return $this->relatedDocuments;
     }
 }

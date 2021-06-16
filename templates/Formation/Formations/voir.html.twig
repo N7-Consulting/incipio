@@ -31,4 +31,32 @@
             <button class="btn btn-success">{{ 'formation.documents_telecharger'|trans({}, 'formation') }}</button>
         </div>
     </div>
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>titre</th>
+            <th>date</th>
+            <th>supre</th>
+
+        </tr>
+
+        {% for relatedDocument in formation.relatedDocuments %}
+        {% set doc = relatedDocument.document %}
+        <tr>
+            <td><a href="{{ path('publish_document_voir', {'nom': doc.name}) }} ">{{ doc.name}}</a></td>
+            <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s')}}</td>
+            {# {% if is_granted('ROLE_CA') %} #}
+            <td><form class="bootbox-confirm inline"
+                    data-content="{{ 'processus.supprimer_doc_confirm'|trans({}, 'processus') }}"
+                    action="{{ path('publish_document_delete', { 'id': doc.id}) }}" method="post">
+                <button class="fa fa-times"></button>
+                </form> </td>
+            {# {% endif %} #}
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <div class="box-footer with-border">
+            <a href="{{ path('publish_document_uploadFormation',{'id': formation.id}) }}" class="pull-right btn btn-info">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
+    </div>
 {% endblock %}

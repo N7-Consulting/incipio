@@ -147,14 +147,26 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="publish_document_uploadFormation", path="/Documents/Upload/Formation/{id}", methods={"GET","HEAD"})
+     * @Route(name="publish_document_uploadFormation", path="/Documents/Upload/Formation/{id}", methods={"GET","HEAD","POST"})
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function uploadFormation(Formation $formation)
-    {
-        return new JsonResponse([], Response::HTTP_NOT_IMPLEMENTED);
+    public function uploadFormation(
+        Request $request,
+        Formation $formation,
+        DocumentManager $documentManager,
+        KernelInterface $kernel
+    ) {
+
+        if (!$response = $this->upload($request, false, ['formation' => $formation], $documentManager, $kernel)) {
+            $this->addFlash('success', 'Document mis en ligne');
+
+            return $this->redirectToRoute('formations_lister');
+            }
+
+        return $response;
     }
+
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
@@ -209,6 +221,9 @@ class DocumentController extends AbstractController
             }
             if (array_key_exists('processus', $options)) {
                 $relatedDocument->setProcessus($options['processus']);
+            }
+            if (array_key_exists('formation', $options)) {
+                $relatedDocument->setFormation($options['formation']);
             }
         }
 
