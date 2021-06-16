@@ -29,13 +29,13 @@
                 {% set docs = attribute(etude, etudeAttr) %}
                 {% for doc in docs %}
                     {% if doc != NULL %}
-                    <a href="Documents/Publiposter/{{nomDoc}}/etude/{{doc.id}}"><span class="fa fa-download">&nbsp</a>
+                    <a href="/Documents/Publiposter/{{nomDoc}}/etude/{{doc.id}}"><span class="fa fa-download">&nbsp</a>
                     <span>{{doc}}</span><br>
                     {% endif %}
                 {% else %}
                     {# On tombe dans ce cas là si on a pas une collection (eg: Convention) ou si la collection est vide. On évite ce cas. #}
                     {% if docs is not empty %}
-                    <a href="Documents/Publiposter/{{nomDoc}}/etude/{{docs.id}}"><span class="fa fa-download">&nbsp</a>
+                    <a href="/Documents/Publiposter/{{nomDoc}}/etude/{{docs.id}}"><span class="fa fa-download">&nbsp</a>
                     <span>{{docs}}</span>
                     {% endif %}
                 {% endfor %}
