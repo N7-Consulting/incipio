@@ -184,7 +184,7 @@ class DocumentController extends AbstractController
         if (!$response = $this->upload($request, false, ['formation' => $formation], $documentManager, $kernel)) {
             $this->addFlash('success', 'Document mis en ligne');
 
-            return $this->redirectToRoute('formation_voir', ['id' => $passation->getId()]);
+            return $this->redirectToRoute('formations_index_admin', ['id' => $formation->getId()]);
             }
 
         return $response;

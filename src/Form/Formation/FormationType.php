@@ -57,7 +57,7 @@ class FormationType extends AbstractType
                 'required' => true,
                 'widget' => 'choice', ])
             ->add('mandat', IntegerType::class, [
-                'label' => 'formation.annee',
+                'label' => 'formation.mandat',
                 'translation_domain' => 'formation',
                 'required' => true, ])
             ->add('formateurs', CollectionType::class, [
@@ -87,11 +87,7 @@ class FormationType extends AbstractType
                     'required' => false, ],
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false, ])
-            ->add('docPath', TextType::class, [
-                'label' => 'formation.lien_documents',
-                'translation_domain' => 'formation',
-                'required' => false, ]);
+                'by_reference' => false, ]);
     }
 
     public function getBlockPrefix()

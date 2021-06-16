@@ -81,6 +81,7 @@ class ProcessusController extends AbstractController
     public function delete(Processus $processus, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        
         $em->remove($processus);
         $em->flush();
         $this->addFlash('success', 'Processus supprimé');

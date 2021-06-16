@@ -1,4 +1,5 @@
 dashboard:
+  book_passation : Book de passations
   base_urssaf: Bases URSSAF
   actico: Activité Commerciale
   administration: Administration

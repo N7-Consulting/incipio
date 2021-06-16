@@ -8,7 +8,7 @@
     <table class="table table-bordered table-striped">
         <tr>
             <th>{{ 'formation.titre'|trans({}, 'formation') }}</th>
-            {# <th>{{ 'formation.categories'|trans({}, 'formation') }}</th> #}
+            <th>{{ 'formation.categories'|trans({}, 'formation') }}</th>
             <th>{{ 'formation.date'|trans({}, 'formation') }}</th>
             <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
             <th>{{ 'formation.description'|trans({}, 'formation') }}</th>
@@ -17,16 +17,16 @@
         </tr>
         {% for mandat, formations in formationsParMandat %}
             <tr>
-                <th colspan="7">{{ 'formation.annee'|trans({}, 'formation') }} {{ mandat }}</th>
+                <th colspan="7">{{ 'formation.mandat'|trans({}, 'formation') }} {{ mandat }}</th>
             </tr>
             {% for formation in formations | reverse %}
                 <tr>
                     <td>{{ formation.titre | title }}</td>
-                    {# <td style="min-width: 300px;">{% for cat in formation.categorie %}{{ formation.categoriesChoiceToString[cat] }}
-                            <br/> {% endfor %}</td> #}
+                    <td style="min-width: 300px;">{% for cat in formation.categorie %}{{ formation.categoriesChoiceToString[cat] }}
+                            <br/> {% endfor %}</td>
                     <td>{{ formation.dateDebut | date("d/m/Y") }}</td>
                     <td>
-                        <a href="{{ path('formation_voir', {'id': formation.id}) }}"><span class="fa fa-eye"></a>
+                        <a href="{{ path('formation_voir', {'id': formation.id}) }}"><span class="fa fa-eye"> ({{ formation.relatedDocuments | length }})</a>
                     </td>
                     <td>{{ formation.description | nl2br }}</td>
                     <td>{% for personne in formation.formateurs %} {{ personne.prenomNom }};{% endfor %}</td>

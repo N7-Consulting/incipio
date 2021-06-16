@@ -79,7 +79,7 @@ class FormationController extends AbstractController
      */
     public function voir(Formation $formation)
     {
-        return $this->render('Formation/Passations/voir.html.twig', [
+        return $this->render('Formation/Formations/voir.html.twig', [
             'formation' => $formation,
         ]);
     }
@@ -299,6 +299,7 @@ class FormationController extends AbstractController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
             $em->remove($formation);
             $em->flush();
             $this->addFlash('success', 'Formation supprimée');
