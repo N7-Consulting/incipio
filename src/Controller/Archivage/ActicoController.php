@@ -12,7 +12,7 @@ class ActicoController extends AbstractController
 {
     // TODO: Permettre d'afficher les éléments que l'on veut via le panel Administration
     // Correspondance colonnes tableau => nom dans l'entity Etude
-    const docEtude = ['CETUDE' => 'ce','AV' => 'avs', 'PV' => 'procesVerbaux'];
+    const docEtude = ['CETUDE' => 'ce','AV' => 'avs', 'PV' => 'procesVerbaux', 'RM' => 'missions'];
     // const docEtude = ['CDC' => 'cdc', 'PC' => 'pc', 'CETUDE' => 'ce', 'CCA' => 'cca', 'BDC' => 'bdc', 'RM' => 'missions', 'AV' => 'avs', 'PV' => 'procesVerbaux', 'QS' => 'qs'];
 
     /**
