@@ -24,10 +24,10 @@ use App\Controller\Stat\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
-class TabProcessController extends AbstractController
+class ProcessusController extends AbstractController
 {
     /**
-     * @Route("/TabProcess", name="tab_process")
+     * @Route("/Processus", name="tab_process")
      */
     public function index(Request $request): Response
     {
@@ -35,7 +35,7 @@ class TabProcessController extends AbstractController
         $processus = $em->getRepository(Processus::class)->findAll();
         
         return $this->render('Stat/Processus/index.html.twig', [
-            'controller_name' => 'TabProcessController',
+            'controller_name' => 'ProcessusController',
             'processus' => $processus,
         ]);
     }
