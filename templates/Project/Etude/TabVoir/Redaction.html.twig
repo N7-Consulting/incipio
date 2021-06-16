@@ -21,7 +21,7 @@
         </button>
         <span class="navbar-brand titre" data-toggle="collapse" data-target="#ap">
             <span class="fa fa-chevron-down"></span> {{ 'suivi.avant_projet'|trans({}, 'project') }}
-            - v{{ etude.ap.version | default('') }}
+            {{ etude.ap.version | default('') }}
         </span>
     </div>
     <div class="collapse navbar-collapse navbar-ap">
@@ -83,7 +83,7 @@
         </button>
         <span class="navbar-brand titre" data-toggle="collapse" data-target="#cc"><span
                     class="fa fa-chevron-down"></span> {{ 'suivi.convention_client'|trans({}, 'project') }}
-            - v{{ etude.cc.version | default('') }}</span>
+            {{ etude.cc.version | default('') }}</span>
     </div>
     <div class="collapse navbar-collapse navbar-cc">
         <ul class="nav navbar-nav">
@@ -129,7 +129,7 @@
             </button>
             <span class="navbar-brand titre" data-toggle="collapse" data-target="#ce"><span
                         class="fa fa-chevron-down"></span> {{ 'suivi.convention_etude'|trans({}, 'project') }}
-            - v{{ etude.cc.version | default('') }}</span>
+            {{ etude.cc.version | default('') }}</span>
         </div>
         <div class="collapse navbar-collapse navbar-cc">
             <ul class="nav navbar-nav">
