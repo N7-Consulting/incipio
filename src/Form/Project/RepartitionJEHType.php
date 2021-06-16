@@ -21,8 +21,8 @@ class RepartitionJEHType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nbrJEH', IntegerType::class, ['required' => true])
-            ->add('prixJEH', IntegerType::class, ['required' => true, 'attr' => ['min' => 80]]);
+        $builder->add('nbrJEH', IntegerType::class, ['required' => true, 'label' => 'Nombre JEH'])
+            ->add('prixJEH', IntegerType::class, ['required' => true, 'label' => 'Prix JEH', 'attr' => ['min' => 80]]);
     }
 
     public function getBlockPrefix()
