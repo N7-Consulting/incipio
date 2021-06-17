@@ -31,7 +31,8 @@
         <div class="col-md-3 col-xs-6">
             <button type="submit" formAudit="audit_type" class="btn btn-success">
                 {{ 'suivi.etude_enregistrer'|trans({}, 'project') }}
-                {{ form_widget(formAudit) }}
+                {{ form_rest(formAudit) }}
+                {# {{ form_widget(formAudit) }} #}
                 {{ form_end(formAudit) }}
             </button>
         </div>
