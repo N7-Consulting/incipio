@@ -92,10 +92,10 @@
             {{ 'suivi.audit_etat'|trans({}, 'project') }}
         </th>
         <th>
-            {{ 'suivi.commentaries'|trans({}, 'project') }}
+            {{ 'suivi.audit_date'|trans({}, 'project') }}
         </th>
         <th>
-            <div>{{ 'suivi.audit_changer_etat'|trans({}, 'project') }}</div>
+            {{ 'suivi.commentaries'|trans({}, 'project') }}
         </th>
     </tr>
     </thead>
@@ -119,13 +119,13 @@
                     <div>{{ etude.dateFin|date("d/m/Y") }}</div>{% endif %}
             </td>
             <td>
-                <a href="{{ path('audit_modifier',{'id': etude.id})}} ">  {{etude.getAuditTypeChoice()[etude.auditType]}} </a>
+                <a href="{{ path('audit_modifier',{'id': etude.id})}} ">  {{etude.getAuditTypeToString()}} </a>
             </td>
             <td>
-                commentaires
+                {{ etude.auditDate|date("d/m/Y") }}
             </td>
             <td>
-                rien ou lien ou document
+                {{ etude.auditCommentaires  }}
             </td>
         </tr>
     {% endfor %}

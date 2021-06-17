@@ -34,11 +34,16 @@ class AuditEtudeType extends AbstractType
             ->add(
                 'auditType',
                 AuditType::class,
-                ['label' => 'Etat de l\'audit', 'required' => true, 'choice_label' => function ($var) {
-                    return $var;
-                },
+                ['label' => 'Etat de l\'audit', 
+                'required' => true,
+                'choices' => array_flip(Etude::getAuditTypeChoice()), 
                 ]
-            );
+            )
+            ->add('auditCommentaires', TextareaType::class, [
+                'label' => 'Commentaires',
+                'translation_domain' => 'formation',
+                'required' => true,
+                'attr' => ['cols' => '100%', 'rows' => 5], ]);
     }
 
     public function getBlockPrefix()

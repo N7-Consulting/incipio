@@ -23,6 +23,7 @@ suivi:
   audit : Audit
   audit_changer_etat : Changer l'état de l'audit
   audit_etat: Etat de l'audit
+  audit_date: Date de l'audit
   auditée_le: Auditée le
   autre: autre
   av_ajouter_un: Ajouter un Avenant

@@ -131,6 +131,13 @@ class Etude
     private $stateDescription;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="auditCommentaires", type="text", nullable=true)
+     */
+    private $auditCommentaires;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="confidentiel", type="boolean", nullable=true)
@@ -819,7 +826,6 @@ class Etude
     public static function getAuditTypeChoice()
     {
         return [
-            '' => 'non déf',
             '0' => 'Non auditée',
             '1' => 'Validée',
             '2' => 'Validée (documents manquants)',
@@ -1508,6 +1514,30 @@ class Etude
     public function getStateDescription()
     {
         return $this->stateDescription;
+    }
+
+    /**
+     * Set auditCommentaires.
+     *
+     * @param string $auditCommentaires
+     *
+     * @return Etude
+     */
+    public function setAuditCommentaires($auditCommentaires)
+    {
+        $this->auditCommentaires = $auditCommentaires;
+
+        return $this;
+    }
+
+    /**
+     * Get auditCommentaires.
+     *
+     * @return string
+     */
+    public function getAuditCommentaires()
+    {
+        return $this->auditCommentaires;
     }
 
     /**
