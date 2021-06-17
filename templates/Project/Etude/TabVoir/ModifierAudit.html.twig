@@ -1,0 +1,50 @@
+{% extends "Project/layout.html.twig" %}
+
+{% block title %}
+    {{ 'suivi.etude_affichage'|trans({}, 'project') }} {{ parent() }}
+{% endblock %}
+
+
+{% block content_bundle %}
+<div class="table-responsive content">
+{{ form_start(formAudit, {'attr': {'id': 'audit_type'}}) }}
+{% form_theme formAudit 'Project/Form/fields.html.twig' %}
+<table class="table table-bordered table-striped standard">
+    <tr>
+        <th>{{ form_label(formAudit.auditType) }} {{ form_errors(formAudit.auditType) }}</th>
+        <td>{{ form_widget(formAudit.auditType) }}</td>
+    </tr>
+     <tr>
+        <th>{{ form_label(formAudit.auditDate) }} {{ form_errors(formAudit.auditDate) }}</th>
+        <td>{{ form_widget(formAudit.auditDate) }}</td>
+    </tr>
+    {# <tr>
+        <th>{{ form_label(form.newProspect.adresse) }} {{ form_errors(form.newProspect.adresse) }}</th>
+        <td>{{ form_widget(form.newProspect.adresse) }}</td>
+    </tr> #}
+    
+</table>
+
+{{ form_widget(formAudit) }}
+{{ form_end(formAudit) }}
+
+
+<div class="row">
+    <div class="col-md-3 col-xs-6">
+        <button type="submit" formAudit="audit_type" class="btn btn-success">
+            {{ 'suivi.etude_enregistrer'|trans({}, 'project') }}
+        </button>
+    </div>
+    {% if delete_form is defined %}
+        <div class="col-md-3 col-md-offset-3 col-xs-6">
+            <form class="bootbox-confirm inline" data-content="{{ 'suivi.etude_supprimer_confirm'|trans({}, 'project') }} ?"
+                  action="{{ path('project_etude_supprimer', { 'nom': etude.nom }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <button class="btn btn-danger">{{ 'suivi.etude_supprimer'|trans({}, 'project') }}</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+{{ form_javascript(formAudit) }}
+</div>
+{% endblock %}

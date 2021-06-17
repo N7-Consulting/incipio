@@ -17,11 +17,11 @@
             <td><label for="checkbox-gantt">{{ 'suivi.gantt'|trans({}, 'project') }}</label>
                 <input id="checkbox-gantt" type="checkbox" onchange="$('#ganttChart').toggle();"/></td>
             <td><label for="checkbox-infos">{{ 'suivi.informations_qualites'|trans({}, 'project') }}</label>
-                <input id="checkbox-infos" type="checkbox" onchange="$('.rawInfos').toggle();"/></td>
+                <input id="checkbox-infos" type="checkbox" checked="checked" onchange="$('.rawInfos').toggle();"/></td>
             <td><label for="checkbox-warns">{{ 'suivi.warnings'|trans({}, 'project') }}</label>
-                <input id="checkbox-warns" type="checkbox" onchange="$('.rawWarns').toggle();"/></td>
+                <input id="checkbox-warns" type="checkbox" checked="checked" onchange="$('.rawWarns').toggle();"/></td>
             <td><label for="checkbox-error">{{ 'suivi.errors'|trans({}, 'project') }}</label>
-                <input id="checkbox-error" type="checkbox" onchange="$('.rawError').toggle();"/></td>
+                <input id="checkbox-error" type="checkbox" checked="checked" onchange="$('.rawError').toggle();"/></td>
         </tr>
     </table>
 
@@ -36,7 +36,6 @@
                 <th>{{ 'suivi.client'|trans({}, 'project') }}</th>
                 <th>{{ 'suivi.suiveur'|trans({}, 'project') }}</th>
                 <th>{{ 'suivi.intervenants'|trans({}, 'project') }}</th>
-                <th>{{ 'suivi.auditee'|trans({}, 'project') }}</th>
                 
             </tr>
             {% for etude in etudes %}
@@ -51,7 +50,6 @@
                         {% endif %}
                         {% endfor %}
                     </td>
-                    <td>{{etude.getAuditTypeChoice()[etude.auditType]}}</td>
                 </tr>
                 {% if etude.stateDescription %}
                     <tr class="rawInfos">
@@ -75,7 +73,65 @@
     {% endfor %}
 
 <table id="content-3" class="table table-bordered table-striped">
-lala
+<div class="table-responsive">
+<table class="table table-striped" id="myTable">
+    <thead>
+    <tr>
+        <th>
+            <div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
+        </th>
+        <th>
+            <div>{{ 'suivi.client'|trans({}, 'project') }}</div>
+            <div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
+        </th>
+        <th>
+            <div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
+            <div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
+        </th>
+        <th>
+            {{ 'suivi.audit_etat'|trans({}, 'project') }}
+        </th>
+        <th>
+            {{ 'suivi.commentaries'|trans({}, 'project') }}
+        </th>
+        <th>
+            <div>{{ 'suivi.audit_changer_etat'|trans({}, 'project') }}</div>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for etude in etudesTerminees %}
+        <tr>
+            <td>
+                <div>{{ etude.confidentiel ? '<span class="label label-danger">[CONFIDENTIEL]</span> ' }}<a
+                            href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.reference(param('namingConvention')) }}</a>
+                </div>
+                <div>{{ etude.numero }}</div>
+            </td>
+            <td>{{ etude.prospect.nom }}
+                <br/><br/>
+                {{ etude.suiveur.prenomNom| default("Pas de suiveur!") }}</td>
+            <td>
+                {% if etude.dateLancement != NULL %}
+                    <div>{{ etude.dateLancement|date("d/m/Y") }}</div>{% endif %}
+                {% if etude.dateFin != NULL %}
+                    <div>{{ etude.dateFin|date("d/m/Y") }}</div>{% endif %}
+            </td>
+            <td>
+                <a href="{{ path('audit_modifier',{'id': etude.id})}} ">  {{etude.getAuditTypeChoice()[etude.auditType]}} </a>
+            </td>
+            <td>
+                commentaires
+            </td>
+            <td>
+                rien ou lien ou document
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
 </table>
 {% endblock %}
 

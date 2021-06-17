@@ -526,7 +526,7 @@ class EtudeController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="project_etude_audit_update", path="/suivi/audit/update/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="audit_modifier", path="/Project/Etude/Tabvoir/ModifierAudit/{id}", methods={"GET","HEAD","POST"})
      *
      * 
      */
@@ -540,8 +540,8 @@ class EtudeController extends AbstractController
         }
         
         $formAudit = $this->createForm(AuditEtudeType::class, $etude);
-        $deleteForm = $this->createDeleteFormt($etude->getId());
-
+        // $deleteForm = $this->createDeleteFormt($etude->getId());
+        
         if ('POST' == $request->getMethod()) {
             $formAudit->handleRequest($request);
 
@@ -549,14 +549,14 @@ class EtudeController extends AbstractController
                 $em->persist($etude);
                 $em->flush();
                 $this->addFlash('success', 'Audit enregistré');
-                return $this->redirectToRoute('project_etude_voir', ['nom' => $etude->getNom()]);
+                return $this->redirectToRoute('project_etude_suiviQualite', ['nom' => $etude->getNom()]);
             }
-        
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
         
 
-        return $this->render('Project/Etude/TabVoir/MajAudit.html.twig',  [
-            'delete_form' => $deleteForm->createView(),
+        return $this->render('Project/Etude/TabVoir/ModifierAudit.html.twig',  [
+            // 'delete_form' => $deleteForm->createView(),
             'etude' => $etude,
             'formAudit' => $formAudit->createView()]                                                                        
         );

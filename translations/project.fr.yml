@@ -21,6 +21,8 @@ suivi:
   aucune: Aucune
   auditee: Auditée
   audit : Audit
+  audit_changer_etat : Changer l'état de l'audit
+  audit_etat: Etat de l'audit
   auditée_le: Auditée le
   autre: autre
   av_ajouter_un: Ajouter un Avenant
@@ -155,6 +157,7 @@ suivi:
     suiveur_projet: Suiveur de projet
     suiveur_qualite: Suiveur qualité
   etude_l: L'étude
+  etat_audit: Etat de l'audit
   etude_modifier: Modifier une étude
   etude_nom: Nom de l'étude
   etude_retour: Retour à l'Etude
@@ -238,6 +241,8 @@ suivi:
   prix_jeh: Prix JEH
   prix_jeh_ht: Prix JEH HT Facturé (€)
   problemes: Problèmes
+  pb_mineur: Problème mineur
+  pb_majeur: Problème majeur
   proces_verbal: Procès verbal
   proces_verbal_afficher: Affichage d'un PV
   proces_verbal_ajouter: Ajouter un Procès-Verbal
@@ -310,4 +315,6 @@ suivi:
   type_prestation: Type de prestation
   version: Version
   voir: Voir
+  valide : Validée
+  valide_ss_doc: Validée (documents manquants)
   warnings: Warnings

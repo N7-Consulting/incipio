@@ -22,8 +22,10 @@ class AuditType extends AbstractType
         $resolver->setDefaults([
             'choices' => [
                 '0' => 'suivi.non_auditee',
-                '1' => 'suivi.exhaustive',
-                '2' => 'suivi.deontologique',
+                '1' => 'suivi.valide',
+                '2' => 'suivi.valide_ss_doc',
+                '3' => 'suivi.pb_mineur',
+                '4' => 'suivi.pb_majeur',
             ],
             'translation_domain' => 'project',
         ]);

@@ -24,25 +24,17 @@ class AuditEtudeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'stateID',
-            ChoiceType::class,
-            ['choices' => array_flip(Etude::ETUDE_STATE_ARRAY),
-             'translation_domain' => 'project',
-             'label' => 'Etat de l\'Étudee',
-             'required' => true,
-            ]
-        )
+        $builder
             ->add(
                 'auditDate',
                 GenemuDateType::class,
-                ['label' => 'Date de naissance (jj/mm/aaaa)', 'widget' => 'single_text', 'format' => 'dd/MM/yyyy',
+                ['label' => 'Date de l\'audit', 'widget' => 'single_text', 'format' => 'dd/MM/yyyy',
                  'required' => false,
                 ])
             ->add(
                 'auditType',
                 AuditType::class,
-                ['label' => 'Type d\'audit', 'required' => true, 'choice_label' => function ($var) {
+                ['label' => 'Etat de l\'audit', 'required' => true, 'choice_label' => function ($var) {
                     return $var;
                 },
                 ]
@@ -51,7 +43,7 @@ class AuditEtudeType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'project_suivietudetype';
+        return 'audit_type';
     }
 
     public function configureOptions(OptionsResolver $resolver)
