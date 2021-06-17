@@ -819,10 +819,12 @@ class Etude
     public static function getAuditTypeChoice()
     {
         return [
-            '' => 'Non auditée',
+            '' => 'non déf',
             '0' => 'Non auditée',
-            '1' => 'Déontologique',
-            '2' => 'Exhaustif',
+            '1' => 'Validée',
+            '2' => 'Validée (documents manquants)',
+            '3' => 'Problème mineur',
+            '4' => 'Problème majeur',
         ];
     }
 
