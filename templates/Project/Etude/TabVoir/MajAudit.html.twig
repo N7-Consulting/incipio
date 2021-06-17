@@ -1,0 +1,38 @@
+{% extends "Project/layout.html.twig" %}
+
+{% block title %}
+    {{ 'suivi.etude_affichage'|trans({}, 'project') }} {{ parent() }}
+{% endblock %}
+
+
+{% block content_bundle %}
+<div class="table-responsive content">
+{{ form_start(formAudit, {'attr': {'id': 'myForm' }}) }}
+
+     
+    <table class="table table-striped">
+        <tr>
+            <th>{{ 'suivi.etude_etat'|trans({}, 'project') }}</th>
+            <td>{{ form_widget(formAudit.stateID) }}</td>
+        </tr>
+            <th>{{ 'suivi.auditée_le'|trans({}, 'project') }}</th>
+            <td>{{ form_widget(formAudit.auditDate) }}</td>
+        </tr>
+            <th>{{ 'suivi.type_audit'|trans({}, 'project') }}</th>
+            <td>{{ form_widget(formAudit.auditType) }}</td>
+        </tr>
+        
+    <tr>
+    <td colspan="2">
+    <div class="row">
+            <div class="col-md-2 col-xs-4">
+               <button type="submit" class="btn btn-success">{{ 'generique.enregistrer'|trans({}, 'personne') }}</button>
+                        {{ form_rest(formAudit) }}
+                        {{ form_end(formAudit) }}
+            </div>
+        </div>
+    </td>
+    </tr>
+    </table>
+</div>
+{% endblock %}

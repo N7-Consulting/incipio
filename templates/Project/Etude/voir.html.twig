@@ -15,6 +15,7 @@
             {% endif %}
             <li><a href="#tab5" data-toggle="tab">{{ 'suivi.document'|trans({}, 'project') }}</a></li>
             <li><a href="#tab6" data-toggle="tab">{{ 'suivi.commentaries'|trans({}, 'project') }}</a></li>
+            <li><a href="#tab7" data-toggle="tab">{{ 'suivi.audit'|trans({}, 'project') }}</a></li>
         </ul>
         <div class="tab-content">
             <!-- ERRORS -->
@@ -45,11 +46,15 @@
                 {% include "Project/Etude/TabVoir/Documents.html.twig" with  {'etude':  etude} %}
             </div>
 
-            <!-- Commentaires sur les études -->
+            <!-- COMMENTAIRES SUR LES ETUDES -->
             <div class="tab-pane" id="tab6">
                 {% if etude.thread|default('0') %}
                     {% include 'Comment/Thread/async.html.twig' with {'id': etude.thread.id, 'view': 'flat'} %}
                 {% endif %}
+            </div>
+            <!-- AUDIT -->
+            <div class="tab-pane" id="tab7">
+                {% include "Project/Etude/TabVoir/Audit.html.twig" with  {'etude':  etude} %}
             </div>
         </div>
     </div>

@@ -37,19 +37,7 @@ class SuiviEtudeType extends AbstractType
              'required' => true,
             ]
         )
-            ->add(
-                'auditDate',
-                GenemuDateType::class,
-                ['label' => 'Audité le', 'format' => 'd/MM/y', 'required' => false, 'widget' => 'single_text']
-            )
-            ->add(
-                'auditType',
-                AuditType::class,
-                ['label' => 'Type d\'audit', 'required' => false, 'choice_label' => function ($var) {
-                    return $var;
-                },
-                ]
-            )
+            
             ->add(
                 'stateDescription',
                 TextareaType::class,

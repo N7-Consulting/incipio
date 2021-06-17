@@ -18,16 +18,7 @@
 
 
     <table class="table table-striped">
-        <tr>
-            <th>{{ 'suivi.etude_etat'|trans({}, 'project') }}</th>
-            <th>{{ 'suivi.auditée_le'|trans({}, 'project') }}</th>
-            <th>{{ 'suivi.type_audit'|trans({}, 'project') }}</th>
-        </tr>
-        <tr>
-            <td>{{ form_widget(formSuivi.stateID) }}</td>
-            <td>{{ form_widget(formSuivi.auditDate) }}</td>
-            <td>{{ form_widget(formSuivi.auditType) }}</td>
-        </tr>
+        
         <th colspan="3">{{ form_label(formSuivi.stateDescription) }}</th>
         <tr>
         </tr>

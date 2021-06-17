@@ -16,6 +16,7 @@ use App\Entity\Project\Etude;
 use App\Entity\User\User;
 use App\Form\Project\EtudeType;
 use App\Form\Project\SuiviEtudeType;
+use App\Form\Project\AuditEtudeType;
 use App\Service\Project\ChartManager;
 use App\Service\Project\EtudeManager;
 use App\Service\Project\EtudePermissionChecker;
@@ -521,6 +522,57 @@ class EtudeController extends AbstractController
 
         return new JsonResponse(['responseCode' => Response::HTTP_OK, 'msg' => 'ok',
         ]); //make sure it has the correct content type
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="project_etude_audit_update", path="/suivi/audit/update/{id}", methods={"GET","HEAD","POST"})
+     *
+     * 
+     */
+    public function auditUpdate(Request $request, Etude $etude, EtudePermissionChecker $permChecker)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+
+        if ($permChecker->confidentielRefus($etude, $this->getUser())) {
+            throw new AccessDeniedException('Cette étude est confidentielle');
+        }
+        
+        $formAudit = $this->createForm(AuditEtudeType::class, $etude);
+        $deleteForm = $this->createDeleteFormt($etude->getId());
+
+        if ('POST' == $request->getMethod()) {
+            $formAudit->handleRequest($request);
+
+            if ($formAudit->isValid()) {
+                $em->persist($etude);
+                $em->flush();
+                $this->addFlash('success', 'Audit enregistré');
+                return $this->redirectToRoute('project_etude_voir', ['nom' => $etude->getNom()]);
+            }
+        
+        }
+        
+
+        return $this->render('Project/Etude/TabVoir/MajAudit.html.twig',  [
+            'delete_form' => $deleteForm->createView(),
+            'etude' => $etude,
+            'formAudit' => $formAudit->createView()]                                                                        
+        );
+    }
+     /**
+     * Function to create a form to remove a formation.
+     *
+     * @param $id
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createDeleteFormt($id)
+    {
+        return $this->createFormBuilder(['id' => $id])
+            ->add('id', HiddenType::class)
+            ->getForm();
     }
 
     /**
