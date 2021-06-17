@@ -9,18 +9,18 @@
     <table id="control" class="table table-bordered">
         <tr>
             <th>{{ 'suivi.panneau_controle'|trans({}, 'project') }}</th>
-            <td><label for="checkbox-gantt">{{ 'suivi.gantt'|trans({}, 'project') }}</label>
-                <input id="checkbox-gantt" type="checkbox" onchange="$('#ganttChart').toggle();"/></td>
-            <td><label for="checkbox-encou">{{ 'suivi.etudes_en_cours'|trans({}, 'project') }}</label>
-                <input id="checkbox-encou" type="checkbox" checked="checked" onchange="$('#content-1').toggle();"/></td>
             <td><label for="checkbox-termi">{{ 'suivi.etudes_terminees'|trans({}, 'project') }}</label>
                 <input id="checkbox-termi" type="checkbox" checked="checked" onchange="$('#content-2').toggle();"/></td>
-            <td><label for="checkbox-infos">{{ 'suivi.informations_qualites'|trans({}, 'project') }}</label>
-                <input id="checkbox-infos" type="checkbox" checked="checked" onchange="$('.rawInfos').toggle();"/></td>
+            <td><label for="checkbox-encou">{{ 'suivi.etudes_en_cours'|trans({}, 'project') }}</label>
+                <input id="checkbox-encou" type="checkbox" onchange="$('#content-1').toggle();"/></td>
+            <td><label for="checkbox-gantt">{{ 'suivi.gantt'|trans({}, 'project') }}</label>
+                <input id="checkbox-gantt" type="checkbox" onchange="$('#ganttChart').toggle();"/></td>
+            {# <td><label for="checkbox-infos">{{ 'suivi.informations_qualites'|trans({}, 'project') }}</label>
+                <input id="checkbox-infos" type="checkbox" onchange="$('.rawInfos').toggle();"/></td>
             <td><label for="checkbox-warns">{{ 'suivi.warnings'|trans({}, 'project') }}</label>
-                <input id="checkbox-warns" type="checkbox" checked="checked" onchange="$('.rawWarns').toggle();"/></td>
+                <input id="checkbox-warns" type="checkbox" onchange="$('.rawWarns').toggle();"/></td>
             <td><label for="checkbox-error">{{ 'suivi.errors'|trans({}, 'project') }}</label>
-                <input id="checkbox-error" type="checkbox" checked="checked" onchange="$('.rawError').toggle();"/></td>
+                <input id="checkbox-error" type="checkbox" onchange="$('.rawError').toggle();"/></td> #}
         </tr>
     </table>
 
@@ -33,13 +33,24 @@
             <tr>
                 <th>{{ label }}</th>
                 <th>{{ 'suivi.client'|trans({}, 'project') }}</th>
+                <th>{{ 'suivi.suiveur'|trans({}, 'project') }}</th>
                 <th>{{ 'suivi.intervenants'|trans({}, 'project') }}</th>
+                <th>{{ 'suivi.auditee'|trans({}, 'project') }}</th>
+                
             </tr>
             {% for etude in etudes %}
                 <tr>
-                    <th><a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a></th>
-                    <td></td>
-                    <td></td>
+                    <td><a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a></td>
+                    <td>{% include "Project/Etude/Buttons/Prospect.html.twig" with  {'prospect':  etude.prospect} %}</td>
+                    <td>{% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  etude.suiveur} %}</td>
+                    <td>{% for mission in etude.missions %}
+                        {% include "Project/Etude/Buttons/Intervenant.html.twig" with  {'mission' : mission, 'etude': etude } %}
+                        {% if loop.index != loop.last %}
+                        <br/><br/>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{etude.getAuditTypeChoice()[etude.auditType]}}</td>
                 </tr>
                 {% if etude.stateDescription %}
                     <tr class="rawInfos">

@@ -818,7 +818,10 @@ class Etude
 
     public static function getAuditTypeChoice()
     {
-        return ['1' => 'Déontologique',
+        return [
+            '' => 'Non auditée',
+            '0' => 'Non auditée',
+            '1' => 'Déontologique',
             '2' => 'Exhaustif',
         ];
     }

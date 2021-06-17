@@ -151,7 +151,7 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="publish_document_uploadEtudediant", path="/Documents/Upload/Etudiant/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="publish_document_uploadEtudiant", path="/Documents/Upload/Etudiant/{id}", methods={"GET","HEAD","POST"})
      *
      * @return bool|RedirectResponse|Response
      */
