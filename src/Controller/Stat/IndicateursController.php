@@ -34,8 +34,6 @@ use Webmozart\KeyValueStore\Api\KeyValueStore;
 
 class IndicateursController extends AbstractController
 {
-    const STATE_ID_EN_COURS_X = 2;
-
     const STATE_ID_TERMINEE_X = 4;
 
     private $chartFactory;
@@ -111,7 +109,7 @@ class IndicateursController extends AbstractController
         foreach ($ccs as $cc) {
             $etude = $cc->getEtude();
             $dateSignature = $cc->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee && $etude->getDelai()) {
@@ -128,7 +126,7 @@ class IndicateursController extends AbstractController
         foreach ($ces as $ce) {
             $etude = $ce->getEtude();
             $dateSignature = $ce->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee && $etude->getDelai()) {
@@ -191,7 +189,7 @@ class IndicateursController extends AbstractController
         foreach ($ccs as $cc) {
             $etude = $cc->getEtude();
             $dateSignature = $cc->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
@@ -206,7 +204,7 @@ class IndicateursController extends AbstractController
         foreach ($ces as $ce) {
             $etude = $ce->getEtude();
             $dateSignature = $ce->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
@@ -265,7 +263,7 @@ class IndicateursController extends AbstractController
         foreach ($ccs as $cc) {
             $etude = $cc->getEtude();
             $dateSignature = $cc->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
@@ -287,7 +285,7 @@ class IndicateursController extends AbstractController
         foreach ($ces as $ce) {
             $etude = $ce->getEtude();
             $dateSignature = $ce->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
@@ -499,7 +497,7 @@ class IndicateursController extends AbstractController
         foreach ($ccs as $cc) {
             $etude = $cc->getEtude();
             $dateSignature = $cc->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
@@ -518,7 +516,7 @@ class IndicateursController extends AbstractController
         foreach ($ces as $ce) {
             $etude = $ce->getEtude();
             $dateSignature = $ce->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
@@ -609,7 +607,7 @@ class IndicateursController extends AbstractController
         foreach ($ccs as $cc) {
             $etude = $cc->getEtude();
             $dateSignature = $cc->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
 
             if ($dateSignature && $signee) {
                 $idMandat = $etude->getMandat();
@@ -630,7 +628,7 @@ class IndicateursController extends AbstractController
         foreach ($ces as $cc) {
             $etude = $ce->getEtude();
             $dateSignature = $ce->getDateSignature();
-            $signee = self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
 
             if ($dateSignature && $signee) {
                 $idMandat = $etude->getMandat();
@@ -1088,7 +1086,7 @@ class IndicateursController extends AbstractController
         $chiffreDAffairesTotal = 0;
         $repartitions = [];
         foreach ($etudes as $etude) {
-            if (self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID()) {
+            if (Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID()) {
                 $type = $etude->getProspect()->getEntiteToString();
                 $CA = $etude->getMontantHT();
                 $chiffreDAffairesTotal += $CA;
@@ -1137,7 +1135,7 @@ class IndicateursController extends AbstractController
 
         /** @var Etude[] $etudes */
         foreach ($etudes as $etude) {
-            if (self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID()) {
+            if (Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID()) {
                 ++$nombreClient;
                 $type = $etude->getProspect()->getEntiteToString();
                 array_key_exists($type, $repartitions) ? $repartitions[$type]++ : $repartitions[$type] = 1;
@@ -1182,7 +1180,7 @@ class IndicateursController extends AbstractController
 
         $clients = [];
         foreach ($etudes as $etude) {
-            if (self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID()) {
+            if (Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID()) {
                 $clientID = $etude->getProspect()->getId();
                 if (array_key_exists($clientID, $clients)) {
                     ++$clients[$clientID];
@@ -1241,7 +1239,7 @@ class IndicateursController extends AbstractController
         $nombreClient = 0;
         $repartitions = [];
         foreach ($etudes as $etude) {
-            if (self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID()) {
+            if (Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID()) {
                 ++$nombreClient;
                 $type = $etude->getSourceDeProspectionToString();
                 array_key_exists($type, $repartitions) ? $repartitions[$type]++ : $repartitions[$type] = 1;
@@ -1287,7 +1285,7 @@ class IndicateursController extends AbstractController
         $chiffreDAffairesTotal = 0;
         $repartitions = [];
         foreach ($etudes as $etude) {
-            if (self::STATE_ID_EN_COURS_X == $etude->getStateID() || self::STATE_ID_TERMINEE_X == $etude->getStateID()) {
+            if (Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID()) {
                 $type = $etude->getSourceDeProspectionToString();
                 $CA = $etude->getMontantHT();
                 $chiffreDAffairesTotal += $CA;
