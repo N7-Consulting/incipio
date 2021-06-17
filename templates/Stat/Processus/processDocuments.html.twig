@@ -34,7 +34,14 @@
                 <button class="fa fa-times"></button>
                 </form> </td>
             {# {% endif %} #}
+            
         </tr>
         {% endfor %}
     </table>
+    </br>
+    <div class="col-md-2 col-xs-4">
+                <a href="{{ path('modifier_processus', {'id': processus.id}) }}" class="btn btn-warning">
+                    {{ 'processus.modifier'|trans({}, 'processus') }}
+                </a>
+            </div>
 {% endblock %}

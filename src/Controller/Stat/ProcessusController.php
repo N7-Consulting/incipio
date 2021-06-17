@@ -88,13 +88,6 @@ class ProcessusController extends AbstractController
         return $this->redirectToRoute('tab_process');
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(['id' => $id])
-            ->add('id', HiddenType::class)
-            ->getForm();
-    }
-
     /**
      * @Route(name="voir_doc_processus", path="/Processus/Document/Associes/{nom}", methods={"GET","HEAD","POST"})
      *
@@ -105,5 +98,53 @@ class ProcessusController extends AbstractController
         return $this->render('Stat/Processus/processDocuments.html.twig', [
             'processus' => $processus,
         ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="modifier_processus", path="/Stat/Processus/Modifier/{id}", methods={"GET","HEAD","POST"}, requirements={"id": "\d+"})
+     *
+     * @param Processus $processus The training to modify
+     *
+     * @return Response
+     */
+    public function modifier(Request $request, Processus $processus)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(ProcessType::class, $processus);
+        $deleteForm = $this->createDeleteForm($processus->getId());
+
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->persist($processus);
+                $em->flush();
+                $this->addFlash('success', 'Formation enregistrée');
+
+                return $this->redirectToRoute('tab_process', ['id' => $processus->getId()]);
+            }
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
+        }
+
+        return $this->render('Stat/Processus/modifier.html.twig', [
+            'delete_form' => $deleteForm->createView(),
+            'form' => $form->createView(),
+            'processus' => $processus,
+        ]);
+    }
+
+        /**
+     * Function to create a form to remove a Processus.
+     *
+     * @param $id
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(['id' => $id])
+            ->add('id', HiddenType::class)
+            ->getForm();
     }
 }

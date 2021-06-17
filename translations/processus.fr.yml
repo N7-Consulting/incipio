@@ -4,7 +4,8 @@ processus:
   ajouter_doc :  Ajouter un Document
   date_upload : Date du télechargement
   documents: Documents associés
-  gestion_proc: Gestion des processus  
+  gestion_proc: Gestion des processus
+  modifier: Modifier le processus  
   nom_process : Nom du processus
   pilote : Pilote
   process : Processus
