@@ -59,7 +59,7 @@ class RepartitionJEH
     private $avMission;
 
     /**
-     * @ORM\OneToOne(targetEntity=Phase::class)
+     * @ORM\ManyToOne(targetEntity=Phase::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $phase;
