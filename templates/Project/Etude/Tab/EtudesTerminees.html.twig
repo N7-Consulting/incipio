@@ -18,9 +18,6 @@
             <div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
         </th>
         <th>
-            {{ 'suivi.archivee'|trans({}, 'project') }}
-        </th>
-        <th>
             {{ 'suivi.auditee'|trans({}, 'project') }}
         </th>
         <th>
@@ -51,8 +48,6 @@
                     <div>{{ etude.dateLancement|date("d/m/Y") }}</div>{% endif %}
                 {% if etude.dateFin != NULL %}
                     <div>{{ etude.dateFin|date("d/m/Y") }}</div>{% endif %}
-            </td>
-            <td>#
             </td>
             <td>
                 {{etude.getAuditTypeChoice()[etude.auditType]}}

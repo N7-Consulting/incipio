@@ -8,19 +8,20 @@
 
     <table id="control" class="table table-bordered">
         <tr>
-            <th>{{ 'suivi.panneau_controle'|trans({}, 'project') }}</th>
+            <td><label for="checkbox-audit">{{ 'suivi.audit'|trans({}, 'project') }}</label>
+                <input id="checkbox-audit" type="checkbox" checked="checked" onchange="$('#content-3').toggle();"/></td>
             <td><label for="checkbox-termi">{{ 'suivi.etudes_terminees'|trans({}, 'project') }}</label>
-                <input id="checkbox-termi" type="checkbox" checked="checked" onchange="$('#content-2').toggle();"/></td>
+                <input id="checkbox-termi" type="checkbox" onchange="$('#content-2').toggle();"/></td>
             <td><label for="checkbox-encou">{{ 'suivi.etudes_en_cours'|trans({}, 'project') }}</label>
                 <input id="checkbox-encou" type="checkbox" onchange="$('#content-1').toggle();"/></td>
             <td><label for="checkbox-gantt">{{ 'suivi.gantt'|trans({}, 'project') }}</label>
                 <input id="checkbox-gantt" type="checkbox" onchange="$('#ganttChart').toggle();"/></td>
-            {# <td><label for="checkbox-infos">{{ 'suivi.informations_qualites'|trans({}, 'project') }}</label>
+            <td><label for="checkbox-infos">{{ 'suivi.informations_qualites'|trans({}, 'project') }}</label>
                 <input id="checkbox-infos" type="checkbox" onchange="$('.rawInfos').toggle();"/></td>
             <td><label for="checkbox-warns">{{ 'suivi.warnings'|trans({}, 'project') }}</label>
                 <input id="checkbox-warns" type="checkbox" onchange="$('.rawWarns').toggle();"/></td>
             <td><label for="checkbox-error">{{ 'suivi.errors'|trans({}, 'project') }}</label>
-                <input id="checkbox-error" type="checkbox" onchange="$('.rawError').toggle();"/></td> #}
+                <input id="checkbox-error" type="checkbox" onchange="$('.rawError').toggle();"/></td>
         </tr>
     </table>
 
@@ -29,7 +30,7 @@
 
     {% set typeEtude = {"Etude en cours" : etudesEnCours, "Etudes Terminees" : etudesTerminees } %}
     {% for label,etudes in typeEtude %}
-        <table id="content-{{ loop.index }}" class="table table-bordered table-striped">
+        <table id="content-{{ loop.index }}" class="table table-bordered table-striped" style="display:none;">
             <tr>
                 <th>{{ label }}</th>
                 <th>{{ 'suivi.client'|trans({}, 'project') }}</th>
@@ -73,7 +74,9 @@
         </table>
     {% endfor %}
 
-
+<table id="content-3" class="table table-bordered table-striped">
+lala
+</table>
 {% endblock %}
 
 {% block javascript %}

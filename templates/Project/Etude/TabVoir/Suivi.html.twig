@@ -17,14 +17,8 @@
 {{ form_start(formSuivi, {'action': path('project_etude_suivi_update', {'id': etude.id}) , 'attr': {'id': 'myForm' }}) }}
 
 
-    <table class="table table-striped">
+    <table class="table table-striped"> 
         
-        <th colspan="3">{{ form_label(formSuivi.stateDescription) }}</th>
-        <tr>
-        </tr>
-        <tr>
-            <td colspan="3">{{ form_widget(formSuivi.stateDescription) }}</td>
-        </tr>
         {% if etude.suivis is not empty %}
             {% set lastSuivi = etude.suivis |last %}
             <tr>
@@ -129,6 +123,16 @@
             <td>{{ form_widget(formSuivi.pvr.relu) }}</td>
             <td>{{ form_widget(formSuivi.pvr.envoye) }}</td>
             <td>{{ form_widget(formSuivi.pvr.receptionne) }}</td>
+        </tr>
+        
+    </table>
+    
+    <table class="table table-striped">
+        <th colspan="3">{{ form_label(formSuivi.stateDescription) }}</th>
+        <tr>
+        </tr>
+        <tr>
+            <td colspan="3">{{ form_widget(formSuivi.stateDescription) }}</td>
         </tr>
     </table>
     {{ form_rest(formSuivi) }}
