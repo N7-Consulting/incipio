@@ -54,11 +54,12 @@ class PhasesController extends AbstractController
                     $phases = array_values($etude->getPhases()->getValues());
                     if (!empty($phases)) {
                         $phasePrevious = end($phases);
+
+                        // ? Préremplissage
                         $phaseNew->setPrixJEH($phasePrevious->getPrixJEH());
                         $phaseNew->setDateDebut($phasePrevious->getDateFin());
                     }
                     $etude->addPhase($phaseNew);
-                    echo 'toto';
                 }
 
                 $em->persist($etude); // persist $etude / $form->getData()
