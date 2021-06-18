@@ -76,6 +76,16 @@ class TraitementController extends AbstractController
 
     const DOCTYPE_AVENANT = 'AV';
 
+    const DOCTYPE_CAHIER_CHARGES = 'CDC';
+
+    const DOCTYPE_PROPOSITION_COMMERCIALE = 'PC';
+
+    const DOCTYPE_CONVENTION_CADRE_AGILE = 'CCA';
+
+    const DOCTYPE_BON_COMMANDE = 'BDC';
+
+    const DOCTYPE_QUESTIONNAIRE_SATISFACTION = 'QS';
+
     const ROOTNAME_ETUDE = 'etude';
 
     const ROOTNAME_PROCES_VERBAL = 'pvr';
@@ -245,7 +255,7 @@ class TraitementController extends AbstractController
 
         $templatesXMLtraite = $this->traiterTemplates($chemin, $rootName, $rootObject);
 
-        //SI DM on prend la ref de RM et ont remplace RM par DM
+        // Si DM on prend la ref de RM et ont remplace RM par DM
         if (self::DOCTYPE_DESCRIPTIF_MISSION == $templateName) {
             $templateName = 'RM';
             $isDM = true;

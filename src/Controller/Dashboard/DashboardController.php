@@ -79,9 +79,9 @@ class DashboardController extends AbstractController
     {
         $etudeRepository = $this->getDoctrine()
             ->getRepository(Etude::class);
-        $statsStore->set('ca_negociation', $etudeRepository->getCaByState(EtudeController::STATE_ID_EN_NEGOCIATION));
-        $statsStore->set('ca_encours', $etudeRepository->getCaByState(EtudeController::STATE_ID_EN_COURS));
-        $statsStore->set('ca_cloture', $etudeRepository->getCaByState(EtudeController::STATE_ID_TERMINEE, date('Y')));
+        $statsStore->set('ca_negociation', $etudeRepository->getCaByState(Etude::ETUDE_STATE_NEGOCIATION));
+        $statsStore->set('ca_encours', $etudeRepository->getCaByState(Etude::ETUDE_STATE_COURS));
+        $statsStore->set('ca_cloture', $etudeRepository->getCaByState(Etude::ETUDE_STATE_CLOTUREE, date('Y')));
 
         $factureRepository = $this->getDoctrine()->getRepository(Facture::class);
         $statsStore->set('ca_facture', $factureRepository->getCAFacture(date('Y')));

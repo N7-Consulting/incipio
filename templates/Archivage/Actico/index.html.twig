@@ -1,0 +1,68 @@
+{% extends 'Archivage/layout.html.twig' %}
+
+{% block title %}
+    {{ 'dashboard.actico'|trans({}, 'dashboard') }} {{ parent() }}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'dashboard.actico'|trans({}, 'dashboard') }}
+{% endblock %}
+
+{% block content_bundle %}
+
+    <div id="myTabContent" class="tab-content">
+        <table class="display dataTable table table-bordered table-striped dt-responsive" id="acticotable">
+            <thead>
+                <tr>
+                    <th>Nom étude</th>
+                        {% for doc,_ in docEtude %}
+                            <th>{{doc}}</th>
+                        {% endfor %}
+                </tr>
+            </thead>
+        {% for etude in etudes  |  reverse %}
+        <tr>
+            <td>{{ etude.nom }}</td>
+            {% for nomDoc, etudeAttr in docEtude %}
+            <td>
+                {# On récupére l'ensemble de documents (eg: l'ensemble des Avenants) #}
+                {% set docs = attribute(etude, etudeAttr) %}
+                {% for doc in docs %}
+                    {% if doc != NULL %}
+                    <a href="/Documents/Publiposter/{{nomDoc}}/{{rootName[nomDoc]}}/{{doc.id}}"><span class="fa fa-download">&nbsp</a>
+                    <span>{{doc}}</span><br>
+                    {% endif %}
+                {% else %}
+                    {# On tombe dans ce cas là si on a pas une collection (eg: Convention) ou si la collection est vide. On évite ce cas. #}
+                    {% if docs is not empty %}
+                    <a href="/Documents/Publiposter/{{nomDoc}}/etude/{{docs.id}}"><span class="fa fa-download">&nbsp</a>
+                    <span>{{docs}}</span>
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
+
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#acticotable').dataTable({
+                "bPaginate": true,
+                "iDisplayLength": 50,
+                "aaSorting": [[1, 'desc']],
+            });
+        });
+    </script>
+{% endblock %}

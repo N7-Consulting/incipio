@@ -34,16 +34,6 @@ use Webmozart\KeyValueStore\Api\KeyValueStore;
 
 class EtudeController extends AbstractController
 {
-    const STATE_ID_EN_NEGOCIATION = 1;
-
-    const STATE_ID_EN_COURS = 2;
-
-    const STATE_ID_EN_PAUSE = 3;
-
-    const STATE_ID_TERMINEE = 4;
-
-    const STATE_ID_AVORTEE = 5;
-
     private $keyValueStore;
 
     public function __construct(KeyValueStore $keyValueStore)
@@ -68,15 +58,23 @@ class EtudeController extends AbstractController
 
         //Etudes En Négociation : stateID = 1
         $etudesEnNegociation = $em->getRepository(Etude::class)
-            ->getPipeline(['stateID' => self::STATE_ID_EN_NEGOCIATION], ['mandat' => 'DESC', 'num' => 'DESC']);
+            ->getPipeline(['stateID' => Etude::ETUDE_STATE_NEGOCIATION], ['mandat' => 'DESC', 'num' => 'DESC']);
 
         //Etudes En Cours : stateID = 2
         $etudesEnCours = $em->getRepository(Etude::class)
-            ->getPipeline(['stateID' => self::STATE_ID_EN_COURS], ['mandat' => 'DESC', 'num' => 'DESC']);
+            ->getPipeline(['stateID' => Etude::ETUDE_STATE_COURS], ['mandat' => 'DESC', 'num' => 'DESC']);
 
         //Etudes en pause : stateID = 3
         $etudesEnPause = $em->getRepository(Etude::class)
-            ->getPipeline(['stateID' => self::STATE_ID_EN_PAUSE], ['mandat' => 'DESC', 'num' => 'DESC']);
+            ->getPipeline(['stateID' => Etude::ETUDE_STATE_PAUSE], ['mandat' => 'DESC', 'num' => 'DESC']);
+
+        //Etudes finie : stateID = 6
+        $etudesFinies = $em->getRepository(Etude::class)
+            ->getPipeline(['stateID' => Etude::ETUDE_STATE_FINIE], ['mandat' => 'DESC', 'num' => 'DESC']);
+
+        //Etudes acceptée : stateID = 7
+        $etudesAcceptees = $em->getRepository(Etude::class)
+            ->getPipeline(['stateID' => Etude::ETUDE_STATE_ACCEPTEE], ['mandat' => 'DESC', 'num' => 'DESC']);
 
         //Etudes Terminees et Avortees Chargée en Ajax dans getEtudesAsyncAction
         //On push des arrays vides pour avoir les menus déroulants
@@ -94,6 +92,8 @@ class EtudeController extends AbstractController
             'etudesEnNegociation' => $etudesEnNegociation,
             'etudesEnCours' => $etudesEnCours,
             'etudesEnPause' => $etudesEnPause,
+            'etudesFinies' => $etudesFinies,
+            'etudesAcceptees' => $etudesAcceptees,
             'etudesTermineesParMandat' => $etudesTermineesParMandat,
             'etudesAvorteesParMandat' => $etudesAvorteesParMandat,
             'anneeCreation' => $anneeCreation,
@@ -123,12 +123,12 @@ class EtudeController extends AbstractController
                                                                     'mandat' => $mandat,
                 ], ['num' => 'DESC']);
 
-                if (self::STATE_ID_TERMINEE == $stateID) {
+                if (Etude::ETUDE_STATE_CLOTUREE == $stateID) {
                     return $this->render('Project/Etude/Tab/EtudesTerminees.html.twig', [
                         'etudes' => $etudes,
                         'role_voir_confidentiel' => $roleVoirConfidentiel,
                     ]);
-                } elseif (self::STATE_ID_AVORTEE == $stateID) {
+                } elseif (Etude::ETUDE_STATE_AVORTEE == $stateID) {
                     return $this->render('Project/Etude/Tab/EtudesAvortees.html.twig', [
                         'etudes' => $etudes,
                         'role_voir_confidentiel' => $roleVoirConfidentiel,
@@ -412,7 +412,7 @@ class EtudeController extends AbstractController
                         ]
                     );
                 ++$id;
-                if (self::STATE_ID_EN_COURS == $etude->getStateID()) {
+                if (Etude::ETUDE_STATE_COURS == $etude->getStateID()) {
                     array_push($etudesEnCours, $etude);
                 }
             }
@@ -461,9 +461,9 @@ class EtudeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $etudesEnCours = $em->getRepository(Etude::class)
-            ->findBy(['stateID' => self::STATE_ID_EN_COURS], ['mandat' => 'DESC', 'num' => 'DESC']);
+            ->findBy(['stateID' => Etude::ETUDE_STATE_COURS], ['mandat' => 'DESC', 'num' => 'DESC']);
         $etudesTerminees = $em->getRepository(Etude::class)
-            ->findBy(['stateID' => self::STATE_ID_TERMINEE], ['mandat' => 'DESC', 'num' => 'DESC']);
+            ->findBy(['stateID' => Etude::ETUDE_STATE_CLOTUREE], ['mandat' => 'DESC', 'num' => 'DESC']);
         $etudes = array_merge($etudesEnCours, $etudesTerminees);
 
         $ob = $chartManager->getGanttSuivi($etudes);
@@ -538,12 +538,12 @@ class EtudeController extends AbstractController
         if ($id > 0) {
             $etude = $em->getRepository(Etude::class)->find($id);
         } else {
-            $etude = $em->getRepository(Etude::class)->findOneBy(['stateID' => self::STATE_ID_EN_COURS]);
+            $etude = $em->getRepository(Etude::class)->findOneBy(['stateID' => Etude::ETUDE_STATE_COURS]);
         }
 
         if (null === $etude) {
             $etude = $em->getRepository(Etude::class)
-                ->findOneBy(['stateID' => self::STATE_ID_EN_NEGOCIATION]);
+                ->findOneBy(['stateID' => Etude::ETUDE_STATE_NEGOCIATION]);
         }
 
         if (null === $etude) {
@@ -551,8 +551,8 @@ class EtudeController extends AbstractController
         }
 
         //Etudes En Négociation : stateID = 1
-        $etudesDisplayList = $em->getRepository(Etude::class)->getTwoStates([self::STATE_ID_EN_NEGOCIATION,
-                                                                             self::STATE_ID_EN_COURS,
+        $etudesDisplayList = $em->getRepository(Etude::class)->getTwoStates([Etude::ETUDE_STATE_NEGOCIATION,
+                                                                             Etude::ETUDE_STATE_COURS,
         ], ['mandat' => 'ASC', 'num' => 'ASC']);
 
         if (!in_array($etude, $etudesDisplayList)) {

@@ -31,7 +31,11 @@ class DocTypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // Version du document
-        $builder->add('version', IntegerType::class, ['label' => 'Version du document']);
+        $builder->add(
+            'version',
+            IntegerType::class,
+            ['label' => 'Numéro du document'],
+        );
 
         $builder->add(
             'signataire1',

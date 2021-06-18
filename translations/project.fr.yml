@@ -3,6 +3,7 @@ suivi:
   a_recontacter_le: A recontacter le
   acces_rapide: Accès Rapide
   accueil: Accueil
+  acceptee: Acceptée
   acompte: Acompte
   action: Action
   ajouter: Ajouter
@@ -161,6 +162,8 @@ suivi:
   etude_supprimer_confirm: Etes-vous sûr de vouloir supprimer définitivement cette étude
   etudes_avortees: Etudes Avortées
   etudes_en_cours: Etudes en Cours
+  etudes_acceptees: Etudes Acceptées
+  etudes_finies: Etudes Finies
   etudes_list_retour: Retour à la liste des études
   etudes_negociations: Etudes en Négociation
   etudes_pause: Etudes en Pause
@@ -172,6 +175,7 @@ suivi:
   fait_par: Fait Par
   fin: Fin
   fin_le: Fin le
+  finie: Finie
   fs: FS
   gantt: Gantt
   gantt_exporter: Exporter le Gantt

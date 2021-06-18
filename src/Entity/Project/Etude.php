@@ -44,11 +44,19 @@ class Etude
 
     public const ETUDE_STATE_AVORTEE = 5;
 
+    // Etude non clôturée (entre en cours et clôturée)
+    public const ETUDE_STATE_FINIE = 6;
+
+    // Etude non commencée (entre en négociation et en cours)
+    public const ETUDE_STATE_ACCEPTEE = 7;
+
     public const ETUDE_STATE_ARRAY = [
         self::ETUDE_STATE_NEGOCIATION => 'suivi.en_negociation',
+        self::ETUDE_STATE_ACCEPTEE => 'suivi.acceptee',
         self::ETUDE_STATE_COURS => 'suivi.en_cours',
-        self::ETUDE_STATE_PAUSE => 'suivi.en_pause',
+        self::ETUDE_STATE_FINIE => 'suivi.finie',
         self::ETUDE_STATE_CLOTUREE => 'suivi.cloturee',
+        self::ETUDE_STATE_PAUSE => 'suivi.en_pause',
         self::ETUDE_STATE_AVORTEE => 'suivi.avortee',
     ];
 
@@ -110,7 +118,7 @@ class Etude
 
     /**
      * @var int
-     * @Assert\Choice({1,2,3,4,5})
+     * @Assert\Choice({1,2,3,4,5,6,7})
      * @ORM\Column(name="stateID", type="integer", nullable=false)
      */
     private $stateID;
@@ -205,6 +213,7 @@ class Etude
     private $suivis;
 
     /**
+     * @deprecated Only present for backward compatibility.
      * @var Ap Avant projet
      *
      * @ORM\OneToOne(targetEntity="Ap", inversedBy="etude", cascade={"persist", "remove"})
@@ -213,6 +222,7 @@ class Etude
     private $ap;
 
     /**
+     * @deprecated Only present for backward compatibility.
      * @var Cc Convention Client
      *
      * @ORM\OneToOne(targetEntity="Cc", inversedBy="etude", cascade={"persist", "remove"})
@@ -335,57 +345,27 @@ class Etude
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $CDC;
+    private $cdc;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $PC;
+    private $pc;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $CE;
+    private $cca;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $CCA;
+    private $bdc;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $BDC;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $RM;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $AVRM;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $AVCE;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $PVRI;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $PVRF;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $QS;
+    private $qs;
 
     /**
      * @ORM\PrePersist
@@ -1790,122 +1770,62 @@ class Etude
         return $this->getNom();
     }
 
-    public function getCDC(): ?string
+    public function getCdc(): ?string
     {
-        return $this->CDC;
+        return $this->cdc;
     }
 
-    public function setCDC(?string $CDC): self
+    public function setCdc(?string $cdc): self
     {
-        $this->CDC = $CDC;
+        $this->cdc = $cdc;
 
         return $this;
     }
 
-    public function getPC(): ?string
+    public function getPc(): ?string
     {
-        return $this->PC;
+        return $this->pc;
     }
 
-    public function setPC(?string $PC): self
+    public function setPc(?string $pc): self
     {
-        $this->PC = $PC;
+        $this->pc = $pc;
 
         return $this;
     }
 
-    public function getCCA(): ?string
+    public function getCca(): ?string
     {
-        return $this->CCA;
+        return $this->cca;
     }
 
-    public function setCCA(?string $CCA): self
+    public function setCca(?string $cca): self
     {
-        $this->CCA = $CCA;
+        $this->cca = $cca;
 
         return $this;
     }
 
-    public function getBDC(): ?string
+    public function getBdc(): ?string
     {
-        return $this->BDC;
+        return $this->bdc;
     }
 
-    public function setBDC(?string $BDC): self
+    public function setBdc(?string $bdc): self
     {
-        $this->BDC = $BDC;
+        $this->bdc = $bdc;
 
         return $this;
     }
 
-    public function getRM(): ?string
+    public function getQs(): ?string
     {
-        return $this->RM;
+        return $this->qs;
     }
 
-    public function setRM(?string $RM): self
+    public function setQs(?string $qs): self
     {
-        $this->RM = $RM;
-
-        return $this;
-    }
-
-    public function getAVRM(): ?string
-    {
-        return $this->AVRM;
-    }
-
-    public function setAVRM(?string $AVRM): self
-    {
-        $this->AVRM = $AVRM;
-
-        return $this;
-    }
-
-    public function getAVCE(): ?string
-    {
-        return $this->AVCE;
-    }
-
-    public function setAVCE(?string $AVCE): self
-    {
-        $this->AVCE = $AVCE;
-
-        return $this;
-    }
-
-    public function getPVRI(): ?string
-    {
-        return $this->PVRI;
-    }
-
-    public function setPVRI(?string $PVRI): self
-    {
-        $this->PVRI = $PVRI;
-
-        return $this;
-    }
-
-    public function getPVRF(): ?string
-    {
-        return $this->PVRF;
-    }
-
-    public function setPVRF(?string $PVRF): self
-    {
-        $this->PVRF = $PVRF;
-
-        return $this;
-    }
-
-    public function getQS(): ?string
-    {
-        return $this->QS;
-    }
-
-    public function setQS(?string $QS): self
-    {
-        $this->QS = $QS;
+        $this->qs = $qs;
 
         return $this;
     }
