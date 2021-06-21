@@ -150,7 +150,7 @@ class TraitementController extends AbstractController
         Environment $twigEnvironment,
         KeyValueStore $keyValueStore,
         KernelInterface $kernel,
-        ObjectManager $em,
+        ObjectManager $em
     ) {
         $this->chartManager = $chartManager;
         $this->permChecker = $permChecker;

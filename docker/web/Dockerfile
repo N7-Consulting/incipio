@@ -1,4 +1,4 @@
-FROM php:8.0.7-apache
+FROM php:7.4-apache
 
 # PHP extensions
 ENV APCU_VERSION 5.1.17
@@ -56,7 +56,7 @@ ARG APP_ENV=dev
 COPY ./composer.json ./composer.lock /app/
 RUN mkdir -p var/cache var/sessions public/tmp \
     # Install dependencies
-    && composer install --ignore-platform-req=php --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest \
+    && composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress \
     && composer clear-cache
 
 # Add application
