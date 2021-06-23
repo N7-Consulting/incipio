@@ -32,6 +32,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Webmozart\KeyValueStore\Api\KeyValueStore;
+use App\Controller\Publish\DocumentController;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class EtudeController extends AbstractController
 {
@@ -320,7 +322,7 @@ class EtudeController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function delete(Etude $etude, Request $request, EtudePermissionChecker $permChecker)
+    public function delete(Etude $etude, Request $request, EtudePermissionChecker $permChecker,KernelInterface $kernel)
     {
         $form = $this->createDeleteForm($etude);
 
@@ -332,7 +334,11 @@ class EtudeController extends AbstractController
             if ($permChecker->confidentielRefus($etude, $this->getUser())) {
                 throw new AccessDeniedException('Cette étude est confidentielle');
             }
-
+            $docs = $etude->getRelatedDocuments();       
+            foreach ($docs as $document) {
+                $doc = $document->getDocument();
+                DocumentController::deleteRelated($em,$doc,$kernel);
+            }
             $em->remove($etude);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Etude supprimée');
