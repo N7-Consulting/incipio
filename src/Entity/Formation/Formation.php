@@ -43,9 +43,9 @@ class Formation
     private $mandat;
 
     /**
-     * @var array
+     * @var int
      *
-     * @ORM\Column(name="categorie", type="array")
+     * @ORM\Column(name="categorie", type="integer")
      */
     private $categorie;
 
@@ -101,34 +101,33 @@ class Formation
     private $dateFin;
 
     /**
-     * @var string
+     *  
      * @ORM\Column(name="doc", type="string", length=255, nullable=true)
      */
     private $docPath;
 
+    /**
+     * Get getCategoriesChoice.
+     *
+     * @return array
+     */
     public static function getCategoriesChoice()
     {
         return [
-            '0' => 'Activité Commerciale',
-            '1' => 'Trésorerie',
-            '2' => 'Communication',
-            '3' => 'Qualité',
-            '4' => 'DSI',
-            '5' => 'RH',
-            '6' => 'Autre', ];
+            0 => 'Activité Commerciale',
+            1 => 'Trésorerie',
+            2 => 'Communication',
+            3 => 'Qualité',
+            4 => 'DSI',
+            5 => 'RH',
+            6 => 'Autre', ];
     }
 
-    public static function getCategoriesChoiceToString($choice = null)
+    public function getCategoriesChoiceToString()
     {
-        $choices = self::getCategoriesChoice();
+        $tab = $this->getCategoriesChoice();      
 
-        if (null === $choice) {
-            return $choices;
-        } elseif (array_key_exists($choice, $choices)) {
-            return $choices[$choice];
-        }
-
-        return '';
+        return $this->categorie ? $tab[$this->categorie] : '';
     }
     
 
@@ -159,7 +158,7 @@ class Formation
     /**
      * Get categorie.
      *
-     * @return array
+     * @return int
      */
     public function getCategorie()
     {

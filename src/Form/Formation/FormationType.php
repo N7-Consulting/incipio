@@ -41,9 +41,8 @@ class FormationType extends AbstractType
             ->add('categorie', Select2ChoiceType::class, [
                 'label' => 'formation.categories',
                 'translation_domain' => 'formation',
-                'multiple' => false,
                 'choices' => array_flip(Formation::getCategoriesChoice()),
-                'required' => false, ])
+                'required' => true, ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => 'formation.date_debut',
                 'translation_domain' => 'formation',

@@ -21,6 +21,7 @@ class AuditType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => [
+                '' => 'Non défini',
                 '0' => 'suivi.non_auditee',
                 '1' => 'suivi.valide',
                 '2' => 'suivi.valide_ss_doc',

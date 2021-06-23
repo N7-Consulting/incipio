@@ -119,10 +119,10 @@
                     <div>{{ etude.dateFin|date("d/m/Y") }}</div>{% endif %}
             </td>
             <td>
-                <a href="{{ path('audit_modifier',{'id': etude.id})}} ">  {{etude.getAuditTypeToString()}} </a>
+                <a href="{{ path('audit_modifier',{'id': etude.id})}} ">  {{etude.getAuditTypeToString()| default("Non défini") }} </a>
             </td>
             <td>
-                {{ etude.auditDate|date("d/m/Y") }}
+                {% if etude.auditType != 0 %}{{ etude.auditDate|date("d/m/Y")}}{% endif %}
             </td>
             <td>
                 {{ etude.auditCommentaires  }}

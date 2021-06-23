@@ -42,7 +42,7 @@ class AuditEtudeType extends AbstractType
             ->add('auditCommentaires', TextareaType::class, [
                 'label' => 'Commentaires',
                 'translation_domain' => 'formation',
-                'required' => true,
+                'required' => false,
                 'attr' => ['cols' => '100%', 'rows' => 5], ]);
     }
 

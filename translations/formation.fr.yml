@@ -4,6 +4,7 @@ formation:
   autre: Autre
   book_passation: Book de passation
   categories: Categories
+  categorie: Categorie
   chercher: Chercher
   confirmation_supprimer_formation: Etes-vous sûr de vouloir supprimer définitivement cette formation ?
   confirmation_supprimer_passation: Etes-vous sûr de vouloir supprimer définitivement cette passation ?

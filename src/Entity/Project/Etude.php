@@ -796,7 +796,7 @@ class Etude
      */
     public function getAuditDate()
     {
-        return $this->auditDate;
+       return $this->auditDate;
     }
 
     /**
@@ -826,6 +826,7 @@ class Etude
     public static function getAuditTypeChoice()
     {
         return [
+            '' => 'Non défini',
             '0' => 'Non auditée',
             '1' => 'Validée',
             '2' => 'Validée (documents manquants)',
