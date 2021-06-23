@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use App\Controller\Stat\UploadedFile;
+use App\Controller\Publish\DocumentController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
@@ -81,17 +82,7 @@ class ProcessusController extends AbstractController
         $docs = $processus->getRelatedDocuments();       
         foreach ($docs as $document) {
             $doc = $document->getDocument();
-            $doc->setProjectDir($kernel->getProjectDir());
-
-            if ($doc->getRelation()) { // Cascade sucks
-                $relation = $doc->getRelation()->setDocument();
-                $doc->setRelation(null);
-                $em->remove($relation);
-                $em->flush();
-            }
-            $this->addFlash('success', 'Document supprimé');
-            $em->remove($doc);
-            $em->flush(); 
+            DocumentController::deleteRelated($em,$doc,$kernel);
         }
         $em->remove($processus);
         $em->flush();

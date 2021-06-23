@@ -269,26 +269,21 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_CA')")
-     * @Route(name="publish_document_processus_delete", path="/Documents/Supprimer/Processus/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="publish_document_related_delete", path="/Documents/Related/Supprimer/{id}", methods={"GET","HEAD","POST"})
      *
      * @return Response
      */
-    public function deleteProcessus(Document $doc, KernelInterface $kernel)
-    {    
-        $em = $this->getDoctrine()->getManager();
+    public static function deleteRelated($em, Document $doc, KernelInterface $kernel)
+    {
         $doc->setProjectDir($kernel->getProjectDir());
 
-        // if ($doc->getRelation()) { // Cascade sucks
-        //     $relation = $doc->getRelation()->setDocument();
-        //     $doc->setRelation(null);
-        //     $em->remove($relation);
-        //     $em->flush();
-        // }
-
-        $this->addFlash('success', 'Document supprimé');
+        if ($doc->getRelation()) { // Cascade sucks
+            $relation = $doc->getRelation()->setDocument();
+            $doc->setRelation(null);
+            $em->remove($relation);
+            $em->flush();
+        }
         $em->remove($doc);
         $em->flush();
-
-        return $this->redirectToRoute('processus_supprimer', ['nom' => $nom]);
     }
 }
