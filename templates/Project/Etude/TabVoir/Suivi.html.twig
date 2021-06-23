@@ -16,7 +16,12 @@
 
 {{ form_start(formSuivi, {'action': path('project_etude_suivi_update', {'id': etude.id}) , 'attr': {'id': 'myForm' }}) }}
 
-
+        <tr>
+            <th>{{ 'suivi.etude_etat'|trans({}, 'project') }}</th>
+        </tr>
+        <tr>
+            <td>{{ form_widget(formSuivi.stateID) }}</td>
+        </tr>
     <table class="table table-striped"> 
         
         {% if etude.suivis is not empty %}
