@@ -21,7 +21,7 @@
             </tr>
             {% for formation in formations | reverse %}
                 <tr>
-                    <td>{{ formation.titre | title }}</td>
+                    <td><a href="{{ path('formation_modifier', {'id': formation.id}) }}">{{ formation.titre | title }}</td>
                     <td>{{ formation.categoriesChoiceToString() }}</td>
                     <td>{{ formation.dateDebut | date("d/m/Y") }}</td>
                     <td>

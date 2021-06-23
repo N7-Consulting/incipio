@@ -28,6 +28,11 @@
                                     {{ form_rest(form) }}
                                     {{ form_end(form) }}
                                 </div>
+                                <form class="bootbox-confirm inline"
+                                    data-content="{{ 'processus.confirmation_supprimer_processus'|trans({}, 'processus') }}"
+                                    action="{{ path('processus_supprimer', { 'nom': processus.nom}) }}" method="post">
+                                    <button class="btn btn-danger">{{ 'processus.processus_supprimer'|trans({}, 'processus') }}</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

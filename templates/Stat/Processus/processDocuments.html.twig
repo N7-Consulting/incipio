@@ -10,10 +10,6 @@
 
 {% block content_bundle %}
 
-    <div class="box-header with-border">
-            <a href="{{ path('publish_document_uploadProcessus',{'nom': processus.nom}) }}" class="pull-right btn btn-primary">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
-    </div>
-
     <table class="table table-bordered table-striped">
         <tr>
             <th>{{ 'processus.titre'|trans({}, 'processus') }}</th>
@@ -39,9 +35,14 @@
         {% endfor %}
     </table>
     </br>
-    <div class="col-md-2 col-xs-4">
+    <div class="row">
+        <div class="col-md-2 col-xs-4">
                 <a href="{{ path('modifier_processus', {'id': processus.id}) }}" class="btn btn-warning">
                     {{ 'processus.modifier'|trans({}, 'processus') }}
                 </a>
-            </div>
+        </div>
+        <div class="col-md-2 col-xs-4">
+                    <a href="{{ path('publish_document_uploadProcessus',{'nom': processus.nom}) }}" class="pull-right btn btn-primary">{{ 'processus.ajouter_doc'|trans({}, 'processus') }}</a>
+        </div>
+    </div>       
 {% endblock %}

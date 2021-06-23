@@ -99,7 +99,7 @@ class ProcessusController extends AbstractController
     }
 
     /**
-     * @Route(name="voir_doc_processus", path="/Processus/Document/Associes/{nom}", methods={"GET","HEAD","POST"})
+     * @Route(name="voir_doc_processus", path="/Processus/Document/Associes/{id}", methods={"GET","HEAD","POST"})
      *
      * @return Response
      */
@@ -130,7 +130,7 @@ class ProcessusController extends AbstractController
             if ($form->isValid()) {
                 $em->persist($processus);
                 $em->flush();
-                $this->addFlash('success', 'Formation enregistrée');
+                $this->addFlash('success', 'Processus enregistré');
 
                 return $this->redirectToRoute('tab_process', ['id' => $processus->getId()]);
             }
