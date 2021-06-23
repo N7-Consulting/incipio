@@ -197,31 +197,6 @@ class DocumentController extends AbstractController
      *
      * @return Response
      */
-   
-
-    /**
-     * @Security("has_role('ROLE_CA')")
-     * @Route(name="publish_document_delete", path="/Documents/Supprimer/{id}", methods={"GET","HEAD","POST"})
-     *
-     * @return Response
-     */
-    public function delete(Document $doc, KernelInterface $kernel)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $doc->setProjectDir($kernel->getProjectDir());
-
-        if ($doc->getRelation()) { // Cascade sucks
-            $relation = $doc->getRelation()->setDocument();
-            $doc->setRelation(null);
-            $em->remove($relation);
-            $em->flush();
-        }
-        $this->addFlash('success', 'Document supprimé');
-        $em->remove($doc);
-        $em->flush();
-
-        return $this->redirectToRoute('publish_documenttype_index');
-    }
 
     private function upload(
         Request $request,
@@ -266,5 +241,54 @@ class DocumentController extends AbstractController
         }
         
         return $this->render('Publish/Document/upload.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="publish_document_delete", path="/Documents/Supprimer/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function delete(Document $doc, KernelInterface $kernel)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $doc->setProjectDir($kernel->getProjectDir());
+
+        if ($doc->getRelation()) { // Cascade sucks
+            $relation = $doc->getRelation()->setDocument();
+            $doc->setRelation(null);
+            $em->remove($relation);
+            $em->flush();
+        }
+        $this->addFlash('success', 'Document supprimé');
+        $em->remove($doc);
+        $em->flush();
+
+        return $this->redirectToRoute('publish_documenttype_index');
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="publish_document_processus_delete", path="/Documents/Supprimer/Processus/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function deleteProcessus(Document $doc, KernelInterface $kernel)
+    {    
+        $em = $this->getDoctrine()->getManager();
+        $doc->setProjectDir($kernel->getProjectDir());
+
+        // if ($doc->getRelation()) { // Cascade sucks
+        //     $relation = $doc->getRelation()->setDocument();
+        //     $doc->setRelation(null);
+        //     $em->remove($relation);
+        //     $em->flush();
+        // }
+
+        $this->addFlash('success', 'Document supprimé');
+        $em->remove($doc);
+        $em->flush();
+
+        return $this->redirectToRoute('processus_supprimer', ['nom' => $nom]);
     }
 }

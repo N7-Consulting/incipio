@@ -28,7 +28,16 @@ class SuiviEtudeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder            
+        $builder  
+        ->add(
+            'stateID',
+            ChoiceType::class,
+            ['choices' => array_flip(Etude::ETUDE_STATE_ARRAY),
+             'translation_domain' => 'project',
+             'label' => 'Etat de l\'Étude',
+             'required' => true,
+            ]
+        )          
             ->add(
                 'stateDescription',
                 TextareaType::class,

@@ -39,8 +39,6 @@ class ProcessusController extends AbstractController
             'processus' => $processus,
         ]);
     }
- 
-
 
 /**
      * @Security("has_role('ROLE_CA')")
@@ -78,13 +76,25 @@ class ProcessusController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function delete(Processus $processus, Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        
+    public function deleteProcessus(Processus $processus, Request $request, KernelInterface $kernel)
+    {   $em = $this->getDoctrine()->getManager();
+        $docs = $processus->getRelatedDocuments();       
+        foreach ($docs as $document) {
+            $doc = $document->getDocument();
+            $doc->setProjectDir($kernel->getProjectDir());
+
+            if ($doc->getRelation()) { // Cascade sucks
+                $relation = $doc->getRelation()->setDocument();
+                $doc->setRelation(null);
+                $em->remove($relation);
+                $em->flush();
+            }
+            $this->addFlash('success', 'Document supprimé');
+            $em->remove($doc);
+            $em->flush(); 
+        }
         $em->remove($processus);
         $em->flush();
-        $this->addFlash('success', 'Processus supprimé');
         return $this->redirectToRoute('tab_process');
     }
 

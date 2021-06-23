@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ProcessusRepository::class)
