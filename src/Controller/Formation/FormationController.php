@@ -322,13 +322,18 @@ class FormationController extends AbstractController
      *
      * @return RedirectResponse Delete a training
      */
-    public function supprimerPassation(Request $request, Passation $passation)
+    public function supprimerPassation(Request $request, Passation $passation, KernelInterface $kernel)
     {
         $form = $this->createDeleteForm($passation->getId());
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $docs = $passation->getRelatedDocuments();
+            foreach ($docs as $document) {
+                $doc = $document->getDocument();
+                DocumentController::deleteRelated($em,$doc,$kernel);
+            }
             $em->remove($passation);
             $em->flush();
             $this->addFlash('success', 'Passation supprimée');
