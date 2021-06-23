@@ -29,11 +29,11 @@
 
     <table class="table table-bordered table-striped">
         <tr>
-            <th>Date d'upload</th>
-            <th>Mis en ligne par</th>
-            <th>Titre</th>
-            <th>Taille</th>
-            <th>Action</th>
+            <th>{{ 'suivi.date_upload' | trans({}, 'project') }}</th>
+            <th>{{ 'suivi.mis_en_ligne_par' | trans({}, 'project') }}</th>
+            <th>{{ 'suivi.titre' | trans({}, 'project') }}</th>
+            <th>{{ 'suivi.taille' | trans({}, 'project') }}</th>
+            <th>{{ 'suivi.action' | trans({}, 'project') }}</th>
         </tr>
         {% for doc in docs | reverse %}
             <tr>

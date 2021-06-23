@@ -52,6 +52,10 @@ suivi:
   budget: Budget
   bv: BV
   capacite_intervenants: Capacité des intervenants
+  cca_ajouter: Ajouter une Convention Cadre Agile
+  cca_enregistrer: Enregistrer la Convention Cadre Agile
+  cca_form:
+    date_fin: Date de fin de la Convention
   cc: CC
   cc_affichage: Affichage d'une Convention Client
   cc_enregistrer: Enregistrer la CC
@@ -140,6 +144,7 @@ suivi:
     client_bdd: Le client existe-t-il déjà dans la base de donnée ?
     ce_active: Utiliser la CE ?
     ce_active_tooltip: Décochez cette case si vous souhaitez utiliser les anciens documents AP & CC.
+    cca_active: Utiliser une CCa ?
     confidentialite: Confidentialité ?
     confidentialite_tooltip: Si l'étude est confidentielle, elle ne sera visible que par vous et les membres du CA.
     domaine_competence: Domaine de compétence
@@ -300,6 +305,7 @@ suivi:
   sujet: Sujet
   supprimer: Supprimer
   telecharger: Télécharger
+  taille: Taille
   titre: Titre
   todo: TODO
   total: TOTAL
