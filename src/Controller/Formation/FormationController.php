@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Controller\Publish\DocumentController;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class FormationController extends AbstractController
 {
@@ -292,20 +294,24 @@ class FormationController extends AbstractController
      *
      * @return RedirectResponse Delete a training
      */
-    public function supprimer(Request $request, Formation $formation)
+    public function supprimer(Request $request, Formation $formation, KernelInterface $kernel)
     {
         $form = $this->createDeleteForm($formation->getId());
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+            $docs = $formation->getRelatedDocuments();
+            foreach ($docs as $document) {
+                $doc = $document->getDocument();
+                DocumentController::deleteRelated($em,$doc,$kernel);
+            }
             $em->remove($formation);
             $em->flush();
             $this->addFlash('success', 'Formation supprimée');
         }
 
-        return $this->redirectToRoute('formations_index_admin', []);
+        return $this->redirectToRoute('formations_index_admin');
     }
 
     /**
