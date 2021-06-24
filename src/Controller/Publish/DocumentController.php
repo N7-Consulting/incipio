@@ -57,7 +57,7 @@ class DocumentController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="publish_document_voir", path="/Documents/show/{id}", methods={"GET","HEAD"})
      *
      * @param Document $documentType (ParamConverter) The document to be downloaded
@@ -192,7 +192,7 @@ class DocumentController extends AbstractController
 
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="publish_document_uploadDoctype", path="/Documents/Upload/Doctype", methods={"GET","HEAD","POST"})
      *
      * @return Response

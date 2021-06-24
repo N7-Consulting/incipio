@@ -218,7 +218,7 @@
     {% endif %}
 
     <!-- QUALITE -->
-    {% if is_granted('ROLE_CA') %}
+    {% if is_granted('ROLE_SUIVEUR') %}
         <li>
             <a href="#">
                 <i class="icon-mini fa fa-paper-plane"></i>
@@ -309,10 +309,11 @@
                 <li><a href="{{ path('archivage_actico_index') }}"><span
                                 class="fa fa-list"></span> {{ 'dashboard.actico'| trans }}</a>
                 </li>
-
-                <li><a href="{{ path('archivage_treso_index') }}"><span
-                                class="fa fa-list"></span> {{ 'dashboard.tresorerie'| trans }}</a>
-                </li>
+                {% if is_granted('ROLE_TRESO') %}
+                    <li><a href="{{ path('archivage_treso_index') }}"><span
+                                    class="fa fa-list"></span> {{ 'dashboard.tresorerie'| trans }}</a>
+                    </li>
+                {% endif %}
             </ul>
         </li>
     {% endif %}

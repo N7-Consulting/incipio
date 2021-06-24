@@ -42,7 +42,7 @@ class ProcessusController extends AbstractController
     }
 
 /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="ajouter_processus", path="/Processus/Ajouter", methods={"GET","HEAD","POST"})
      *
      * @return Response

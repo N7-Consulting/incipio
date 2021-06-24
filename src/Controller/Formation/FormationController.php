@@ -29,7 +29,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class FormationController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="formations_index_admin", path="/Formations/Admin", methods={"GET","HEAD"})
      *
      * Display a list of all training given order by date desc
@@ -102,7 +102,7 @@ class FormationController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="formation_ajouter", path="/Formations/Admin/Ajouter", methods={"GET","HEAD","POST"})
      *
      * @return Response
@@ -132,7 +132,7 @@ class FormationController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="passation_ajouter", path="/Passation/Admin/Ajouter", methods={"GET","HEAD","POST"})
      *
      * @return Response
