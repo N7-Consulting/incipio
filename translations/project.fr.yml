@@ -33,6 +33,7 @@ suivi:
   avancement_developpeur: Avancement du développeur
   avancement_modifier: Modifier l'avancement
   avant_projet: Avant-Projet
+  avance_etude: Commentaire sur l'avancé de l'étude
   avenant: Avenant
   avenant_affichage: Affichage d'un avenant
   avenant_ajouter: Ajouter un avenant
@@ -221,7 +222,7 @@ suivi:
   montant_total_ht: Montant Total H.T.
   nombre_dev_estime: Nombre de dev. estimé
   non: Non
-  non_auditee: Non auditée
+  non_auditee: Non audité
   objectif: Objectif
   objectifs: Objectifs
   objet: Objet
@@ -317,6 +318,6 @@ suivi:
   type_prestation: Type de prestation
   version: Version
   voir: Voir
-  valide : Validée
-  valide_ss_doc: Validée (documents manquants)
+  valide : Validé
+  valide_ss_doc: Validé (documents manquants)
   warnings: Warnings

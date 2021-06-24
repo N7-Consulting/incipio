@@ -41,7 +41,7 @@ class SuiviEtudeType extends AbstractType
             ->add(
                 'stateDescription',
                 TextareaType::class,
-                ['label' => 'suivi.problemes', 'translation_domain' => 'project', 'required' => false, 'attr' => ['cols' => '100%', 'rows' => 5]]
+                ['label' => 'suivi.avance_etude', 'translation_domain' => 'project', 'required' => false, 'attr' => ['cols' => '100%', 'rows' => 5]]
             )
             ->add('ap', DocTypeSuiviType::class, ['label' => 'Avant-Projet', 'data_class' => Ap::class])
             ->add('cc', DocTypeSuiviType::class, ['label' => 'Convention Client', 'data_class' => Cc::class])

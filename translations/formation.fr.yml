@@ -27,6 +27,7 @@ formation:
   formations: Formations
   formations_rapports : Rapports des formations
   formations_presence: Présence aux formations
+  num_mandat: Numéro du mandat 
   mandat: Mandat
   membres: membres
   membres_present: Membres Présents

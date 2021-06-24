@@ -22,9 +22,9 @@
         <th>
             {{ 'suivi.etat'|trans({}, 'project') }}
         </th>
-        <th>
+        {# <th>
             {{ 'suivi.a_recontacter_le'|trans({}, 'project') }}
-        </th>
+        </th> #}
         <th>
             <div>{{ 'suivi.prix_ht'|trans({}, 'project') }}</div>
             <div>{{ 'suivi.jeh_nombre'|trans({}, 'project') }}</div>
@@ -58,8 +58,8 @@
             <td>
                 {{ etude.stateDescription }}
             </td>
-            <td>
-            </td>
+            {# <td>
+            </td> #}
             <td>
                 <div>{{ etude.confidentiel ? '*' : etude.montantHT |default('') }} €</div>
                 <div>{{ etude.confidentiel ? '*' : etude.nbrJEH |default('') }} {{ 'suivi.jeh'|trans({}, 'project') }}</div>
