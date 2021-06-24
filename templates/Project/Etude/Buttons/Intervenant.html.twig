@@ -12,6 +12,16 @@
         <ul class="dropdown-menu">
             <li><a href="{{ path('personne_membre_voir', {'id': mission.intervenant.id}) }}"><i class="fa fa-info-circle" ></i> {{ 'suivi.voir'|trans({}, 'project') }}</a></li> 
             <li><a href="mailto:{{ mission.intervenant.personne.email | default("#") }}"><i class="fa fa-envelope"></i> {{ 'suivi.contacter'|trans({}, 'project') }}</a></li>
+            {# <li>
+                <a href="{{ path('publish_publiposter',
+                { 'templateName' : 'CE', 'rootName' : 'mission', 'rootObject_id' : mission.id }) }}">
+                    <i class="fa fa-envelope"></i> {{ 'suivi.générer'|trans({}, 'project') }}
+                </a>
+            </li> #}
+            <li>
+                <a href="#" class="avancement" data-mission="{{ mission.id }}" data-etude="{{ etude.id }}"><i
+                            class="fa fa-envelope"></i> {{ 'suivi.avancement_modifier'|trans({}, 'project') }}</a>
+            </li>
         </ul>
     </div>
 {% else %}
