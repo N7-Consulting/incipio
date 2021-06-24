@@ -255,6 +255,7 @@ class EtudeController extends AbstractController
             'formSuivi' => $formSuivi->createView(),
             'chart' => $ob,
             'clientContacts' => $clientContacts,
+            'tab' => 'tab7',
             /* 'delete_form' => $deleteForm->createView(),  */
         ]);
     }

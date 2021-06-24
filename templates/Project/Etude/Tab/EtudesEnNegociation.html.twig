@@ -65,7 +65,7 @@
             {% for contact in etude.clientContacts %}
                     {% set dernierContact = dernierContact | date("U") < contact.date |date("U") ? contact.date : dernierContact %}
             {% endfor %} 
-            <a href="{{ path('project_etude_voir', {'nom' : etude.nom }) }}">{{etude.clientContacts | length }}</a>
+            <a href="{{ path('project_etude_voir', {'nom' : etude.nom  }) }}">{{ 'suivi.voir'|trans({}, 'project') }} ({{etude.clientContacts | length }})</a>
             
             </td>
             <td>
