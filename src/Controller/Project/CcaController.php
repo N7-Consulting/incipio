@@ -6,6 +6,7 @@ use App\Entity\Project\Cca;
 use App\Form\Project\CcaType;
 use App\Form\Project\SubCcaType;
 use DateTime;
+use App\Service\Project\DocTypeManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,7 +105,7 @@ class CcaController extends AbstractController
      *
      * @return RedirectResponse|Response
      */
-    public function modifier(Request $request, Cca $cca): Response
+    public function modifier(Request $request, Cca $cca, DocTypeManager $docTypeManager): Response
     {
         $form = $this->createForm(SubCcaType::class, $cca, ['prospect' => $cca->getProspect()]);
         $form->handleRequest($request);
@@ -112,8 +113,12 @@ class CcaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $cca = $form->getData();
-
             $em = $this->getDoctrine()->getManager();
+
+            // Save signataire is unknown
+            $docTypeManager->checkSaveNewEmploye($cca);
+            $em->flush();
+
             $em->persist($cca);
             $em->flush();
 
