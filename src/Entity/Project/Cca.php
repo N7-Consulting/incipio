@@ -39,6 +39,20 @@ class Cca extends DocType
      */
     private $prospect;
 
+    /************************
+     *   OTHERS DEFINITIONS
+     ************************/
+
+    /**
+     * @var bool
+     */
+    private $knownProspect = false;
+
+    /**
+     * @var Prospect
+     */
+    private $newProspect;
+
     public function __construct()
     {
         $this->etudes = new ArrayCollection();
@@ -101,5 +115,25 @@ class Cca extends DocType
         $this->prospect = $prospect;
 
         return $this;
+    }
+
+    public function isKnownProspect()
+    {
+        return $this->knownProspect;
+    }
+
+    public function setKnownProspect($boolean)
+    {
+        $this->knownProspect = $boolean;
+    }
+
+    public function getNewProspect()
+    {
+        return $this->newProspect;
+    }
+
+    public function setNewProspect($var)
+    {
+        $this->newProspect = $var;
     }
 }

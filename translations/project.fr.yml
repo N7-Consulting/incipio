@@ -54,8 +54,6 @@ suivi:
   capacite_intervenants: Capacité des intervenants
   cca_ajouter: Ajouter une Convention Cadre Agile
   cca_enregistrer: Enregistrer la Convention Cadre Agile
-  cca_form:
-    date_fin: Date de fin de la Convention
   cc: CC
   cc_affichage: Affichage d'une Convention Client
   cc_enregistrer: Enregistrer la CC
