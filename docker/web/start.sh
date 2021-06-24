@@ -2,9 +2,9 @@
 set -xe
 
 if [ "$APP_ENV" != 'prod' ]; then
-    composer install --ignore-platform-req=php --prefer-dist --no-progress --no-interaction
+    composer install --prefer-dist --no-progress --no-interaction
 else
-    composer install --ignore-platform-req=php --prefer-dist --no-dev --no-progress --optimize-autoloader
+    composer install --prefer-dist --no-dev --no-progress --optimize-autoloader
 fi
 
 # Start Apache with the right permissions after removing pre-existing PID file
