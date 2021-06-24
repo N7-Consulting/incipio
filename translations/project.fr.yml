@@ -209,6 +209,7 @@ suivi:
   jeh_nombre_nouveau: Nouveau nombre JEH
   jeh_repartition: Répartition des JEH
   jours_en_plus: Jours en plus
+  mail: Mail
   mandat: Mandat
   methodologie: Méthodologie
   mis_en_ligne_par: Mis en ligne par
@@ -238,6 +239,7 @@ suivi:
   phases_gestion: Gestion des Phases (à venir)
   phases_modifier: Modifier les phases
   phases_non_groupees: Phases non groupées
+  physique: Physique
   pourcentage_acompte: Pourcentage Acompte
   presentation_projet: Présentation du projet
   prix: Prix
@@ -310,6 +312,7 @@ suivi:
   sujet: Sujet
   supprimer: Supprimer
   telecharger: Télécharger
+  telephone: Téléphone
   titre: Titre
   todo: TODO
   total: TOTAL

@@ -30,14 +30,7 @@
 			<a href="{{ path('project_clientcontact_voir', {'id': contact.id}) }}">{{ 'suivi.contact'|trans({}, 'project') }} n°{{etude.clientContacts | length - loop.index0}}</a>
 		</td>
 		<td>
-		{% set dernierContact = dernierContact | date("U") < contact.date |date("U") ? contact.date : dernierContact %}
-		{% if contact.moyenContact == 'telephone'%}
-			<span title="{{ contact.date | date("d/m/Y - ") ~ contact.faitPar.PrenomNom}}" class="fa fa-headphones"></span>
-		{% elseif contact.moyenContact == 'mail'%}
-			<span title="{{ contact.date | date("d/m/Y - ") ~ contact.faitPar.PrenomNom}}"  class="fa fa-envelope"></span>
-		{% else %}
-			<span title="{{ contact.date | date("d/m/Y - ") ~ contact.faitPar.PrenomNom}}"  class="fa fa-eye-open"></span>
-		{% endif %}
+            {{contact.moyenContact}}
 		</td>
 		<td>
 			{{contact.date | date("d/m/Y") }}
