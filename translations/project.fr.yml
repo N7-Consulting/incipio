@@ -228,6 +228,7 @@ suivi:
   objet: Objet
   oui: Oui
   panneau_controle: Panneau de controle
+  pas_de_contact: Aucun contact enregistré avec le client pour cette étude.
   phase: phase
   phase_ajouter: Ajouter une phase
   phase_pas_encore: Pas (encore !) de phase
