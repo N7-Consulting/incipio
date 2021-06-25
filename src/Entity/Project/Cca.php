@@ -53,6 +53,12 @@ class Cca extends DocType
      */
     private $newProspect;
 
+
+    public function __toString()
+    {
+        return $this->prospect->getNom() . ' - ' . $this->dateFin->format('d/m/Y');
+    }
+
     public function __construct()
     {
         $this->etudes = new ArrayCollection();
