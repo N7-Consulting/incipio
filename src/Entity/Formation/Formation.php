@@ -114,12 +114,12 @@ class Formation
     public static function getCategoriesChoice()
     {
         return [
-            0 => 'Activité Commerciale',
-            1 => 'Trésorerie',
-            2 => 'Communication',
-            3 => 'Qualité',
-            4 => 'DSI',
-            5 => 'RH',
+            0 => 'Gestion Associative',
+            1 => 'R.F.P',
+            2 => 'Gestion d\'étude',
+            3 => 'Trésorerie',
+            4 => 'Développement Commercial',
+            5 => 'Qualité',
             6 => 'Autre', ];
     }
 
