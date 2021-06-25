@@ -71,7 +71,7 @@ class CcaController extends AbstractController
             $cca = $form->getData();
 
             // Javascript to add a new prospect dynamically
-            if ((!$cca->isKnownProspect() && !$cca->getNewProspect()) || !$cca->getProspect()) {
+            if ((!$cca->isKnownProspect() && !$cca->getNewProspect()) || ($cca->isKnownProspect() && !$cca->getProspect())) {
                 $this->addFlash('danger', 'Vous devez définir un prospect');
 
                 return $this->render('Project/Cca/ajouter.html.twig', [
