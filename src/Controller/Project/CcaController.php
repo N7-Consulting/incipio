@@ -119,9 +119,6 @@ class CcaController extends AbstractController
             $docTypeManager->checkSaveNewEmploye($cca);
             $em->flush();
 
-            $em->persist($cca);
-            $em->flush();
-
             return $this->redirectToRoute('project_cca_voir');
         }
 
