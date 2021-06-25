@@ -5,7 +5,6 @@
 /var/sessions/*
 /var/documents/*
 /var/key_value_store/stats.json
-/var/key_value_store/config.json
 config.json.dist
 docker-compose.yml
 /docker/mysql
