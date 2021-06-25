@@ -19,19 +19,13 @@
                     <th>{{'processus.nom_process'|trans({}, 'processus')}}</th>
                     <th>{{'processus.pilote'|trans({}, 'processus')}}</th>
                     <th>{{'processus.documents'|trans({}, 'processus')}}</th>
-                    <th>{{'processus.action'|trans({}, 'processus')}}</th>
                 </tr>
                 </thead>
                 {% for process in processus %}
                     <tr>
-                        <td>{{process.nom}} </td>
+                        <td><a href="{{ path('modifier_processus',{'id': process.id})}} ">{{process.nom}}</a></td>
                         <td>{{process.pilote}} </td>
-                        <td><a href="{{ path('voir_doc_processus',{'nom': process.nom})}} "><span class="fa fa-eye"> ({{ process.relatedDocuments | length }})</a></td>
-                        <td><form class="bootbox-confirm inline"
-                                data-content="{{ 'processus.supprimer_process_confirm'|trans({}, 'processus') }}"
-                                action="{{ path('processus_supprimer', { 'nom': process.nom}) }}" method="post">
-                        <button class="fa fa-times"></button>
-                        </form> </td>
+                        <td><a href="{{ path('voir_doc_processus',{'id': process.id})}} "><span class="fa fa-eye"> ({{ process.relatedDocuments | length }})</a></td>
                     </tr>
                 {% endfor %}
             </table>

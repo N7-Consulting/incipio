@@ -73,11 +73,7 @@
                 <li><a href="{{ path('project_etude_ajouter') }}"><span
                                 class="fa fa-plus"></span> {{ 'dashboard.etude_creer'| trans }}</a></li>
                 <li class="divider"></li>
-                <li class="dropdown-header">Qualité</li>
-                <li><a href="{{ path('project_etude_suiviQualite') }}"><span
-                                class="fa fa-exclamation-triangle"></span> {{ 'dashboard.problemes_suivi'| trans }}
-                    </a></li>
-                {% if is_granted('ROLE_CA') %}
+               {% if is_granted('ROLE_CA') %}
                     <li class="divider"></li>
                     <li class="dropdown-header">{{ 'dashboard.administration'| trans }}</li>
                     <li>
@@ -222,7 +218,7 @@
     {% endif %}
 
     <!-- QUALITE -->
-    {% if is_granted('ROLE_CA') %}
+    {% if is_granted('ROLE_SUIVEUR') %}
         <li>
             <a href="#">
                 <i class="icon-mini fa fa-paper-plane"></i>
@@ -236,6 +232,10 @@
             <ul class="treeview-menu">
                 <li><a href="{{ path('tab_process') }}"><span
                                 class="fa fa-tasks"></span> {{ 'dashboard.gestion_proc'| trans }}</a></li>
+            </ul>
+            <ul class="treeview-menu">
+                <li><a href="{{ path('project_etude_suiviQualite') }}"><span
+                                class="fa fa-exclamation-triangle"></span> {{ 'dashboard.problemes_suivi'| trans }}</a></li>
             </ul>
         </li>
     {% endif %}
@@ -309,10 +309,11 @@
                 <li><a href="{{ path('archivage_actico_index') }}"><span
                                 class="fa fa-list"></span> {{ 'dashboard.actico'| trans }}</a>
                 </li>
-
-                <li><a href="{{ path('archivage_treso_index') }}"><span
-                                class="fa fa-list"></span> {{ 'dashboard.tresorerie'| trans }}</a>
-                </li>
+                {% if is_granted('ROLE_TRESO') %}
+                    <li><a href="{{ path('archivage_treso_index') }}"><span
+                                    class="fa fa-list"></span> {{ 'dashboard.tresorerie'| trans }}</a>
+                    </li>
+                {% endif %}
             </ul>
         </li>
     {% endif %}

@@ -1,13 +1,13 @@
 <table class="table table-bordered table-striped">
         <tr>
-            <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
             <th>{{ 'formation.titre'|trans({}, 'formation') }}</th>
+            <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
             <th>{{ 'formation.description'|trans({}, 'formation') }}</th>
         </tr>
         {% for passation in passations %}
             <tr>
+                <td><a href="{{ path('passation_modifier', {'id': passation.id}) }}">{{ passation.titre | title }}</a>
                 <td><a href="{{ path('passation_voir', {'id': passation.id}) }}"><span class="fa fa-eye"> ({{ passation.relatedDocuments | length }})</td>
-                <td>{{ passation.titre | title }}</a>
                 <td>{{ passation.description }}</td>
             </tr>
         {% endfor %}

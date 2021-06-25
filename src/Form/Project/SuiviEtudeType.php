@@ -28,7 +28,8 @@ class SuiviEtudeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
+        $builder  
+        ->add(
             'stateID',
             ChoiceType::class,
             ['choices' => array_flip(Etude::ETUDE_STATE_ARRAY),
@@ -36,24 +37,11 @@ class SuiviEtudeType extends AbstractType
              'label' => 'Etat de l\'Étude',
              'required' => true,
             ]
-        )
-            ->add(
-                'auditDate',
-                GenemuDateType::class,
-                ['label' => 'Audité le', 'format' => 'd/MM/y', 'required' => false, 'widget' => 'single_text']
-            )
-            ->add(
-                'auditType',
-                AuditType::class,
-                ['label' => 'Type d\'audit', 'required' => false, 'choice_label' => function ($var) {
-                    return $var;
-                },
-                ]
-            )
+        )          
             ->add(
                 'stateDescription',
                 TextareaType::class,
-                ['label' => 'suivi.problemes', 'translation_domain' => 'project', 'required' => false, 'attr' => ['cols' => '100%', 'rows' => 5]]
+                ['label' => 'suivi.avance_etude', 'translation_domain' => 'project', 'required' => false, 'attr' => ['cols' => '100%', 'rows' => 5]]
             )
             ->add('ap', DocTypeSuiviType::class, ['label' => 'Avant-Projet', 'data_class' => Ap::class])
             ->add('cc', DocTypeSuiviType::class, ['label' => 'Convention Client', 'data_class' => Cc::class])

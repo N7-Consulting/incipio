@@ -57,7 +57,7 @@ class DocumentController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="publish_document_voir", path="/Documents/show/{id}", methods={"GET","HEAD"})
      *
      * @param Document $documentType (ParamConverter) The document to be downloaded
@@ -151,7 +151,7 @@ class DocumentController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="publish_document_uploadEtudediant", path="/Documents/Upload/Etudiant/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="publish_document_uploadEtudiant", path="/Documents/Upload/Etudiant/{id}", methods={"GET","HEAD","POST"})
      *
      * @return bool|RedirectResponse|Response
      */
@@ -192,36 +192,11 @@ class DocumentController extends AbstractController
 
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="publish_document_uploadDoctype", path="/Documents/Upload/Doctype", methods={"GET","HEAD","POST"})
      *
      * @return Response
      */
-   
-
-    /**
-     * @Security("has_role('ROLE_CA')")
-     * @Route(name="publish_document_delete", path="/Documents/Supprimer/{id}", methods={"GET","HEAD","POST"})
-     *
-     * @return Response
-     */
-    public function delete(Document $doc, KernelInterface $kernel)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $doc->setProjectDir($kernel->getProjectDir());
-
-        if ($doc->getRelation()) { // Cascade sucks
-            $relation = $doc->getRelation()->setDocument();
-            $doc->setRelation(null);
-            $em->remove($relation);
-            $em->flush();
-        }
-        $this->addFlash('success', 'Document supprimé');
-        $em->remove($doc);
-        $em->flush();
-
-        return $this->redirectToRoute('publish_documenttype_index');
-    }
 
     private function upload(
         Request $request,
@@ -266,5 +241,49 @@ class DocumentController extends AbstractController
         }
         
         return $this->render('Publish/Document/upload.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="publish_document_delete", path="/Documents/Supprimer/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public function delete(Document $doc, KernelInterface $kernel)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $doc->setProjectDir($kernel->getProjectDir());
+
+        if ($doc->getRelation()) { // Cascade sucks
+            $relation = $doc->getRelation()->setDocument();
+            $doc->setRelation(null);
+            $em->remove($relation);
+            $em->flush();
+        }
+        $this->addFlash('success', 'Document supprimé');
+        $em->remove($doc);
+        $em->flush();
+
+        return $this->redirectToRoute('publish_documenttype_index');
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="publish_document_related_delete", path="/Documents/Related/Supprimer/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return Response
+     */
+    public static function deleteRelated($em, Document $doc, KernelInterface $kernel)
+    {
+        $doc->setProjectDir($kernel->getProjectDir());
+
+        if ($doc->getRelation()) { // Cascade sucks
+            $relation = $doc->getRelation()->setDocument();
+            $doc->setRelation(null);
+            $em->remove($relation);
+            $em->flush();
+        }
+        $em->remove($doc);
+        $em->flush();
     }
 }

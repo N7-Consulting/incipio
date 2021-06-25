@@ -20,6 +20,11 @@ suivi:
   au: Au
   aucune: Aucune
   auditee: Auditée
+  audit : Audit
+  audit_changer_etat : Changer l'état de l'audit
+  audit_etat: Etat de l'audit
+  audit_enregistrer : Enregistrer l'état
+  audit_date: Date de l'audit
   auditée_le: Auditée le
   autre: autre
   av_ajouter_un: Ajouter un Avenant
@@ -28,6 +33,7 @@ suivi:
   avancement_developpeur: Avancement du développeur
   avancement_modifier: Modifier l'avancement
   avant_projet: Avant-Projet
+  avance_etude: Commentaire sur l'avancé de l'étude
   avenant: Avenant
   avenant_affichage: Affichage d'un avenant
   avenant_ajouter: Ajouter un avenant
@@ -154,6 +160,7 @@ suivi:
     suiveur_projet: Suiveur de projet
     suiveur_qualite: Suiveur qualité
   etude_l: L'étude
+  etat_audit: Etat de l'audit
   etude_modifier: Modifier une étude
   etude_nom: Nom de l'étude
   etude_retour: Retour à l'Etude
@@ -202,6 +209,7 @@ suivi:
   jeh_nombre_nouveau: Nouveau nombre JEH
   jeh_repartition: Répartition des JEH
   jours_en_plus: Jours en plus
+  mail: Mail
   mandat: Mandat
   methodologie: Méthodologie
   mis_en_ligne_par: Mis en ligne par
@@ -215,12 +223,13 @@ suivi:
   montant_total_ht: Montant Total H.T.
   nombre_dev_estime: Nombre de dev. estimé
   non: Non
-  non_auditee: Non auditée
+  non_auditee: Non audité
   objectif: Objectif
   objectifs: Objectifs
   objet: Objet
   oui: Oui
   panneau_controle: Panneau de controle
+  pas_de_contact: Aucun contact enregistré avec le client pour cette étude.
   phase: phase
   phase_ajouter: Ajouter une phase
   phase_pas_encore: Pas (encore !) de phase
@@ -230,6 +239,7 @@ suivi:
   phases_gestion: Gestion des Phases (à venir)
   phases_modifier: Modifier les phases
   phases_non_groupees: Phases non groupées
+  physique: Physique
   pourcentage_acompte: Pourcentage Acompte
   presentation_projet: Présentation du projet
   prix: Prix
@@ -237,6 +247,8 @@ suivi:
   prix_jeh: Prix JEH
   prix_jeh_ht: Prix JEH HT Facturé (€)
   problemes: Problèmes
+  pb_mineur: Problème mineur
+  pb_majeur: Problème majeur
   proces_verbal: Procès verbal
   proces_verbal_afficher: Affichage d'un PV
   proces_verbal_ajouter: Ajouter un Procès-Verbal
@@ -300,6 +312,7 @@ suivi:
   sujet: Sujet
   supprimer: Supprimer
   telecharger: Télécharger
+  telephone: Téléphone
   titre: Titre
   todo: TODO
   total: TOTAL
@@ -309,4 +322,6 @@ suivi:
   type_prestation: Type de prestation
   version: Version
   voir: Voir
+  valide : Validé
+  valide_ss_doc: Validé (documents manquants)
   warnings: Warnings

@@ -23,11 +23,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Controller\Publish\DocumentController;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class FormationController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="formations_index_admin", path="/Formations/Admin", methods={"GET","HEAD"})
      *
      * Display a list of all training given order by date desc
@@ -100,7 +102,7 @@ class FormationController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="formation_ajouter", path="/Formations/Admin/Ajouter", methods={"GET","HEAD","POST"})
      *
      * @return Response
@@ -130,7 +132,7 @@ class FormationController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_CA')")
+     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="passation_ajouter", path="/Passation/Admin/Ajouter", methods={"GET","HEAD","POST"})
      *
      * @return Response
@@ -292,20 +294,24 @@ class FormationController extends AbstractController
      *
      * @return RedirectResponse Delete a training
      */
-    public function supprimer(Request $request, Formation $formation)
+    public function supprimer(Request $request, Formation $formation, KernelInterface $kernel)
     {
         $form = $this->createDeleteForm($formation->getId());
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+            $docs = $formation->getRelatedDocuments();
+            foreach ($docs as $document) {
+                $doc = $document->getDocument();
+                DocumentController::deleteRelated($em,$doc,$kernel);
+            }
             $em->remove($formation);
             $em->flush();
             $this->addFlash('success', 'Formation supprimée');
         }
 
-        return $this->redirectToRoute('formations_index_admin', []);
+        return $this->redirectToRoute('formations_index_admin');
     }
 
     /**
@@ -316,13 +322,18 @@ class FormationController extends AbstractController
      *
      * @return RedirectResponse Delete a training
      */
-    public function supprimerPassation(Request $request, Passation $passation)
+    public function supprimerPassation(Request $request, Passation $passation, KernelInterface $kernel)
     {
         $form = $this->createDeleteForm($passation->getId());
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $docs = $passation->getRelatedDocuments();
+            foreach ($docs as $document) {
+                $doc = $document->getDocument();
+                DocumentController::deleteRelated($em,$doc,$kernel);
+            }
             $em->remove($passation);
             $em->flush();
             $this->addFlash('success', 'Passation supprimée');

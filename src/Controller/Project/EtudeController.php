@@ -16,6 +16,7 @@ use App\Entity\Project\Etude;
 use App\Entity\User\User;
 use App\Form\Project\EtudeType;
 use App\Form\Project\SuiviEtudeType;
+use App\Form\Project\AuditEtudeType;
 use App\Service\Project\ChartManager;
 use App\Service\Project\EtudeManager;
 use App\Service\Project\EtudePermissionChecker;
@@ -31,6 +32,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Webmozart\KeyValueStore\Api\KeyValueStore;
+use App\Controller\Publish\DocumentController;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class EtudeController extends AbstractController
 {
@@ -252,6 +255,7 @@ class EtudeController extends AbstractController
             'formSuivi' => $formSuivi->createView(),
             'chart' => $ob,
             'clientContacts' => $clientContacts,
+            'tab' => 'tab7',
             /* 'delete_form' => $deleteForm->createView(),  */
         ]);
     }
@@ -319,7 +323,7 @@ class EtudeController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function delete(Etude $etude, Request $request, EtudePermissionChecker $permChecker)
+    public function delete(Etude $etude, Request $request, EtudePermissionChecker $permChecker,KernelInterface $kernel)
     {
         $form = $this->createDeleteForm($etude);
 
@@ -331,7 +335,11 @@ class EtudeController extends AbstractController
             if ($permChecker->confidentielRefus($etude, $this->getUser())) {
                 throw new AccessDeniedException('Cette étude est confidentielle');
             }
-
+            $docs = $etude->getRelatedDocuments();       
+            foreach ($docs as $document) {
+                $doc = $document->getDocument();
+                DocumentController::deleteRelated($em,$doc,$kernel);
+            }
             $em->remove($etude);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Etude supprimée');
@@ -521,6 +529,57 @@ class EtudeController extends AbstractController
 
         return new JsonResponse(['responseCode' => Response::HTTP_OK, 'msg' => 'ok',
         ]); //make sure it has the correct content type
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="audit_modifier", path="/Project/Etude/Tabvoir/ModifierAudit/{id}", methods={"GET","HEAD","POST"})
+     *
+     * 
+     */
+    public function auditUpdate(Request $request, Etude $etude, EtudePermissionChecker $permChecker)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+
+        if ($permChecker->confidentielRefus($etude, $this->getUser())) {
+            throw new AccessDeniedException('Cette étude est confidentielle');
+        }
+        
+        $formAudit = $this->createForm(AuditEtudeType::class, $etude);
+        // $deleteForm = $this->createDeleteFormt($etude->getId());
+        
+        if ('POST' == $request->getMethod()) {
+            $formAudit->handleRequest($request);
+
+            if ($formAudit->isValid()) {
+                $em->persist($etude);
+                $em->flush();
+                $this->addFlash('success', 'Audit enregistré');
+                return $this->redirectToRoute('project_etude_suiviQualite', ['nom' => $etude->getNom()]);
+            }
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
+        }
+        
+
+        return $this->render('Project/Etude/TabVoir/ModifierAudit.html.twig',  [
+            // 'delete_form' => $deleteForm->createView(),
+            'etude' => $etude,
+            'formAudit' => $formAudit->createView()]                                                                        
+        );
+    }
+     /**
+     * Function to create a form to remove a formation.
+     *
+     * @param $id
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createDeleteFormt($id)
+    {
+        return $this->createFormBuilder(['id' => $id])
+            ->add('id', HiddenType::class)
+            ->getForm();
     }
 
     /**
