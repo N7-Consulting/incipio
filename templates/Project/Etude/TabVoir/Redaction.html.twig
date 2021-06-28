@@ -130,9 +130,9 @@
             </button>
             <span class="navbar-brand titre" data-toggle="collapse" data-target="#ce"><span
                         class="fa fa-chevron-down"></span> {{ 'suivi.convention_etude'|trans({}, 'project') }}
-            {{ etude.cc.version | default('') }}</span>
+            {{ etude.ce.version | default('') }}</span>
         </div>
-        <div class="collapse navbar-collapse navbar-cc">
+        <div class="collapse navbar-collapse navbar-ce">
             <ul class="nav navbar-nav">
                 <li><a href="{{ path('project_ce_rediger', {'id': etude.id}) }}"><span
                                 class="fa fa-pencil"></span> {{ 'suivi.rediger'|trans({}, 'project') }}</a></li>
@@ -187,8 +187,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-bdc">
             <ul class="nav navbar-nav">
-            {# TODO Changer path #}
-                <li><a href="{{ path('project_ce_rediger', {'id': etude.id}) }}"><span class="fa fa-pencil"></span> {{ 'suivi.rediger'|trans({}, 'project') }}</a></li>
+                <li><a href="{{ path('project_bdc_rediger', {'id': etude.id}) }}"><span class="fa fa-pencil"></span> {{ 'suivi.rediger'|trans({}, 'project') }}</a></li>
                 <li><a href="{{ path('publish_publiposter', { 'templateName' : constant('\\App\\Controller\\Publish\\TraitementController::DOCTYPE_CONVENTION_CADRE_AGILE'),
                         'rootName' : constant('\\App\\Controller\\Publish\\TraitementController::ROOTNAME_ETUDE'),
                         'rootObject_id' : etude.id}) }}">
