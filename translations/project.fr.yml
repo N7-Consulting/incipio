@@ -51,6 +51,7 @@ suivi:
   avortee: Avortée
   budget: Budget
   bv: BV
+  bon_de_commande: Bon de Commande
   capacite_intervenants: Capacité des intervenants
   cca: Convention Cadre Agile
   cca_ajouter: Ajouter une Convention Cadre Agile
@@ -186,6 +187,8 @@ suivi:
   gantt_exporter: Exporter le Gantt
   generer: Generer
   generer_ce: Générer la CE
+  generer_cca : Générer la CCA
+  generer_bdc: Générer le BDC
   generer_devis: Générer le devis
   groupe: Groupe
   groupe_ajouter: Ajouter un groupe
