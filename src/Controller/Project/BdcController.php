@@ -47,6 +47,11 @@ class BdcController extends AbstractController
                 $docTypeManager->checkSaveNewEmploye($etude->getBdc());
                 $em->flush();
 
+                $this->addFlash('success', 'Bon de Commande modifié');
+                if ($request->get('phases')) {
+                    return $this->redirectToRoute('project_phases_modifier', ['id' => $etude->getId()]);
+                }
+
                 return $this->redirectToRoute('project_etude_voir', ['nom' => $etude->getNom(), '_fragment' => 'tab3']);
             }
         }
