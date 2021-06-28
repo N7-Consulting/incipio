@@ -14,10 +14,10 @@
             <li class="active"><a href="#tab1" data-toggle="tab">{{ 'suivi.etudes_negociations'|trans({}, 'project') }}
                     ({{ etudesEnNegociation | length }})</a></li>
             {# Acceptées #}
-            {# {% if etudesAcceptees | length %} #}
+            {% if etudesAcceptees | length %}
             <li><a href="#tab2" data-toggle="tab">{{ 'suivi.etudes_acceptees'|trans({}, 'project') }}
                     ({{ etudesAcceptees | length }})</a></li>
-            {# {% endif %} #}
+            {% endif %}
             <li><a href="#tab3" data-toggle="tab">{{ 'suivi.etudes_en_cours'|trans({}, 'project') }}
                     ({{ etudesEnCours | length }})</a></li>
             {# Finies #}
