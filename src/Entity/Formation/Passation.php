@@ -56,13 +56,13 @@ class Passation
     public static function getCategoriesChoice()
     {
         return [
-            '0' => 'Activité Commerciale',
-            '1' => 'Trésorerie',
-            '2' => 'Communication',
-            '3' => 'Qualité',
-            '4' => 'DSI',
-            '5' => 'RH',
-            '6' => 'Autre', ];
+            1 => 'Gestion Associative',
+            2 => 'R.F.P',
+            3 => 'Gestion d\'étude',
+            4 => 'Trésorerie',
+            5 => 'Développement Commercial',
+            6 => 'Qualité',
+            7 => 'Autre', ];
     }
 
     public static function getCategoriesChoiceToString($choice = null)

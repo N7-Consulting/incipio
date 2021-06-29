@@ -1,0 +1,33 @@
+
+
+
+<div class="table-responsive">
+<table class="table table-striped" id="myTable">
+    <thead>
+    <th> </th>
+    {% for numMandat in mandats %}
+        <th>{{numMandat}}</th>
+    {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    
+    
+    {% for titre in titres %}
+        <tr>
+        <td>{{titre}}</td>
+        {% for mandat in mandats %}
+                {% if mandat in donnees|keys %}
+                <td>{{donnees[mandat]}}</td>
+                {% else %}
+                <td>0</td>
+                {% endif %}
+        {% endfor %}   
+        </tr>
+    {% endfor %}
+    
+    </tbody>
+</table>
+</div>
+
+

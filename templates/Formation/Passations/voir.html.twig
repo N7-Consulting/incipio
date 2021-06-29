@@ -25,7 +25,9 @@
         <tr>
             <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
             <th>{{ 'formation.date_upload'|trans({}, 'formation') }}</th>
-            <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
+            {% if is_granted('ROLE_CA') %} 
+                <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
+            {% endif %}
 
         </tr>
 
@@ -34,13 +36,13 @@
         <tr>
             <td><a href="{{ path('publish_document_voir', {'id': doc.id}) }} ">{{ doc.name}}</a></td>
             <td>{{ doc.uptime ? doc.uptime | date('d/m/Y - H:i:s')}}</td>
-            {# {% if is_granted('ROLE_CA') %} #}
-            <td><form class="bootbox-confirm inline"
-                    data-content="{{ 'processus.supprimer_doc_confirm'|trans({}, 'processus') }}"
-                    action="{{ path('publish_document_delete', { 'id': doc.id}) }}" method="post">
-                <button class="fa fa-times"></button>
-                </form> </td>
-            {# {% endif %} #}
+            {% if is_granted('ROLE_CA') %} 
+                <td><form class="bootbox-confirm inline"
+                        data-content="{{ 'processus.supprimer_doc_confirm'|trans({}, 'processus') }}"
+                        action="{{ path('publish_document_delete', { 'id': doc.id}) }}" method="post">
+                    <button class="fa fa-times"></button>
+                    </form> </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>

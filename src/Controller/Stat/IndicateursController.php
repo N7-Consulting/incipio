@@ -52,9 +52,9 @@ class IndicateursController extends AbstractController
                     'stat_ajax_treso_caParMandatHistogram',
                     'stat_ajax_treso_caParMandatCourbe',
         ],
-        'asso' => ['stat_ajax_asso_nombreMembres',
-                   'stat_ajax_asso_membresParPromo',
-                   'stat_ajax_asso_intervenantsParPromo',
+        'asso' => [//'stat_ajax_asso_nombreMembres',
+                    'stat_ajax_asso_membresParPromo',
+                    'stat_ajax_asso_intervenantsParPromo',
         ],
         'formations' => ['stat_ajax_formations_nombreDePresentFormationsTimed',
                          'stat_ajax_formations_nombreFormationsParMandat',
@@ -82,10 +82,26 @@ class IndicateursController extends AbstractController
     public function index()
     {
         $statsBrutes = ['Pas de données' => 'A venir'];
+        $em = $this->getDoctrine()->getManager();
+        $series = $this->getMembresParPromo2( $em);
+
+        $etudeManager = $this->etudeManager;
+        $MANDAT_MAX = $etudeManager->getMaxMandat();
+        $MANDAT_MIN = $etudeManager->getMinMandat();
+        $mandats = [];
+        for ($j = $MANDAT_MIN; $j <= $MANDAT_MAX; ++$j) {
+            $mandats[] = $j; 
+        }
+        $titres =["Nombre", "titre 2"];
 
         return $this->render(
             'Stat/Indicateurs/index.html.twig',
-            ['stats' => $statsBrutes, 'indicateurs' => self::INDICATEURS]
+            ['stats' => $statsBrutes, 
+            'indicateurs' => self::INDICATEURS,
+            'series' => $series,
+            'mandats' => $mandats,
+            'titres' => $titres
+            ]
         );
     }
 
@@ -841,7 +857,7 @@ class IndicateursController extends AbstractController
         $ob->tooltip->valueSuffix(' cotisants');
 
         return $this->render('Stat/Indicateurs/Indicateur.html.twig', [
-            'chart' => $ob,
+             'chart' => $ob,
         ]);
     }
 
@@ -886,7 +902,7 @@ class IndicateursController extends AbstractController
 
         return $this->render('Stat/Indicateurs/Indicateur.html.twig', [
             'chart' => $ob,
-        ]);
+            ]);
     }
 
     /**
@@ -929,7 +945,7 @@ class IndicateursController extends AbstractController
 
         return $this->render('Stat/Indicateurs/Indicateur.html.twig', [
             'chart' => $ob,
-        ]);
+            ]);
     }
 
     /**
@@ -1068,7 +1084,7 @@ class IndicateursController extends AbstractController
 
         return $this->render('Stat/Indicateurs/Indicateur.html.twig', [
             'chart' => $ob,
-        ]);
+            ]);
     }
 
     /**
@@ -1394,5 +1410,39 @@ class IndicateursController extends AbstractController
         return $this->render('Stat/Indicateurs/Indicateur.html.twig', [
             'chart' => $ob,
         ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="stat_ajax_asso_membresParPromo2", path="/admin/indicateurs/asso/membresParPromo", methods={"GET","HEAD"})
+     *
+     * Nombres de membres par promotion (gestion associative)
+     *
+     * @return Response
+     */
+    public function getMembresParPromo2(ObjectManager $em)
+    {
+        $membres = $em->getRepository(Membre::class)->findAll();
+
+        $promos = [];
+        foreach ($membres as $membre) {
+            $p = $membre->getPromotion();
+            if ($p) {
+                array_key_exists($p, $promos) ? $promos[$p]++ : $promos[$p] = 1;
+            }
+        }
+
+        $data = [];
+        $categories = [];
+        ksort($promos); // Tri selon les promos
+        // foreach ($promos as $promo => $nombre) {
+        //     $data[] = $nombre;
+        //     $categories[] = 'P' . $promo;
+        // }
+
+        $series = [['name' => 'Membres', 'colorByPoint' => true, 'data' => $data]];
+        
+
+        return $promos;
     }
 }

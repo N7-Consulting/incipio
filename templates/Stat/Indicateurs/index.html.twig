@@ -8,23 +8,23 @@
             <li class=""><a href="#gestion" data-toggle="tab" data-loaded="false">
                     {{ 'indicateur.gestion_associative'|trans({}, 'indicateur') }}</a></li>
             <li class=""><a href="#formations" data-toggle="tab" data-loaded="false">
-                    {{ 'indicateur.formations'|trans({}, 'indicateur') }}</a></li>
+                    {{ 'indicateur.rfp'|trans({}, 'indicateur') }}</a></li>
             <li class=""><a href="#suivi" data-toggle="tab" data-loaded="false">
                     {{ 'indicateur.gestion_etudes'|trans({}, 'indicateur') }}</a></li>
             <li class=""><a href="#treso" data-toggle="tab" data-loaded="false">
                     {{ 'indicateur.tresorerie'|trans({}, 'indicateur') }}</a></li>
             <li class=""><a href="#devco" data-toggle="tab" data-loaded="false">
                     {{ 'indicateur.developpement_commercial'|trans({}, 'indicateur') }}</a></li>
+            {# <li class=""><a href="#" data-toggle="tab" data-loaded="false">
+                    {{ 'indicateur.qualite'|trans({}, 'indicateur') }}</a></li>
+            <li class=""><a href="#devco" data-toggle="tab" data-loaded="false">
+                    {{ 'indicateur.autre'|trans({}, 'indicateur') }}</a></li> #}
         </ul>
     </div>
 
     <div id="indicateursTabs" class="tab-content">
         <div class="tab-pane active row" id="infos">
-            <div class="col-md-12">
-                {% for title, stat in stats %}
-                    {{ title }} : {{ stat }}<br/>
-                {% endfor %}
-            </div>
+             {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "mandats": mandats, "titres": titres } %}
         </div>
 
         <div class="tab-pane row" id="gestion">

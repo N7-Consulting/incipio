@@ -6,7 +6,11 @@
         </tr>
         {% for passation in passations %}
             <tr>
-                <td><a href="{{ path('passation_modifier', {'id': passation.id}) }}">{{ passation.titre | title }}</a>
+                {% if is_granted('ROLE_CA') %}
+                    <td><a href="{{ path('passation_modifier', {'id': passation.id}) }}">{{ passation.titre | title }}</a>
+                {% else %}
+                    <td>{{ passation.titre | title }}</td>
+                {% endif %}
                 <td><a href="{{ path('passation_voir', {'id': passation.id}) }}"><span class="fa fa-eye"> ({{ passation.relatedDocuments | length }})</td>
                 <td>{{ passation.description }}</td>
             </tr>

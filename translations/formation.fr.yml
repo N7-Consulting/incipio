@@ -12,6 +12,7 @@ formation:
   date: Date
   date_upload: Date de télechargement
   description: Description
+  devco: Développement commercial
   documents: Documents
   document_formation : Documents relatifs à la formation
   document_passation: Documents relatifs à la passation
@@ -27,6 +28,8 @@ formation:
   formations: Formations
   formations_rapports : Rapports des formations
   formations_presence: Présence aux formations
+  gestion_etude: Gestion d'études
+  gestion_asso: Gestion associative
   num_mandat: Numéro du mandat 
   mandat: Mandat
   membres: membres
@@ -39,7 +42,7 @@ formation:
   personnes_presentes: Personnes présentes
   present: Présents
   qualite: Qualité
-  rfp: RFP
+  rfp: R.F.P
   rh: RH
   taux: Taux
   titre: Titre

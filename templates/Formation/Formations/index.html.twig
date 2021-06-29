@@ -21,7 +21,11 @@
             </tr>
             {% for formation in formations | reverse %}
                 <tr>
-                    <td><a href="{{ path('formation_modifier', {'id': formation.id}) }}">{{ formation.titre | title }}</td>
+                    {% if is_granted('ROLE_CA') %}
+                        <td><a href="{{ path('formation_modifier', {'id': formation.id}) }}">{{ formation.titre | title }}</td>
+                    {% else %}
+                        <td>{{ formation.titre | title }}</td>
+                    {% endif %}
                     <td>{{ formation.categoriesChoiceToString() }}</td>
                     <td>{{ formation.dateDebut | date("d/m/Y") }}</td>
                     <td>

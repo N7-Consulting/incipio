@@ -53,20 +53,20 @@ class FormationController extends AbstractController
     public function lister()
     {   
         $em = $this->getDoctrine()->getManager();
-        $passationActico = $em->getRepository(Passation::class)->findBy(['categorie' => '0']);
-        $passationTreso = $em->getRepository(Passation::class)->findBy(['categorie' => '1']);
-        $passationDsi = $em->getRepository(Passation::class)->findBy(['categorie' => '2']);
-        $passationRh = $em->getRepository(Passation::class)->findBy(['categorie' => '3']);
-        $passationQualite = $em->getRepository(Passation::class)->findBy(['categorie' => '4']);
-        $passationCommunication = $em->getRepository(Passation::class)->findBy(['categorie' => '5']);
-        $passationAutre = $em->getRepository(Passation::class)->findBy(['categorie' => '6']);
+        $passationGestionAsso = $em->getRepository(Passation::class)->findBy(['categorie' => 1]);
+        $passationRFP = $em->getRepository(Passation::class)->findBy(['categorie' => 2]);
+        $passationGestionEtude = $em->getRepository(Passation::class)->findBy(['categorie' => 3]);
+        $passationTreso = $em->getRepository(Passation::class)->findBy(['categorie' => 4]);
+        $passationDevCo = $em->getRepository(Passation::class)->findBy(['categorie' => 5]);
+        $passationQualite = $em->getRepository(Passation::class)->findBy(['categorie' => 6]);
+        $passationAutre = $em->getRepository(Passation::class)->findBy(['categorie' => 7]);
         return $this->render('Formation/Passations/lister.html.twig', [
-            'passationActico' => $passationActico,
+            'passationGestionAsso' => $passationGestionAsso,
+            'passationRFP' => $passationRFP,
+            'passationGestionEtude' => $passationGestionEtude,
             'passationTreso' => $passationTreso,
-            'passationDsi' => $passationDsi,
-            'passationRh' => $passationRh,
+            'passationDevCo' => $passationDevCo,
             'passationQualite' => $passationQualite,
-            'passationCommunication' => $passationCommunication,
             'passationAutre' => $passationAutre,
         ]);
     }
