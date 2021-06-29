@@ -47,6 +47,9 @@
             {{ 'suivi.bv'|trans({}, 'project') }}
         </th>
         <th>
+            {{ 'suivi.contacts_client'|trans({}, 'project') }}
+        </th>
+        <th>
             {{ 'suivi.dernier_contact'|trans({}, 'project') }}
         </th>
         <th>
@@ -165,6 +168,9 @@
 
             </td>
             <td>
+            </td>
+            <td>
+            <a href="{{ path('project_etude_voir', {'nom' : etude.nom,  '_fragment': 'tab7'}) }}">{{ 'suivi.voir'|trans({}, 'project') }} ({{etude.clientContacts | length }})</a>
             </td>
             <td>
                 {% set dernierContact = 0 %}

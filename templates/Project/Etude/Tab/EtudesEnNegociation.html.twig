@@ -60,13 +60,13 @@
             <td>
                 {{etude.stateDescription }}
             </td>
-            <td>
+            
             {% set dernierContact = 0 %}
             {% for contact in etude.clientContacts %}
                     {% set dernierContact = dernierContact | date("U") < contact.date |date("U") ? contact.date : dernierContact %}
             {% endfor %} 
+            <td>
             <a href="{{ path('project_etude_voir', {'nom' : etude.nom,  '_fragment': 'tab7'}) }}">{{ 'suivi.voir'|trans({}, 'project') }} ({{etude.clientContacts | length }})</a>
-            
             </td>
             <td>
                 {% set dCU = dernierContact | date("U") %}
