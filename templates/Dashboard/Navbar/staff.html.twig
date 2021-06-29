@@ -200,7 +200,7 @@
                 <li><a href="{{ path('passation_ajouter') }}"><span
                                 class="fa fa-plus"></span> {{ 'dashboard.passation_ajouter'| trans }}
                 </a></li>
-                {# {% if is_granted('ROLE_CA') %} #}
+                
                 <li class="divider"></li>
                 <li class="dropdown-header">{{ 'dashboard.formations'| trans }}</li>
                 <li><a href="{{ path('formations_index_admin') }}"><span
@@ -209,10 +209,11 @@
                 <li><a href="{{ path('formation_ajouter') }}"><span
                                 class="fa fa-plus"></span> {{ 'dashboard.formation_ajouter'| trans }}
                     </a></li>
+                {% if is_granted('ROLE_CA') %}
                 <li><a href="{{ path('formation_participation') }}"><span
                                 class="fa fa-tasks"></span> {{ 'dashboard.particpants_voir'| trans }}
                     </a></li>
-                {# {% endif %} #}
+                {% endif %}
             </ul>
         </li>
     {% endif %}
