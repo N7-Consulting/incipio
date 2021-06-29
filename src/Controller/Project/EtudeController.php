@@ -182,6 +182,7 @@ class EtudeController extends AbstractController
     {
         $etude = new Etude();
 
+        $etude->setCcaActive(false);
         $etude->setMandat($etudeManager->getMaxMandat());
         $etude->setNum($etudeManager->getNouveauNumero());
         $etude->setFraisDossier($etudeManager->getDefaultFraisDossier());
@@ -200,12 +201,17 @@ class EtudeController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                if ((!$etude->isKnownProspect() && !$etude->getNewProspect()) || ($etude->isKnownProspect() && !$etude->getProspect())) {
-                    $this->addFlash('danger', 'Vous devez définir un prospect');
+                if (!$etude->getCcaActive()) {
+                    if ((!$etude->isKnownProspect() && !$etude->getNewProspect()) || ($etude->isKnownProspect() && !$etude->getProspect())) {
+                        $this->addFlash('danger', 'Vous devez définir un prospect');
 
-                    return $this->render('Project/Etude/ajouter.html.twig', ['form' => $form->createView()]);
-                } elseif (!$etude->isKnownProspect()) {
-                    $etude->setProspect($etude->getNewProspect());
+                        return $this->render('Project/Etude/ajouter.html.twig', ['form' => $form->createView()]);
+                    } elseif (!$etude->isKnownProspect()) {
+                        $etude->setProspect($etude->getNewProspect());
+                    }
+                } else {
+                    $prospectCca = $etude->getCca()->getProspect();
+                    $etude->setProspect($prospectCca);
                 }
 
                 $em->persist($etude);

@@ -41,21 +41,20 @@ class DocTypeType extends AbstractType
             'signataire1',
             Select2EntityType::class,
             ['label' => 'Signataire Junior',
-             'class' => Personne::class,
-             'choice_label' => 'prenomNom',
-             'query_builder' => function (PersonneRepository $pr) {
-                 return $pr->getMembresByPoste('president%');
-             },
-             'required' => true,
+                'class' => Personne::class,
+                'choice_label' => 'prenomNom',
+                'query_builder' => function (PersonneRepository $pr) {
+                    return $pr->getMembresByPoste('president%');
+                },
+                'required' => true,
             ]
         );
 
-        // Si le document n'est ni une FactureVente ni un RM
+        // Si le document n'est ni un RM ni un AVRM
         if (Mission::class != $options['data_class'] &&
             AvMission::class != $options['data_class']
         ) {
             // le signataire 2 est l'intervenant
-
             $pro = $options['prospect'];
             if (Av::class != $options['data_class']) {
                 $builder->add(
@@ -70,9 +69,9 @@ class DocTypeType extends AbstractType
                         'newSignataire2',
                         EmployeType::class,
                         ['label' => 'Nouveau signataire ' . $pro->getNom(),
-                         'required' => false,
-                         'signataire' => true,
-                         'mini' => true,
+                            'required' => false,
+                            'signataire' => true,
+                            'mini' => true,
                         ]
                     );
             }
@@ -92,10 +91,10 @@ class DocTypeType extends AbstractType
             'dateSignature',
             DateType::class,
             ['label' => 'Date de Signature du document',
-             'required' => false,
-             'format' => 'dd/MM/yyyy',
-             'widget' => 'single_text',
-             'attr' => ['autocomplete' => 'off'],
+                'required' => false,
+                'format' => 'dd/MM/yyyy',
+                'widget' => 'single_text',
+                'attr' => ['autocomplete' => 'off'],
             ]
         );
     }

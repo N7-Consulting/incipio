@@ -55,11 +55,11 @@
             <div id="myTabContent" class="tab-content">
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
                     <tr>
-                        <th>Date d'upload</th>
-                        <th>Mis en ligne par</th>
-                        <th>Titre</th>
-                        <th>Taille</th>
-                        <th>Action</th>
+                        <th>{{ 'suivi.date_upload' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.mis_en_ligne_par' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.titre' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.taille' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.action' | trans({}, 'project') }}</th>
                     </tr>
                     {% for doc in docs |filter(doc => doc.type =="sociaux")| reverse %}
                         <tr>
@@ -79,11 +79,11 @@
             <div id="myTabContent" class="tab-content">
                 <table class="display dataTable table table-bordered table-striped dt-responsive" id="FAtable">
                     <tr>
-                        <th>Date d'upload</th>
-                        <th>Mis en ligne par</th>
-                        <th>Titre</th>
-                        <th>Taille</th>
-                        <th>Action</th>
+                        <th>{{ 'suivi.date_upload' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.mis_en_ligne_par' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.titre' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.taille' | trans({}, 'project') }}</th>
+                        <th>{{ 'suivi.action' | trans({}, 'project') }}</th>
                     </tr>
                     {% for doc in docs | filter(doc => doc.type =="fiscaux")| reverse %}
                         <tr>

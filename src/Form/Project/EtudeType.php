@@ -15,6 +15,7 @@ use App\Entity\Personne\Personne;
 use App\Entity\Personne\Prospect;
 use App\Entity\Project\DomaineCompetence;
 use App\Entity\Project\Etude;
+use App\Entity\Project\Cca;
 use App\Form\Personne\ProspectType;
 use App\Repository\Personne\PersonneRepository;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2ChoiceType;
@@ -31,11 +32,25 @@ class EtudeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('knownProspect', CheckboxType::class, [
-            'label' => 'suivi.etude_form.client_bdd',
-            'translation_domain' => 'project',
-            'required' => false,
-        ])
+        $builder
+            ->add('boutonCcaActive', CheckboxType::class, [
+                'label' => 'suivi.etude_form.cca_active',
+                'translation_domain' =>  'project',
+                'attr' => ['title' => 'suivi.etude_form.cca_active_tooltip'],
+                'required' => false,
+                'property_path' => 'ccaActive',
+            ])
+            ->add('cca', Select2EntityType::class, [
+                'class' => Cca::class,
+                'label' => 'suivi.cca',
+                'translation_domain' => 'project',
+                'required' => false,
+            ])
+            ->add('knownProspect', CheckboxType::class, [
+                'label' => 'suivi.etude_form.client_bdd',
+                'translation_domain' => 'project',
+                'required' => false,
+            ])
             ->add('prospect', Select2EntityType::class, [
                 'class' => Prospect::class,
                 'choice_label' => 'nom',
@@ -71,12 +86,6 @@ class EtudeType extends AbstractType
                 'label' => 'suivi.etude_form.confidentialite',
                 'translation_domain' => 'project',
                 'attr' => ['title' => 'suivi.etude_form.confidentialite_tooltip'],
-                'required' => false,
-            ])
-            ->add('ceActive', CheckboxType::class, [
-                'label' => 'suivi.etude_form.ce_active',
-                'translation_domain' => 'project',
-                'attr' => ['title' => 'suivi.etude_form.ce_active_tooltip'],
                 'required' => false,
             ])
             ->add('suiveur', Select2EntityType::class, [

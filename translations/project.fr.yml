@@ -48,16 +48,24 @@ suivi:
   avenant_mission_supprimer: Supprimer l'avenant au Récapitulatif de Mission
   avenant_mission_supprimer_confirm: Etes-vous sûr de vouloir supprimer définitivement cet avenant au RM ?
   avenant_modifier: Modifier l'Avenant
+  avenants_projet: Avenants au Projet
   avenant_supprimer: Supprimer l'Avenant
   avenant_supprimer_confirmation: Êtes-vous sûr de vouloir supprimer définitivement cet avenant ?
-  avenants: Avenants
+  avenants_ce: Avenants à la CE
   avenants_clients: Avenants clients
   av: AVCE
   avenants_mission: Avenants de Mission
   avortee: Avortée
   budget: Budget
+  bdc_rediger: Rédiger le Bon de Commande
+  bdc_enregistrer: Enregistrer le BDC
+  bdc_enregistrer_phases_passer: Enregistrer le BDC et passer aux Phases
   bv: BV
+  bon_de_commande: Bon de Commande
   capacite_intervenants: Capacité des intervenants
+  cca: Convention Cadre Agile
+  cca_ajouter: Ajouter une Convention Cadre Agile
+  cca_enregistrer: Enregistrer la Convention Cadre Agile
   cc: CC
   cc_affichage: Affichage d'une Convention Client
   cc_enregistrer: Enregistrer la CC
@@ -146,6 +154,8 @@ suivi:
     client_bdd: Le client existe-t-il déjà dans la base de donnée ?
     ce_active: Utiliser la CE ?
     ce_active_tooltip: Décochez cette case si vous souhaitez utiliser les anciens documents AP & CC.
+    cca_active: Utiliser une CCa ?
+    cca_active_tooltip: Cocher cette case si vous souhaitez utiliser une CCa/BdC à la place de la CE. Il faut en amont créer la CCa.
     confidentialite: Confidentialité ?
     confidentialite_tooltip: Si l'étude est confidentielle, elle ne sera visible que par vous et les membres du CA.
     domaine_competence: Domaine de compétence
@@ -188,6 +198,8 @@ suivi:
   gantt_exporter: Exporter le Gantt
   generer: Generer
   generer_ce: Générer la CE
+  generer_cca : Générer la CCA
+  generer_bdc: Générer le BDC
   generer_devis: Générer le devis
   groupe: Groupe
   groupe_ajouter: Ajouter un groupe
@@ -268,7 +280,7 @@ suivi:
   raison: Raison
   realisateurs_capable_de: Les réalisateurs de cette étude devront donc être capables de
   recapitulatif: Récapitulatif
-  recapitulatif_mission: Récapitulatif de mission
+  recapitulatif_mission: Récapitulatif de Mission
   recapitulatif_suivi: Récapitulatif - Suivi d'étude
   recu_encaisse: Reçu / Encaissé
   redaction_generation: Rédaction et Génération
@@ -313,6 +325,7 @@ suivi:
   supprimer: Supprimer
   telecharger: Télécharger
   telephone: Téléphone
+  taille: Taille
   titre: Titre
   todo: TODO
   total: TOTAL

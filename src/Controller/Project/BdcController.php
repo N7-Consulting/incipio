@@ -1,19 +1,10 @@
 <?php
 
-/*
- * This file is part of the Incipio package.
- *
- * (c) Florian Lefevre
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace App\Controller\Project;
 
-use App\Entity\Project\Ce;
+use App\Entity\Project\Bdc;
 use App\Entity\Project\Etude;
-use App\Form\Project\CeType;
+use App\Form\Project\BdcType;
 use App\Service\Project\DocTypeManager;
 use App\Service\Project\EtudePermissionChecker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,13 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class CeController extends AbstractController
+class BdcController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="project_ce_rediger", path="/suivi/ce/rediger/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="project_bdc_rediger", path="/suivi/bdc/rediger/{id}", methods={"GET","HEAD","POST"})
      *
-     * @param Etude $etude etude which CE should belong to
+     * @param Etude $etude etude which BDC should belong to
      *
      * @return RedirectResponse|Response
      */
@@ -42,21 +33,21 @@ class CeController extends AbstractController
             throw new AccessDeniedException('Cette étude est confidentielle');
         }
 
-        if (!$ce = $etude->getCe()) {
-            $ce = new Ce();
-            $etude->setCe($ce);
+        if (!$bdc = $etude->getBdc()) {
+            $bdc = new Bdc();
+            $etude->setBdc($bdc);
         }
 
-        $form = $this->createForm(CeType::class, $etude, ['prospect' => $etude->getProspect()]);
+        $form = $this->createForm(BdcType::class, $etude, ['prospect' => $etude->getProspect()]);
 
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $docTypeManager->checkSaveNewEmploye($etude->getCe());
+                $docTypeManager->checkSaveNewEmploye($etude->getBdc());
                 $em->flush();
 
-                $this->addFlash('success', 'CE modifiée');
+                $this->addFlash('success', 'Bon de Commande modifié');
                 if ($request->get('phases')) {
                     return $this->redirectToRoute('project_phases_modifier', ['id' => $etude->getId()]);
                 }
@@ -65,7 +56,7 @@ class CeController extends AbstractController
             }
         }
 
-        return $this->render('Project/Ce/rediger.html.twig', [
+        return $this->render('Project/Bdc/rediger.html.twig', [
             'form' => $form->createView(),
             'etude' => $etude,
         ]);

@@ -29,7 +29,7 @@
             <th>Droit</th>
             <th>Dernière connexion</th>
             {% if is_granted('ROLE_ADMIN') %}
-                <th>Action</th>
+                <th>{{ 'suivi.action' | trans({}, 'project') }}</th>
             {% endif %}
         </tr>
         </thead>

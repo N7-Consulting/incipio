@@ -169,7 +169,7 @@ class Etude
      *           l'affichage de la CC et de l'AP si définit à false ou null
      *
      * @ORM\Column(name="ceActive", type="boolean", nullable=true)
-     */
+    */
     private $ceActive;
 
     /************************
@@ -362,17 +362,23 @@ class Etude
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $cca;
+    private $qs;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity=Bdc::class, inversedBy="etude", cascade={"persist", "remove"})
      */
     private $bdc;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Cca::class, inversedBy="etudes", cascade={"persist"})
      */
-    private $qs;
+    private $cca;
+
+    /**
+     * @var bool est-ce que l'étude utilise la CCa/BdC ? Ce booléen sert à forcer
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $ccaActive;
 
     /**
      * @ORM\PrePersist
@@ -1830,30 +1836,6 @@ class Etude
         return $this;
     }
 
-    public function getCca(): ?string
-    {
-        return $this->cca;
-    }
-
-    public function setCca(?string $cca): self
-    {
-        $this->cca = $cca;
-
-        return $this;
-    }
-
-    public function getBdc(): ?string
-    {
-        return $this->bdc;
-    }
-
-    public function setBdc(?string $bdc): self
-    {
-        $this->bdc = $bdc;
-
-        return $this;
-    }
-
     public function getQs(): ?string
     {
         return $this->qs;
@@ -1865,4 +1847,46 @@ class Etude
 
         return $this;
     }
+
+    public function getBdc(): ?Bdc
+    {
+        return $this->bdc;
+    }
+
+    public function setBdc(Bdc $bdc): self
+    {
+        // set the owning side of the relation if necessary
+        if ($bdc->getEtude() !== $this) {
+            $bdc->setEtude($this);
+        }
+
+        $this->bdc = $bdc;
+
+        return $this;
+    }
+
+    public function getCca(): ?Cca
+    {
+        return $this->cca;
+    }
+
+    public function setCca(?Cca $cca): self
+    {
+        $this->cca = $cca;
+
+        return $this;
+    }
+
+    public function getCcaActive(): ?bool
+    {
+        return $this->ccaActive;
+    }
+
+    public function setCcaActive(?bool $ccaActive): self
+    {
+        $this->ccaActive = $ccaActive;
+
+        return $this;
+    }
 }
+ 

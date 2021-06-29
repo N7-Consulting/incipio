@@ -23,10 +23,10 @@
             <table class="display dataTable table table-bordered table-striped dt-responsive" id="chiffragetable">
                 <thead>
                 <tr>
-                    <th>Date d'upload</th>
-                    <th>Titre</th>
-                    <th>Taille</th>
-                    <th>Action</th>
+                    <th>{{ 'suivi.date_upload' | trans({}, 'project') }}</th>
+                    <th>{{ 'suivi.titre' | trans({}, 'project') }}</th>
+                    <th>{{ 'suivi.taille' | trans({}, 'project') }}</th>
+                    <th>{{ 'suivi.action' | trans({}, 'project') }}</th>
                 </tr>
                 </thead>
              {% for doc in docs | filter(doc => doc.type =="devis")| reverse %}

@@ -27,6 +27,8 @@ dashboard:
   domaine_competences: Domaines de compétence
   donnes_externes_importer: Importer données externes
   etude_creer: Créer une étude
+  cca_voir: Voir les CCa
+  cca: Convention Cadre Agile
   etudes_voir: Voir les études
   factures: Factures
   facture_ajouter: Ajouter une facture
