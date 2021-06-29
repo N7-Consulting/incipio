@@ -34,41 +34,47 @@ class DocTypeType extends AbstractType
         $builder->add(
             'version',
             IntegerType::class,
-            ['label' => 'Numéro du document'],
-        );
+            [
+                'label' => 'suivi.doc_type_form.version',
+                'translation_domain' => 'project',
+            ]);
 
         $builder->add(
             'signataire1',
             Select2EntityType::class,
-            ['label' => 'Signataire Junior',
+            [
                 'class' => Personne::class,
+                'label' => 'suivi.doc_type_form.signataire_junior',
+                'translation_domain' => 'project',
                 'choice_label' => 'prenomNom',
                 'query_builder' => function (PersonneRepository $pr) {
                     return $pr->getMembresByPoste('president%');
                 },
                 'required' => true,
-            ]
-        );
+            ]);
 
         // Si le document n'est ni un RM ni un AVRM
         if (Mission::class != $options['data_class'] &&
             AvMission::class != $options['data_class']
         ) {
-            // le signataire 2 est l'intervenant
+            // le signataire 2 est un client/prospect
             $pro = $options['prospect'];
             if (Av::class != $options['data_class']) {
                 $builder->add(
                     'knownSignataire2',
                     CheckboxType::class,
                     [
+                        'label' => 'suivi.signataire_client_connu',
+                        'translation_domain' => 'project',
                         'required' => false,
-                        'label' => 'Le signataire client existe-t-il déjà dans la base de donnée ?',
                     ]
                 )
                     ->add(
                         'newSignataire2',
                         EmployeType::class,
-                        ['label' => 'Nouveau signataire ' . $pro->getNom(),
+                        [
+                            'label' => 'suivi.nouveau_signataire_ajouter',
+                            'translation_domain' => 'project',
                             'required' => false,
                             'signataire' => true,
                             'mini' => true,
@@ -76,21 +82,27 @@ class DocTypeType extends AbstractType
                     );
             }
 
-            $builder->add('signataire2', Select2EntityType::class, [
-                'class' => Personne::class,
-                'choice_label' => 'prenomNom',
-                'label' => 'Signataire ' . $pro->getNom(),
-                'query_builder' => function (PersonneRepository $pr) use ($pro) {
-                    return $pr->getEmployeOnly($pro);
-                },
-                'required' => false,
-            ]);
+            $builder->add(
+                'signataire2',
+                Select2EntityType::class,
+                [
+                    'class' => Personne::class,
+                    'choice_label' => 'prenomNom',
+                    'label' => 'suivi.signataire_client',
+                    'translation_domain' => 'project',
+                    'query_builder' => function (PersonneRepository $pr) use ($pro) {
+                        return $pr->getEmployeOnly($pro);
+                    },
+                    'required' => false,
+                ]);
         }
 
         $builder->add(
             'dateSignature',
             DateType::class,
-            ['label' => 'Date de Signature du document',
+            [
+                'label' => 'suivi.date_signature_document',
+                'translation_domain' => 'project',
                 'required' => false,
                 'format' => 'dd/MM/yyyy',
                 'widget' => 'single_text',
