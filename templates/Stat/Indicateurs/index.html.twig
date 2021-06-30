@@ -24,7 +24,22 @@
 
     <div id="indicateursTabs" class="tab-content">
         <div class="tab-pane active row" id="infos">
-             {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "mandats": mandats, "titres": titres } %}
+            <table id="control" class="table table-bordered">
+                <tr>
+                    <td><label for="checkbox-tabAnuel">{{ 'indicateur.tabAnuel'|trans({}, 'indicateur') }}</label>
+                        <input id="checkbox-tabAnuel" type="checkbox" checked="checked" onchange="$('#content-1').toggle();"/></td>
+                    <td><label for="checkbox-tabMensuel">{{ 'indicateur.tabMensuel'|trans({}, 'indicateur') }}</label>
+                        <input id="checkbox-tabMensuel" type="checkbox" onchange="$('#content-2').toggle();"/></td>
+                </tr>
+            </table>
+
+            <table id="content-1" class="table table-bordered table-striped">
+                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "mandats": mandats, "titres": titres } %}
+            </table>
+    
+            <table id="content-2" class="table table-bordered table-striped" style="display:none;">
+                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "mandats": mandats, "titres": titres } %}
+            </table>
         </div>
 
         <div class="tab-pane row" id="gestion">
