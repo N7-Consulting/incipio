@@ -57,6 +57,7 @@ suivi:
   avenants_mission: Avenants de Mission
   avortee: Avortée
   budget: Budget
+  bdc: BDC
   bdc_rediger: Rédiger le Bon de Commande
   bdc_enregistrer: Enregistrer le BDC
   bdc_enregistrer_phases_passer: Enregistrer le BDC et passer aux Phases
