@@ -4,41 +4,42 @@
 
 <div class="table-responsive">
 <table class="table table-striped" id="myTable">
-      <thead>
-          <tr>
-              <th>
-                  <div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
-              </th>
-              <th>
-                  <div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
-                  <div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
-              </th>
-              <th>
-                  <div>{{ 'suivi.client'|trans({}, 'project') }}</div>
-                  <div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
-              </th>
-              <th>
-                  {{ 'suivi.etat'|trans({}, 'project') }}
-              </th>
-              <th>
-                   {{ 'suivi.contacts_client'|trans({}, 'project') }}
-              </th>
-              <th>
-                  {{ 'suivi.dernier_contact'|trans({}, 'project') }}
-              </th>
-              <th>
-                  {{ 'suivi.ce'|trans({}, 'project') }}
-              </th>
-              <th>
-                   <div>{{ 'suivi.prix_ht'|trans({}, 'project') }}</div>
-                   <div>{{ 'suivi.jeh_nombre'|trans({}, 'project') }}</div>
-              </th>
-            </tr>
- 	 </thead>
- 	 <tbody>
+	<thead>
+		<tr>
+			<th>
+				<div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
+			</th>
+			<th>
+				<div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
+				<div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
+			</th>
+			<th>
+				<div>{{ 'suivi.client'|trans({}, 'project') }}</div>
+				<div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
+			</th>
+			<th>
+				{{ 'suivi.etat'|trans({}, 'project') }}
+			</th>
+			<th>
+				{{ 'suivi.contacts_client'|trans({}, 'project') }}
+			</th>
+			<th>
+				{{ 'suivi.dernier_contact'|trans({}, 'project') }}
+			</th>
+			<th>
+				{{ 'suivi.ce'|trans({}, 'project') }}
+			</th>
+			<th>
+				{{ 'suivi.bdc'|trans({}, 'project') }}
+			</th>
+			<th>
+				<div>{{ 'suivi.prix_ht'|trans({}, 'project') }}</div>
+				<div>{{ 'suivi.jeh_nombre'|trans({}, 'project') }}</div>
+			</th>
+		</tr>
+	</thead>
 
-
-        {% for etude in etudesEnNegociation | filter(etude => not confidentielRefus(etude, app.user, is_granted('ROLE_CA'))) %}
+    {% for etude in etudesEnNegociation | filter(etude => not confidentielRefus(etude, app.user, is_granted('ROLE_CA'))) %}
     <tr>
         <td><div>
                 <a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a>
@@ -64,9 +65,9 @@
             {% set dernierContact = 0 %}
             {% for contact in etude.clientContacts %}
                     {% set dernierContact = dernierContact | date("U") < contact.date |date("U") ? contact.date : dernierContact %}
-            {% endfor %} 
+            {% endfor %}
             <a href="{{ path('project_etude_voir', {'nom' : etude.nom,  '_fragment': 'tab7'}) }}">{{ 'suivi.voir'|trans({}, 'project') }} ({{etude.clientContacts | length }})</a>
-            
+
             </td>
             <td>
                 {% set dCU = dernierContact | date("U") %}
@@ -75,12 +76,25 @@
                 </span>
             </td>
             <td>
-                {% if getEtatDoc(etude.ce) == 1 %}
-                        <img src="{{ enCours }}" />
-                {% elseif getEtatDoc(etude.ce) == 2 %}
-                        <img src="{{ valide }}" />
-                {% else %}
-                        <img src="{{ nonValide }}" />
+                {% if (etude.ceActive and not etude.ccaActive) or etude.ce is not none %}
+                    {% if getEtatDoc(etude.ce) == 1 %}
+                            <img src="{{ enCours }}" />
+                    {% elseif getEtatDoc(etude.ce) == 2 %}
+                            <img src="{{ valide }}" />
+                    {% else %}
+                            <img src="{{ nonValide }}" />
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+            {% if etude.ccaActive or etude.bdc is not none %}
+                    {% if getEtatDoc(etude.bdc) == 1 %}
+                            <img src="{{ enCours }}" />
+                    {% elseif getEtatDoc(etude.bdc) == 2 %}
+                            <img src="{{ valide }}" />
+                    {% else %}
+                            <img src="{{ nonValide }}" />
+                    {% endif %}
                 {% endif %}
             </td>
             <td>
@@ -89,6 +103,6 @@
             </td>
             </tr>
         {% endfor %}
- 	 </tbody>
+    </tbody>
 </table>
 </div>
