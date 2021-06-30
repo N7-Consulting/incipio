@@ -141,7 +141,113 @@ class IndicateursController extends AbstractController
         foreach ($formationsParMandat as $mandat => $formations) {
             $nombreFormations[$mandat] = count($formations);
         }
-        $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations];
+   
+        // Taux de retard par an 
+
+        // Calucul du CA / du Taux d'avenant par an 
+        // du Cumul des JEH / de la Moyenne du prix d'un JEH 
+        // Du nb études / Des Taux d'avenants / Du nb Avenant par an
+        
+        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
+        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
+
+        $nombreEtudesParMandat = [];
+        $nombreEtudesAvecAvenantParMandat = [];
+        $nombreAvsParMandat = [];
+        $cumuls = [];
+        $cumulsJEH = [];
+        $cumulsFraisDossier = [];
+
+        foreach ($ccs as $cc) {
+            $etude = $cc->getEtude();
+            $dateSignature = $cc->getDateSignature();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+            $mandat = $etude->getMandat();
+
+            if ($dateSignature && $signee) {
+                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
+                    ++$nombreEtudesParMandat[$mandat];
+                } else {
+                    $nombreEtudesParMandat[$mandat] = 1;
+                    $nombreEtudesAvecAvenantParMandat[$mandat] = 0;
+                    $nombreAvsParMandat[$mandat] = 0;
+                }
+
+                if (count($etude->getAvs()->toArray())) {
+                    ++$nombreEtudesAvecAvenantParMandat[$mandat];
+                    $nombreAvsParMandat[$mandat] += count($etude->getAvs()->toArray());
+                }
+
+                if (array_key_exists($mandat, $cumuls)) {
+                    $cumuls[$mandat] += $etude->getMontantHT();
+                    $cumulsJEH[$mandat] += $etude->getNbrJEH();
+                    $cumulsFraisDossier[$mandat] += $etude->getFraisDossier();
+                } else {
+                    $cumuls[$mandat] = $etude->getMontantHT();
+                    $cumulsJEH[$mandat] = $etude->getNbrJEH();
+                    $cumulsFraisDossier[$mandat] = $etude->getFraisDossier();
+                }
+            }
+        }
+
+        foreach ($ces as $ce) {
+            $etude = $ce->getEtude();
+            $dateSignature = $ce->getDateSignature();
+            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+            $mandat = $etude->getMandat();
+
+            if ($dateSignature && $signee) {
+                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
+                    ++$nombreEtudesParMandat[$mandat];
+                } else {
+                    $nombreEtudesParMandat[$mandat] = 1;
+                    $nombreEtudesAvecAvenantParMandat[$mandat] = 0;
+                    $nombreAvsParMandat[$mandat] = 0;
+                }
+
+                if (count($etude->getAvs()->toArray())) {
+                    ++$nombreEtudesAvecAvenantParMandat[$mandat];
+                    $nombreAvsParMandat[$mandat] += count($etude->getAvs()->toArray());
+                }
+
+                if (array_key_exists($mandat, $cumuls)) {
+                    $cumuls[$mandat] += $etude->getMontantHT();
+                    $cumulsJEH[$mandat] += $etude->getNbrJEH();
+                    $cumulsFraisDossier[$mandat] += $etude->getFraisDossier();
+                } else {
+                    $cumuls[$mandat] = $etude->getMontantHT();
+                    $cumulsJEH[$mandat] = $etude->getNbrJEH();
+                    $cumulsFraisDossier[$mandat] = $etude->getFraisDossier();
+                }
+            }
+        }
+
+        $nbEtudes['Indicateur'] = 'Nombre d\'étude';
+        $tauxAvenant['Indicateur'] = 'Taux d\'avenant';
+        $nombreEtudesAvecAv['Indicateur'] = 'Nombre d\'études avec avenant';
+        $nombreAv['Indicateur'] = 'Nombre d\'avenant';
+        foreach ($nombreEtudesParMandat as $mandat => $datas) {
+            if ($datas > 0) {
+                $nbEtudes[$mandat] = $datas;
+                $tauxAvenant[$mandat] = 100 * $nombreEtudesAvecAvenantParMandat[$mandat] / $datas;
+                $nombreEtudesAvecAv[$mandat] = $nombreEtudesAvecAvenantParMandat[$mandat];
+                $nombreAv[$mandat] = $nombreAvsParMandat[$mandat];      
+            }
+        }
+
+        $caAnnuel['Indicateur'] = 'Chiffre d\'affaire (en euros)';
+        $cumulJeh['Indicateur'] = 'Nombre de JEH signés';
+        $moyenne['Indicateur'] = 'Moyenne du prix d\'un JEH';
+        foreach ($cumuls as $mandat => $datas) {
+            if ($datas > 0) {
+                $caAnnuel[$mandat] = $datas;
+                $cumulJeh[$mandat] = $cumulsJEH[$mandat];
+                $moyenne[$mandat] = ($datas - $cumulsFraisDossier[$mandat]) / $cumulsJEH[$mandat];
+            }
+        }
+        
+        $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations, $nbEtudes, $tauxAvenant, $nombreEtudesAvecAv, $nombreAv,
+        $caAnnuel, $cumulJeh, $moyenne];
 
         return $tabDonnees;
     }
