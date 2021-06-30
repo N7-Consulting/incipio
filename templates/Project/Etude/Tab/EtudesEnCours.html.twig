@@ -26,6 +26,9 @@
             {{ 'suivi.ce'|trans({}, 'project') }}
         </th>
         <th>
+            {{ 'suivi.bdc'|trans({}, 'project') }}
+        </th>
+        <th>
             {{ 'suivi.fa'|trans({}, 'project') }}
         </th>
         <th>
@@ -95,14 +98,25 @@
                 {% endfor %}
             </td>
             <td>
-                {% if getEtatDoc(etude.ce) == 1 %}
-                    <img src="{{ enCours }}" title="{{ etude.ap is not null ? etude.ce.dateSignature | date("d/m/y") }}"/>
-                {% elseif getEtatDoc(etude.ce) == 2 %}
-                    <img src="{{ valide }}"
-                         title="{{ etude.ce is not null ? etude.ce.dateSignature | date("d/m/y") }}"/>
-                {% else %}
-                    <img src="{{ nonValide }}"
-                         title="{{ etude.ce is not null ? etude.ce.dateSignature | date("d/m/y") }}"/>
+                {% if (etude.ceActive and not etude.ccaActive) or etude.ce is not none %}
+                    {% if getEtatDoc(etude.ce) == 1 %}
+                        <img src="{{ enCours }}/>
+                    {% elseif getEtatDoc(etude.ce) == 2 %}
+                        <img src="{{ valide }}"/>
+                    {% else %}
+                        <img src="{{ nonValide }}"/>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if etude.ccaActive or etude.bdc is not none %}
+                    {% if getEtatDoc(etude.bdc) == 1 %}
+                        <img src="{{ enCours }}"/>
+                    {% elseif getEtatDoc(etude.bdc) == 2 %}
+                        <img src="{{ valide }}"/>
+                    {% else %}
+                        <img src="{{ nonValide }}"/>
+                    {% endif %}
                 {% endif %}
             </td>
             <td>
