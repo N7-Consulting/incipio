@@ -3,27 +3,29 @@
 {% set enCours   = asset('img/progress.png') %}
 
 <div class="table-responsive">
-<table class="table table-striped" id="myTable">
-    <thead>
-    <tr>
-        <th>
-            <div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
-            <!--<div>{{ 'suivi.reference'|trans({}, 'project') }}</div>-->
-        </th>
-        <th>
-            <div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
-            <div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
-        </th>
-        <th>
-            <div>{{ 'suivi.client'|trans({}, 'project') }}</div>
-            <div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
-        </th>
+	<table class="table table-striped" id="myTable">
+		<thead>
+			<tr>
+				<th>
+					<div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
+				</th>
+				<th>
+					<div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
+					<div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
+				</th>
+				<th>
+					<div>{{ 'suivi.client'|trans({}, 'project') }}</div>
+					<div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
+				</th>
 
         <th>
             {{ 'suivi.intervenants'|trans({}, 'project') }}
         </th>
         <th>
             {{ 'suivi.ce'|trans({}, 'project') }}
+        </th>
+        <th>
+            {{ 'suivi.bdc'|trans({}, 'project') }}
         </th>
         <th>
             {{ 'suivi.fa'|trans({}, 'project') }}
@@ -61,30 +63,41 @@
     <tbody>
 
 
-    {% for etude in etudesFinies | filter(etude => not confidentielRefus(etude, app.user, is_granted(role_voir_confidentiel))) %}
-        <tr>
-            <td>
-                <div>
-                    <a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a>
-                    <!-- {{ etude.reference(param('namingConvention')) }} -->
-                </div>
-                <div>{{ etude.confidentiel ? '<span class="label label-danger">[CONFIDENTIEL]</span> ' }}</div>
-                <div>{{ etude.numero }}</div>
-            </td>
-            <td>
-                {% if etude.dateLancement != NULL %}
-                    <div>{{ etude.dateLancement|date("d/m/Y") }}</div>{% endif %}
-                <br/>
-                {% if etude.dateFin != NULL %}
-                    <div>{% if etude.avs | length > 0 %}
-                    <s><b>{% endif %}{{ etude.dateFin|date("d/m/Y") }}{% if etude.avs | length > 0 %}</b></s>
-                <br/>{{ etude.dateFin(true) |date("d/m/Y") }}{% endif %}</div>{% endif %}
-            </td>
-            <td>
-                {% include "Project/Etude/Buttons/Prospect.html.twig" with  {'prospect':  etude.prospect} %}
-                <br/><br/>
-                {% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  etude.suiveur} %}
-            </td>
+			{% for etude in etudesFinies | filter(etude => not confidentielRefus(etude, app.user, is_granted(role_voir_confidentiel))) %}
+				<tr>
+					<td>
+						<div>
+							<a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a>
+							<!-- {{ etude.reference(param('namingConvention')) }} -->
+						</div>
+						<div>{{ etude.confidentiel ? '<span class="label label-danger">[CONFIDENTIEL]</span> ' }}</div>
+						<div>{{ etude.numero }}</div>
+					</td>
+					<td>
+						{% if etude.dateLancement != NULL %}
+							<div>{{ etude.dateLancement|date("d/m/Y") }}</div>
+						{% endif %}
+						<br/>
+						{% if etude.dateFin != NULL %}
+							<div>
+								{% if etude.avs | length > 0 %}
+									<s>
+										<b>
+										{% endif %}
+										{{ etude.dateFin|date("d/m/Y") }}
+										{% if etude.avs | length > 0 %}
+										</b>
+									</s>
+									<br/>{{ etude.dateFin(true) |date("d/m/Y") }}
+								{% endif %}
+							</div>
+						{% endif %}
+					</td>
+					<td>
+						{% include "Project/Etude/Buttons/Prospect.html.twig" with  {'prospect':  etude.prospect} %}
+						<br/><br/>
+						{% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  etude.suiveur} %}
+					</td>
 
             <td>
                 {% for mission in etude.missions %}
@@ -95,14 +108,25 @@
                 {% endfor %}
             </td>
             <td>
-                {% if getEtatDoc(etude.ce) == 1 %}
-                    <img src="{{ enCours }}" title="{{ etude.ap is not null ? etude.ce.dateSignature | date("d/m/y") }}"/>
-                {% elseif getEtatDoc(etude.ce) == 2 %}
-                    <img src="{{ valide }}"
-                         title="{{ etude.ce is not null ? etude.ce.dateSignature | date("d/m/y") }}"/>
-                {% else %}
-                    <img src="{{ nonValide }}"
-                         title="{{ etude.ce is not null ? etude.ce.dateSignature | date("d/m/y") }}"/>
+                {% if (etude.ceActive and not etude.ccaActive) or etude.ce is not none %}
+                    {% if getEtatDoc(etude.ce) == 1 %}
+                        <img src="{{ enCours }}"/>
+                    {% elseif getEtatDoc(etude.ce) == 2 %}
+                        <img src="{{ valide }}"/>
+                    {% else %}
+                        <img src="{{ nonValide }}"/>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if etude.ccaActive or etude.bdc is not none %}
+                    {% if getEtatDoc(etude.bdc) == 1 %}
+                        <img src="{{ enCours }}"/>
+                    {% elseif getEtatDoc(etude.bdc) == 2 %}
+                        <img src="{{ valide }}"/>
+                    {% else %}
+                        <img src="{{ nonValide }}"/>
+                    {% endif %}
                 {% endif %}
             </td>
             <td>
@@ -110,10 +134,10 @@
                     <img src="{{ valide }}" title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
                 {% elseif etude.fa is not null and etude.fa.dateEmission is not null %}
                     <img src="{{ enCours }}"
-                         title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
                 {% else %}
                     <img src="{{ nonValide }}"
-                         title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
                 {% endif %}
             </td>
             <td>
@@ -144,38 +168,40 @@
             <td>
                 {% if getEtatDoc(etude.pvr) == 1 %}
                     <img src="{{ enCours }}"
-                         title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
+                        title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
                 {% elseif getEtatDoc(etude.pvr) == 2 %}
                     <img src="{{ valide }}"
-                         title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
+                        title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
                 {% else %}
                     <img src="{{ nonValide }}"
-                         title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
+                        title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
                 {% endif %}
             </td>
             <td>
                 {% if etude.fs is not null and etude.fs.dateEmission is not null %}
                     <img src="{{ enCours }}"
-                         title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
                 {% elseif etude.fs is not null and etude.fs.dateEmission is not null and etude.fs.dateVersement is not null %}
                     <img src="{{ valide }}" title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
                 {% else %}
                     <img src="{{ nonValide }}"
-                         title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
                 {% endif %}
             </td>
-            <td>
 
+						{# TODO RP and BV data #}
+            <td>
             </td>
             <td>
             </td>
+
             <td>
             <a href="{{ path('project_etude_voir', {'nom' : etude.nom,  '_fragment': 'tab7'}) }}">{{ 'suivi.voir'|trans({}, 'project') }} ({{etude.clientContacts | length }})</a>
             </td>
             <td>
                 {% set dernierContact = 0 %}
                 {% set contactId = 0 %}
-                 {% for contact in etude.clientContacts  %} {#| filter(etude => dernierContact |date("U") <= contact.date |date("U")) #}
+                {% for contact in etude.clientContacts %} {# | filter(etude => dernierContact |date("U") <= contact.date |date("U")) #}
                     {% set dernierContact = contact.date %}
                     {% set contactId = contact.id %}
                 {% endfor %}
