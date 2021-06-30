@@ -352,24 +352,31 @@ class EtudeExtension extends \Twig_Extension
             }
         }
 
-        /*
-         * Verification que les dates de debut de phases correspondent bien avec la date de signature de la CC
-         * On créé juste un compteur d'erreur pour ne pas spammer l'utilisateur sous un grand nombre d'erreurs liées juste aux phases.
-         */
+        /**********************************************
+         * Verification des dates de debut des phases *
+         **********************************************/
         $phasesErreurDate = 0; //compteur des phases avec date incorrectes
-        if (null !== $etude->getCc()) {
-            foreach ($etude->getPhases() as $phase) {
-                if ($phase->getDateDebut() < $etude->getCc()->getDateSignature()) {
-                    ++$phasesErreurDate;
-                }
+
+        // Sélection du document d'étude ─ On s'en fiche du message personnalisé
+        if ($etude->getCc())
+            $doc = $etude->getCc();
+        elseif ($etude->getCe())
+            $doc = $etude->getCe();
+        elseif ($etude->getBdc())
+            $doc = $etude->getBdc();
+
+        foreach ($etude->getPhases() as $phase) {
+            if ($phase->getDateDebut() < $doc->getDateSignature()) {
+                ++$phasesErreurDate;
             }
-            if ($phasesErreurDate > 0) {
-                $error = [
-                    'titre' => 'Date des phases',
-                    'message' => 'Il y a ' . $phasesErreurDate . ' erreur(s) dans les dates de début de phases.',
-                ];
-                array_push($errors, $error);
-            }
+        }
+
+        if ($phasesErreurDate > 0) {
+            $error = [
+                'titre' => 'Date des phases',
+                'message' => 'Il y a ' . $phasesErreurDate . ' erreur(s) dans les dates de début de phases.',
+            ];
+            array_push($errors, $error);
         }
 
         return $errors;
