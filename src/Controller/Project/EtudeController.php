@@ -182,12 +182,13 @@ class EtudeController extends AbstractController
     {
         $etude = new Etude();
 
+        $etude->setCeActive(true);
         $etude->setCcaActive(false);
+        $etude->setKnownProspect(true);
         $etude->setMandat($etudeManager->getMaxMandat());
         $etude->setNum($etudeManager->getNouveauNumero());
         $etude->setFraisDossier($etudeManager->getDefaultFraisDossier());
         $etude->setPourcentageAcompte($etudeManager->getDefaultPourcentageAcompte());
-        $etude->setCeActive(true);
 
         $user = $this->getUser();
         if (is_object($user) && $user instanceof User) {
