@@ -81,7 +81,6 @@ class IndicateursController extends AbstractController
      */
     public function index()
     {
-        $statsBrutes = ['Pas de données' => 'A venir'];
         $em = $this->getDoctrine()->getManager();
         $tabDonnees = $this->getDonnesBrutes( $em);
 
@@ -94,15 +93,47 @@ class IndicateursController extends AbstractController
 
         return $this->render(
             'Stat/Indicateurs/index.html.twig',
-            ['stats' => $statsBrutes, 
-            'indicateurs' => self::INDICATEURS,
+            ['indicateurs' => self::INDICATEURS,
             'tabDonnees' => $tabDonnees,
             'annees' => $annees,
             ]
         );
     }
 
-    
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="stat_donnees_brutes_mensuel", path="/admin/indicateurs/DonneesBrutes/Mensuelles", methods={"GET","HEAD"})
+     * @return Response
+     * 
+     */
+    public function getDonneesBrutesMensuelles(ObjectManager $em)
+    {
+        $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
+
+        $maxMandat = [] !== $formationsParMandat ? max(array_keys($formationsParMandat)) : 0;
+        $nombrePresentFormations['Indicateur'] = 'Nombre de présent aux formations';
+
+        /** @var Formation[] $formations */
+        foreach ($formationsParMandat as $mandat => $formations) {
+            foreach ($formations as $formation) {
+                if ($formation->getDateDebut()) {
+                    $interval = new \DateInterval('P' . ($maxMandat - $mandat) . 'Y');
+                    $dateDecale = clone $formation->getDateDebut();
+                    $dateDecale->add($interval);
+                    $nombrePresentFormations[$mandat][] = [
+                        'x' => $dateDecale->getTimestamp() * 1000,
+                        'y' => count($formation->getMembresPresents()), 'name' => $formation->getTitre(),
+                        'date' => $dateDecale->format('d/m/Y'),
+                    ];
+                }
+            }
+        }
+
+        $tabDonnees = [$nombrePresentFormations];
+
+        return $tabDonnees;
+    }
+
     /**
      * @Security("has_role('ROLE_CA')")
      * @Route(name="stat_donnees_brutes", path="/admin/indicateurs/donnesBrutes", methods={"GET","HEAD"})
@@ -137,11 +168,16 @@ class IndicateursController extends AbstractController
         // Nombre de formation par an
         $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
         $nombreFormations['Indicateur'] = 'Nombre de formation';
+        $nombrePresentFormations['Indicateur'] = 'Nombre de présence aux formations';
         ksort($formationsParMandat); // Tri selon les promos
         foreach ($formationsParMandat as $mandat => $formations) {
             $nombreFormations[$mandat] = count($formations);
+            $nombrePresentFormations[$mandat] = 0;
+            foreach ($formations as $formation) {
+                $nombrePresentFormations[$mandat] = $nombrePresentFormations[$mandat] + count($formation->getMembresPresents());
+            }
         }
-   
+
         // Taux de retard par an 
 
         // Calucul du CA / du Taux d'avenant par an 
@@ -246,7 +282,55 @@ class IndicateursController extends AbstractController
             }
         }
         
-        $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations, $nbEtudes, $tauxAvenant, $nombreEtudesAvecAv, $nombreAv,
+        // // Données trésorerie
+        // $sortiesParMandat = $em->getRepository(NoteDeFrais::class)->findAllByMandat();
+        // $bvsParMandat = $em->getRepository(BV::class)->findAllByMandat();
+        // $mandats = [];
+        // ksort($sortiesParMandat); // Tri selon les mandats
+        // /** @var NoteDeFrais[] $nfs */
+        // foreach ($sortiesParMandat as $mandat => $nfs) { // Pour chaque Mandat
+        //     $mandats[$mandat] = ['Honoraires BV' => 0, 'URSSAF' => 0];
+        //     foreach ($nfs as $nf) { // Pour chaque NF d'un mandat
+        //         foreach ($nf->getDetails() as $detail) { // Pour chaque détail d'une NF
+        //             $compte = $detail->getCompte();
+        //             if (null !== $compte) {
+        //                 $libelle = $compte->getLibelle();
+        //                 if (array_key_exists($libelle, $mandats[$mandat])) {
+        //                     $mandats[$mandat][$libelle] += $detail->getMontantHT();
+        //                 } else {
+        //                     $mandats[$mandat][$libelle] = $detail->getMontantHT();
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        // foreach ($bvsParMandat as $mandat => $bvs) { // Pour chaque Mandat
+        //     if (!array_key_exists($mandat, $mandats)) {
+        //         $mandats[$mandat] = [];
+        //     }
+
+        //     /** @var BV[] $bvs */
+        //     foreach ($bvs as $bv) {
+        //         $mandats[$mandat]['Honoraires BV'] += $bv->getRemunerationBrute();
+        //         $mandats[$mandat]['URSSAF'] += $bv->getPartJunior();
+        //     }
+        // }
+
+        // ksort($mandats);
+
+        // $totalDepenses['Indicateur'] = 'Total des dépenses';
+        // $drilldownSeries = [];
+        // foreach ($mandats as $mandat => $comptes) {
+        //     $total = 0;
+
+        //     foreach ($comptes as $libelle => $compte) {
+        //         $total += $compte;
+        //     }
+        //     $totalDepenses[$mandat] = round((float) $total, 2);
+        // }
+        
+        $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations, $nombrePresentFormations, $nbEtudes, $tauxAvenant, $nombreEtudesAvecAv, $nombreAv,
         $caAnnuel, $cumulJeh, $moyenne];
 
         return $tabDonnees;
