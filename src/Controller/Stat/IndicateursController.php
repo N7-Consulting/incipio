@@ -88,9 +88,12 @@ class IndicateursController extends AbstractController
         $etudeManager = $this->etudeManager;
         $MANDAT_MAX = $etudeManager->getMaxMandat();
         $MANDAT_MIN = $etudeManager->getMinMandat();
-        $mandats = [];
-        for ($j = $MANDAT_MIN; $j <= $MANDAT_MAX; ++$j) {
-            $mandats[] = $j; 
+        $annees = [];
+        $date = new \DateTime('now' );
+        $ANNEE_ACTUELLE = $date->format('Y');
+               
+        for ($j = $ANNEE_ACTUELLE- 2  ; $j <= $ANNEE_ACTUELLE; ++$j) {
+            $annees[] = $j; 
         }
         $titres =["Nombre", "titre 2"];
 
@@ -99,7 +102,7 @@ class IndicateursController extends AbstractController
             ['stats' => $statsBrutes, 
             'indicateurs' => self::INDICATEURS,
             'series' => $series,
-            'mandats' => $mandats,
+            'annees' => $annees,
             'titres' => $titres
             ]
         );

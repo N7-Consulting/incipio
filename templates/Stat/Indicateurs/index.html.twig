@@ -34,11 +34,11 @@
             </table>
 
             <table id="content-1" class="table table-bordered table-striped">
-                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "mandats": mandats, "titres": titres } %}
+                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "dates": annees, "titres": titres } %}
             </table>
     
             <table id="content-2" class="table table-bordered table-striped" style="display:none;">
-                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "mandats": mandats, "titres": titres } %}
+                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "donnees": series, "dates": annees, "titres": titres } %}
             </table>
         </div>
 

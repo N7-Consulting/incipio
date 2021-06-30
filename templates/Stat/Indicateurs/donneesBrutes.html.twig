@@ -1,8 +1,8 @@
 
         <thead>
             <th> </th>
-            {% for numMandat in mandats %}
-                <th>{{numMandat}}</th>
+            {% for date in dates %}
+                <th>{{date}}</th>
             {% endfor %}
             </tr>
         </thead>
@@ -12,9 +12,9 @@
             {% for titre in titres %}
                 <tr>
                 <td>{{titre}}</td>
-                {% for mandat in mandats %}
-                        {% if mandat in donnees|keys %}
-                        <td>{{donnees[mandat]}}</td>
+                {% for date in dates %}
+                        {% if date in donnees|keys %}
+                        <td>{{donnees[date]}}</td>
                         {% else %}
                         <td>0</td>
                         {% endif %}
