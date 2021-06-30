@@ -3,21 +3,21 @@
 {% set enCours   = asset('img/progress.png') %}
 
 <div class="table-responsive">
-<table class="table table-striped" id="myTable">
-    <thead>
-    <tr>
-        <th>
-            <div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
-            <!--<div>{{ 'suivi.reference'|trans({}, 'project') }}</div>-->
-        </th>
-        <th>
-            <div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
-            <div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
-        </th>
-        <th>
-            <div>{{ 'suivi.client'|trans({}, 'project') }}</div>
-            <div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
-        </th>
+	<table class="table table-striped" id="myTable">
+		<thead>
+			<tr>
+				<th>
+					<div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
+					<!--<div>{{ 'suivi.reference'|trans({}, 'project') }}</div>-->
+				</th>
+				<th>
+					<div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
+					<div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
+				</th>
+				<th>
+					<div>{{ 'suivi.client'|trans({}, 'project') }}</div>
+					<div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
+				</th>
 
         <th>
             {{ 'suivi.intervenants'|trans({}, 'project') }}
@@ -64,30 +64,41 @@
     <tbody>
 
 
-    {% for etude in etudesEnCours | filter(etude => not confidentielRefus(etude, app.user, is_granted(role_voir_confidentiel))) %}
-        <tr>
-            <td>
-                <div>
-                    <a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a>
-                    <!-- {{ etude.reference(param('namingConvention')) }} -->
-                </div>
-                <div>{{ etude.confidentiel ? '<span class="label label-danger">[CONFIDENTIEL]</span> ' }}</div>
-                <div>{{ etude.numero }}</div>
-            </td>
-            <td>
-                {% if etude.dateLancement != NULL %}
-                    <div>{{ etude.dateLancement|date("d/m/Y") }}</div>{% endif %}
-                <br/>
-                {% if etude.dateFin != NULL %}
-                    <div>{% if etude.avs | length > 0 %}
-                    <s><b>{% endif %}{{ etude.dateFin|date("d/m/Y") }}{% if etude.avs | length > 0 %}</b></s>
-                <br/>{{ etude.dateFin(true) |date("d/m/Y") }}{% endif %}</div>{% endif %}
-            </td>
-            <td>
-                {% include "Project/Etude/Buttons/Prospect.html.twig" with  {'prospect':  etude.prospect} %}
-                <br/><br/>
-                {% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  etude.suiveur} %}
-            </td>
+			{% for etude in etudesEnCours | filter(etude => not confidentielRefus(etude, app.user, is_granted(role_voir_confidentiel))) %}
+				<tr>
+					<td>
+						<div>
+							<a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a>
+							<!-- {{ etude.reference(param('namingConvention')) }} -->
+						</div>
+						<div>{{ etude.confidentiel ? '<span class="label label-danger">[CONFIDENTIEL]</span> ' }}</div>
+						<div>{{ etude.numero }}</div>
+					</td>
+					<td>
+						{% if etude.dateLancement != NULL %}
+							<div>{{ etude.dateLancement|date("d/m/Y") }}</div>
+						{% endif %}
+						<br/>
+						{% if etude.dateFin != NULL %}
+							<div>
+								{% if etude.avs | length > 0 %}
+									<s>
+										<b>
+										{% endif %}
+										{{ etude.dateFin|date("d/m/Y") }}
+										{% if etude.avs | length > 0 %}
+										</b>
+									</s>
+									<br/>{{ etude.dateFin(true) |date("d/m/Y") }}
+								{% endif %}
+							</div>
+						{% endif %}
+					</td>
+					<td>
+						{% include "Project/Etude/Buttons/Prospect.html.twig" with  {'prospect':  etude.prospect} %}
+						<br/><br/>
+						{% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  etude.suiveur} %}
+					</td>
 
             <td>
                 {% for mission in etude.missions %}
