@@ -194,6 +194,7 @@ suivi:
   etude_supprimer: Supprimer l'étude
   etude_supprimer_confirm: Etes-vous sûr de vouloir supprimer définitivement cette étude
   etudes_avortees: Etudes Avortées
+  etudes_cloturees: Etudes Clôturées
   etudes_en_cours: Etudes en Cours
   etudes_acceptees: Etudes Acceptées
   etudes_finies: Etudes Finies
