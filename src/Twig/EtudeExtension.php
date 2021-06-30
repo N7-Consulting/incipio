@@ -309,11 +309,11 @@ class EtudeExtension extends \Twig_Extension
          * Contenu des documents *
          *************************/
 
-        // Description de l'AP suffisante
-        if (!$etude->getCeActive() && strlen($etude->getDescriptionPrestation()) < 300) {
+        // Description de l'étude suffisante
+        if (strlen($etude->getDescriptionPrestation()) < 300) {
             $error = [
                 'titre' => 'Description de l\'étude:',
-                'message' => 'Attention la description de l\'étude dans l\'AP fait moins de 300 caractères',
+                'message' => 'Attention la description de l\'étude fait moins de 300 caractères',
             ];
             array_push($errors, $error);
         }
@@ -386,12 +386,12 @@ class EtudeExtension extends \Twig_Extension
     {
         $warnings = [];
 
-        // Description de l'AP insuffisante
+        // Description de l'étude insuffisante
         $length = strlen($etude->getDescriptionPrestation());
         if ($length > 300 && $length < 500) {
             $error = [
                 'titre' => 'Description de l\'étude:',
-                'message' => 'Attention la description de l\'étude dans l\'AP fait moins de 500 caractères',
+                'message' => 'Attention la description de l\'étude fait moins de 500 caractères',
             ];
             array_push($warnings, $error);
         }
