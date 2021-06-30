@@ -1,6 +1,5 @@
 
         <thead>
-            <th> </th>
             {% for date in dates %}
                 <th>{{date}}</th>
             {% endfor %}
@@ -9,9 +8,8 @@
         <tbody>
         
         
-            {% for titre in titres %}
+            {% for donnees in tabDonnees %}
                 <tr>
-                <td>{{titre}}</td>
                 {% for date in dates %}
                         {% if date in donnees|keys %}
                         <td>{{donnees[date]}}</td>

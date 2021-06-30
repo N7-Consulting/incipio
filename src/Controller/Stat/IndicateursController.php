@@ -83,29 +83,49 @@ class IndicateursController extends AbstractController
     {
         $statsBrutes = ['Pas de données' => 'A venir'];
         $em = $this->getDoctrine()->getManager();
-        $series = $this->getMembresParPromo2( $em);
+        $tabDonnees = $this->getDonnesBrutes( $em);
 
-        $etudeManager = $this->etudeManager;
-        $MANDAT_MAX = $etudeManager->getMaxMandat();
-        $MANDAT_MIN = $etudeManager->getMinMandat();
-        $annees = [];
+        $annees = ['Indicateur'];
         $date = new \DateTime('now' );
         $ANNEE_ACTUELLE = $date->format('Y');
-               
         for ($j = $ANNEE_ACTUELLE- 2  ; $j <= $ANNEE_ACTUELLE; ++$j) {
             $annees[] = $j; 
         }
-        $titres =["Nombre", "titre 2"];
 
         return $this->render(
             'Stat/Indicateurs/index.html.twig',
             ['stats' => $statsBrutes, 
             'indicateurs' => self::INDICATEURS,
-            'series' => $series,
+            'tabDonnees' => $tabDonnees,
             'annees' => $annees,
-            'titres' => $titres
             ]
         );
+    }
+
+    
+    /**
+     * @Security("has_role('ROLE_CA')")
+     * @Route(name="stat_donnees_brutes", path="/admin/indicateurs/donnesBrutes", methods={"GET","HEAD"})
+     *
+     *
+     * @return Response
+     */
+    public function getDonnesBrutes(ObjectManager $em)
+    {   
+        // Nombres de membres par années (gestion associative)
+        $membres = $em->getRepository(Membre::class)->findAll();
+        $nbMembres = [];
+        $nbMembres['Indicateur'] = 'Nombre de membre';
+        foreach ($membres as $membre) {
+            $annee = $membre->getPromotion() - 3;
+            if ($annee) {
+                array_key_exists($annee, $nbMembres) ? $nbMembres[$annee]++ : $nbMembres[$annee] = 1;
+            }
+        }
+
+        $tabDonnees = [$nbMembres,$nbMembres];
+
+        return $tabDonnees;
     }
 
     /**
@@ -1415,37 +1435,4 @@ class IndicateursController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("has_role('ROLE_CA')")
-     * @Route(name="stat_ajax_asso_membresParPromo2", path="/admin/indicateurs/asso/membresParPromo", methods={"GET","HEAD"})
-     *
-     * Nombres de membres par promotion (gestion associative)
-     *
-     * @return Response
-     */
-    public function getMembresParPromo2(ObjectManager $em)
-    {
-        $membres = $em->getRepository(Membre::class)->findAll();
-
-        $promos = [];
-        foreach ($membres as $membre) {
-            $p = $membre->getPromotion();
-            if ($p) {
-                array_key_exists($p, $promos) ? $promos[$p]++ : $promos[$p] = 1;
-            }
-        }
-
-        $data = [];
-        $categories = [];
-        ksort($promos); // Tri selon les promos
-        // foreach ($promos as $promo => $nombre) {
-        //     $data[] = $nombre;
-        //     $categories[] = 'P' . $promo;
-        // }
-
-        $series = [['name' => 'Membres', 'colorByPoint' => true, 'data' => $data]];
-        
-
-        return $promos;
-    }
 }
