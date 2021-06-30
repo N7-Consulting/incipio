@@ -156,10 +156,10 @@ class EtudeManager
             ->orderBy('e.num', 'DESC');
 
         $value = $query->getQuery()->setMaxResults(1)->getOneOrNullResult();
-        if ($value) {
+        if ($value['num']) {
             return $value['num'] + 1;
         } else {
-            return 1;
+            return;
         }
     }
 
