@@ -8,7 +8,6 @@
 			<tr>
 				<th>
 					<div>{{ 'suivi.etude_nom'|trans({}, 'project') }}</div>
-					<!--<div>{{ 'suivi.reference'|trans({}, 'project') }}</div>-->
 				</th>
 				<th>
 					<div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
@@ -111,7 +110,7 @@
             <td>
                 {% if (etude.ceActive and not etude.ccaActive) or etude.ce is not none %}
                     {% if getEtatDoc(etude.ce) == 1 %}
-                        <img src="{{ enCours }}/>
+                        <img src="{{ enCours }}"/>
                     {% elseif getEtatDoc(etude.ce) == 2 %}
                         <img src="{{ valide }}"/>
                     {% else %}
@@ -135,10 +134,10 @@
                     <img src="{{ valide }}" title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
                 {% elseif etude.fa is not null and etude.fa.dateEmission is not null %}
                     <img src="{{ enCours }}"
-                         title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
                 {% else %}
                     <img src="{{ nonValide }}"
-                         title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fa is not null ? etude.fa.dateEmission | date("d/m/y") }}"/>
                 {% endif %}
             </td>
             <td>
@@ -169,38 +168,40 @@
             <td>
                 {% if getEtatDoc(etude.pvr) == 1 %}
                     <img src="{{ enCours }}"
-                         title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
+                        title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
                 {% elseif getEtatDoc(etude.pvr) == 2 %}
                     <img src="{{ valide }}"
-                         title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
+                        title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
                 {% else %}
                     <img src="{{ nonValide }}"
-                         title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
+                        title="{{ etude.pvr is not null ? etude.pvr.dateSignature | date("d/m/y") }}"/>
                 {% endif %}
             </td>
             <td>
                 {% if etude.fs is not null and etude.fs.dateEmission is not null %}
                     <img src="{{ enCours }}"
-                         title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
                 {% elseif etude.fs is not null and etude.fs.dateEmission is not null and etude.fs.dateVersement is not null %}
                     <img src="{{ valide }}" title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
                 {% else %}
                     <img src="{{ nonValide }}"
-                         title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
+                        title="{{ etude.fs is not null ? etude.fs.dateEmission | date("d/m/y") }}"/>
                 {% endif %}
             </td>
-            <td>
 
+						{# TODO RP and BV data #}
+            <td>
             </td>
             <td>
             </td>
+
             <td>
             <a href="{{ path('project_etude_voir', {'nom' : etude.nom,  '_fragment': 'tab7'}) }}">{{ 'suivi.voir'|trans({}, 'project') }} ({{etude.clientContacts | length }})</a>
             </td>
             <td>
                 {% set dernierContact = 0 %}
                 {% set contactId = 0 %}
-                 {% for contact in etude.clientContacts %} {# | filter(etude => dernierContact |date("U") <= contact.date |date("U")) #}
+                {% for contact in etude.clientContacts %} {# | filter(etude => dernierContact |date("U") <= contact.date |date("U")) #}
                     {% set dernierContact = contact.date %}
                     {% set contactId = contact.id %}
                 {% endfor %}
