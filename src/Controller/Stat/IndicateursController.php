@@ -52,7 +52,7 @@ class IndicateursController extends AbstractController
                     'stat_ajax_treso_caParMandatHistogram',
                     'stat_ajax_treso_caParMandatCourbe',
         ],
-        'asso' => [//'stat_ajax_asso_nombreMembres',
+        'asso' => [ 'stat_ajax_asso_nombreMembres',
                     'stat_ajax_asso_membresParPromo',
                     'stat_ajax_asso_intervenantsParPromo',
         ],
@@ -123,7 +123,19 @@ class IndicateursController extends AbstractController
             }
         }
 
-        $tabDonnees = [$nbMembres,$nbMembres];
+        // Nombre d'intervenant par an
+        $intervenants = $em->getRepository(Membre::class)->getIntervenantsParPromo();
+        $nbIntervenants = [];
+        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenants';
+        foreach ($intervenants as $intervenant) {
+            $annee = $intervenant->getPromotion() - 3;
+            if ($annee) {
+                array_key_exists($annee, $nbIntervenants) ? $nbIntervenants[$annee]++ : $nbIntervenants[$annee] = 1;
+            }
+        }
+
+        
+        $tabDonnees = [$nbMembres,$nbIntervenants];
 
         return $tabDonnees;
     }
