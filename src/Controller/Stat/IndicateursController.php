@@ -123,10 +123,10 @@ class IndicateursController extends AbstractController
             }
         }
 
-        // Nombre d'intervenant par an
+        // Nombre d'intervenants par an
         $intervenants = $em->getRepository(Membre::class)->getIntervenantsParPromo();
         $nbIntervenants = [];
-        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenants';
+        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenant';
         foreach ($intervenants as $intervenant) {
             $annee = $intervenant->getPromotion() - 3;
             if ($annee) {
@@ -134,8 +134,14 @@ class IndicateursController extends AbstractController
             }
         }
 
-        
-        $tabDonnees = [$nbMembres,$nbIntervenants];
+        // Nombre de formation par an
+        $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
+        $nombreFormations['Indicateur'] = 'Nombre de formation';
+        ksort($formationsParMandat); // Tri selon les promos
+        foreach ($formationsParMandat as $mandat => $formations) {
+            $nombreFormations[$mandat] = count($formations);
+        }
+        $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations];
 
         return $tabDonnees;
     }
