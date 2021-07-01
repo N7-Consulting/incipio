@@ -494,6 +494,9 @@ class Etude
         if ($this->ce) {// Réel
             return $this->ce->getDateSignature();
         }
+        if ($this->bdc) {// Réel
+            return $this->bdc->getDateSignature();
+        }
         if ($this->cc) { // Réel
             return $this->cc->getDateSignature();
         }
@@ -550,9 +553,7 @@ class Etude
     public function getDelai($avecAvenant = false)
     {
         if ($this->getDateFin($avecAvenant)) {
-            if ($this->cc && $this->cc->getDateSignature()) { // Réel
-                return $this->getDateFin($avecAvenant)->diff($this->cc->getDateSignature());
-            } elseif ($this->getDateLancement()) {
+            if ($this->getDateLancement()) {
                 return $this->getDateFin($avecAvenant)->diff($this->getDateLancement());
             }
         }
@@ -1889,4 +1890,3 @@ class Etude
         return $this;
     }
 }
- 
