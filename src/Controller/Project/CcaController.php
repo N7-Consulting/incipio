@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CcaController extends AbstractController
 {
-
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
      * @Route("/suivi/cca", name="project_cca_voir")
@@ -23,6 +22,23 @@ class CcaController extends AbstractController
      * @return RedirectResponse|Response
      */
     public function voir(): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ccas = $em->getRepository(Cca::class)->findAll();
+        return $this->render('Project/Cca/voir.html.twig', [
+            'controller_name' => 'CcaController',
+            'ccas' => $ccas,
+        ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route("/suivi/cca/bdc/{id}", name="project_cca_bdc")
+     *
+     * @return RedirectResponse|Response
+     */
+    public function voirBdc(): Response
     {
         $em = $this->getDoctrine()->getManager();
 
