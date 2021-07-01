@@ -42,6 +42,8 @@ class IndicateursController extends AbstractController
 
     private $keyValueStore;
 
+    private $anneeActuelle;
+
     const INDICATEURS = [
         'suivi' => ['stat_ajax_suivi_retardParMandat',
                     'stat_ajax_suivi_nombreEtudes',
@@ -73,6 +75,9 @@ class IndicateursController extends AbstractController
         $this->chartFactory = $chartFactory;
         $this->etudeManager = $etudeManager;
         $this->keyValueStore = $keyValueStore;
+
+        $date = new \DateTime('now' );
+        $this->anneeActuelle = $date->format('Y');
     }
 
     /**
@@ -85,24 +90,23 @@ class IndicateursController extends AbstractController
         $tabDonneesAnnuel = $this->getDonnesBrutes( $em);
         $tabDonneesMensuel = $this->getDonneesBrutesMensuelles( $em);
 
-        $annees = ['Indicateur'];
-        $date = new \DateTime('now' );
-        $ANNEE_ACTUELLE = $date->format('Y');
-        for ($j = $ANNEE_ACTUELLE- 2  ; $j <= $ANNEE_ACTUELLE; ++$j) {
+        $annees = ['Indicateur'];      
+        for ($j = $this->anneeActuelle- 2  ; $j <= $this->anneeActuelle; ++$j) {
             $annees[] = $j; 
         }
 
         $mois = ['Indicateur'];
-        $MOIS = $date->format('m');
-        for ($j = $MOIS   ; $j <= 12; ++$j) {
-            $MOISTRING = new \DateTime($ANNEE_ACTUELLE . '-' . $j . '-01');
-            $MOISTRING = $MOISTRING->format('M');
-            $mois[] = $MOISTRING;
+        $date = new \DateTime('now' );
+        $moisInt = $date->format('m');
+        for ($j = $moisInt   ; $j <= 12; ++$j) {
+            $moisString = new \DateTime($this->anneeActuelle . '-' . $j . '-01');
+            $moisString = $moisString->format('M');
+            $mois[] = $moisString;
         } 
-        for ($j = 1   ; $j <= $MOIS; ++$j) {
-            $MOISTRING = new \DateTime($ANNEE_ACTUELLE . '-' . $j . '-01');
-            $MOISTRING = $MOISTRING->format('M');
-            $mois[] = $MOISTRING;
+        for ($j = 1   ; $j <= $moisInt; ++$j) {
+            $moisString = new \DateTime($this->anneeActuelle . '-' . $j . '-01');
+            $moisString = $moisString->format('M');
+            $mois[] = $moisString;
         } 
         
 
@@ -128,7 +132,7 @@ class IndicateursController extends AbstractController
         $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
 
         $maxMandat = [] !== $formationsParMandat ? max(array_keys($formationsParMandat)) : 0;
-        $nombrePresentFormations[2021]['Indicateur'] = 'Nombre de présent aux formations';
+        $nombrePresentFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de présent aux formations';
 
         /** @var Formation[] $formations */
         foreach ($formationsParMandat as $mandat => $formations) {
@@ -137,13 +141,13 @@ class IndicateursController extends AbstractController
                     $interval = new \DateInterval('P' . ($maxMandat - $mandat) . 'Y');
                     $dateDecale = clone $formation->getDateDebut();
                     $dateDecale->add($interval);
-                    $mois2= $dateDecale->format('M');
-                    $nombrePresentFormations[$mandat][$mois2] = count($formation->getMembresPresents());
+                    $mois= $dateDecale->format('M');
+                    $nombrePresentFormations[$mandat][$mois] = count($formation->getMembresPresents());
                 }
             }
         }
 
-        $tabDonnees = [$nombrePresentFormations[2021]];
+        $tabDonnees = [$nombrePresentFormations[$this->anneeActuelle]];
 
         return $tabDonnees;
     }
