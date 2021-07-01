@@ -3,6 +3,7 @@
 namespace App\Controller\Project;
 
 use App\Entity\Project\Cca;
+use App\Entity\Project\Bdc;
 use App\Form\Project\CcaType;
 use App\Form\Project\SubCcaType;
 use DateTime;
@@ -38,14 +39,15 @@ class CcaController extends AbstractController
      *
      * @return RedirectResponse|Response
      */
-    public function voirBdc(): Response
+    public function voirBdc(Cca $cca): Response
     {
         $em = $this->getDoctrine()->getManager();
-
-        $ccas = $em->getRepository(Cca::class)->findAll();
-        return $this->render('Project/Cca/voir.html.twig', [
+        $nomProspect = $cca->getProspect()->getNom();
+        $bdcs = $em->getRepository(Bdc::class)->findAllByCca($cca->getId());
+        return $this->render('Project/Cca/bdcs.html.twig', [
             'controller_name' => 'CcaController',
-            'ccas' => $ccas,
+            'bdcs' => $bdcs,
+            'prospect' => $nomProspect
         ]);
     }
 

@@ -63,6 +63,7 @@ suivi:
   bdc_enregistrer_phases_passer: Enregistrer le BDC et passer aux Phases
   bv: BV
   bon_de_commande: Bon de Commande
+  cca_bdc_relation: Bon(s) de commande avec
   capacite_intervenants: Capacité des intervenants
   cca: Convention Cadre Agile
   cca_ajouter: Ajouter une Convention Cadre Agile
