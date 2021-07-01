@@ -34,13 +34,11 @@
             </table>
 
             <table id="content-1" class="table table-bordered table-striped">
-            <table class="display dataTable table table-bordered table-striped dt-responsive" id="table">
-                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "tabDonnees": tabDonnees, "dates": annees} %}
-            </table>
+                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "tabDonnees": tabDonneesAnnuel, "dates": annees} %}
             </table>
     
             <table id="content-2" class="table table-bordered table-striped" style="display:none;">
-                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "tabDonnees": tabDonnees, "dates": annees} %}
+                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "tabDonnees": tabDonneesAnnuel, "dates": mois} %}
             </table>
         </div>
 

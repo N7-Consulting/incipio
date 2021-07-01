@@ -82,7 +82,8 @@ class IndicateursController extends AbstractController
     public function index()
     {
         $em = $this->getDoctrine()->getManager();
-        $tabDonnees = $this->getDonnesBrutes( $em);
+        $tabDonneesAnnuel = $this->getDonnesBrutes( $em);
+        $tabDonneesMensuel = $this->getDonneesBrutesMensuelles( $em);
 
         $annees = ['Indicateur'];
         $date = new \DateTime('now' );
@@ -91,11 +92,27 @@ class IndicateursController extends AbstractController
             $annees[] = $j; 
         }
 
+        $mois = ['Indicateur'];
+        $MOIS = $date->format('m');
+        for ($j = $MOIS   ; $j <= 12; ++$j) {
+            $MOISTRING = new \DateTime($ANNEE_ACTUELLE . '-' . $j . '-01');
+            $MOISTRING = $MOISTRING->format('M');
+            $mois[] = $MOISTRING;
+        } 
+        for ($j = 1   ; $j <= $MOIS; ++$j) {
+            $MOISTRING = new \DateTime($ANNEE_ACTUELLE . '-' . $j . '-01');
+            $MOISTRING = $MOISTRING->format('M');
+            $mois[] = $MOISTRING;
+        } 
+        
+
         return $this->render(
             'Stat/Indicateurs/index.html.twig',
             ['indicateurs' => self::INDICATEURS,
-            'tabDonnees' => $tabDonnees,
+            'tabDonneesAnnuel' => $tabDonneesAnnuel,
+            'tabDonneesMensuel' => $tabDonneesMensuel,
             'annees' => $annees,
+            'mois' => $mois,
             ]
         );
     }
