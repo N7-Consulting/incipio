@@ -128,7 +128,7 @@ class IndicateursController extends AbstractController
         $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
 
         $maxMandat = [] !== $formationsParMandat ? max(array_keys($formationsParMandat)) : 0;
-        $nombrePresentFormations['Indicateur'] = 'Nombre de présent aux formations';
+        $nombrePresentFormations[2021]['Indicateur'] = 'Nombre de présent aux formations';
 
         /** @var Formation[] $formations */
         foreach ($formationsParMandat as $mandat => $formations) {
@@ -137,16 +137,13 @@ class IndicateursController extends AbstractController
                     $interval = new \DateInterval('P' . ($maxMandat - $mandat) . 'Y');
                     $dateDecale = clone $formation->getDateDebut();
                     $dateDecale->add($interval);
-                    $nombrePresentFormations[$mandat][] = [
-                        'x' => $dateDecale->getTimestamp() * 1000,
-                        'y' => count($formation->getMembresPresents()), 'name' => $formation->getTitre(),
-                        'date' => $dateDecale->format('d/m/Y'),
-                    ];
+                    $mois2= $dateDecale->format('M');
+                    $nombrePresentFormations[$mandat][$mois2] = count($formation->getMembresPresents());
                 }
             }
         }
 
-        $tabDonnees = [$nombrePresentFormations];
+        $tabDonnees = [$nombrePresentFormations[2021]];
 
         return $tabDonnees;
     }

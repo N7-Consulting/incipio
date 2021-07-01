@@ -37,8 +37,8 @@
                 {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "tabDonnees": tabDonneesAnnuel, "dates": annees} %}
             </table>
     
-            <table id="content-2" class="table table-bordered table-striped" style="display:none;">
-                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "tabDonnees": tabDonneesAnnuel, "dates": mois} %}
+            <table id="content-2" class="table table-bordered table-striped" > 
+                {% include 'Stat/Indicateurs/donneesBrutes.html.twig' with { "tabDonnees": tabDonneesMensuel, "dates": mois} %}
             </table>
         </div>
 
