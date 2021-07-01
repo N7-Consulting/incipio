@@ -135,23 +135,27 @@ class IndicateursController extends AbstractController
 
         $maxMandat = [] !== $formationsParMandat ? max(array_keys($formationsParMandat)) : 0;
         $nombrePresentFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de présent aux formations';
+        $nombreFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de formation';
+        ksort($formationsParMandat); // Tri selon les promos
 
         /** @var Formation[] $formations */
-        foreach ($formationsParMandat as $mandat => $formations) {
+        foreach ($formationsParMandat as $mandat => $formations) {    
             foreach ($formations as $formation) {
                 if ($formation->getDateDebut()) {
                     $interval = new \DateInterval('P' . 1 . 'Y');
                     $dateDecale = clone $formation->getDateDebut();
                     $dateDecale->add($interval);
                     $mois= $dateDecale->format('M');
+                    if (array_key_exists($mois, $formationsParMandat[$mandat])) {
+                        ++$nombreFormations[$mandat][$mois];
+                    } else {
+                        $nombreFormations[$mandat][$mois] = 1;
+                    }
                     $nombrePresentFormations[$mandat][$mois] = count($formation->getMembresPresents());
                 }
             }
         }
-
-        // Calucul du CA / du Taux d'avenant par an 
-        // du Cumul des JEH // Du nb études / Des Taux d'avenants / Du nb Avenant par an
-        
+               
         $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
         $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
 
@@ -264,11 +268,10 @@ class IndicateursController extends AbstractController
             }
         }
 
-        $tabDonnees = [$nombrePresentFormations[$this->anneeActuelle], $nbEtudes[$this->anneeActuelle],
+        $tabDonnees = [$nombreFormations[$this->anneeActuelle],$nombrePresentFormations[$this->anneeActuelle], $nbEtudes[$this->anneeActuelle],
         $tauxAvenant[$this->anneeActuelle], $nombreEtudesAvecAv[$this->anneeActuelle], $nombreAv[$this->anneeActuelle]
         ,$caAnnuel[$this->anneeActuelle], $cumulJeh[$this->anneeActuelle]];
-        // $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations, ,
-        // $caAnnuel, $cumulJeh, $moyenne];
+        
         return $tabDonnees;
     }
 
