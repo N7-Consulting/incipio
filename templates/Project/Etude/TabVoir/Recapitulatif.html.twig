@@ -6,9 +6,6 @@
 {% set finieID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_FINIE') %}
 {% set clotureeID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_CLOTUREE') %}
 {% set avorteeID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_AVORTEE') %}
-{% set stateNames = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_ARRAY') %}
-
-{% set stateName = stateNames[etude.stateID] | trans({}, 'project') %}
 
 {# Set rendering options depending of project state here #}
 {% if etude.stateID == negoID %}
@@ -66,7 +63,7 @@
 		<td style="width: 25%;" valign="top">
 			<table class="table table-bordered table-striped" style="padding-top: 0px;">
 					<td colspan="2" class="{{alert}}" >
-						<h4>{{ 'suivi.etat'|trans({}, 'project') }} : {{ stateName }}</h4>
+<h4>{{ 'suivi.etat'|trans({}, 'project') }} : {{ etude.getStateIDToString(etude.stateID) | trans({}, 'project') }}</h4>
 					</td>
 				</tr>
 				<tr>
