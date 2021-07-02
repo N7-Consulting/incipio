@@ -176,7 +176,8 @@ class IndicateursController extends AbstractController
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
+                if (array_key_exists($mandat, $nombreEtudesParMandat)
+                && array_key_exists($moisSignature, $nombreEtudesParMandat[$mandat])) {
                     ++$nombreEtudesParMandat[$mandat][$moisSignature];
                 } else {
                     $nombreEtudesParMandat[$mandat][$moisSignature] = 1;
@@ -185,25 +186,28 @@ class IndicateursController extends AbstractController
                 }
 
                 if (count($etude->getAvs()->toArray())) {
-                    
-                    ++$nombreEtudesAvecAvenantParMandat[$mandat][$moisSignature];
-                    $nombreAvsParMandat[$mandat][$moisSignature] += count($etude->getAvs()->toArray());
+                    foreach($avs as $av){
+                        // $moisSignature
+                        ++$nombreEtudesAvecAvenantParMandat[$mandat][$moisSignature];
+                        ++$nombreAvsParMandat[$mandat][$moisSignature];
+                    }
                 }
 
                 if (array_key_exists($mandat, $cumuls)) {
                     foreach($phases as $phase){
                         $datePhase = $phase->getDateDebut()->format('M');
-                        $cumuls[$mandat][$datePhase] += $phase->getMontantHT();
-                        $cumulsJEH[$mandat][$datePhase] += $phase->getNbrJEH();
+                        if (array_key_exists($datePhase, $cumuls[$mandat])) {
+                            $cumuls[$mandat][$datePhase] += $phase->getMontantHT();
+                            $cumulsJEH[$mandat][$datePhase] += $phase->getNbrJEH();
+                        }
+                        else {
+                            $datePhase = $phase->getDateDebut()->format('M');
+                            $cumuls[$mandat][$datePhase] = $phase->getMontantHT();
+                            $cumulsJEH[$mandat][$datePhase] = $phase->getNbrJEH();
+                        }
                     }
                     
-                } else {
-                    foreach($phases as $phase){
-                        $datePhase = $phase->getDateDebut()->format('M');
-                        $cumuls[$mandat][$datePhase] = $phase->getMontantHT();
-                        $cumulsJEH[$mandat][$datePhase] = $phase->getNbrJEH();
-                    }
-                }
+                } 
             }
         }
 
@@ -216,7 +220,8 @@ class IndicateursController extends AbstractController
             $mandat = $etude->getMandat();
 
             if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
+                if (array_key_exists($mandat, $nombreEtudesParMandat)
+                && array_key_exists($moisSignature, $nombreEtudesParMandat[$mandat])) {
                     ++$nombreEtudesParMandat[$mandat][$moisSignature];
                 } else {
                     $nombreEtudesParMandat[$mandat][$moisSignature] = 1;
@@ -225,24 +230,28 @@ class IndicateursController extends AbstractController
                 }
 
                 if (count($etude->getAvs()->toArray())) {
-                    ++$nombreEtudesAvecAvenantParMandat[$mandat][$moisAvenant];
-                    $nombreAvsParMandat[$mandat][$moisAvenant] += count($etude->getAvs()->toArray());
+                    foreach($avs as $av){
+                        // $moisSignature
+                        ++$nombreEtudesAvecAvenantParMandat[$mandat][$moisSignature];
+                        ++$nombreAvsParMandat[$mandat][$moisSignature];
+                    }
                 }
 
                 if (array_key_exists($mandat, $cumuls)) {
                     foreach($phases as $phase){
                         $datePhase = $phase->getDateDebut()->format('M');
-                        $cumuls[$mandat][$datePhase] += $phase->getMontantHT();
-                        $cumulsJEH[$mandat][$datePhase] += $phase->getNbrJEH();
+                        if (array_key_exists($datePhase, $cumuls[$mandat])) {
+                            $cumuls[$mandat][$datePhase] += $phase->getMontantHT();
+                            $cumulsJEH[$mandat][$datePhase] += $phase->getNbrJEH();
+                        }
+                        else {
+                            $datePhase = $phase->getDateDebut()->format('M');
+                            $cumuls[$mandat][$datePhase] = $phase->getMontantHT();
+                            $cumulsJEH[$mandat][$datePhase] = $phase->getNbrJEH();
+                        }
                     }
                     
-                } else {
-                    foreach($phases as $phase){
-                        $datePhase = $phase->getDateDebut()->format('M');
-                        $cumuls[$mandat][$datePhase] = $phase->getMontantHT();
-                        $cumulsJEH[$mandat][$datePhase] = $phase->getNbrJEH();
-                    }
-                }
+                } 
             }
         }
 
@@ -250,21 +259,25 @@ class IndicateursController extends AbstractController
         $tauxAvenant[$this->anneeActuelle]['Indicateur'] = 'Taux d\'avenant';
         $nombreEtudesAvecAv[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études avec avenant';
         $nombreAv[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant';
-        foreach ($nombreEtudesParMandat[$this->anneeActuelle] as $mois => $datas) {
-            if ($datas > 0) {
-                $nbEtudes[$this->anneeActuelle][$mois] = $datas;
-                $tauxAvenant[$this->anneeActuelle][$mois] = 100 * $nombreEtudesAvecAvenantParMandat[$this->anneeActuelle][$mois] / $datas;
-                $nombreEtudesAvecAv[$this->anneeActuelle][$mois] = $nombreEtudesAvecAvenantParMandat[$this->anneeActuelle][$mois];
-                $nombreAv[$this->anneeActuelle][$mois] = $nombreAvsParMandat[$this->anneeActuelle][$mois];      
+        if (array_key_exists($this->anneeActuelle, $nombreEtudesParMandat)) {
+            foreach ($nombreEtudesParMandat[$this->anneeActuelle] as $mois => $datas) {
+                if ($datas > 0) {
+                    $nbEtudes[$this->anneeActuelle][$mois] = $datas;
+                    $tauxAvenant[$this->anneeActuelle][$mois] = 100 * $nombreEtudesAvecAvenantParMandat[$this->anneeActuelle][$mois] / $datas;
+                    $nombreEtudesAvecAv[$this->anneeActuelle][$mois] = $nombreEtudesAvecAvenantParMandat[$this->anneeActuelle][$mois];
+                    $nombreAv[$this->anneeActuelle][$mois] = $nombreAvsParMandat[$this->anneeActuelle][$mois];      
+                }
             }
         }
        
         $caAnnuel[$this->anneeActuelle]['Indicateur'] = 'Chiffre d\'affaire (en euros)';
         $cumulJeh[$this->anneeActuelle]['Indicateur'] = 'Nombre de JEH signés';
-        foreach ($cumuls[$this->anneeActuelle] as $mois => $datas) {
-            if ($datas > 0) {
-                $caAnnuel[$this->anneeActuelle][$mois] = $datas;
-                $cumulJeh[$this->anneeActuelle][$mois] = $cumulsJEH[$this->anneeActuelle][$mois];
+        if (array_key_exists($this->anneeActuelle, $cumuls)) {
+            foreach ($cumuls[$this->anneeActuelle] as $mois => $datas) {
+                if ($datas > 0) {
+                    $caAnnuel[$this->anneeActuelle][$mois] = $datas;
+                    $cumulJeh[$this->anneeActuelle][$mois] = $cumulsJEH[$this->anneeActuelle][$mois];
+                }
             }
         }
 
