@@ -31,7 +31,7 @@
 				</tr>
 			</thead>
       <tbody>
-			{% for cca in ccas %}
+			{% for i, cca in ccas %}
         {# On affiche en orange la ligne si la convention arrive bientôt à son terme (30 jours) #}
         {% set echeance = date(cca.dateFin).diff(date("now")) %}
         <tr class="{{ echeance.m  < 1 ? "warning" : echeance.invert ? : "danger" }}">
@@ -48,7 +48,7 @@
 						</a>
             &nbsp
             <a href="{{ path('project_cca_bdc', {'id' : cca.id }) }}">
-              <span>BDC</span>&nbsp<i class="fa fa-eye"></i>
+              <span>BDC ({{nbBdc[i]}})</span>&nbsp<i class="fa fa-eye"></i>
             </a>
 					</td>
 				</tr>
