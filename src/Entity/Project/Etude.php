@@ -365,11 +365,13 @@ class Etude
     private $qs;
 
     /**
-     * @ORM\OneToOne(targetEntity=Bdc::class, inversedBy="etude", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     * @ORM\OneToOne(targetEntity=Bdc::class, inversedBy="etude", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $bdc;
 
     /**
+     * @Assert\Valid()
      * @ORM\ManyToOne(targetEntity=Cca::class, inversedBy="etudes", cascade={"persist"})
      */
     private $cca;

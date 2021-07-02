@@ -34,7 +34,7 @@ final class Version20210623150618 extends AbstractMigration
         $this->addSql('ALTER TABLE Cca ADD CONSTRAINT FK_F9F88321D5A42B2D FOREIGN KEY (signataire2_id) REFERENCES Personne (id)');
         $this->addSql('ALTER TABLE Cca ADD CONSTRAINT FK_F9F88321D182060A FOREIGN KEY (prospect_id) REFERENCES Prospect (id)');
         $this->addSql('ALTER TABLE Etude ADD bdc_id INT DEFAULT NULL, ADD cca_id INT DEFAULT NULL, ADD ccaActive TINYINT(1) DEFAULT NULL, DROP cca, DROP bdc');
-        $this->addSql('ALTER TABLE Etude ADD CONSTRAINT FK_DC1F862028DF9AB0 FOREIGN KEY (bdc_id) REFERENCES Bdc (id)');
+        $this->addSql('ALTER TABLE Etude ADD CONSTRAINT FK_DC1F862028DF9AB0 FOREIGN KEY (bdc_id) REFERENCES Bdc (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE Etude ADD CONSTRAINT FK_DC1F8620FBAA5D8E FOREIGN KEY (cca_id) REFERENCES Cca (id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_DC1F862028DF9AB0 ON Etude (bdc_id)');
         $this->addSql('CREATE INDEX IDX_DC1F8620FBAA5D8E ON Etude (cca_id)');
