@@ -39,17 +39,17 @@
 					<td>{{ cca.dateSignature | date('d/m/Y')}}</td>
 					<td>{{ cca.dateFin | date('d/m/Y')}}</td>
 					<td>
-						<a href="{{ path('project_cca_supprimer', {'id' : cca.id }) }}">
-							<i class="fa fa-times text-danger"></i>
-						</a>
+            <a href="{{ path('project_cca_bdc', {'id' : cca.id }) }}">
+              <span>BDC ({{nbBdc[i]}})</span>&nbsp<i class="fa fa-eye"></i>
+            </a>
 						&nbsp
 						<a href="{{ path('project_cca_modifier', {'id' : cca.id }) }}">
 							<i class="fa fa-pencil"></i>
 						</a>
             &nbsp
-            <a href="{{ path('project_cca_bdc', {'id' : cca.id }) }}">
-              <span>BDC ({{nbBdc[i]}})</span>&nbsp<i class="fa fa-eye"></i>
-            </a>
+						<a href="{{ path('project_cca_supprimer', {'id' : cca.id }) }}">
+							<i class="fa fa-times text-danger"></i>
+						</a>
 					</td>
 				</tr>
 			{% endfor %}
