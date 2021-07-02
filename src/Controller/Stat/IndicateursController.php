@@ -161,7 +161,12 @@ class IndicateursController extends AbstractController
 
         $nombreEtudesParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'étude';
         $nombreEtudesAvecAvenantParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études avec avenant';
-        $nombreAvsParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant';
+        $nombreAvsParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant total';
+        $avenantDelai[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de délai';
+        $avenantMeto[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de méthodologie';
+        $avenantMontant[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de montant';
+        $avenantMission[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de mission';
+        $avenantRupture[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de rupture';
         $cumuls[$this->anneeActuelle]['Indicateur'] = 'Chiffre d\'affaire (en euros)';
         $cumulsJEH[$this->anneeActuelle]['Indicateur'] = 'Nombre de JEH signés';
 
@@ -181,21 +186,52 @@ class IndicateursController extends AbstractController
                     ++$nombreEtudesParMandat[$mandat][$moisSignature];
                 } else {
                     $nombreEtudesParMandat[$mandat][$moisSignature] = 1;
-                    $nombreEtudesAvecAvenantParMandat[$mandat][$moisSignature] = 0;
-                    $nombreAvsParMandat[$mandat][$moisSignature] = 0;
                 }
 
                 if (count($etude->getAvs()->toArray())) {
                     foreach($avs as $av){
+                        if ($av->getDateSignature()) {
                         $moisAvenant = $av->getDateSignature()->format('M');
-                        if (array_key_exists($moisAvenant, $nombreAvsParMandat[$mandat])) {
+                        if (array_key_exists($moisAvenant, $nombreEtudesParMandat[$mandat])) {
                             ++$nombreEtudesAvecAvenantParMandat[$mandat][$moisAvenant];
                             ++$nombreAvsParMandat[$mandat][$moisAvenant];
+                            $types = $av ->getClauses()->getClausesKeys();
+                            foreach($types as $type){
+                            switch ($type) {
+                                case 1: array_key_exists($moisAvenant, $avenantDelai[$this->anneeActuelle]) ? $avenantDelai[$this->anneeActuelle][$moisAvenant]++ : $avenantDelai[$this->anneeActuelle][$moisAvenant] = 1;
+                                    break;
+                                case '2': array_key_exists($moisAvenant, $avenantMeto[$this->anneeActuelle]) ? $avenantMeto[$this->anneeActuelle]++ : $avenantMeto[$this->anneeActuelle] = 1;
+                                    break;
+                                case '3': array_key_exists($moisAvenant, $avenantMontant[$this->anneeActuelle]) ? $avenantMontant[$this->anneeActuelle]++ : $avenantMontant[$this->anneeActuelle] = 1;
+                                    break;
+                                case '4': array_key_exists($moisAvenant, $avenantMission[$this->anneeActuelle]) ? $avenantMission[$this->anneeActuelle]++ : $avenantMission[$this->anneeActuelle] = 1;
+                                    break;
+                                case '5': array_key_exists($moisAvenant, $avenantRupture[$this->anneeActuelle]) ? $avenantRupture[$this->anneeActuelle]++ : $avenantRupture[$this->anneeActuelle] = 1;
+                                    break;
+                            }
+                            }
                         }
                         else{
                             $nombreEtudesAvecAvenantParMandat[$mandat][$moisAvenant] = 1;
                             $nombreAvsParMandat[$mandat][$moisAvenant] = 1;
-                        }   
+                            $types = $av ->getClauses();
+                            
+                            foreach($types as $type){
+                                
+                            switch ($type) {
+                                case 1: array_key_exists($moisAvenant, $avenantDelai[$this->anneeActuelle]) ? $avenantDelai[$this->anneeActuelle][$moisAvenant]++ : $avenantDelai[$this->anneeActuelle][$moisAvenant] = 1;
+                                    break;
+                                case 2: array_key_exists($moisAvenant, $avenantMeto[$this->anneeActuelle]) ? $avenantMeto[$this->anneeActuelle]++ : $avenantMeto[$this->anneeActuelle] = 1;
+                                    break;
+                                case 3: array_key_exists($moisAvenant, $avenantMontant[$this->anneeActuelle]) ? $avenantMontant[$this->anneeActuelle]++ : $avenantMontant[$this->anneeActuelle] = 1;
+                                    break;
+                                case 4: array_key_exists($moisAvenant, $avenantMission[$this->anneeActuelle]) ? $avenantMission[$this->anneeActuelle]++ : $avenantMission[$this->anneeActuelle] = 1;
+                                    break;
+                                case 5: array_key_exists($moisAvenant, $avenantRupture[$this->anneeActuelle]) ? $avenantRupture[$this->anneeActuelle]++ : $avenantRupture[$this->anneeActuelle] = 1;
+                                    break;
+                            }
+                            }
+                        }}
                     }
                 }
 
@@ -239,10 +275,42 @@ class IndicateursController extends AbstractController
                         if (array_key_exists($moisAvenant, $nombreEtudesParMandat[$mandat])) {
                             ++$nombreEtudesAvecAvenantParMandat[$mandat][$moisAvenant];
                             ++$nombreAvsParMandat[$mandat][$moisAvenant];
+                            $types = $av ->getClauses()->getClausesKeys();
+                            foreach($types as $type){
+                            switch ($type) {
+                                case 1: array_key_exists($moisAvenant, $avenantDelai[$this->anneeActuelle]) ? $avenantDelai[$this->anneeActuelle][$moisAvenant]++ : $avenantDelai[$this->anneeActuelle][$moisAvenant] = 1;
+                                    break;
+                                case '2': array_key_exists($moisAvenant, $avenantMeto[$this->anneeActuelle]) ? $avenantMeto[$this->anneeActuelle]++ : $avenantMeto[$this->anneeActuelle] = 1;
+                                    break;
+                                case '3': array_key_exists($moisAvenant, $avenantMontant[$this->anneeActuelle]) ? $avenantMontant[$this->anneeActuelle]++ : $avenantMontant[$this->anneeActuelle] = 1;
+                                    break;
+                                case '4': array_key_exists($moisAvenant, $avenantMission[$this->anneeActuelle]) ? $avenantMission[$this->anneeActuelle]++ : $avenantMission[$this->anneeActuelle] = 1;
+                                    break;
+                                case '5': array_key_exists($moisAvenant, $avenantRupture[$this->anneeActuelle]) ? $avenantRupture[$this->anneeActuelle]++ : $avenantRupture[$this->anneeActuelle] = 1;
+                                    break;
+                            }
+                            }
                         }
                         else{
                             $nombreEtudesAvecAvenantParMandat[$mandat][$moisAvenant] = 1;
                             $nombreAvsParMandat[$mandat][$moisAvenant] = 1;
+                            $types = $av ->getClauses();
+                            
+                            foreach($types as $type){
+                                $typeS = $type->getClausesKeys();
+                            switch ($typeS) {
+                                case 1: array_key_exists($moisAvennt, $avenantDelai[$this->anneeActuelle]) ? $avenantDelai[$this->anneeActuelle][$moisAvenant]++ : $avenantDelai[$this->anneeActuelle][$moisAvenant] = 1;
+                                    break;
+                                case 2: array_key_exists($moisAvenant, $avenantMeto[$this->anneeActuelle]) ? $avenantMeto[$this->anneeActuelle]++ : $avenantMeto[$this->anneeActuelle] = 1;
+                                    break;
+                                case 3: array_key_exists($moisAvenant, $avenantMontant[$this->anneeActuelle]) ? $avenantMontant[$this->anneeActuelle]++ : $avenantMontant[$this->anneeActuelle] = 1;
+                                    break;
+                                case 4: array_key_exists($moisAvenant, $avenantMission[$this->anneeActuelle]) ? $avenantMission[$this->anneeActuelle]++ : $avenantMission[$this->anneeActuelle] = 1;
+                                    break;
+                                case 5: array_key_exists($moisAvenant, $avenantRupture[$this->anneeActuelle]) ? $avenantRupture[$this->anneeActuelle]++ : $avenantRupture[$this->anneeActuelle] = 1;
+                                    break;
+                            }
+                            }
                         }
                     }
                 }
@@ -268,7 +336,7 @@ class IndicateursController extends AbstractController
         // Nombre d'intervenants par mois
         $membres = $em->getRepository(Membre::class)->findAll();
         $nbIntervenants = [];
-        $nbIntervenants[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'intervenant inscrit';
+        $nbIntervenants[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'intervenant recrutés';
         foreach ($membres as $membre) {
             if ($membre->getPersonne()->getPoste() == 'Intervenant'
             && $membre->getDateConventionEleve()) {
@@ -283,6 +351,8 @@ class IndicateursController extends AbstractController
 
         $tabDonnees = [$nbIntervenants[$this->anneeActuelle],$nombreFormations[$this->anneeActuelle],$nombrePresentFormations[$this->anneeActuelle], $nombreEtudesParMandat[$this->anneeActuelle],
         $nombreEtudesAvecAvenantParMandat[$this->anneeActuelle], $nombreAvsParMandat[$this->anneeActuelle]
+        ,$avenantDelai[$this->anneeActuelle],$avenantMontant[$this->anneeActuelle],$avenantMission[$this->anneeActuelle],$avenantRupture[$this->anneeActuelle]
+        ,$avenantMeto[$this->anneeActuelle]
         ,$cumuls[$this->anneeActuelle], $cumulsJEH[$this->anneeActuelle]];
         
         return $tabDonnees;
@@ -309,13 +379,18 @@ class IndicateursController extends AbstractController
         }
 
         // Nombre d'intervenants par an
-        $intervenants = $em->getRepository(Membre::class)->getIntervenantsParPromo();
+        $membres = $em->getRepository(Membre::class)->findAll();
         $nbIntervenants = [];
-        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenant';
-        foreach ($intervenants as $intervenant) {
-            $annee = $intervenant->getPromotion() - 3;
-            if ($annee) {
-                array_key_exists($annee, $nbIntervenants) ? $nbIntervenants[$annee]++ : $nbIntervenants[$annee] = 1;
+        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenant recrutés';
+        foreach ($membres as $membre) {
+            if ($membre->getPersonne()->getPoste() == 'Intervenant'
+            && $membre->getDateConventionEleve()) {
+                $annee = $membre->getDateConventionEleve()->format('Y');
+                if (array_key_exists($annee, $nbIntervenants)) {
+                    ++$nbIntervenants[$annee];
+                } else {
+                    $nbIntervenants[$annee] = 1;
+                }
             }
         }
 
@@ -436,53 +511,18 @@ class IndicateursController extends AbstractController
             }
         }
         
-        // // Données trésorerie
-        // $sortiesParMandat = $em->getRepository(NoteDeFrais::class)->findAllByMandat();
-        // $bvsParMandat = $em->getRepository(BV::class)->findAllByMandat();
-        // $mandats = [];
-        // ksort($sortiesParMandat); // Tri selon les mandats
-        // /** @var NoteDeFrais[] $nfs */
-        // foreach ($sortiesParMandat as $mandat => $nfs) { // Pour chaque Mandat
-        //     $mandats[$mandat] = ['Honoraires BV' => 0, 'URSSAF' => 0];
-        //     foreach ($nfs as $nf) { // Pour chaque NF d'un mandat
-        //         foreach ($nf->getDetails() as $detail) { // Pour chaque détail d'une NF
-        //             $compte = $detail->getCompte();
-        //             if (null !== $compte) {
-        //                 $libelle = $compte->getLibelle();
-        //                 if (array_key_exists($libelle, $mandats[$mandat])) {
-        //                     $mandats[$mandat][$libelle] += $detail->getMontantHT();
-        //                 } else {
-        //                     $mandats[$mandat][$libelle] = $detail->getMontantHT();
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
-        // foreach ($bvsParMandat as $mandat => $bvs) { // Pour chaque Mandat
-        //     if (!array_key_exists($mandat, $mandats)) {
-        //         $mandats[$mandat] = [];
-        //     }
-
-        //     /** @var BV[] $bvs */
-        //     foreach ($bvs as $bv) {
-        //         $mandats[$mandat]['Honoraires BV'] += $bv->getRemunerationBrute();
-        //         $mandats[$mandat]['URSSAF'] += $bv->getPartJunior();
-        //     }
-        // }
-
-        // ksort($mandats);
-
-        // $totalDepenses['Indicateur'] = 'Total des dépenses';
-        // $drilldownSeries = [];
-        // foreach ($mandats as $mandat => $comptes) {
-        //     $total = 0;
-
-        //     foreach ($comptes as $libelle => $compte) {
-        //         $total += $compte;
-        //     }
-        //     $totalDepenses[$mandat] = round((float) $total, 2);
-        // }
+        // Nombre de prospect par an
+        $prospect = $em->getRepository(Formation::class)->findAllByMandat();
+        $nombreFormations['Indicateur'] = 'Nombre de formation';
+        $nombrePresentFormations['Indicateur'] = 'Nombre de présence aux formations';
+        ksort($formationsParMandat); // Tri selon les promos
+        foreach ($formationsParMandat as $mandat => $formations) {
+            $nombreFormations[$mandat] = count($formations);
+            $nombrePresentFormations[$mandat] = 0;
+            foreach ($formations as $formation) {
+                $nombrePresentFormations[$mandat] = $nombrePresentFormations[$mandat] + count($formation->getMembresPresents());
+            }
+        }
         
         $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations, $nombrePresentFormations, $nbEtudes, $tauxAvenant, $nombreEtudesAvecAv, $nombreAv,
         $caAnnuel, $cumulJeh, $moyenne];
