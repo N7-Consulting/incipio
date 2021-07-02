@@ -1,15 +1,22 @@
 {% extends "Project/layout.html.twig" %}
 
 {% block title %}
-{{ 'suivi.cca_ajouter'|trans({}, 'project') }} {{ parent() }}
+    {{ 'suivi.cca_ajouter'|trans({}, 'project') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-{{ 'suivi.cca_ajouter'|trans({}, 'project') }}
+    {{ 'suivi.cca_ajouter'|trans({}, 'project') }}
+{% endblock %}
+
+{% block breadcrumb_items %}
+	{{parent()}}
+	<li>
+		<a href="{{ path('project_cca_voir') }}">{{ 'dashboard.cca'|trans({}, 'dashboard') }}</a>
+	</li>
 {% endblock %}
 
 {% block breadcrumb_active %}
-{{ 'suivi.cca_ajouter'|trans({}, 'project') }}
+    {{ 'suivi.cca_ajouter'|trans({}, 'project') }}
 {% endblock %}
 
 

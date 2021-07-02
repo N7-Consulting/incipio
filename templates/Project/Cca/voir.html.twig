@@ -13,6 +13,10 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block breadcrumb_active %}
+	{{ 'dashboard.cca'|trans({}, 'dashboard') }}
+{% endblock %}
+
 
 {% block content_bundle %}
 

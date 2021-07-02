@@ -13,6 +13,17 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block breadcrumb_items %}
+	{{parent()}}
+	<li>
+		<a href="{{ path('project_cca_voir') }}">{{ 'dashboard.cca'|trans({}, 'dashboard') }}</a>
+	</li>
+{% endblock %}
+
+{% block breadcrumb_active %}
+	{{ 'suivi.bon_de_commande'|trans({}, 'project') }}
+{% endblock %}
+
 
 {% block content_bundle %}
 
