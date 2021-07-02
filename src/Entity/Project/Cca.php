@@ -53,6 +53,11 @@ class Cca extends DocType
      */
     private $newProspect;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     */
+    private $nom;
+
 
     public function __toString()
     {
@@ -141,5 +146,17 @@ class Cca extends DocType
     public function setNewProspect($var)
     {
         $this->newProspect = $var;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }
