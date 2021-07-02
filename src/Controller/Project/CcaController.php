@@ -142,6 +142,9 @@ class CcaController extends AbstractController
      */
     public function modifier(Request $request, Cca $cca, DocTypeManager $docTypeManager): Response
     {
+        if(!$cca->getVersion())
+            $cca->setVersion(1);
+
         $form = $this->createForm(SubCcaType::class, $cca, ['prospect' => $cca->getProspect()]);
         $form->handleRequest($request);
 
