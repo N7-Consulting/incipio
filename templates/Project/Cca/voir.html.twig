@@ -24,7 +24,7 @@
 		<table class="display dataTable table table-bordered table-striped dt-responsive" id="ccatable">
 			<thead>
 				<tr>
-					<th>{{ 'suivi.client'|trans({}, 'project') }}</th>
+					<th>{{ 'suivi.cca_nom'|trans({}, 'project') }}</th>
 					<th>{{ 'suivi.date_signature' | trans({}, 'project') }}</th>
 					<th>{{ 'suivi.date_fin' | trans({}, 'project') }}</th>
 					<th>{{ 'suivi.action' | trans({}, 'project') }}</th>
@@ -35,7 +35,7 @@
         {# On affiche en orange la ligne si la convention arrive bientôt à son terme (30 jours) #}
         {% set echeance = date(cca.dateFin).diff(date("now")) %}
         <tr class="{{ echeance.m  < 1 ? "warning" : echeance.invert ? : "danger" }}">
-					<td>{{ cca.prospect.nom }}</td>
+					<td>{{ cca.nom }}</td>
 					<td>{{ cca.dateSignature | date('d/m/Y')}}</td>
 					<td>{{ cca.dateFin | date('d/m/Y')}}</td>
 					<td>

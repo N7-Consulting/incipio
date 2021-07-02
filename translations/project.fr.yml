@@ -66,6 +66,7 @@ suivi:
   cca_bdc_relation: Bon(s) de commande avec
   capacite_intervenants: Capacité des intervenants
   cca: Convention Cadre Agile
+  cca_nom: Nom convention
   cca_form:
     nom_interne: Nom interne de la convention
   cca_ajouter: Ajouter une Convention Cadre Agile
