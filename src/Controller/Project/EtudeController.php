@@ -507,11 +507,13 @@ class EtudeController extends AbstractController
         if ($permChecker->confidentielRefus($etude, $this->getUser())) {
             throw new AccessDeniedException('Cette étude est confidentielle');
         }
-        // hack around AP, CC & CE stats, to avoid this to create empty object when one of the status is set.
-        // and empty AP or CC mess with CE management (because an Etude has mostly either AP+CC or CE)
+
+        // get previous null documents in order to reset them afterwards
         $ap = null !== $etude->getAp();
         $cc = null !== $etude->getCc();
         $ce = null !== $etude->getCe();
+        $cca = null !== $etude->getCca();
+        $bdc = null !== $etude->getBdc();
 
         $formSuivi = $this->createForm(SuiviEtudeType::class, $etude);
         $formSuivi->handleRequest($request);
@@ -519,22 +521,25 @@ class EtudeController extends AbstractController
         if (!$formSuivi->isValid()) {
             $msg = 'Erreurs sur l\'étude: ';
             foreach ($formSuivi->getErrors(true, true) as $error) {
-                $msg .= $error->getCause()->getPropertyPath() . ' : ' . $error->getMessage();
+                $msg .= $error->getMessage();
             }
 
-            return new JsonResponse(['responseCode' => Response::HTTP_PRECONDITION_FAILED,
-                                     'msg' => $msg,
+            return new JsonResponse(['responseCode' => Response::HTTP_PRECONDITION_FAILED, 'msg' => $msg,
             ]);
         }
-        if (!$ap) {
-            $etude->setAp(null);
-        }
-        if (!$cc) {
-            $etude->setCc(null);
-        }
-        if (!$ce) {
-            $etude->setCe(null);
-        }
+
+        if (!$ap)
+            $etude->setAp();
+        if (!$cc)
+            $etude->setCc();
+        if (!$ce)
+            $etude->setCe();
+        if (!$cca)
+            $etude->setCca();
+        if (!$bdc)
+            $etude->setBdc();
+
+
         $em->persist($etude);
         $em->flush();
 
