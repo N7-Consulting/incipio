@@ -112,34 +112,38 @@ class CcaController extends AbstractController
         $cca = new Cca();
 
         // We need to have a prospect in order to include DocTypeType Form without issues so we devide the form in two pieces.
-        $form = $this->createForm(CcaType::class);
-        $form->handleRequest($request);
+        // First we ask for internal name and prospect
+        // Then we go to modifier method.
+        $form = $this->createForm(CcaType::class, $cca);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cca = $form->getData();
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
 
-            // Javascript to add a new prospect dynamically
-            if ((!$cca->isKnownProspect() && !$cca->getNewProspect()) || ($cca->isKnownProspect() && !$cca->getProspect())) {
-                $this->addFlash('danger', 'Vous devez définir un prospect');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $cca = $form->getData();
 
-                return $this->render('Project/Cca/ajouter.html.twig', [
-                    'form' => $form->createView(),
-                ]);
+                // Javascript to add a new prospect dynamically
+                if ((!$cca->isKnownProspect() && !$cca->getNewProspect()) || ($cca->isKnownProspect() && !$cca->getProspect())) {
+                    $this->addFlash('danger', 'Vous devez définir un prospect');
 
-            } elseif (!$cca->isKnownProspect()) {
-                $cca->setProspect($cca->getNewProspect());
+                    return $this->render('Project/Cca/ajouter.html.twig', [
+                        'form' => $form->createView(),
+                    ]);
+
+                } elseif (!$cca->isKnownProspect()) {
+                    $cca->setProspect($cca->getNewProspect());
+                }
+
+                $dateFinEstimee = new DateTime(date('Y-m-d', strtotime('+1 year')));
+                $cca->setDateFin($dateFinEstimee);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($cca);
+                $em->flush();
+
+                return $this->redirectToRoute('project_cca_modifier', ['id' => $cca->getId()]);
             }
-
-            $em = $this->getDoctrine()->getManager();
-
-            $dateFinEstimee = new DateTime(date('Y-m-d', strtotime('+1 year')));
-            $cca->setDateFin($dateFinEstimee);
-
-            $em->persist($cca);
-            $em->flush();
-
-            return $this->redirectToRoute('project_cca_modifier', ['id' => $cca->getId()]);
-
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
         return $this->render('Project/Cca/ajouter.html.twig', [
