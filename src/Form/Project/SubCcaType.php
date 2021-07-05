@@ -22,6 +22,11 @@ class SubCcaType extends AbstractType
             ]);
     }
 
+    public function getBlockPrefix()
+    {
+        return 'project_ccasubtype';
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

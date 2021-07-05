@@ -40,6 +40,11 @@ class CcaType extends AbstractType
             ]);
     }
 
+    public function getBlockPrefix()
+    {
+        return 'project_ccatype';
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
