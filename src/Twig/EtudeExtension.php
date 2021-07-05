@@ -365,9 +365,11 @@ class EtudeExtension extends \Twig_Extension
         elseif ($etude->getBdc())
             $doc = $etude->getBdc();
 
-        foreach ($etude->getPhases() as $phase) {
-            if ($phase->getDateDebut() < $doc->getDateSignature()) {
-                ++$phasesErreurDate;
+        if ($doc) {
+            foreach ($etude->getPhases() as $phase) {
+                if ($phase->getDateDebut() < $doc->getDateSignature()) {
+                    ++$phasesErreurDate;
+                }
             }
         }
 
