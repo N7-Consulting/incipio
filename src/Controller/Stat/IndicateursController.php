@@ -135,8 +135,8 @@ class IndicateursController extends AbstractController
         $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
 
         $maxMandat = [] !== $formationsParMandat ? max(array_keys($formationsParMandat)) : 0;
-        $nombrePresentFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de présent aux formations';
-        $nombreFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de formation';
+        $nombrePresentFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de présents aux formations';
+        $nombreFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de formations';
         ksort($formationsParMandat); // Tri selon les promos
 
         /** @var Formation[] $formations */
@@ -164,14 +164,14 @@ class IndicateursController extends AbstractController
 
         $listDocs = [$ccs, $ces, $bdc];
 
-        $nombreEtudesParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'étude';
+        $nombreEtudesParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études';
         $nombreEtudesAvecAvenantParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études avec avenant';
-        $nombreAvsParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant total';
-        $avenantDelai[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de délai';
-        $avenantMeto[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de méthodologie';
-        $avenantMontant[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de montant';
-        $avenantMission[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de mission';
-        $avenantRupture[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenant de rupture';
+        $nombreAvsParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants total';
+        $avenantDelai[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de délai';
+        $avenantMeto[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de méthodologie';
+        $avenantMontant[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de montant';
+        $avenantMission[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de mission';
+        $avenantRupture[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de rupture';
 
         $cumuls[$this->anneeActuelle]['Indicateur'] = 'Chiffre d\'affaire (en euros)';
         $cumulsJEH[$this->anneeActuelle]['Indicateur'] = 'Nombre de JEH signés';
@@ -264,7 +264,7 @@ class IndicateursController extends AbstractController
         // Nombre d'intervenants par mois
         $membres = $em->getRepository(Membre::class)->findAll();
         $nbIntervenants = [];
-        $nbIntervenants[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'intervenant recrutés';
+        $nbIntervenants[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'intervenants recrutés';
         foreach ($membres as $membre) {
             if ($membre->getPersonne()->getPoste() == 'Intervenant'
             && $membre->getDateConventionEleve()) {
@@ -298,7 +298,7 @@ class IndicateursController extends AbstractController
         // Nombres de membres par années (gestion associative)
         $membres = $em->getRepository(Membre::class)->findAll();
         $nbMembres = [];
-        $nbMembres['Indicateur'] = 'Nombre de membre';
+        $nbMembres['Indicateur'] = 'Nombre de membres';
         foreach ($membres as $membre) {
             $annee = $membre->getPromotion() - 3;
             if ($annee) {
@@ -309,7 +309,7 @@ class IndicateursController extends AbstractController
         // Nombre d'intervenants par an
         $membres = $em->getRepository(Membre::class)->findAll();
         $nbIntervenants = [];
-        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenant recrutés';
+        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenants recrutés';
         foreach ($membres as $membre) {
             if ($membre->getPersonne()->getPoste() == 'Intervenant'
             && $membre->getDateConventionEleve()) {
@@ -324,8 +324,8 @@ class IndicateursController extends AbstractController
 
         // Nombre de formation par an
         $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
-        $nombreFormations['Indicateur'] = 'Nombre de formation';
-        $nombrePresentFormations['Indicateur'] = 'Nombre de présence aux formations';
+        $nombreFormations['Indicateur'] = 'Nombre de formations';
+        $nombrePresentFormations['Indicateur'] = 'Nombre de présents aux formations';
         ksort($formationsParMandat); // Tri selon les promos
         foreach ($formationsParMandat as $mandat => $formations) {
             $nombreFormations[$mandat] = count($formations);
@@ -343,17 +343,18 @@ class IndicateursController extends AbstractController
 
         $listDocs = [$ccs, $ces, $bdc];
 
-        $nombreEtudesParMandat['Indicateur'] = 'Nombre d\'étude';
+        $nombreEtudesParMandat['Indicateur'] = 'Nombre d\'études signées';
         $nombreEtudesAvecAvenantParMandat['Indicateur'] = 'Nombre d\'études avec avenant';
-        $nombreAvsParMandat['Indicateur'] = 'Nombre d\'avenant total';
-        $avenantDelai['Indicateur'] = 'Nombre d\'avenant de délai';
-        $avenantMeto['Indicateur'] = 'Nombre d\'avenant de méthodologie';
-        $avenantMontant['Indicateur'] = 'Nombre d\'avenant de montant';
-        $avenantMission['Indicateur'] = 'Nombre d\'avenant de mission';
-        $avenantRupture['Indicateur'] = 'Nombre d\'avenant de rupture';
+        $nombreAvsParMandat['Indicateur'] = 'Nombre d\'avenants total';
+        $avenantDelai['Indicateur'] = 'Nombre d\'avenants de délai';
+        $avenantMeto['Indicateur'] = 'Nombre d\'avenants de méthodologie';
+        $avenantMontant['Indicateur'] = 'Nombre d\'avenants de montant';
+        $avenantMission['Indicateur'] = 'Nombre d\'avenants de mission';
+        $avenantRupture['Indicateur'] = 'Nombre d\'avenants de rupture';
 
         $cumuls['Indicateur'] = 'Chiffre d\'affaire (en euros)';
         $cumulsJEH['Indicateur'] = 'Nombre de JEH signés';
+        $panierMoyen['Indicateur'] = 'Chiffre d\'affaire moyen d\'une mission';
 
         foreach ($listDocs as $docs){
             foreach ($docs as $doc) {
@@ -444,13 +445,14 @@ class IndicateursController extends AbstractController
         foreach ($cumuls as $mandat => $datas) {
             if ($datas > 0) {
                 $moyenne[$mandat] = ($datas - $cumulsFraisDossier[$mandat]) / $cumulsJEH[$mandat];
+                $panierMoyen[$mandat] = $datas / $nombreEtudesParMandat[$mandat];
             }
         }
         
         // Nombre de prospect par an
         $prospect = $em->getRepository(Formation::class)->findAllByMandat();
-        $nombreFormations['Indicateur'] = 'Nombre de formation';
-        $nombrePresentFormations['Indicateur'] = 'Nombre de présence aux formations';
+        $nombreFormations['Indicateur'] = 'Nombre de formations';
+        $nombrePresentFormations['Indicateur'] = 'Nombre de présents aux formations';
         ksort($formationsParMandat); // Tri selon les promos
         foreach ($formationsParMandat as $mandat => $formations) {
             $nombreFormations[$mandat] = count($formations);
@@ -462,7 +464,7 @@ class IndicateursController extends AbstractController
         
         $tabDonnees = [$nbMembres, $nbIntervenants, $nombreFormations, $nombrePresentFormations, $nombreEtudesParMandat, $tauxAvenant, 
         $nombreEtudesAvecAvenantParMandat, $nombreAvsParMandat, $avenantDelai, $avenantMontant,$avenantMission, $avenantRupture, $avenantMeto,
-        $cumuls, $cumulsJEH, $moyenne];
+        $cumuls, $cumulsJEH, $moyenne, $panierMoyen];
 
         return $tabDonnees;
     }
