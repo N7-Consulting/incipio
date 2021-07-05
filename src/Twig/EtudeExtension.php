@@ -356,6 +356,7 @@ class EtudeExtension extends \Twig_Extension
          * Verification des dates de debut des phases *
          **********************************************/
         $phasesErreurDate = 0; //compteur des phases avec date incorrectes
+        $doc = NULL;
 
         // Sélection du document d'étude ─ On s'en fiche du message personnalisé
         if ($etude->getCc())
