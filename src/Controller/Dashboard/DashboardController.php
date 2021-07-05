@@ -11,7 +11,7 @@
 
 namespace App\Controller\Dashboard;
 
-use App\Entity\Comment\Comment;
+use App\Entity\Comment\Thread;
 use App\Controller\Project\EtudeController;
 use App\Entity\Personne\Personne;
 use App\Entity\Personne\Prospect;
@@ -50,7 +50,7 @@ class DashboardController extends AbstractController
         $stats = $this->statsStore->getMultiple(['ca_negociation', 'ca_encours', 'ca_cloture', 'ca_facture', 'ca_paye', 'expiration']);
 
         $em = $this->getDoctrine()->getManager();
-        $comments = $em->getRepository(Comment::class)->findAll();
+        $comments = $em->getRepository(Thread::class)->findAll();
 
         return $this->render('Dashboard/Default/index.html.twig', 
         ['stats' => (isset($stats) ? $stats : []),
