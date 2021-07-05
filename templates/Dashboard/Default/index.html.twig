@@ -122,12 +122,25 @@
     <div class="row">
             <div class="col-md-10">
                 <table class="table">
-                    {% for etude in comments %}
-                        {# {{comment.body}}-- #}
-                        {# {% if thread|default('0') %} #}
-                            {% include 'Comment/Thread/async.html.twig' with {'id': etude.id, 'view': 'flat'} %}
-                        {# {% endif %} #}
+                    {% for etude, comments in commentsParEtude %}
+                        <tr>
+                            <th colspan="7">{{ 'formation.annee'|trans({}, 'formation') }} {{ etude }}</th>
+                        </tr>
+                        {% for comment in comments %}
+                            <tr>
+                                <td>{{ comment.body }}</td>
+                                
+                                {# <td>
+                                    <a href="{{ path('formation_voir', {'id': formation.id}) }}"><span class="fa fa-eye"> ({{ formation.relatedDocuments | length }})</a>
+                                </td> #}
+                                <td>etude</td>
+                            </tr>
+                        {% endfor %}
                     {% endfor %}
+                        {# {% if thread|default('0') %} 
+                            {% include 'Comment/Thread/async.html.twig' with {'id': etude.id, 'view': 'flat'} %}
+                         {% endif %}  #}
+                    
                 </table>
             </div>
     </div>
