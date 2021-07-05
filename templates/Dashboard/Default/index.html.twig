@@ -119,6 +119,18 @@
             </div>
         </div>
     </div>
+    <div class="row">
+            <div class="col-md-10">
+                <table class="table">
+                    {% for comment in comments %}
+                        {{comment.body}}--
+                        {# {% if comment.thread|default('0') %}
+                            {% include 'Comment/Thread/async.html.twig' with {'id': etude.thread.id, 'view': 'tree'} %}
+                        {% endif %} #}
+                    {% endfor %}
+                </table>
+            </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
