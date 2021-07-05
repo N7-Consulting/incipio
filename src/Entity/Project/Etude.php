@@ -367,12 +367,14 @@ class Etude
     /**
      * @Assert\Valid()
      * @ORM\OneToOne(targetEntity=Bdc::class, inversedBy="etude", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $bdc;
 
     /**
      * @Assert\Valid()
      * @ORM\ManyToOne(targetEntity=Cca::class, inversedBy="etudes", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $cca;
 
