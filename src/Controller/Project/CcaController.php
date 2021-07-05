@@ -10,6 +10,7 @@ use DateTime;
 use App\Service\Project\DocTypeManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -74,18 +75,30 @@ class CcaController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function supprimer(Cca $cca): Response
+    public function supprimer(Cca $cca, Request $request): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $form = $this->createDeleteForm($cca);
 
-        $nomProspect = $cca->getProspect()->getNom();
-        $em->remove($cca);
-        $em->flush($cca);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', 'Convention Cadre Agile avec ' . $nomProspect . ' bien supprimée');
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
 
+            $nomProspect = $cca->getProspect()->getNom();
+            $em->remove($cca);
+            $em->flush($cca);
+
+            $this->addFlash('success', 'Convention Cadre Agile avec ' . $nomProspect . ' bien supprimée');
+        }
 
         return $this->redirectToRoute('project_cca_voir');
+    }
+
+    private function createDeleteForm(Cca $cca)
+    {
+        return $this->createFormBuilder(['id' => $cca->getId()])
+            ->add('id', HiddenType::class)
+            ->getForm();
     }
 
     /**
@@ -146,22 +159,26 @@ class CcaController extends AbstractController
             $cca->setVersion(1);
 
         $form = $this->createForm(SubCcaType::class, $cca, ['prospect' => $cca->getProspect()]);
-        $form->handleRequest($request);
+        $deleteForm = $this->createDeleteForm($cca);
 
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $cca = $form->getData();
+                $em = $this->getDoctrine()->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cca = $form->getData();
-            $em = $this->getDoctrine()->getManager();
+                // Save signataire is unknown
+                $docTypeManager->checkSaveNewEmploye($cca);
+                $em->flush();
 
-            // Save signataire is unknown
-            $docTypeManager->checkSaveNewEmploye($cca);
-            $em->flush();
-
-            return $this->redirectToRoute('project_cca_voir');
+                return $this->redirectToRoute('project_cca_voir');
+            }
         }
 
         return $this->render('Project/Cca/modifier.html.twig', [
             'form' => $form->createView(),
+            'cca' => $cca,
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 }

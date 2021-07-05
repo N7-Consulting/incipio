@@ -69,8 +69,11 @@ suivi:
   cca_nom: Nom convention
   cca_form:
     nom_interne: Nom interne de la convention
+    supprimer: Supprimer la convention
+    supprimer_confirm: Etes-vous sûr de vouloir supprimer définitivement cette convention
   cca_ajouter: Ajouter une Convention Cadre Agile
   cca_enregistrer: Enregistrer la Convention Cadre Agile
+  cca_supprimer_confirm:
   cc: CC
   cc_affichage: Affichage d'une Convention Client
   cc_enregistrer: Enregistrer la CC

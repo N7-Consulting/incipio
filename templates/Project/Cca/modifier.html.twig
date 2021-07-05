@@ -21,7 +21,8 @@
 
 
 {% block content_bundle %}
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'id': 'project_ccasubtype'}}) }}
+
 {% form_theme form 'Project/Form/fields.html.twig' %}
 
 <table class="table table-bordered table-striped standard">
@@ -93,10 +94,25 @@
     </tr>
 </table>
 
-<input type="submit" value="{{ 'suivi.cca_enregistrer'|trans({}, 'project') }}" class="btn btn-success" />
-
 {{ form_widget(form) }}
+
 {{ form_end(form) }}
+
+<div class="row">
+	<div class="col-md-3 col-xs-6">
+        <button type="submit" form="project_ccasubtype" class="btn btn-success">
+            {{ 'suivi.cca_enregistrer'|trans({}, 'project') }}
+		</button>
+	</div>
+{% if delete_form is defined %}
+	<div class="col-md-3 col-md-offset-3 col-xs-6">
+		<form class="bootbox-confirm inline" data-content="{{ 'suivi.cca_form.supprimer_confirm'|trans({}, 'project') }} ?" action="{{ path('project_cca_supprimer', { 'id': cca.id }) }}" method="post">
+			{{ form_widget(delete_form) }}
+			<button class="btn btn-danger">{{ 'suivi.cca_form.supprimer'|trans({}, 'project') }}</button>
+		</form>
+	</div>
+{% endif %}
+</div>
 
 {% endblock %}
 
