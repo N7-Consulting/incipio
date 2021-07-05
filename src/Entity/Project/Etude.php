@@ -1858,10 +1858,9 @@ class Etude
         return $this->bdc;
     }
 
-    public function setBdc(Bdc $bdc): self
+    public function setBdc(?Bdc $bdc = null): self
     {
-        // set the owning side of the relation if necessary
-        if ($bdc->getEtude() !== $this) {
+        if (null !== $bdc) {
             $bdc->setEtude($this);
         }
 
@@ -1875,7 +1874,7 @@ class Etude
         return $this->cca;
     }
 
-    public function setCca(?Cca $cca): self
+    public function setCca(?Cca $cca = null): self
     {
         $this->cca = $cca;
 
