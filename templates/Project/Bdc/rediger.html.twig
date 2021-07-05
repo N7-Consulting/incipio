@@ -14,15 +14,12 @@
 {% block content_bundle %}
 
 	{{ form_start(form) }}
-	{% form_theme form 'Project/Form/fields.html.twig' %}
 	<table class="table table-bordered table-striped standard">
 		<tr>
 			<th>
 				{{ form_label(form.suiveur) }}
 				{{ form_errors(form.suiveur) }}
-				<div class="badge" title="Liste des personnes ayant exercées au moins 1 mandat" data-toggle="tooltip">
-					?
-				</div>
+				<span class="badge badge-default" data-toggle="tooltip" title="{{ 'suivi.etude_form.suiveur_tooltip'|trans({}, 'project') }}">?</span>
 			</th>
 			<td>{{ form_widget(form.suiveur) }}</td>
 		</tr>
@@ -30,6 +27,7 @@
 			<th>
 				{{ form_label(form.bdc.contact) }}
 				{{ form_errors(form.bdc.contact) }}
+				<span class="badge badge-default" data-toggle="tooltip" title="{{ 'suivi.etude_form.contact_secondaire_tooltip'|trans({}, 'project') }}">?</span>
 			</th>
 			<td>{{ form_widget(form.bdc.contact) }}</td>
 		</tr>
@@ -90,7 +88,7 @@
 			<td>{{ form_widget(form.bdc.newSignataire2.poste) }}</td>
 		</tr>
 		<tr>
-			<th id="{{ form.bdc.newSignataire2.vars.id }}_block" colspan="2" class="success">{{ 'suivi.suivant'|trans({}, 'project') }}</th>
+			<th id="{{ form.bdc.newSignataire2.vars.id }}_block" colspan="2" class="success">{{ 'suivi.suite'|trans({}, 'project') }}</th>
 		</tr>
 		<tr>
 			<th>

@@ -143,17 +143,12 @@
     var prospect = $("[id^='{{ form.prospect.vars.id }}']").closest('tr');
     var newProspect = $("[id^='{{ form.newProspect.vars.id }}']").closest('tr');
 
-    {# Default #}
-    boutonCca.prop('checked', true);
-    boutonProspect.prop('checked', true);
-
     function show(object) {
             object.find('input').attr('disabled', false);
             object.show();
 
             // Unfortunately, it's needed for correct display...
             object.find('.select2').css('width', '100%');
-
     }
 
     function hide(object) {

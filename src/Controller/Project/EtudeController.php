@@ -182,12 +182,13 @@ class EtudeController extends AbstractController
     {
         $etude = new Etude();
 
+        $etude->setCeActive(true);
         $etude->setCcaActive(false);
+        $etude->setKnownProspect(true);
         $etude->setMandat($etudeManager->getMaxMandat());
         $etude->setNum($etudeManager->getNouveauNumero());
         $etude->setFraisDossier($etudeManager->getDefaultFraisDossier());
         $etude->setPourcentageAcompte($etudeManager->getDefaultPourcentageAcompte());
-        $etude->setCeActive(true);
 
         $user = $this->getUser();
         if (is_object($user) && $user instanceof User) {
@@ -290,16 +291,21 @@ class EtudeController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                if ((!$etude->isKnownProspect() && !$etude->getNewProspect()) || !$etude->getProspect()) {
-                    $this->addFlash('danger', 'Vous devez définir un prospect');
+                if (!$etude->getCcaActive()) {
+                    if ((!$etude->isKnownProspect() && !$etude->getNewProspect()) || !$etude->getProspect()) {
+                        $this->addFlash('danger', 'Vous devez définir un prospect');
 
-                    return $this->render('Project/Etude/modifier.html.twig', [
-                        'form' => $form->createView(),
-                        'etude' => $etude,
-                        'delete_form' => $deleteForm->createView(),
-                    ]);
-                } elseif (!$etude->isKnownProspect()) {
-                    $etude->setProspect($etude->getNewProspect());
+                        return $this->render('Project/Etude/modifier.html.twig', [
+                            'form' => $form->createView(),
+                            'etude' => $etude,
+                            'delete_form' => $deleteForm->createView(),
+                        ]);
+                    } elseif (!$etude->isKnownProspect()) {
+                        $etude->setProspect($etude->getNewProspect());
+                    }
+                } else {
+                    $prospectCca = $etude->getCca()->getProspect();
+                    $etude->setProspect($prospectCca);
                 }
 
                 $em->persist($etude);
@@ -340,7 +346,7 @@ class EtudeController extends AbstractController
             if ($permChecker->confidentielRefus($etude, $this->getUser())) {
                 throw new AccessDeniedException('Cette étude est confidentielle');
             }
-            $docs = $etude->getRelatedDocuments();       
+            $docs = $etude->getRelatedDocuments();
             foreach ($docs as $document) {
                 $doc = $document->getDocument();
                 DocumentController::deleteRelated($em,$doc,$kernel);
@@ -540,20 +546,20 @@ class EtudeController extends AbstractController
      * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="audit_modifier", path="/Project/Etude/Tabvoir/ModifierAudit/{id}", methods={"GET","HEAD","POST"})
      *
-     * 
+     *
      */
     public function auditUpdate(Request $request, Etude $etude, EtudePermissionChecker $permChecker)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
 
         if ($permChecker->confidentielRefus($etude, $this->getUser())) {
             throw new AccessDeniedException('Cette étude est confidentielle');
         }
-        
+
         $formAudit = $this->createForm(AuditEtudeType::class, $etude);
         // $deleteForm = $this->createDeleteFormt($etude->getId());
-        
+
         if ('POST' == $request->getMethod()) {
             $formAudit->handleRequest($request);
 
@@ -565,12 +571,12 @@ class EtudeController extends AbstractController
             }
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
-        
+
 
         return $this->render('Project/Etude/TabVoir/ModifierAudit.html.twig',  [
             // 'delete_form' => $deleteForm->createView(),
             'etude' => $etude,
-            'formAudit' => $formAudit->createView()]                                                                        
+            'formAudit' => $formAudit->createView()]
         );
     }
      /**

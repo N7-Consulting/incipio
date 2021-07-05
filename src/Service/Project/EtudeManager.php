@@ -33,11 +33,11 @@ class EtudeManager
     public function __construct(ObjectManager $em, KeyValueStore $keyValueStore)
     {
         $this->em = $em;
-        // if ($keyValueStore->exists('tva')) {
-        //     $this->tva = $keyValueStore->get('tva');
-        // } else {
-        //     throw new \LogicException('Parameter TVA is undefined.');
-        // }
+        if ($keyValueStore->exists('tva')) {
+            $this->tva = $keyValueStore->get('tva');
+        } else {
+            throw new \LogicException('Parameter TVA is undefined.');
+        }
 
         if ($keyValueStore->exists('namingConvention')) {
             $this->namingConvention = $keyValueStore->get('namingConvention');
@@ -45,23 +45,23 @@ class EtudeManager
             $this->namingConvention = 'id';
         }
 
-        // if ($keyValueStore->exists('anneeCreation')) {
-        //     $this->anneeCreation = intval($keyValueStore->get('anneeCreation'));
-        // } else {
-        //     throw new \LogicException('Parameter Année Creation is undefined.');
-        // }
+        if ($keyValueStore->exists('anneeCreation')) {
+            $this->anneeCreation = intval($keyValueStore->get('anneeCreation'));
+        } else {
+            throw new \LogicException('Parameter Année Creation is undefined.');
+        }
 
-        // if ($keyValueStore->exists('fraisDossierDefaut')) {
-        //     $this->defaultFraisDossier = $keyValueStore->get('fraisDossierDefaut');
-        // } else {
-        //     throw new \LogicException('Parameter Frais Dossier Defaut is undefined.');
-        // }
+        if ($keyValueStore->exists('fraisDossierDefaut')) {
+            $this->defaultFraisDossier = $keyValueStore->get('fraisDossierDefaut');
+        } else {
+            throw new \LogicException('Parameter Frais Dossier Defaut is undefined.');
+        }
 
-        // if ($keyValueStore->exists('pourcentageAcompteDefaut')) {
-        //     $this->defaultPourcentageAcompte = $keyValueStore->get('pourcentageAcompteDefaut');
-        // } else {
-        //     throw new \LogicException('Parameter Pourcentage Acompte Defaut is undefined.');
-        // }
+        if ($keyValueStore->exists('pourcentageAcompteDefaut')) {
+            $this->defaultPourcentageAcompte = $keyValueStore->get('pourcentageAcompteDefaut');
+        } else {
+            throw new \LogicException('Parameter Pourcentage Acompte Defaut is undefined.');
+        }
     }
 
     /**
@@ -93,7 +93,8 @@ class EtudeManager
             if ($key < 0) {
                 return $name . '-' . $type;
             }
-            if (!$etude->getMissions()->get($key)
+            if (
+                !$etude->getMissions()->get($key)
                 || !$etude->getMissions()->get($key)->getIntervenant()
             ) {
                 return $name . '-' . $type . '- ERROR GETTING DEV ID - ERROR GETTING VERSION';
@@ -119,7 +120,8 @@ class EtudeManager
                 return $name . '-' . $type . '- ERROR GETTING VERSION';
             }
         } elseif ('CE' == $type) {
-            if (!$etude->getMissions()->get($key)
+            if (
+                !$etude->getMissions()->get($key)
                 || !$etude->getMissions()->get($key)->getIntervenant()
             ) {
                 return $etude->getMandat() . '-CE- ERROR GETTING DEV ID';
@@ -154,10 +156,10 @@ class EtudeManager
             ->orderBy('e.num', 'DESC');
 
         $value = $query->getQuery()->setMaxResults(1)->getOneOrNullResult();
-        if ($value) {
+        if ($value['num']) {
             return $value['num'] + 1;
         } else {
-            return 1;
+            return;
         }
     }
 

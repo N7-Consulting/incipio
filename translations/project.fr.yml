@@ -57,15 +57,23 @@ suivi:
   avenants_mission: Avenants de Mission
   avortee: Avortée
   budget: Budget
+  bdc: BDC
   bdc_rediger: Rédiger le Bon de Commande
   bdc_enregistrer: Enregistrer le BDC
   bdc_enregistrer_phases_passer: Enregistrer le BDC et passer aux Phases
   bv: BV
   bon_de_commande: Bon de Commande
+  cca_bdc_relation: Bon(s) de commande avec
   capacite_intervenants: Capacité des intervenants
   cca: Convention Cadre Agile
+  cca_nom: Nom convention
+  cca_form:
+    nom_interne: Nom interne de la convention
+    supprimer: Supprimer la convention
+    supprimer_confirm: Cette action rendra impossible la génération de la CCa dans toutes les études qui l'utilisent. Etes-vous sûr de vouloir supprimer définitivement cette convention
   cca_ajouter: Ajouter une Convention Cadre Agile
   cca_enregistrer: Enregistrer la Convention Cadre Agile
+  cca_supprimer_confirm:
   cc: CC
   cc_affichage: Affichage d'une Convention Client
   cc_enregistrer: Enregistrer la CC
@@ -73,10 +81,10 @@ suivi:
   cc_liste: Liste des Convention Client
   cc_modifier: Modifier une Convention Client
   cc_modifier_la: Modifier la Convention Client
-  cc_rediger: Rediger la Convention Client
+  cc_rediger: Rédiger la Convention Client
   ce_enregistrer: Enregistrer la CE
   ce_enregistrer_phases_passer: Enregistrer la CE et passer aux Phases
-  ce_rediger: Rediger la Convention Etude
+  ce_rediger: Rédiger la Convention Etude
   cloturee: Cloturée
   client: Client
   client_contact_ajouter: Ajouter un nouveau contact du client
@@ -84,6 +92,7 @@ suivi:
   commentaires_enregistrer: Enregistrer les commentaires
   commentaries: Commentaires
   commenter: Commenter
+  competences: Compétences
   contact: Contact
   contact_client: Contact client
   contact_client_affichage: Affichage d'un contact client
@@ -108,7 +117,8 @@ suivi:
   date_debut: Date de Debut
   date_fin: Date de Fin
   date_lancement: Date de Lancement
-  date_signature: Date de signature
+  date_signature: Date de Signature
+  date_signature_document: Date de Signature du document
   date_upload: Date d'upload
   de_recette: de Recette
   dejai_jours: Delai (Jours)
@@ -124,7 +134,11 @@ suivi:
   document_ajouter: Ajouter un document
   documents_etude: Document relatif à l'étude
   document_type: Document Type
+  doc_type_form:
+    version: Version du Document
+    signataire_junior: Signataire Junior
   domaine: Domaine
+  signataire_client_connu: Le signataire client existe-t-il déjà dans la base de donnée ?
   domaine_competence: Domaine de compétence
   domaines_competences_affichage: Affichage des domaines de compétences
   dont_frais: dont frais
@@ -151,6 +165,10 @@ suivi:
   etude_enregistrer_passer_ap: Enregistrer l'étude et passer à l'AP
   etude_etat: État de l'étude
   etude_form:
+    suiveur: Suiveur de projet
+    suiveur_tooltip: Liste des personnes ayant exercé au moins 1 mandat
+    contact_secondaire: Contact secondaire
+    contact_secondaire_tooltip: "'En cas d’absence ou de problème, il est également possible de joindre ...' ex: Vice-Président"
     client_bdd: Le client existe-t-il déjà dans la base de donnée ?
     ce_active: Utiliser la CE ?
     ce_active_tooltip: Décochez cette case si vous souhaitez utiliser les anciens documents AP & CC.
@@ -169,6 +187,11 @@ suivi:
     source_prospection: Source de prospection
     suiveur_projet: Suiveur de projet
     suiveur_qualite: Suiveur qualité
+    frais_dossier: Frais de dossier
+    presentation: Présentation du projet
+    description_prestation: Description du la prestation proposée
+    description_prestation_title: La phrase commence par 'N7 Consulting réalisera, pour le compte du Client, une étude consistant en'. Il faut la continuer en décrivant la prestation proposée. Le début de la phrase est déjà généré.
+
   etude_l: L'étude
   etat_audit: Etat de l'audit
   etude_modifier: Modifier une étude
@@ -178,6 +201,7 @@ suivi:
   etude_supprimer: Supprimer l'étude
   etude_supprimer_confirm: Etes-vous sûr de vouloir supprimer définitivement cette étude
   etudes_avortees: Etudes Avortées
+  etudes_cloturees: Etudes Clôturées
   etudes_en_cours: Etudes en Cours
   etudes_acceptees: Etudes Acceptées
   etudes_finies: Etudes Finies
@@ -233,9 +257,10 @@ suivi:
   montant_brut: Montant Brut
   montant_ht: Montant H.T.
   montant_total_ht: Montant Total H.T.
-  nombre_dev_estime: Nombre de dev. estimé
+  nombre_dev_estime: Nombre d'intervenants estimé
   non: Non
-  non_auditee: Non audité
+  non_auditee: Non auditée
+  nouveau_signataire: Nouveau signataire
   objectif: Objectif
   objectifs: Objectifs
   objet: Objet
@@ -276,7 +301,7 @@ suivi:
   pvi: PVRI
   pvi_ajouter_un: Ajouter un PVRI
   pvr: PVRF
-  pvr_rediger: Rediger le PVRF
+  pvr_rediger: Rédiger le PVRF
   raison: Raison
   realisateurs_capable_de: Les réalisateurs de cette étude devront donc être capables de
   recapitulatif: Récapitulatif
@@ -285,7 +310,7 @@ suivi:
   recu_encaisse: Reçu / Encaissé
   redaction_generation: Rédaction et Génération
   redige: Rédigé
-  rediger: Rediger
+  rediger: Rédiger
   reference: Référence
   relu: Relu
   repartitions_jeh_gestion: Gestion des Répartions JEH (à venir)
@@ -300,6 +325,7 @@ suivi:
   rp: RP
   signataire_client: Signataire Client
   signataire_client_ajouter: Nouveau signataire client
+  signataire: Signataire
   signe: Signé
   source_prospection: Source de Prospection
   sous_total: SOUS-TOTAL
@@ -310,6 +336,7 @@ suivi:
   suiveur_projet: Suiveur de projet
   suiveur_qualite: Suiveur Qualité
   suivi: Suivi
+  suite: Suite
   suivi_affichage: Affichage du suivi
   suivi_ajouter: Ajouter un suivi
   suivi_etude: Suivi d'Etude

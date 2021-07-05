@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 /**
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Project\CcaRepository")
+ * @UniqueEntity("nom")
  */
 class Cca extends DocType
 {
@@ -52,6 +55,11 @@ class Cca extends DocType
      * @var Prospect
      */
     private $newProspect;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     */
+    private $nom;
 
 
     public function __toString()
@@ -141,5 +149,17 @@ class Cca extends DocType
     public function setNewProspect($var)
     {
         $this->newProspect = $var;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }

@@ -68,12 +68,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ path('project_etude_homepage') }}"><span
-                                class="fa fa-list"></span> {{ 'dashboard.etudes_voir'| trans }}</a></li>
-                <li><a href="{{ path('project_etude_ajouter') }}"><span
-                                class="fa fa-plus"></span> {{ 'dashboard.etude_creer'| trans }}</a></li>
-                <li><a href="{{ path('project_cca_voir') }}"><span
-                                class="fa fa-list"></span> {{ 'dashboard.cca_voir'| trans }}</a></li>
+                <li><a href="{{ path('project_etude_homepage') }}"><span class="fa fa-list"></span> {{ 'dashboard.etudes_voir'| trans }}</a></li>
+                <li><a href="{{ path('project_etude_ajouter') }}"><span class="fa fa-plus"></span> {{ 'dashboard.etude_creer'| trans }}</a></li>
+                <li><a href="{{ path('project_cca_voir') }}"><span class="fa fa-briefcase"></span>{{ 'dashboard.cca_voir'| trans }}</a></li>
+
                 <li class="divider"></li>
                {% if is_granted('ROLE_CA') %}
                     <li class="divider"></li>
@@ -202,7 +200,7 @@
                 <li><a href="{{ path('passation_ajouter') }}"><span
                                 class="fa fa-plus"></span> {{ 'dashboard.passation_ajouter'| trans }}
                 </a></li>
-                
+
                 <li class="divider"></li>
                 <li class="dropdown-header">{{ 'dashboard.formations'| trans }}</li>
                 <li><a href="{{ path('formations_index_admin') }}"><span

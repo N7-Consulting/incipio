@@ -1,15 +1,22 @@
 {% extends "Project/layout.html.twig" %}
 
 {% block title %}
-{{ 'suivi.cca_ajouter'|trans({}, 'project') }} {{ parent() }}
+    {{ 'suivi.cca_ajouter'|trans({}, 'project') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-{{ 'suivi.cca_ajouter'|trans({}, 'project') }}
+    {{ 'suivi.cca_ajouter'|trans({}, 'project') }}
+{% endblock %}
+
+{% block breadcrumb_items %}
+	{{parent()}}
+	<li>
+		<a href="{{ path('project_cca_voir') }}">{{ 'dashboard.cca'|trans({}, 'dashboard') }}</a>
+	</li>
 {% endblock %}
 
 {% block breadcrumb_active %}
-{{ 'suivi.cca_ajouter'|trans({}, 'project') }}
+    {{ 'suivi.cca_ajouter'|trans({}, 'project') }}
 {% endblock %}
 
 
@@ -54,6 +61,10 @@
     <tr>
         <th>{{ form_label(form.prospect) }} {{ form_errors(form.prospect) }}</th>
         <td>{{ form_widget(form.prospect, {'attr': {'class': 'select2'}}) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.nom) }} {{ form_errors(form.nom) }}</th>
+        <td>{{ form_widget(form.nom) }}</td>
     </tr>
 </table>
 {{ form_widget(form) }}

@@ -54,13 +54,13 @@ class RelatedDocument
     private $etude;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation\Formation", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Formation\Formation", cascade={"persist"}, inversedBy="relatedDocuments")
      * @ORM\JoinColumn(name="formation_id", referencedColumnName="id", nullable=true)
      */
     private $formation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation\Passation", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Formation\Passation", cascade={"persist"}, inversedBy="relatedDocuments")
      * @ORM\JoinColumn(name="passation_id", referencedColumnName="id", nullable=true)
      */
     private $passation;
@@ -71,8 +71,8 @@ class RelatedDocument
      */
     private $prospect;
 
-        /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Processus\Processus", cascade={"persist"})
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Processus\Processus", cascade={"persist"}, inversedBy="relatedDocuments")
      * @ORM\JoinColumn(name="processus_id", referencedColumnName="id", nullable=true)
      */
     private $processus;
