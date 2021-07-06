@@ -589,7 +589,7 @@ class EtudeExtension extends \Twig_Extension
         /** @var Facture $doc */
         if (null !== $doc) {
             $now = new \DateTime('now');
-            $dateDebutEtude = $doc->getEtude()->getCc()->getDateSignature();
+            $dateDebutEtude = $doc->getEtude()->getDateLancement();
             $ok = ($doc->getDateVersement() < $now && $doc->getDateVersement() > $dateDebutEtude ? 2 : 1);
         } else {
             $ok = 0;
