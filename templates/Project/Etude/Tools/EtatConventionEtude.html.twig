@@ -1,0 +1,11 @@
+{# Use these templates to display information throughout all Tabs (Négociation, Acceptées, en Cours...) #}
+
+{% if (etude.ceActive and not etude.ccaActive) or etude.ce is not none %}
+	{% if getEtatDoc(etude.ce) == 2 %}
+		<img src="{{ valide }}"/>
+	{% elseif getEtatDoc(etude.ce) == 1 %}
+		<img src="{{ enCours }}"/>
+	{% else %}
+		<img src="{{ nonValide }}"/>
+	{% endif %}
+{% endif %}
