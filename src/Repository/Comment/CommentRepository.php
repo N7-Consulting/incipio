@@ -40,11 +40,13 @@ class CommentRepository extends EntityRepository
         foreach ($entities as $etude) {
             $nom = $etude->getNom();
             $thread = $etude->getThread();
-            $comments = $commentManager ->findCommentsByThread($thread); 
-            if (array_key_exists($etude, $commentsParEtude)) {
-                $commentsParEtude[$etude][] = $comment;
-            } else {
-                $commentsParEtude[$etude] = [$comment];
+            $comments = $commentManager->findCommentsByThread($thread); 
+            foreach ($comments as $comment) {
+                if (array_key_exists($nom, $commentsParEtude)) {
+                    $commentsParEtude[$nom][] = $comment;
+                } else {
+                    $commentsParEtude[$nom] = [$comment];
+                }
             }
         }
 
