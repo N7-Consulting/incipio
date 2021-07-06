@@ -17,8 +17,10 @@ dashboard:
   chiffrage: Chiffrage
   compte_utilisateur: Compte d'Utilisateur
   comptes: Comptes
+  commentaire: Commentaire
   contacts_clients: Contacts Client
   cotisations: Cotisations
+  date: Date
   declaratif_tva: Déclaratif TVA
   deconnexion: Déconnexion
   doctype_ajouter: Ajouter un Doctype
@@ -91,3 +93,4 @@ dashboard:
   vie_privee: Vie privée
   vie_privee_gestion: Gestion de la vie privée
   vu_ca: Vu CA
+  voir_commentaire: Voir le fil de discussion

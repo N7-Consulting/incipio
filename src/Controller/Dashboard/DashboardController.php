@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Webmozart\KeyValueStore\Api\KeyValueStore;
+use App\Service\Comment\CommentManagerInterface;
+
 
 class DashboardController extends AbstractController
 {
@@ -37,7 +39,7 @@ class DashboardController extends AbstractController
     /**
      * @Route(name="dashboard_homepage", path="/", methods={"GET","HEAD"})
      */
-    public function index()
+    public function index(CommentManagerInterface $commentManager)
     {
         if (!$this->statsStore->exists('expiration') ||
             (
@@ -50,7 +52,7 @@ class DashboardController extends AbstractController
         $stats = $this->statsStore->getMultiple(['ca_negociation', 'ca_encours', 'ca_cloture', 'ca_facture', 'ca_paye', 'expiration']);
 
         $em = $this->getDoctrine()->getManager();
-        $commentsParEtude = $em->getRepository(Comment::class)->findAllByEtude();
+        $commentsParEtude = $em->getRepository(Comment::class)->findAllByEtude($commentManager);
 
         return $this->render('Dashboard/Default/index.html.twig', 
         ['stats' => (isset($stats) ? $stats : []),

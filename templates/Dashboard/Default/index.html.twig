@@ -1,6 +1,12 @@
 {# Page d'accueil de Jeyser  #}
-
 {% extends "Dashboard/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.fontAwesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
+{% endblock %}
 {% block content_bundle %}
     <div class="container-fluid">
         <div class="row">
@@ -119,30 +125,27 @@
             </div>
         </div>
     </div>
-    <div class="row">
-            <div class="col-md-10">
-                <table class="table">
+    <div id="myTabContent" class="tab-content">
+                <table class="display dataTable table table-bordered table-striped dt-responsive" id="commentTable">
+                    <tr>
+                        <th>{{ 'dashboard.membres'|trans({}, 'dashboard') }}</th>
+                        <th>{{ 'dashboard.commentaire'|trans({}, 'dashboard') }}</th>
+                        <th>{{ 'dashboard.date'|trans({}, 'dashboard') }}</th>
+                    </tr>
                     {% for etude, comments in commentsParEtude %}
                         <tr>
-                            <th colspan="7">{{ 'formation.annee'|trans({}, 'formation') }} {{ etude }}</th>
+                            <th colspan="2">{{ 'suivi.etude.etude'|trans({}, 'project') }} {{ etude }}</th>
+                            <th><a href="{{ path('project_etude_voir', {'nom': etude, '_fragment': 'tab6'}) }}">{{ 'dashboard.voir_commentaire'|trans({}, 'dashboard') }}</a></th>
                         </tr>
-                        {% for comment in comments %}
+                        {% for comment in comments | reverse %}
                             <tr>
+                                <td>{{ comment.getAuthorName() }}</td>
                                 <td>{{ comment.body }}</td>
-                                
-                                {# <td>
-                                    <a href="{{ path('formation_voir', {'id': formation.id}) }}"><span class="fa fa-eye"> ({{ formation.relatedDocuments | length }})</a>
-                                </td> #}
-                                <td>etude</td>
+                                <td>{{ comment.createdAt | date("d/m/y") }}</td>
                             </tr>
                         {% endfor %}
                     {% endfor %}
-                        {# {% if thread|default('0') %} 
-                            {% include 'Comment/Thread/async.html.twig' with {'id': etude.id, 'view': 'flat'} %}
-                         {% endif %}  #}
-                    
-                </table>
-            </div>
+                </table>        
     </div>
 {% endblock %}
 
@@ -155,4 +158,19 @@
             displayVersionMessage();
         </script>
     {% endif %}
+
+    <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#commentTable').dataTable({
+                "bPaginate": true,
+                "iDisplayLength": 50,
+                "aaSorting": [[1, 'desc']],
+            });
+        });
+    </script>
 {% endblock %}
