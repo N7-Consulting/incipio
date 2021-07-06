@@ -41,6 +41,7 @@ class DashboardController extends AbstractController
      */
     public function index(CommentManagerInterface $commentManager)
     {
+        $this->updateDashboardStats($this->statsStore);
         if (!$this->statsStore->exists('expiration') ||
             (
                 $this->statsStore->exists('expiration') &&
