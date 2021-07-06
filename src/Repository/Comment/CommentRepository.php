@@ -35,17 +35,26 @@ class CommentRepository extends EntityRepository
             ->orderBy('f.id', 'asc');
         $entities = $query->getQuery()->getResult();
 
+        $date = new \DateTime('now' );
+        $mois = $date->format('m');
+        $annee = $date->format('Y');
+        $jour = $date->format('d');
+
         $commentsParEtude = [];
         /** @var Comment $comment */
         foreach ($entities as $etude) {
             $nom = $etude->getNom();
             $thread = $etude->getThread();
             $comments = $commentManager->findCommentsByThread($thread); 
-            foreach ($comments as $comment) {
-                if (array_key_exists($nom, $commentsParEtude)) {
-                    $commentsParEtude[$nom][] = $comment;
-                } else {
-                    $commentsParEtude[$nom] = [$comment];
+            foreach ($comments as $comment) { // Condition pour afficher que les commentaires des 10 derniers jours
+                if (($comment->getCreatedAt()->format('m') >= $mois - 1) 
+                && ($comment->getCreatedAt()->format('Y') == $annee )
+                && $jour - $comment->getCreatedAt()->format('d') < 10) {
+                    if (array_key_exists($nom, $commentsParEtude)) {
+                        $commentsParEtude[$nom][] = $comment;
+                    } else {
+                        $commentsParEtude[$nom] = [$comment];
+                    }
                 }
             }
         }
