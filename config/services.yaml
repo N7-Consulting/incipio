@@ -58,3 +58,7 @@ services:
 
     Monolog\Processor\WebProcessor:
         tags: ['monolog.processor']
+
+    App\Service\EventListener\FullCalendarListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadEvents }
