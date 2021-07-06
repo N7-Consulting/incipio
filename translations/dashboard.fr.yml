@@ -18,7 +18,8 @@ dashboard:
   chiffrage: Chiffrage
   compte_utilisateur: Compte d'Utilisateur
   comptes: Comptes
-  commentaire: Commentaire
+  commentaire_recent: Commentaires récents
+  commentaire_recent_titre: Commentaires écrits durant les 10 derniers jours
   connecte: Connecté en tant que 
   contacts_clients: Contacts Client
   cotisations: Cotisations

@@ -151,8 +151,10 @@ suivi:
   enregistrer: Enregistrer
   envoye: Envoyé
   errors: Errors
+  espace_utilise : Espace utilisé 
   etat: État
   etat_avenant: État Sur avenant
+  liste_doc : Liste des documents
   etude:
     cree_le: créée le
     etude: Etude

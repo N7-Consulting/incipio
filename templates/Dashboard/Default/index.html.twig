@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.fontAwesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
 {% endblock %}
+
 {% block content_bundle %}
     <div class="container-fluid">
         <div class="row">
@@ -16,7 +17,7 @@
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="CA potentiel via les études actuellement en négociation">?</span>
+                                title="CA potentiel via les études actuellement en négociation">?</span>
                                 {{ 'dashboard.ca_nego'|trans({}, 'dashboard') }}
                             </th>
                             <td>{{ stats.ca_negociation }} €</td>
@@ -24,7 +25,7 @@
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="CA potentiel via les études actuellement en cours de réalisation">?</span>
+                                title="CA potentiel via les études actuellement en cours de réalisation">?</span>
                                 {{ 'dashboard.ca_cours'|trans({}, 'dashboard') }}
                             </th>
                             <td>{{ stats.ca_encours }} €</td>
@@ -32,7 +33,7 @@
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="CA des études cloturées sur le mandat {{ 'now' | date('Y') }}">?</span>
+                                title="CA des études cloturées sur le mandat {{ 'now' | date('Y') }}">?</span>
                                 {{ 'dashboard.ca_cloture'|trans({}, 'dashboard') }} {{ 'now' | date('Y') }}
                             </th>
                             <td>{{ stats.ca_cloture }} €</td>
@@ -40,7 +41,7 @@
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="Somme des factures de vente émises (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
+                                title="Somme des factures de vente émises (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
                                 {{ 'dashboard.ca_facture'|trans({}, 'dashboard') }} {{ 'now' | date('Y') }}
                             </th>
                             <td>{{ stats.ca_facture ? stats.ca_facture : 0 }} €</td>
@@ -48,7 +49,7 @@
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="Somme des factures de vente payées par le client (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
+                                title="Somme des factures de vente payées par le client (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
                                 {{ 'dashboard.ca_paye'|trans({}, 'dashboard') }} {{ 'now' | date('Y') }} {{ 'now' | date('Y') }}
                             </th>
                             <td>{{ stats.ca_paye ? stats.ca_paye : 0 }} €</td>
@@ -126,44 +127,34 @@
             </div>
         </div>
     </div>
-    <div id="myTabContent" class="tab-content">
-                <table class="display dataTable table table-bordered table-striped dt-responsive">
+            <h4>{{ 'dashboard.commentaire_recent_titre' | trans({}, 'dashboard') }} :</h4>
+             {% set i = 0 %}
+                {% for etude, comments in commentsParEtude %}
+                    {% set i = i + 1 %}
+                    <table class="display dataTable table table-bordered table-striped dt-responsive " id= "commentTable{{i}}">
                     <thead>
-                    <tr>
-                        <th>{{ 'dashboard.membres'|trans({}, 'dashboard') }}</th>
-                        <th>{{ 'dashboard.commentaire'|trans({}, 'dashboard') }}</th>
-                        <th>{{ 'dashboard.date'|trans({}, 'dashboard') }}</th>
-                    </tr>
-                    </thead>
-
-                    {% set i = 0 %}
-                    {% for etude, comments in commentsParEtude %}
-                        {% set i = i + 1 %}
-                        
-                        <table class="display dataTable table table-bordered table-striped dt-responsive" id="commentTable{{i}}">
-                        <thead>
                         <tr>
-                            <th colspan="2">{{ 'suivi.etude.etude'|trans({}, 'project') }} {{ etude }}</th>
-                            <th><a href="{{ path('project_etude_voir', {'nom': etude, '_fragment': 'tab6'}) }}">{{ 'dashboard.voir_commentaire'|trans({}, 'dashboard') }}</a></th>
+                                <th colspan="2">{{ 'suivi.etude.etude'|trans({}, 'project') }} {{ etude }}</th>
+                                <th><a href="{{ path('project_etude_voir', {'nom': etude, '_fragment': 'tab6'}) }}">{{ 'dashboard.voir_commentaire'|trans({}, 'dashboard') }}</a></th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for comment in comments | reverse %}
-                        
+                        <tr>
+                            <th>{{ 'dashboard.membres'|trans({}, 'dashboard') }}</th>
+                            <th>{{ 'dashboard.commentaire_recent'|trans({}, 'dashboard') }}</th>
+                            <th>{{ 'dashboard.date'|trans({}, 'dashboard') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment in comments | reverse %}                   
                             <tr>
                                 <td>{{ comment.getAuthorName() }}</td>
                                 <td>{{ comment.body }}</td>
                                 <td>{{ comment.createdAt | date("d/m/y") }}</td>
                             </tr>
                         {% endfor %}
-                        </tbody>
-                        </table>
-                        
-                    {% endfor %}
-                    
-                </table>        
-    </div> 
-
+                    </tbody>
+                    <br>
+                    </table> 
+                {% endfor %}
 {% endblock %}
 
 {% block javascript %}
@@ -183,16 +174,13 @@
 
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
-            $('#commentTable'+1).dataTable({
+            for (j =1; j < 100; j++){
+                $('#commentTable'+j).dataTable({
                 "bPaginate": true,
-                "iDisplayLength": 50,
+                "iDisplayLength": 10,
                 "aaSorting": [[1, 'desc']],
             });
-            $('#commentTable'+2).dataTable({
-                "bPaginate": true,
-                "iDisplayLength": 50,
-                "aaSorting": [[1, 'desc']],
-            });
+            }
         });
     </script>
 
