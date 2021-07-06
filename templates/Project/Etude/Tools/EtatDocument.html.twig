@@ -1,0 +1,15 @@
+{# Use these templates to display information throughout all Tabs (Négociation, Acceptées, en Cours...) #}
+
+{% set etat = getEtatDoc(doc) %}
+
+{% if title == 'date' and etat != 0 %}
+	{% set title = doc.dateSignature | date("d/m/y") %}
+{% endif %}
+
+{% if etat == 2 %}
+	<img src="{{ valide }}" title="{{ title }}"/>
+{% elseif etat == 1 %}
+	<img src="{{ enCours }}" title="{{ title }}"/>
+{% elseif etat == 0 %}
+	<img src="{{ nonValide }}"/>
+{% endif %}
