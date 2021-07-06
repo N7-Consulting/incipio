@@ -131,7 +131,7 @@
              {% set i = 0 %}
                 {% for etude, comments in commentsParEtude %}
                     {% set i = i + 1 %}
-                    <table class="display dataTable table table-bordered table-striped dt-responsive " id= "commentTable{{i}}">
+                    <table class="display dataTable table table-bordered table-striped dt-responsive " > {# à rajouter pour avoir le nombre de commentaires par étude limité : id= "commentTable{{i}}" #}
                     <thead>
                         <tr>
                                 <th colspan="2">{{ 'suivi.etude.etude'|trans({}, 'project') }} {{ etude }}</th>
