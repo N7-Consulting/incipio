@@ -41,6 +41,7 @@ class DashboardController extends AbstractController
      */
     public function index(CommentManagerInterface $commentManager)
     {
+        $this->updateDashboardStats($this->statsStore);
         if (!$this->statsStore->exists('expiration') ||
             (
                 $this->statsStore->exists('expiration') &&
@@ -54,7 +55,7 @@ class DashboardController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $commentsParEtude = $em->getRepository(Comment::class)->findAllByEtude($commentManager);
 
-        return $this->render('Dashboard/Default/index.html.twig', 
+        return $this->render('Dashboard/Default/index.html.twig',
         ['stats' => (isset($stats) ? $stats : []),
         'commentsParEtude' => $commentsParEtude,
         ]);
@@ -86,11 +87,17 @@ class DashboardController extends AbstractController
 
     private function updateDashboardStats(KeyValueStore $statsStore)
     {
-        $etudeRepository = $this->getDoctrine()
-            ->getRepository(Etude::class);
+        $etudeRepository = $this->getDoctrine()->getRepository(Etude::class);
+
         $statsStore->set('ca_negociation', $etudeRepository->getCaByState(Etude::ETUDE_STATE_NEGOCIATION));
-        $statsStore->set('ca_encours', $etudeRepository->getCaByState(Etude::ETUDE_STATE_COURS));
-        $statsStore->set('ca_cloture', $etudeRepository->getCaByState(Etude::ETUDE_STATE_CLOTUREE, date('Y')));
+
+        $caEnCours = $etudeRepository->getCaByState(Etude::ETUDE_STATE_ACCEPTEE)
+                    + $etudeRepository->getCaByState(Etude::ETUDE_STATE_COURS);
+        $statsStore->set('ca_encours', $caEnCours);
+
+        $caCloture = $etudeRepository->getCaByState(Etude::ETUDE_STATE_FINIE)
+            + $etudeRepository->getCaByState(Etude::ETUDE_STATE_CLOTUREE);
+        $statsStore->set('ca_cloture', $caCloture);
 
         $factureRepository = $this->getDoctrine()->getRepository(Facture::class);
         $statsStore->set('ca_facture', $factureRepository->getCAFacture(date('Y')));
