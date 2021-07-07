@@ -5,8 +5,8 @@
 {% set enCoursID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_COURS') %}
 
 {% block title %}
-	{{ parent() }}
 	{{ 'dashboard.vue_ca'|trans({}, 'dashboard') }}
+	{{ parent() }}
 {% endblock %}
 
 {% block content_title %}
@@ -41,35 +41,18 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li class="nav-header">
-						<i class="fa fa-briefcase"></i>
-						{{ 'suivi.en_negociation'|trans({}, 'project') }}</li>
-					{% for etude in etudesDisplayList | filter(etude => etude.stateID == negoID) %}
-						<li>
-							<a href="{{ path('project_vue_ca', {'id': etude.id}) }}">
-								<i class="fa fa-minus"></i>
-								{{ etude.reference(param('namingConvention')) }}
-							</a>
-						</li>
-					{% endfor %}
-					<li class="divider"></li>
-					<li class="nav-header">
-						<i class="fa fa-bookmark-o"></i>
-						{{ 'suivi.en_cours'|trans({}, 'project') }}
-					</li>
-					{% for etude in etudesDisplayList | filter(etude => etude.stateID == accepteeID) %}
-						<li>
-							<a href="{{ path('project_vue_ca', {'id': etude.id}) }}">
-								<i class="fa fa-minus"></i>
-								{{ etude.reference(param('namingConvention')) }}
-							</a>
-						</li>
-					{% endfor %}
-					<li class="divider"></li>
-					<li class="nav-header">
-						<i class="fa fa-bookmark"></i>
-						{{ 'suivi.en_cours'|trans({}, 'project') }}
-					</li>
-					{% for etude in etudesDisplayList | filter(etude => etude.stateID == enCoursID) %}
+					{% for etude in etudes %}
+						{# On affiche l'état de l'étude pour le premier et à chaque changement #}
+						{% if not loop.first %}
+							{% if etude.stateID != etudes[loop.index0 - 1].stateID %}
+								&nbsp<i class="fa fa-briefcase"></i>&nbsp
+								{{ etude.getStateIDToString(etude.stateID) | trans({}, 'project') }}
+								<li class="divider"></li>
+							{% endif %}
+						{% else %}
+								&nbsp<i class="fa fa-briefcase"></i>&nbsp
+								{{ etude.getStateIDToString(etude.stateID) | trans({}, 'project') }}
+						{% endif %}
 						<li>
 							<a href="{{ path('project_vue_ca', {'id': etude.id}) }}">
 								<i class="fa fa-minus"></i>
