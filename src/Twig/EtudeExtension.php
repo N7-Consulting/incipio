@@ -9,8 +9,11 @@ use App\Entity\Project\Mission;
 use App\Entity\Project\ProcesVerbal;
 use App\Entity\Treso\Facture;
 use App\Entity\User\User;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class EtudeExtension extends \Twig_Extension
+class EtudeExtension extends AbstractExtension
 {
     // Pour utiliser les fonctions depuis twig
     public function getName()
@@ -22,12 +25,12 @@ class EtudeExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'getErrors' => new \Twig_Function('getErrors', [$this, 'getErrors']),
-            'getWarnings' => new \Twig_Function('getWarnings', [$this, 'getWarnings']),
-            'getInfos' => new \Twig_Function('getInfos', [$this, 'getInfos']),
-            'getEtatDoc' => new \Twig_Function('getEtatDoc', [$this, 'getEtatDoc']),
-            'getEtatFacture' => new \Twig_Function('getEtatFacture', [$this, 'getEtatFacture']),
-            'confidentielRefus' => new \Twig_Function('confidentielRefus', [$this, 'confidentielRefusTwig']),
+            'getErrors' => new TwigFunction('getErrors', [$this, 'getErrors']),
+            'getWarnings' => new TwigFunction('getWarnings', [$this, 'getWarnings']),
+            'getInfos' => new TwigFunction('getInfos', [$this, 'getInfos']),
+            'getEtatDoc' => new TwigFunction('getEtatDoc', [$this, 'getEtatDoc']),
+            'getEtatFacture' => new TwigFunction('getEtatFacture', [$this, 'getEtatFacture']),
+            'confidentielRefus' => new TwigFunction('confidentielRefus', [$this, 'confidentielRefusTwig']),
         ];
     }
 
@@ -38,8 +41,8 @@ class EtudeExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            'nbsp' => new \Twig_Filter('nonBreakingSpace', [$this, 'nonBreakingSpace']),
-            'string' => new \Twig_Filter('nonBreakingSpace', [$this, 'toString']),
+            'nbsp' => new TwigFilter('nonBreakingSpace', [$this, 'nonBreakingSpace']),
+            'string' => new TwigFilter('nonBreakingSpace', [$this, 'toString']),
         ];
     }
 
