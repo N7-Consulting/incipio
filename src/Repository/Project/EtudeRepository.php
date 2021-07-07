@@ -143,14 +143,15 @@ class EtudeRepository extends EntityRepository
      *
      * @return array of projects
      */
-    public function getTwoStates(array $states = [1, 2], array $orders = null)
+    public function getThreeStates(array $states = [1, 2, 3], array $orders = null)
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('e')
             ->from(Etude::class, 'e')
-            ->where('e.stateID = :stateNegociate or e.stateID= :stateCurrent')
+            ->where('e.stateID = :stateNegociate or e.stateID= :stateAccepted or e.stateID= :stateCurrent')
             ->setParameter('stateNegociate', $states[0])
-            ->setParameter('stateCurrent', $states[1]);
+            ->setParameter('stateAccepted', $states[1])
+            ->setParameter('stateCurrent', $states[2]);
         if (null !== $orders) {
             foreach ($orders as $column => $value) {
                 $qb->orderBy('e.' . $column, $value);
