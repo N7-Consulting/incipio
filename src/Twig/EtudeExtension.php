@@ -29,6 +29,7 @@ class EtudeExtension extends AbstractExtension
             'getEtatDoc' => new TwigFunction('getEtatDoc', [$this, 'getEtatDoc']),
             'getEtatFacture' => new TwigFunction('getEtatFacture', [$this, 'getEtatFacture']),
             'getColor' => new TwigFunction('getColor', [$this, 'getColor']),
+            'getColorDoc' => new TwigFunction('getColorDoc', [$this, 'getColorDoc']),
             'confidentielRefus' => new TwigFunction('confidentielRefus', [$this, 'confidentielRefusTwig']),
         ];
     }
@@ -632,5 +633,35 @@ class EtudeExtension extends AbstractExtension
         }
 
         return 'alert-' . $color;
+    }
+
+    /**
+     * Avoir une couleur affichée cohérente sur l'ensemble du site
+     * Utilisé principalement dans Vu(e)CA
+     */
+    public function getColorDoc($doc) {
+
+        if ($doc instanceof Facture) {
+            $etat = $this->getEtatFacture($doc);
+        } else {
+            $etat = $this->getEtatDoc($doc);
+        }
+
+        switch ($etat) {
+            case 0:
+                $color = 'danger';
+                break;
+            case 1:
+                $color = 'warning';
+                break;
+            case 2:
+                $color = 'success';
+                break;
+            default:
+                $color = '';
+                break;
+        }
+
+        return $color;
     }
 }
