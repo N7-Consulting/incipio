@@ -1,4 +1,5 @@
 dashboard:
+  aucun_commentaire : Aucun commentaire sur les études durant les 10 derniers jours.
   book_passation : Book de passations
   base_urssaf: Bases URSSAF
   actico: Activité Commerciale
@@ -42,6 +43,19 @@ dashboard:
   cca_voir: Voir les CCa
   cca: Convention Cadre Agile
   etudes_voir: Voir les études
+  evenement : Evénement
+  ev_liste: Liste des événements
+  ev_ajouter: Ajouter un événement
+  ev_action: Action
+  ev_aucun: Aucun évenement prévu
+  ev_id: Id
+  ev_date_debut: Date de début
+  ev_date_fin : Date de fin
+  ev_titre : Evénement
+  ev_voir: Voir les événements
+  ev_modifier: Modifier l'événement
+  ev_supprimer: Supprimer l'événement
+  ev_confirme: Etes-vous sur de vouloir supprimer cet événement?
   encourager_dev: Encouragez le développement en donnant une étoile sur
   factures: Factures
   facture_ajouter: Ajouter une facture

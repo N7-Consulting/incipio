@@ -12,7 +12,7 @@
 {% block content_bundle %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <table class="table">
                     {% if stats is not empty and (is_granted('ROLE_SUIVEUR') or is_granted('ROLE_TRESO')) %}
                         <tr>
@@ -69,10 +69,7 @@
 
                 </table>
             </div>
-            <div class="col-md-4 xs-hidden">
-                <!-- One day, maybe, a calendar ... -->
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <table class="table">
                     <tr>
                         <th colspan="2">{{ 'dashboard.info'|trans({}, 'dashboard') }}</th>
@@ -127,9 +124,15 @@
                 </table>
             </div>
         </div>
-    </div>
-            <h4>{{ 'dashboard.commentaire_recent_titre' | trans({}, 'dashboard') }} :</h4>
-             {% set i = 0 %}
+        <div class="row">
+            <div class="col-md-6">
+            {% include '@FullCalendar/Calendar/calendar.html.twig' %}
+            <br>
+            <a href="{{ path('booking_new')}}" class="btn btn-primary">{{ 'dashboard.ev_ajouter'|trans({}, 'dashboard') }}</a>
+            </div>
+            <div class="col-md-6">
+                <h4>{{ 'dashboard.commentaire_recent_titre' | trans({}, 'dashboard') }} :</h4>
+                {% set i = 0 %}
                 {% for etude, comments in commentsParEtude %}
                     {% set i = i + 1 %}
                     <table class="display dataTable table table-bordered table-striped dt-responsive "> {# à rajouter pour avoir le nombre de commentaires par étude limité : id= "commentTable{{i}}" #}
@@ -153,14 +156,13 @@
                             </tr>
                         {% endfor %}
                     </tbody>
-                    <br>
                     </table> 
+                {% else %}
+                    <h>{{ 'dashboard.aucun_commentaire' | trans({}, 'dashboard') }}</h>
                 {% endfor %}
+            </div>
+        </div>
 
-<a href="{{ path('booking_new') }}">Create new booking</a>
-
-
-    {% include '@FullCalendar/Calendar/calendar.html.twig' %}
 
 {% endblock %}
 
