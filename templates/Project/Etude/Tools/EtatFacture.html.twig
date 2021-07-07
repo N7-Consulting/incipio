@@ -1,5 +1,9 @@
 {# Use these templates to display information throughout all Tabs (Négociation, Acceptées, en Cours...) #}
 
+{% set valide    = asset('img/success.png') %}
+{% set nonValide = asset('img/cross.png') %}
+{% set enCours   = asset('img/progress.png') %}
+
 {% set etat = getEtatFacture(facture) %}
 
 {% if etat == 2 %}
