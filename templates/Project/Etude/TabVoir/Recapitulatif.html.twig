@@ -1,40 +1,3 @@
-{# Load constants #}
-{% set negoID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_NEGOCIATION') %}
-{% set accepteeID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_ACCEPTEE') %}
-{% set enCoursID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_COURS') %}
-{% set pauseID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_PAUSE') %}
-{% set finieID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_FINIE') %}
-{% set clotureeID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_CLOTUREE') %}
-{% set avorteeID = constant('App\\Entity\\Project\\Etude::ETUDE_STATE_AVORTEE') %}
-
-{# Set rendering options depending of project state here #}
-{% if etude.stateID == negoID %}
-	{% set alert = "alert-primary" %}
-	{% set infos = true %}
-	{% set warnings = true %}
-{% elseif etude.stateID == accepteeID or etude.stateID == enCoursID %}
-	{% set alert = "alert-success" %}
-	{% set infos = true %}
-	{% set warnings = true %}
-{% elseif etude.stateID == avorteeID %}
-	{% set alert = "alert-danger" %}
-	{% set infos = false %}
-	{% set warnings = false %}
-{% elseif etude.stateID == pauseID %}
-	{% set alert = "alert-secondary" %}
-	{% set infos = true %}
-	{% set warnings = true %}
-{% elseif etude.stateID == finieID %}
-	{% set alert = "alert-info" %}
-	{% set infos = false %}
-	{% set warnings = false %}
-{% elseif etude.stateID == clotureeID %}
-	{% set alert = "alert-dark" %}
-	{% set infos = false %}
-	{% set warnings = false %}
-{% endif %}
-
-
 <nav class="navbar" role="navigation">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle text-black" data-toggle="collapse" data-target=".navbar-recap">
@@ -62,7 +25,7 @@
 	<tr>
 		<td style="width: 25%;" valign="top">
 			<table class="table table-bordered table-striped" style="padding-top: 0px;">
-					<td colspan="2" class="{{alert}}" >
+					<td colspan="2" class="alert {{ getColor(etude) }}" >
 <h4>{{ 'suivi.etat'|trans({}, 'project') }} : {{ etude.getStateIDToString(etude.stateID) | trans({}, 'project') }}</h4>
 					</td>
 				</tr>
@@ -110,13 +73,3 @@
 		</td>
 	</tr>
 </table>
-
-<br />
-
-{% if warnings %}
-	{% include "Project/Etude/Infos/warning.html.twig" with  {'etude':  etude} %}
-{% endif %}
-
-{% if infos %}
-	{% include "Project/Etude/Infos/info.html.twig" with  {'etude':  etude} %}
-{% endif %}
