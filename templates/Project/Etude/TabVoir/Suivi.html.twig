@@ -17,14 +17,13 @@
 
 {{ form_start(formSuivi, {'action': path('project_etude_suivi_update', {'id': etude.id}), 'attr': {'id': 'myForm' }}) }}
 
-<div class='container'>
-	<div class='row'>
-            <p>
-                {{ 'suivi.etude_etat'|trans({}, 'project') }}
-                {{ form_widget(formSuivi.stateID) }}
-            </p>
-	</div>
-</div>
+{# Etat de l'étude #}
+<tr>
+	<th>{{ 'suivi.etude_etat'|trans({}, 'project') }}</th>
+</tr>
+<tr>
+	<td>{{ form_widget(formSuivi.stateID) }}</td>
+</tr>
 
 {# Ensemble des suivis enregistrés #}
 <table class="table table-striped">
