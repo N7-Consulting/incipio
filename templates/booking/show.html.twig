@@ -14,11 +14,11 @@
             </tr>
             <tr>
                 <th>{{ 'dashboard.ev_date_debut'|trans({}, 'dashboard') }}</th>
-                <td>{{ booking.dateDebut ? booking.dateDebut|date('d\m\Y H:i:s') : '' }}</td>
+                <td>{{ booking.dateDebut ? booking.dateDebut|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'dashboard.ev_date_fin'|trans({}, 'dashboard') }}</th>
-                <td>{{ booking.dateFin ? booking.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.dateFin ? booking.dateFin|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>

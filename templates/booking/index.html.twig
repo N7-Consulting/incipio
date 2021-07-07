@@ -19,8 +19,8 @@
         {% for booking in bookings %}
             <tr>
                 <td><a href="{{ path('booking_show', {'id': booking.id}) }}">{{ booking.title }}</td></a>
-                <td>{{ booking.dateDebut ? booking.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ booking.dateFin ? booking.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.dateDebut ? booking.dateDebut|date('d/m/Y H:i:s') : '' }}</td>
+                <td>{{ booking.dateFin ? booking.dateFin|date('d/m/Y H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('booking_edit', {'id': booking.id}) }}">{{ 'dashboard.ev_modifier'|trans({}, 'dashboard') }}</a>
                 </td>

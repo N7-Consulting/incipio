@@ -32,8 +32,8 @@ class FullCalendarListener
         $bookings = $this->bookingRepository
             ->createQueryBuilder('booking')
             ->where('booking.dateDebut BETWEEN :startDate and :endDate')
-            ->setParameter('startDate', $startDate->format('Y-m-d H:i:s'))
-            ->setParameter('endDate', $endDate->format('Y-m-d H:i:s'))
+            ->setParameter('startDate', $startDate->format('d/m/Y H:i:s'))
+            ->setParameter('endDate', $endDate->format('d/m/Y H:i:s'))
             ->getQuery()
             ->getResult()
         ;
