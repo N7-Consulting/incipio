@@ -626,8 +626,7 @@ class EtudeController extends AbstractController
         }
 
         //Etudes En Négociation : stateID = 1
-        $etudesDisplayList = $em->getRepository(Etude::class)->getTwoStates([Etude::ETUDE_STATE_NEGOCIATION,
-                                                                             Etude::ETUDE_STATE_COURS,
+        $etudesDisplayList = $em->getRepository(Etude::class)->getThreeStates([Etude::ETUDE_STATE_NEGOCIATION, Etude::ETUDE_STATE_ACCEPTEE, Etude::ETUDE_STATE_COURS,
         ], ['mandat' => 'ASC', 'num' => 'ASC']);
 
         if (!in_array($etude, $etudesDisplayList)) {
