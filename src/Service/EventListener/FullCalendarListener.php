@@ -31,7 +31,7 @@ class FullCalendarListener
         // Change b.beginAt by your start date in your custom entity
         $bookings = $this->bookingRepository
             ->createQueryBuilder('booking')
-            ->where('booking.beginAt BETWEEN :startDate and :endDate')
+            ->where('booking.dateDebut BETWEEN :startDate and :endDate')
             ->setParameter('startDate', $startDate->format('Y-m-d H:i:s'))
             ->setParameter('endDate', $endDate->format('Y-m-d H:i:s'))
             ->getQuery()
@@ -42,8 +42,8 @@ class FullCalendarListener
             // this create the events with your own entity (here booking entity) to populate calendar
             $bookingEvent = new Event(
                 $booking->getTitle(),
-                $booking->getBeginAt(),
-                $booking->getEndAt() // If the end date is null or not defined, a all day event is created.
+                $booking->getDateDebut(),
+                $booking->getDateFin() // If the end date is null or not defined, a all day event is created.
             );
 
             /*

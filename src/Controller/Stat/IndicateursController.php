@@ -1533,7 +1533,7 @@ class IndicateursController extends AbstractController
 
         $series = [['type' => 'pie', 'name' => 'Provenance des études selon le type de client (tous mandats)',
                     'data' => $data, 'nombreClient' => $nombreClient,
-                   ],
+                ],
         ];
         $ob = $this->chartFactory->newPieChart($series);
 

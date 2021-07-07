@@ -51,10 +51,10 @@ services:
         tags:
             - { name: twig.extension }
     App\Twig\KeyValueExtension:
-          arguments:
+        arguments:
             - "@app.json_key_value_store"
-          tags:
-              - { name: twig.extension }
+        tags:
+            - { name: twig.extension }
 
     Monolog\Processor\WebProcessor:
         tags: ['monolog.processor']

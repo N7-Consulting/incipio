@@ -11,10 +11,10 @@
 <form action="{{ path('dashboard_search') }}" method="GET" class="sidebar-form">
     <div class="input-group">
         <input type="text" name="q" class="form-control"
-               placeholder="{{ 'dashboard.rechercher'| trans }}">
+            placeholder="{{ 'dashboard.rechercher'| trans }}">
         <span class="input-group-btn">
                 <button type="submit" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
+            </span>
     </div>
 </form>
 <!-- sidebar menu start-->
@@ -73,7 +73,7 @@
                 <li><a href="{{ path('project_cca_voir') }}"><span class="fa fa-briefcase"></span>{{ 'dashboard.cca_voir'| trans }}</a></li>
 
                 <li class="divider"></li>
-               {% if is_granted('ROLE_CA') %}
+                {% if is_granted('ROLE_CA') %}
                     <li class="divider"></li>
                     <li class="dropdown-header">{{ 'dashboard.administration'| trans }}</li>
                     <li>
@@ -306,7 +306,6 @@
                 <li><a href="{{ path('archivage_chiffrage_index') }}"><span
                                 class="fa fa-list"></span> {{ 'dashboard.chiffrage'| trans }}</a>
                 </li>
-
                 <li><a href="{{ path('archivage_actico_index') }}"><span
                                 class="fa fa-list"></span> {{ 'dashboard.actico'| trans }}</a>
                 </li>
