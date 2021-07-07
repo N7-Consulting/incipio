@@ -1,6 +1,0 @@
-{# Use these templates to display information throughout all Tabs (Négociation, Acceptées, en Cours...) #}
-
-{% for mission in etude.missions %}
-	{% include "Project/Etude/Tools/EtatDocument.html.twig" with {'doc': mission, 'title': mission.intervenant.personne.prenomNom} %}
-	<br><br>
-{% endfor %}
