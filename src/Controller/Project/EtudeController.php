@@ -641,8 +641,8 @@ class EtudeController extends AbstractController
 
         /* pagination management */
         $currentKey = array_search($etude, $etudes);
-        $nextID = $this->getAdjascentKey($currentKey, $etudes, +1);
-        $prevID = $this->getAdjascentKey($currentKey, $etudes, -1);
+        $nextID = $etudes[$this->getAdjascentKey($currentKey, $etudes, +1)]->getId();
+        $prevID = $etudes[$this->getAdjascentKey($currentKey, $etudes, -1)]->getId();
 
         $ob = $chartManager->getGantt($etude, 'suivi');
 
