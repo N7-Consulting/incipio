@@ -27,7 +27,6 @@ class EtudeExtension extends AbstractExtension
         return [
             'getErrors' => new TwigFunction('getErrors', [$this, 'getErrors']),
             'getWarnings' => new TwigFunction('getWarnings', [$this, 'getWarnings']),
-            'getInfos' => new TwigFunction('getInfos', [$this, 'getInfos']),
             'getEtatDoc' => new TwigFunction('getEtatDoc', [$this, 'getEtatDoc']),
             'getEtatFacture' => new TwigFunction('getEtatFacture', [$this, 'getEtatFacture']),
             'confidentielRefus' => new TwigFunction('confidentielRefus', [$this, 'confidentielRefusTwig']),
@@ -468,6 +467,7 @@ class EtudeExtension extends AbstractExtension
         return $warnings;
     }
 
+    // Never used and deprecated (CC and AP docs) but interesting... 2021
     public function getInfos(Etude $etude)
     {
         $infos = [];
@@ -580,7 +580,7 @@ class EtudeExtension extends AbstractExtension
     }
 
     //Copie de getEtatDoc pour les factures. Les factures n'étendant pas Doctype, le relu, rédigé ...
-    // n'est pas pertinent. On ne teste donc que l'existence et loe versement.
+    // n'est pas pertinent. On ne teste donc que l'existence et le versement.
 
     /**
      * @param $doc
