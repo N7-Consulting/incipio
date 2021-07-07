@@ -131,7 +131,7 @@
             <a href="{{ path('booking_new')}}" class="btn btn-primary">{{ 'dashboard.ev_ajouter'|trans({}, 'dashboard') }}</a>
             </div>
             <div class="col-md-6">
-                <h4>{{ 'dashboard.commentaire_recent_titre' | trans({}, 'dashboard') }} :</h4>
+                <h4>{{ 'dashboard.commentaire_recent_titre' | trans({}, 'dashboard') }}</h4>
                 {% set i = 0 %}
                 {% for etude, comments in commentsParEtude %}
                     {% set i = i + 1 %}
