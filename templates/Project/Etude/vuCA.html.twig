@@ -43,16 +43,12 @@
 					<li class="nav-header">
 					{% for etude in etudes %}
 						{# On affiche l'état de l'étude pour le premier et à chaque changement #}
-						{% if not loop.first %}
-							{% if etude.stateID != etudes[loop.index0 - 1].stateID %}
-								&nbsp<i class="fa fa-briefcase"></i>&nbsp
-								{{ etude.getStateIDToString(etude.stateID) | trans({}, 'project') }}
-								<li class="divider"></li>
+							{% set nextEtude = etudes[loop.index0 - 1] ?? etude %}
+							{% if loop.first or (etude.stateID != nextEtude.stateID) %}
+									&nbsp<i class="fa fa-briefcase"></i>&nbsp
+									{{ etude.getStateIDToString(etude.stateID) | trans({}, 'project') }}
+									<li class="divider"></li>
 							{% endif %}
-						{% else %}
-								&nbsp<i class="fa fa-briefcase"></i>&nbsp
-								{{ etude.getStateIDToString(etude.stateID) | trans({}, 'project') }}
-						{% endif %}
 						<li>
 							<a href="{{ path('project_vue_ca', {'id': etude.id}) }}">
 								<i class="fa fa-minus"></i>
