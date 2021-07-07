@@ -10,6 +10,9 @@
 					<div>{{ 'suivi.date_fin'|trans({}, 'project') }}</div>
 				</th>
 				<th>
+					{{ 'suivi.audit'|trans({}, 'project') }}
+				</th>
+				<th>
 					<div>{{ 'suivi.client'|trans({}, 'project') }}</div>
 					<div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
 				</th>
@@ -57,6 +60,9 @@
 					</td>
 					<td>
 						{% include "Project/Etude/Tools/DatesEtude.html.twig" %}
+					</td>
+					<td>
+						{{ etude.getAuditTypeChoice()[etude.auditType]}}
 					</td>
 					<td>
 						{% include "Project/Etude/Buttons/Prospect.html.twig" with {'prospect': etude.prospect} %}
