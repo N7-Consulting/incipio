@@ -28,7 +28,7 @@ class EtudeExtension extends AbstractExtension
             'getWarnings' => new TwigFunction('getWarnings', [$this, 'getWarnings']),
             'getEtatDoc' => new TwigFunction('getEtatDoc', [$this, 'getEtatDoc']),
             'getEtatFacture' => new TwigFunction('getEtatFacture', [$this, 'getEtatFacture']),
-            'getColor' => new TwigFunction('getColor', [$this, 'getColorTwig']),
+            'getColor' => new TwigFunction('getColor', [$this, 'getColor']),
             'confidentielRefus' => new TwigFunction('confidentielRefus', [$this, 'confidentielRefusTwig']),
         ];
     }
@@ -609,26 +609,22 @@ class EtudeExtension extends AbstractExtension
     /**
      * Avoir une couleur affichée cohérente sur l'ensemble du site
      */
-    private function getColor(Etude $etude) {
+    public function getColor(Etude $etude) {
         switch ($etude->getStateID()) {
-            case Etude::ETUDE_STATE_NEGOCIATION:
-                $color = 'primary';
-                break;
             case Etude::ETUDE_STATE_ACCEPTEE:
             case Etude::ETUDE_STATE_COURS:
+            case Etude::ETUDE_STATE_CLOTUREE:
                 $color = 'success';
                 break;
             case Etude::ETUDE_STATE_AVORTEE:
                 $color = 'danger';
                 break;
             case Etude::ETUDE_STATE_PAUSE:
-                $color = 'secondary';
+                $color = 'warning';
                 break;
+            case Etude::ETUDE_STATE_NEGOCIATION:
             case Etude::ETUDE_STATE_FINIE:
                 $color = 'info';
-                break;
-            case Etude::ETUDE_STATE_CLOTUREE:
-                $color = 'dark';
                 break;
             default:
                 $color = '';
