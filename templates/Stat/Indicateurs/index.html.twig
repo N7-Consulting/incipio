@@ -10,7 +10,7 @@
 {% block content_bundle %}
     <div class="nav-tabs-custom">
         <ul id="indicateursLink" class="nav nav-tabs">
-            <li class=""><a href="#infos" data-toggle="tab" data-loaded="true">
+            <li class="active"><a href="#infos" data-toggle="tab" data-loaded="true">
                     {{ 'indicateur.donnees_brutes'|trans({}, 'indicateur') }}</a></li>
             <li class=""><a href="#gestion" data-toggle="tab" data-loaded="false">
                     {{ 'indicateur.gestion_associative'|trans({}, 'indicateur') }}</a></li>
@@ -26,7 +26,7 @@
     </div>
 
     <div class="tab-content">
-        <div class="tab-pane" id="infos">
+        <div class="tab-pane active" id="infos">
             <table id="control" class="table table-bordered">
                 <tr>
                     <td><label for="checkbox-tabAnuel">{{ 'indicateur.tabAnuel'|trans({}, 'indicateur') }}</label>
