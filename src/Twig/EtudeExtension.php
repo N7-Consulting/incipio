@@ -10,7 +10,6 @@ use App\Entity\Project\ProcesVerbal;
 use App\Entity\Treso\Facture;
 use App\Entity\User\User;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class EtudeExtension extends AbstractExtension
@@ -29,19 +28,8 @@ class EtudeExtension extends AbstractExtension
             'getWarnings' => new TwigFunction('getWarnings', [$this, 'getWarnings']),
             'getEtatDoc' => new TwigFunction('getEtatDoc', [$this, 'getEtatDoc']),
             'getEtatFacture' => new TwigFunction('getEtatFacture', [$this, 'getEtatFacture']),
+            'getColor' => new TwigFunction('getColor', [$this, 'getColorTwig']),
             'confidentielRefus' => new TwigFunction('confidentielRefus', [$this, 'confidentielRefusTwig']),
-        ];
-    }
-
-    /***
-     *
-     * Juste un test
-     */
-    public function getFilters()
-    {
-        return [
-            'nbsp' => new TwigFilter('nonBreakingSpace', [$this, 'nonBreakingSpace']),
-            'string' => new TwigFilter('nonBreakingSpace', [$this, 'toString']),
         ];
     }
 
@@ -616,5 +604,37 @@ class EtudeExtension extends AbstractExtension
         }
 
         return null;
+    }
+
+    /**
+     * Avoir une couleur affichée cohérente sur l'ensemble du site
+     */
+    private function getColor(Etude $etude) {
+        switch ($etude->getStateID()) {
+            case Etude::ETUDE_STATE_NEGOCIATION:
+                $color = 'primary';
+                break;
+            case Etude::ETUDE_STATE_ACCEPTEE:
+            case Etude::ETUDE_STATE_COURS:
+                $color = 'success';
+                break;
+            case Etude::ETUDE_STATE_AVORTEE:
+                $color = 'danger';
+                break;
+            case Etude::ETUDE_STATE_PAUSE:
+                $color = 'secondary';
+                break;
+            case Etude::ETUDE_STATE_FINIE:
+                $color = 'info';
+                break;
+            case Etude::ETUDE_STATE_CLOTUREE:
+                $color = 'dark';
+                break;
+            default:
+                $color = '';
+                break;
+        }
+
+        return 'alert-' . $color;
     }
 }
