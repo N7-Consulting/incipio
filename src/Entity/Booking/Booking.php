@@ -32,6 +32,11 @@ class Booking
      */
     private $dateFin;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $commentaires;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Booking
     public function setDateFin(\DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    public function getCommentaires(): ?string
+    {
+        return $this->commentaires;
+    }
+
+    public function setCommentaires(?string $commentaires): self
+    {
+        $this->commentaires = $commentaires;
 
         return $this;
     }

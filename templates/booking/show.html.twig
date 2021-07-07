@@ -20,6 +20,10 @@
                 <th>{{ 'dashboard.ev_date_fin'|trans({}, 'dashboard') }}</th>
                 <td>{{ booking.dateFin ? booking.dateFin|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
+            <tr>
+                <th>{{ 'dashboard.ev_commentaires'|trans({}, 'dashboard') }}</th>
+                <td>{{ booking.commentaires}}</td>
+            </tr>
         </tbody>
     </table>
 

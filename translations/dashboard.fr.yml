@@ -46,6 +46,7 @@ dashboard:
   evenement : Evénement
   ev_liste: Liste des événements
   ev_ajouter: Ajouter un événement
+  ev_commentaires: Description
   ev_action: Action
   ev_aucun: Aucun évenement prévu
   ev_id: Id
