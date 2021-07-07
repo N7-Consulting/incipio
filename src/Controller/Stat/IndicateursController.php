@@ -479,48 +479,34 @@ class IndicateursController extends AbstractController
      * @return Response
      */
     public function getRetardParMandat(Request $request, ObjectManager $em)
-    {
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-        
-
+    {   
         $nombreJoursParMandat = [];
         $nombreJoursAvecAvenantParMandat = [];
 
-        foreach ($ccs as $cc) {
-            $etude = $cc->getEtude();
-            $dateSignature = $cc->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
+        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
+        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
+        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
-            if ($dateSignature && $signee && $etude->getDelai()) {
-                if (array_key_exists($mandat, $nombreJoursParMandat)) {
-                    $nombreJoursParMandat[$mandat] += $etude->getDelai(false)->days;
-                    $nombreJoursAvecAvenantParMandat[$mandat] += $etude->getDelai(true)->days;
-                } else {
-                    $nombreJoursParMandat[$mandat] = $etude->getDelai(false)->days;
-                    $nombreJoursAvecAvenantParMandat[$mandat] = $etude->getDelai(true)->days;
+        $listDocs = [$ccs, $ces, $bdc];
+
+        foreach ($listDocs as $docs) {
+            foreach ($docs as $doc) {
+                $etude = $doc->getEtude();
+                $dateSignature = $doc->getDateSignature();
+                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+                $mandat = $etude->getMandat();
+
+                if ($dateSignature && $signee && $etude->getDelai()) {
+                    if (array_key_exists($mandat, $nombreJoursParMandat)) {
+                        $nombreJoursParMandat[$mandat] += $etude->getDelai(false)->days;
+                        $nombreJoursAvecAvenantParMandat[$mandat] += $etude->getDelai(true)->days;
+                    } else {
+                        $nombreJoursParMandat[$mandat] = $etude->getDelai(false)->days;
+                        $nombreJoursAvecAvenantParMandat[$mandat] = $etude->getDelai(true)->days;
+                    }
                 }
             }
         }
-
-        foreach ($ces as $ce) {
-            $etude = $ce->getEtude();
-            $dateSignature = $ce->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
-
-            if ($dateSignature && $signee && $etude->getDelai()) {
-                if (array_key_exists($mandat, $nombreJoursParMandat)) {
-                    $nombreJoursParMandat[$mandat] += $etude->getDelai(false)->days;
-                    $nombreJoursAvecAvenantParMandat[$mandat] += $etude->getDelai(true)->days;
-                } else {
-                    $nombreJoursParMandat[$mandat] = $etude->getDelai(false)->days;
-                    $nombreJoursAvecAvenantParMandat[$mandat] = $etude->getDelai(true)->days;
-                }
-            }
-        }
-
         $data = [];
         $categories = [];
         foreach ($nombreJoursParMandat as $mandat => $datas) {
@@ -562,37 +548,27 @@ class IndicateursController extends AbstractController
      */
     public function getNombreEtudes(Request $request, ObjectManager $em)
     {
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-
         $nombreEtudesParMandat = [];
 
-        foreach ($ccs as $cc) {
-            $etude = $cc->getEtude();
-            $dateSignature = $cc->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
+        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
+        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
+        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
-            if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
-                    ++$nombreEtudesParMandat[$mandat];
-                } else {
-                    $nombreEtudesParMandat[$mandat] = 1;
-                }
-            }
-        }
+        $listDocs = [$ccs, $ces, $bdc];
+        
+        foreach ($listDocs as $docs) {
+            foreach ($docs as $doc) {
+                $etude = $doc->getEtude();
+                $dateSignature = $doc->getDateSignature();
+                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+                $mandat = $etude->getMandat();
 
-        foreach ($ces as $ce) {
-            $etude = $ce->getEtude();
-            $dateSignature = $ce->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
-
-            if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
-                    ++$nombreEtudesParMandat[$mandat];
-                } else {
-                    $nombreEtudesParMandat[$mandat] = 1;
+                if ($dateSignature && $signee) {
+                    if (array_key_exists($mandat, $nombreEtudesParMandat)) {
+                        ++$nombreEtudesParMandat[$mandat];
+                    } else {
+                        $nombreEtudesParMandat[$mandat] = 1;
+                    }
                 }
             }
         }
@@ -634,53 +610,36 @@ class IndicateursController extends AbstractController
      */
     public function getTauxAvenantsParMandat(Request $request, ObjectManager $em)
     {
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-
         $nombreEtudesParMandat = [];
         $nombreEtudesAvecAvenantParMandat = [];
         $nombreAvsParMandat = [];
 
-        foreach ($ccs as $cc) {
-            $etude = $cc->getEtude();
-            $dateSignature = $cc->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
+        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
+        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
+        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
-            if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
-                    ++$nombreEtudesParMandat[$mandat];
-                } else {
-                    $nombreEtudesParMandat[$mandat] = 1;
-                    $nombreEtudesAvecAvenantParMandat[$mandat] = 0;
-                    $nombreAvsParMandat[$mandat] = 0;
-                }
+        $listDocs = [$ccs, $ces, $bdc];
+        
+        foreach ($listDocs as $docs) {
+            foreach ($docs as $doc) {
+                $etude = $doc->getEtude();
+                $dateSignature = $doc->getDateSignature();
+                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+                $mandat = $etude->getMandat();
 
-                if (count($etude->getAvs()->toArray())) {
-                    ++$nombreEtudesAvecAvenantParMandat[$mandat];
-                    $nombreAvsParMandat[$mandat] += count($etude->getAvs()->toArray());
-                }
-            }
-        }
+                if ($dateSignature && $signee) {
+                    if (array_key_exists($mandat, $nombreEtudesParMandat)) {
+                        ++$nombreEtudesParMandat[$mandat];
+                    } else {
+                        $nombreEtudesParMandat[$mandat] = 1;
+                        $nombreEtudesAvecAvenantParMandat[$mandat] = 0;
+                        $nombreAvsParMandat[$mandat] = 0;
+                    }
 
-        foreach ($ces as $ce) {
-            $etude = $ce->getEtude();
-            $dateSignature = $ce->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
-
-            if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $nombreEtudesParMandat)) {
-                    ++$nombreEtudesParMandat[$mandat];
-                } else {
-                    $nombreEtudesParMandat[$mandat] = 1;
-                    $nombreEtudesAvecAvenantParMandat[$mandat] = 0;
-                    $nombreAvsParMandat[$mandat] = 0;
-                }
-
-                if (count($etude->getAvs()->toArray())) {
-                    ++$nombreEtudesAvecAvenantParMandat[$mandat];
-                    $nombreAvsParMandat[$mandat] += count($etude->getAvs()->toArray());
+                    if (count($etude->getAvs()->toArray())) {
+                        ++$nombreEtudesAvecAvenantParMandat[$mandat];
+                        $nombreAvsParMandat[$mandat] += count($etude->getAvs()->toArray());
+                    }
                 }
             }
         }
@@ -868,50 +827,37 @@ class IndicateursController extends AbstractController
      */
     public function getCAParMandatHistogram(Request $request, ObjectManager $em)
     {
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-
         $cumuls = [];
         $cumulsJEH = [];
         $cumulsFraisDossier = [];
 
-        foreach ($ccs as $cc) {
-            $etude = $cc->getEtude();
-            $dateSignature = $cc->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
+        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
+        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
+        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
-            if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $cumuls)) {
-                    $cumuls[$mandat] += $etude->getMontantHT();
-                    $cumulsJEH[$mandat] += $etude->getNbrJEH();
-                    $cumulsFraisDossier[$mandat] += $etude->getFraisDossier();
-                } else {
-                    $cumuls[$mandat] = $etude->getMontantHT();
-                    $cumulsJEH[$mandat] = $etude->getNbrJEH();
-                    $cumulsFraisDossier[$mandat] = $etude->getFraisDossier();
+        $listDocs = [$ccs, $ces, $bdc];
+        
+        foreach ($listDocs as $docs) {
+            foreach ($docs as $doc) {
+                $etude = $doc->getEtude();
+                $dateSignature = $doc->getDateSignature();
+                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+                $mandat = $etude->getMandat();
+
+                if ($dateSignature && $signee) {
+                    if (array_key_exists($mandat, $cumuls)) {
+                        $cumuls[$mandat] += $etude->getMontantHT();
+                        $cumulsJEH[$mandat] += $etude->getNbrJEH();
+                        $cumulsFraisDossier[$mandat] += $etude->getFraisDossier();
+                    } else {
+                        $cumuls[$mandat] = $etude->getMontantHT();
+                        $cumulsJEH[$mandat] = $etude->getNbrJEH();
+                        $cumulsFraisDossier[$mandat] = $etude->getFraisDossier();
+                    }
                 }
             }
         }
 
-        foreach ($ces as $ce) {
-            $etude = $ce->getEtude();
-            $dateSignature = $ce->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-            $mandat = $etude->getMandat();
-
-            if ($dateSignature && $signee) {
-                if (array_key_exists($mandat, $cumuls)) {
-                    $cumuls[$mandat] += $etude->getMontantHT();
-                    $cumulsJEH[$mandat] += $etude->getNbrJEH();
-                    $cumulsFraisDossier[$mandat] += $etude->getFraisDossier();
-                } else {
-                    $cumuls[$mandat] = $etude->getMontantHT();
-                    $cumulsJEH[$mandat] = $etude->getNbrJEH();
-                    $cumulsFraisDossier[$mandat] = $etude->getFraisDossier();
-                }
-            }
-        }
 
         $data = [];
         $categories = [];
@@ -971,8 +917,11 @@ class IndicateursController extends AbstractController
     public function getCA(Request $request, ObjectManager $em)
     {
         $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
+        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
+        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
+        $listDocs = [$ccs, $ces, $bdc];
+        
         if ($this->keyValueStore->exists('namingConvention')) {
             $namingConvention = $this->keyValueStore->get('namingConvention');
         } else {
@@ -985,45 +934,26 @@ class IndicateursController extends AbstractController
         $mandats = [];
         $cumuls = [];
 
-        foreach ($ccs as $cc) {
-            $etude = $cc->getEtude();
-            $dateSignature = $cc->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+        foreach ($listDocs as $docs) {
+            foreach ($docs as $doc) {
+                $etude = $doc->getEtude();
+                $dateSignature = $doc->getDateSignature();
+                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
 
-            if ($dateSignature && $signee) {
-                $idMandat = $etude->getMandat();
-                $cumuls[$idMandat] += $etude->getMontantHT();
-                $interval = new \DateInterval('P' . ($maxMandat - $idMandat) . 'Y');
-                $dateDecale = clone $dateSignature;
-                $dateDecale->add($interval);
-                $mandats[$idMandat][]
-                    = ['x' => $dateDecale->getTimestamp() * 1000,
-                       'y' => $cumuls[$idMandat],
-                       'name' => $etude->getReference($namingConvention) . ' - ' . $etude->getNom(),
-                       'date' => $dateDecale->format('d/m/Y'),
-                       'prix' => $etude->getMontantHT(),
-                ];
-            }
-        }
-
-        foreach ($ces as $cc) {
-            $etude = $ce->getEtude();
-            $dateSignature = $ce->getDateSignature();
-            $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-
-            if ($dateSignature && $signee) {
-                $idMandat = $etude->getMandat();
-                $cumuls[$idMandat] += $etude->getMontantHT();
-                $interval = new \DateInterval('P' . ($maxMandat - $idMandat) . 'Y');
-                $dateDecale = clone $dateSignature;
-                $dateDecale->add($interval);
-                $mandats[$idMandat][]
-                    = ['x' => $dateDecale->getTimestamp() * 1000,
-                       'y' => $cumuls[$idMandat],
-                       'name' => $etude->getReference($namingConvention) . ' - ' . $etude->getNom(),
-                       'date' => $dateDecale->format('d/m/Y'),
-                       'prix' => $etude->getMontantHT(),
-                ];
+                if ($dateSignature && $signee) {
+                    $idMandat = $etude->getMandat();
+                    $cumuls[$idMandat] += $etude->getMontantHT();
+                    $interval = new \DateInterval('P' . ($maxMandat - $idMandat) . 'Y');
+                    $dateDecale = clone $dateSignature;
+                    $dateDecale->add($interval);
+                    $mandats[$idMandat][]
+                        = ['x' => $dateDecale->getTimestamp() * 1000,
+                        'y' => $cumuls[$idMandat],
+                        'name' => $etude->getReference($namingConvention) . ' - ' . $etude->getNom(),
+                        'date' => $dateDecale->format('d/m/Y'),
+                        'prix' => $etude->getMontantHT(),
+                    ];
+                }
             }
         }
 
