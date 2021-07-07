@@ -16,13 +16,13 @@
 					<div>{{ 'suivi.suiveur'|trans({}, 'project') }}</div>
 				</th>
 				<th>
-					{{ 'suivi.audit'|trans({}, 'project') }}
-				</th>
-				<th>
 					{{ 'suivi.intervenants'|trans({}, 'project') }}
 				</th>
 				<th>
 					{{ 'suivi.contacts_client'|trans({}, 'project') }}
+				</th>
+				<th>
+					{{ 'suivi.audit'|trans({}, 'project') }}
 				</th>
 				<th>
 					<div>{{ 'suivi.prix_ht'|trans({}, 'project') }}</div>
@@ -45,13 +45,13 @@
 						{% include "Project/Etude/Buttons/Suiveur.html.twig" with {'suiveur': etude.suiveur} %}
 					</td>
 					<td>
-						{{etude.getAuditTypeChoice()[etude.auditType]}}
-					</td>
-					<td>
 						{% include "Project/Etude/Tools/Intervenants.html.twig" %}
 					</td>
 					<td>
 						{% include "Project/Etude/Tools/NombreContactsClient.html.twig" %}
+					</td>
+					<td>
+						{{ etude.getAuditTypeChoice()[etude.auditType]}}
 					</td>
 					<td>
 						{% include "Project/Etude/Tools/PrixEtJEH.html.twig" %}
