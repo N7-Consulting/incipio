@@ -82,31 +82,6 @@ class ClientContactController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="project_clientcontact_voir", path="/suivi/clientcontact/voir/{id}", methods={"GET","HEAD"})
-     *
-     * @return Response
-     */
-    public function voir(ClientContact $clientContact, EtudePermissionChecker $permChecker)
-    {
-        $etude = $clientContact->getEtude();
-
-        if ($permChecker->confidentielRefus($etude, $this->getUser())) {
-            throw new AccessDeniedException('Cette étude est confidentielle');
-        }
-
-        $etude = $clientContact->getEtude();
-        $contactsClient = $etude->getClientContacts()->toArray();
-        usort($contactsClient, [$this, 'compareDate']);
-
-        return $this->render('Project/ClientContact/voir.html.twig', [
-            'contactsClient' => $contactsClient,
-            'selectedContactClient' => $clientContact,
-            'etude' => $etude,
-            ]);
-    }
-
-    /**
-     * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="project_clientcontact_modifier", path="/suivi/clientcontact/modifier/{id}", methods={"GET","HEAD","POST"})
      *
      * @return RedirectResponse|Response
