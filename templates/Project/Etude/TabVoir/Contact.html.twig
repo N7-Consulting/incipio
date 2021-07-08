@@ -22,11 +22,11 @@
 		<thead>
 			<tr>
 				<th>{{ 'suivi.contact'|trans({}, 'project') }}</th>
-				<th>{{ 'suivi.type'|trans({}, 'project') }}</th>
 				<th>{{ 'suivi.date'|trans({}, 'project') }}</th>
 				<th>{{ 'suivi.fait_par'|trans({}, 'project') }}</th>
 				<th>{{ 'suivi.objet'|trans({}, 'project') }}</th>
 				<th>{{ 'suivi.resume'|trans({}, 'project') }}</th>
+				<th>{{ 'suivi.type'|trans({}, 'project') }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,9 +35,6 @@
 					<td>
 						<a href="{{ path('project_clientcontact_modifier', {'id': contact.id}) }}">{{ 'suivi.contact'|trans({}, 'project') }}
 							n°{{etude.clientContacts | length - loop.index0}}</a>
-					</td>
-					<td>
-						{{contact.moyenContact}}
 					</td>
 					<td>
 						{{contact.date | date("d/m/Y") }}
@@ -50,6 +47,9 @@
 					</td>
 					<td>
 						{{ contact.contenu  | nl2br }}
+					</td>
+					<td>
+						{{contact.moyenContact}}
 					</td>
 				</tr>
 			{% endfor %}

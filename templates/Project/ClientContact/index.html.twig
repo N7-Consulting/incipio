@@ -28,10 +28,10 @@
 					<th>{{ 'suivi.contact'|trans({}, 'project') }}</th>
 					<th>{{ 'suivi.etude.etude'|trans({}, 'project') }}</th>
 					<th>{{ 'suivi.date'|trans({}, 'project') }}</th>
-					<th>{{ 'suivi.type'|trans({}, 'project') }}</th>
 					<th>{{ 'suivi.fait_par'|trans({}, 'project') }}</th>
 					<th>{{ 'suivi.objet'|trans({}, 'project') }}</th>
 					<th>{{ 'suivi.resume'|trans({}, 'project') }}</th>
+					<th>{{ 'suivi.type'|trans({}, 'project') }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,9 +48,6 @@
 							{{contact.date | date("d/m/Y") }}
 						</td>
 						<td>
-							{{contact.moyenContact}}
-						</td>
-						<td>
 							{{ contact.faitPar.PrenomNom }}
 						</td>
 						<td>
@@ -58,6 +55,9 @@
 						</td>
 						<td>
 							{{ contact.contenu  | nl2br }}
+						</td>
+						<td>
+							{{contact.moyenContact}}
 						</td>
 					</tr>
 				{% endfor %}
