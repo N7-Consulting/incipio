@@ -481,15 +481,17 @@ class EtudeController extends AbstractController
 
         $etudesEnCours = $em->getRepository(Etude::class)
             ->findBy(['stateID' => Etude::ETUDE_STATE_COURS], ['mandat' => 'DESC', 'num' => 'DESC']);
+        $etudesFinies = $em->getRepository(Etude::class)
+            ->findBy(['stateID' => Etude::ETUDE_STATE_FINIE], ['mandat' => 'DESC', 'num' => 'DESC']);
         $etudesTerminees = $em->getRepository(Etude::class)
             ->findBy(['stateID' => Etude::ETUDE_STATE_CLOTUREE], ['mandat' => 'DESC', 'num' => 'DESC']);
-        $etudes = array_merge($etudesEnCours, $etudesTerminees);
+        $etudes = [$etudesEnCours, $etudesFinies, $etudesTerminees];
 
-        $ob = $chartManager->getGanttSuivi($etudes);
+        $ob = $chartManager->getGanttSuivi(array_merge($etudesEnCours, $etudesFinies, $etudesTerminees));
 
         return $this->render('Project/Etude/suiviQualite.html.twig', [
-            'etudesEnCours' => $etudesEnCours,
-            'etudesTerminees' => $etudesTerminees,
+            '_etudes' => $etudes,
+            'etudesAudit' => $etudesFinies, // Les études à auditer
             'chart' => $ob,
         ]);
     }
