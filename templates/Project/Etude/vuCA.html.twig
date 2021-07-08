@@ -87,11 +87,13 @@
 		<th>{{ 'suivi.suiveur'|trans({}, 'project') }}</th>
 		<td colspan="2">{% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  etude.suiveur} %}</td>
 	</tr>
+	{% if etude.missions is not empty %}
 	<tr>
 		<td colspan="6" style="text-align: center;">
 			{% include "Project/Etude/Tools/Intervenants.html.twig" %}
 		</td>
 	</tr>
+	{% endif %}
 	<tr>
 		<th>
 			<div>{{ 'suivi.date_lancement'|trans({}, 'project') }}</div>
