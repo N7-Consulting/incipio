@@ -133,7 +133,6 @@ class IndicateursController extends AbstractController
     {
         // Nombre de formation et de présent par mois:
         $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
-
         $maxMandat = [] !== $formationsParMandat ? max(array_keys($formationsParMandat)) : 0;
         $nombrePresentFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de présents aux formations';
         $nombreFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de formations';
@@ -143,10 +142,7 @@ class IndicateursController extends AbstractController
         foreach ($formationsParMandat as $mandat => $formations) {    
             foreach ($formations as $formation) {
                 if ($formation->getDateDebut()) {
-                    $interval = new \DateInterval('P' . 1 . 'Y');
-                    $dateDecale = clone $formation->getDateDebut();
-                    $dateDecale->add($interval);
-                    $mois= $dateDecale->format('M');
+                    $mois= $formation->getDateDebut()->format('M');
                     if (array_key_exists($mois, $formationsParMandat[$mandat])) {
                         ++$nombreFormations[$mandat][$mois];
                     } else {
@@ -182,7 +178,6 @@ class IndicateursController extends AbstractController
                 $moisSignature = $dateSignature->format('M');
                 $avs = $etude->getAvs();
                 $avMissions = $etude->getAvMissions();
-                
                 $phases = $etude->getPhases();
                 $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
                 $mandat = $etude->getMandat();
@@ -196,8 +191,7 @@ class IndicateursController extends AbstractController
                         $nombreEtudesParMandat[$mandat][$moisSignature] = 1;
                     }
 
-                    // Nombre d'avs de durée, de mission, de rupture, de montant, de m"thode, et le total
-                    
+                    // Nombre d'avs de durée, de mission, de rupture, de montant, de méthode, et le total
                     foreach ($avMissions as $avMission){
                         if ($avMission->getDateSignature()) {
                             $anneeAvenant = $avMission->getDateSignature()->format('Y');
