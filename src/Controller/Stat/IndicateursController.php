@@ -179,7 +179,7 @@ class IndicateursController extends AbstractController
                             }
                             else{
                                     $nombreAvsParMandat[$anneeAvenant][$moisAvenant] = 1;
-                                    array_key_exists($moisAvenant, $avenantMission[$anneeAvenant]) ? $avenantMission[$anneeAvenant][$moisAvenant]++ : $avenantMission[$anneeAvenant][$moisAvenant] = 1;
+                                    $avenantMission[$anneeAvenant][$moisAvenant] = 1;
                             }
                         }
                     }
@@ -228,13 +228,13 @@ class IndicateursController extends AbstractController
                                     $types = $av ->getClauses();
                                     foreach($types as $type){ 
                                         switch ($type) {
-                                            case 1: array_key_exists($moisAvenant, $avenantDelai[$anneeAvenant]) ? $avenantDelai[$anneeAvenant][$moisAvenant]++ : $avenantDelai[$anneeAvenant][$moisAvenant] = 1;
+                                            case 1: $avenantDelai[$anneeAvenant][$moisAvenant] = 1;
                                                 break;
-                                            case 2: array_key_exists($moisAvenant, $avenantMeto[$anneeAvenant]) ? $avenantMeto[$anneeAvenant][$moisAvenant]++ : $avenantMeto[$anneeAvenant][$moisAvenant] = 1;
+                                            case 2: $avenantMeto[$anneeAvenant][$moisAvenant] = 1;
                                                 break;
-                                            case 3: array_key_exists($moisAvenant, $avenantMontant[$anneeAvenant]) ? $avenantMontant[$anneeAvenant][$moisAvenant]++ : $avenantMontant[$anneeAvenant][$moisAvenant] = 1;
+                                            case 3: $avenantMontant[$anneeAvenant][$moisAvenant] = 1;
                                                 break;
-                                            case 5: array_key_exists($moisAvenant, $avenantRupture[$anneeAvenant]) ? $avenantRupture[$anneeAvenant][$moisAvenant]++ : $avenantRupture[$anneeAvenant][$moisAvenant] = 1;
+                                            case 5: $avenantRupture[$anneeAvenant][$moisAvenant] = 1;
                                                 break;
                                         }
                                     }
