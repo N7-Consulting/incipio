@@ -20,10 +20,6 @@
     {# affiche l'unique champ de la tache : description #}
     {#{ form_row(form.description) }#}
 
-    {# Buttons en haut #}
-    <p><input type="submit" value="{{ 'suivi.phase_ajouter'|trans({}, 'project') }}" name="add" class="btn btn-info"/> &nbsp
-        <input type="submit" value="{{ 'suivi.phases_enregistrer'|trans({}, 'project') }}" class="btn btn-default"/></p>
-
     <div class="row">
         <div class="col-md-12">
         <div class="table-responsive" data-prototype="{{ form_widget(form.phases.vars.prototype) | e }}">
