@@ -17,7 +17,7 @@
         </tr>
         {% for mandat, formations in formationsParMandat %}
             <tr>
-                <th colspan="7">{{ 'formation.annee'|trans({}, 'formation') }} {{ mandat }}</th>
+                <th colspan="7">{{ 'formation.mandat'|trans({}, 'formation') }} {{ mandat }}</th>
             </tr>
             {% for formation in formations | reverse %}
                 <tr>
