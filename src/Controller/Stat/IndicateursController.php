@@ -123,7 +123,8 @@ class IndicateursController extends AbstractController
         );
     }
     public function getDonneesEtudes(ObjectManager $em)
-    {
+    {   // Analyse des données sur les études, le chiffre d'affaire et les avenants. 
+
         $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
         $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
         $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
@@ -131,7 +132,7 @@ class IndicateursController extends AbstractController
         $listDocs = [$ccs, $ces, $bdc];
 
         $nombreEtudesParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études';
-        $nombreAvsParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants total';
+        $nombreAvsParMandat[2021]['Indicateur'] = 'Nombre d\'avenants total';
         $avenantDelai[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de délai';
         $avenantMeto[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de méthodologie';
         $avenantMontant[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de montant';
@@ -139,16 +140,6 @@ class IndicateursController extends AbstractController
         $avenantRupture[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de rupture';
         $cumuls[$this->anneeActuelle]['Indicateur'] = 'Chiffre d\'affaire (en euros)';
         $cumulsJEH[$this->anneeActuelle]['Indicateur'] = 'Nombre de JEH signés';
-
-        $nombreEtudesParMandat['Indicateur'] = 'Nombre d\'études';
-        $nombreAvsParMandat['Indicateur'] = 'Nombre d\'avenants total';
-        $avenantDelai['Indicateur'] = 'Nombre d\'avenants de délai';
-        $avenantMeto['Indicateur'] = 'Nombre d\'avenants de méthodologie';
-        $avenantMontant['Indicateur'] = 'Nombre d\'avenants de montant';
-        $avenantMission['Indicateur'] = 'Nombre d\'avenants de mission';
-        $avenantRupture['Indicateur'] = 'Nombre d\'avenants de rupture';
-        $cumuls['Indicateur'] = 'Chiffre d\'affaire (en euros)';
-        $cumulsJEH['Indicateur'] = 'Nombre de JEH signés';
 
         foreach ($listDocs as $docs){
             foreach ($docs as $doc) {
@@ -159,7 +150,7 @@ class IndicateursController extends AbstractController
                 $avMissions = $etude->getAvMissions();
                 $phases = $etude->getPhases();
                 $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
-                $mandat = $etude->getMandat();
+                $mandat = $dateSignature->format('Y');
 
                 if ($dateSignature && $signee) {
                     // Nombre d'étude par mois
@@ -174,8 +165,8 @@ class IndicateursController extends AbstractController
                     foreach ($avMissions as $avMission){
                         if ($avMission->getDateSignature()) {
                             $anneeAvenant = $avMission->getDateSignature()->format('Y');
+                            $moisAvenant = $avMission->getDateSignature()->format('M');
                             if (array_key_exists($anneeAvenant, $nombreAvsParMandat)) {
-                                $moisAvenant = $avMission->getDateSignature()->format('M');
                                 if (array_key_exists($moisAvenant, $nombreAvsParMandat[$anneeAvenant])) {
                                     ++$nombreAvsParMandat[$anneeAvenant][$moisAvenant];
                                     array_key_exists($moisAvenant, $avenantMission[$anneeAvenant]) ? $avenantMission[$anneeAvenant][$moisAvenant]++ : $avenantMission[$anneeAvenant][$moisAvenant] = 1;
@@ -280,27 +271,25 @@ class IndicateursController extends AbstractController
     public function getDonneesFormation(ObjectManager $em)
     {
         // Nombre de formation et de présent par mois:
-            $formationsParMandat = $em->getRepository(Formation::class)->findAllByMandat();
-            $maxMandat = [] !== $formationsParMandat ? max(array_keys($formationsParMandat)) : 0;
+            $formations = $em->getRepository(Formation::class)->findAll();
             $nombrePresentFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de présents aux formations';
             $nombreFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de formations';
-
-            $nombreFormations['Indicateur'] = 'Nombre de formations';
-            $nombrePresentFormations['Indicateur'] = 'Nombre de présents aux formations';
-            ksort($formationsParMandat); // Tri selon les promos
-    
-            /** @var Formation[] $formations */
-            foreach ($formationsParMandat as $mandat => $formations) {    
-                foreach ($formations as $formation) {
-                    if ($formation->getDateDebut()) {
-                        $mois= $formation->getDateDebut()->format('M');
-                        if (array_key_exists($mois, $formationsParMandat[$mandat])) {
-                            ++$nombreFormations[$mandat][$mois];
+     
+            foreach ($formations as $formation) {
+                if ($formation->getDateDebut()) {
+                    $mois= $formation->getDateDebut()->format('M');
+                    $annee= $formation->getDateDebut()->format('Y');
+                    if (array_key_exists($annee, $nombreFormations)) {
+                        if (array_key_exists($mois, $nombreFormations[$annee])) {
+                            ++$nombreFormations[$annee][$mois];
                         } else {
-                            $nombreFormations[$mandat][$mois] = 1;
+                            $nombreFormations[$annee][$mois] = 1;
                         }
-                        $nombrePresentFormations[$mandat][$mois] = count($formation->getMembresPresents());
                     }
+                    else {
+                        $nombreFormations[$annee][$mois] = 1;
+                    }
+                    $nombrePresentFormations[$annee][$mois] = count($formation->getMembresPresents());
                 }
             }
 
@@ -314,20 +303,36 @@ class IndicateursController extends AbstractController
         $membres = $em->getRepository(Membre::class)->findAll();
         $nbIntervenants = [];
         $nbIntervenants[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'intervenants recrutés';
-        $nbIntervenants['Indicateur'] = 'Nombre d\'intervenants recrutés';
 
         foreach ($membres as $membre) {
             if ($membre->getPersonne()->getPoste() == 'Intervenant'
             && $membre->getDateConventionEleve()) {
                 $mois = $membre->getDateConventionEleve()->format('M');
+                $annee = $membre->getDateConventionEleve()->format('Y');
                 if (array_key_exists($mois, $nbIntervenants[$this->anneeActuelle])) {
-                    ++$nbIntervenants[$this->anneeActuelle][$mois];
+                    ++$nbIntervenants[$annee][$mois];
                 } else {
-                    $nbIntervenants[$this->anneeActuelle][$mois] = 1;
+                    $nbIntervenants[$annee][$mois] = 1;
                 }
             }
         }
         $donnees = [$nbIntervenants];
+        return $donnees;
+    }
+
+    public function getDonneesSupplementaires(ObjectManager $em)
+    {
+        // Nombres de membres par années (gestion associative)
+        $membres = $em->getRepository(Membre::class)->findAll();
+        $nbMembres = [];
+        $nbMembres['Indicateur'] = 'Nombre total de membres';
+        foreach ($membres as $membre) {
+            $annee = $membre->getPromotion() - 3;
+            if ($annee) {
+                array_key_exists($annee, $nbMembres) ? $nbMembres[$annee]++ : $nbMembres[$annee] = 1;
+            }
+        }
+        $donnees = [$nbMembres];
         return $donnees;
     }
 
@@ -346,6 +351,7 @@ class IndicateursController extends AbstractController
         $donneesEtudes = $this->getDonneesEtudes($em);
         $donneesMembres = $this->getDonneesMembres($em);
 
+        // On récupère les données mensuelles pour l'année actuelle
         $listeDonnees = [$donneesFormation, $donneesEtudes, $donneesMembres];
         foreach ($listeDonnees as $donnees) {
             foreach ($donnees as $donnee) {
@@ -373,63 +379,32 @@ class IndicateursController extends AbstractController
         $donneesFormation = $this->getDonneesFormation($em);
         $donneesEtudes = $this->getDonneesEtudes($em);
         $donneesMembres = $this->getDonneesMembres($em);
+        $donneesSupplementaires = $this->getDonneesSupplementaires($em);
 
-        
-        
-
-        // $tauxAvenant['Indicateur'] = 'Taux d\'avenant';
-        // foreach ($nombreEtudesParMandat as $anneeAvenant => $datas) {
-        //     if ($datas > 0 && array_key_exists($anneeAvenant, $nombreEtudesAvecAvenantParMandat) ) {
-        //         $tauxAvenant[$anneeAvenant] = 100 * $nombreEtudesAvecAvenantParMandat[$anneeAvenant] / $datas;
-        //     }
-        // }
-
-        // $moyenne['Indicateur'] = 'Moyenne du prix d\'un JEH';
-        // foreach ($cumuls as $mandat => $datas) {
-        //     if ($datas > 0) {
-        //         $moyenne[$mandat] = round(($datas) / $cumulsJEH[$mandat]);
-        //         $panierMoyen[$mandat] = $datas / $nombreEtudesParMandat[$mandat];
-        //     }
-        // }
-
-        // Nombres de membres par années (gestion associative)
-        $membres = $em->getRepository(Membre::class)->findAll();
-        $nbMembres = [];
-        $nbMembres['Indicateur'] = 'Nombre total de membres';
-        foreach ($membres as $membre) {
-            $annee = $membre->getPromotion() - 3;
-            if ($annee) {
-                array_key_exists($annee, $nbMembres) ? $nbMembres[$annee]++ : $nbMembres[$annee] = 1;
-            }
-        }
-
-        $donneesSupplementaires = [$nbMembres];
-
+        // Permet de rajouter des données qui ne sont pas le cumul des données mensuelles
+        foreach ($donneesSupplementaires as $donnees) {
+            $tabDonnees[] = $donnees;
+       }
 
         $listeDonnees = [$donneesFormation, $donneesEtudes, $donneesMembres];
-        
+
+        // Somme des données mensuelles pour avoir le bilan annuelle
         foreach ($listeDonnees as $donnees) {
-            foreach ($donnees as $annee) { 
-                
-
-                    foreach ($annee as $mois) {
-                        $donneeAnuelle = [];
-                if(!array_key_exists('Indicateur', $donneeAnuelle)){    
-                    $donneeAnuelle['Indicateur'] = $annee['Indicateur'];
-                }
-                        if(key($annee) != 'Indicateur'){
-                            array_key_exists(key($annee), $donneeAnuelle) ? $donneeAnuelle[key($annee)]++ : $donneeAnuelle[key($annee)] = 1;
+            foreach ($donnees as $donnee) {            
+                $donneesAnnuelles = [];
+                $donneesAnnuelles['Indicateur'] = $donnee[$this->anneeActuelle]['Indicateur'];      
+                foreach ($donnee as $annee => $donneeMensuelles) {
+                    $somme = 0;
+                    foreach ($donneeMensuelles as $mois => $valeur) {
+                                                if( $mois != 'Indicateur'){
+                                $somme += $valeur;
                         }
-                        $tabDonnees[] = $donneeAnuelle;  
-                            //array_key_exists(key($annee), $donneeAnuelle) ? $donneeAnuelle[key($annee)]+= $data : $donneeAnuelle[key($annee)] = 0;
                     }
-            }
+                    $donneesAnnuelles[$annee] = $somme;
+                }
+                $tabDonnees[] = $donneesAnnuelles;
+            }            
         }
-
-        // foreach ($donneesSupplementaires as $donnees) {
-        //     $tabDonnees[] = $donneeAnuelle;
-        // }
-
         return $tabDonnees;
     }
 
