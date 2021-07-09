@@ -131,7 +131,7 @@ class IndicateursController extends AbstractController
 
         $listDocs = [$ccs, $ces, $bdc];
 
-        $nombreEtudesParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études';
+        $nombreEtudesParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études signées';
         $nombreAvsParMandat[2021]['Indicateur'] = 'Nombre d\'avenants total';
         $avenantDelai[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de délai';
         $avenantMeto[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'avenants de méthodologie';
@@ -149,7 +149,8 @@ class IndicateursController extends AbstractController
                 $avs = $etude->getAvs();
                 $avMissions = $etude->getAvMissions();
                 $phases = $etude->getPhases();
-                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID();
+                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID() || Etude::ETUDE_STATE_CLOTUREE == $etude->getStateID() ; 
+                // ETAT ACCEPTE?? 
                 $mandat = $dateSignature->format('Y');
 
                 if ($dateSignature && $signee) {
