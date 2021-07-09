@@ -385,7 +385,7 @@ class IndicateursController extends AbstractController
         // Permet de rajouter des données qui ne sont pas le cumul des données mensuelles
         foreach ($donneesSupplementaires as $donnees) {
             $tabDonnees[] = $donnees;
-       }
+        }
 
         $listeDonnees = [$donneesFormation, $donneesEtudes, $donneesMembres];
 
@@ -453,15 +453,15 @@ class IndicateursController extends AbstractController
             if ($datas > 0) {
                 $categories[] = $mandat;
                 $data[] = ['y' => 100 * ($nombreJoursAvecAvenantParMandat[$mandat] - $datas) / $datas,
-                           'nombreEtudes' => $datas,
-                           'nombreEtudesAvecAv' => $nombreJoursAvecAvenantParMandat[$mandat] - $datas,
+                        'nombreEtudes' => $datas,
+                        'nombreEtudesAvecAv' => $nombreJoursAvecAvenantParMandat[$mandat] - $datas,
                 ];
             }
         }
 
         $series = [['name' => 'Nombre de jours de retard / nombre de jours travaillés', 'colorByPoint' => true,
                     'data' => $data,
-                   ],
+                ],
         ];
         $ob = $this->chartFactory->newColumnChart($series, $categories);
 
@@ -590,9 +590,9 @@ class IndicateursController extends AbstractController
             if ($datas > 0) {
                 $categories[] = $mandat;
                 $data[] = ['y' => 100 * $nombreEtudesAvecAvenantParMandat[$mandat] / $datas,
-                           'nombreEtudes' => $datas,
-                           'nombreEtudesAvecAv' => $nombreEtudesAvecAvenantParMandat[$mandat],
-                           'nombreAvs' => $nombreAvsParMandat[$mandat],
+                        'nombreEtudes' => $datas,
+                        'nombreEtudesAvecAv' => $nombreEtudesAvecAvenantParMandat[$mandat],
+                        'nombreAvs' => $nombreAvsParMandat[$mandat],
                 ];
             }
         }
@@ -659,13 +659,13 @@ class IndicateursController extends AbstractController
         $data = [];
         foreach ($comptes as $compte => $montantHT) {
             $data[] = ['name' => $compte, 'y' => (0 == $montantTotal) ? 0 : 100 * $montantHT / $montantTotal,
-                       'montantHT' => $montantHT, 'montantTotal' => $montantTotal,
+                    'montantHT' => $montantHT, 'montantTotal' => $montantTotal,
             ];
         }
 
         $series = [['type' => 'pie', 'name' => 'Répartition des dépenses HT', 'data' => $data,
                     'Dépenses totale' => $montantTotal,
-                   ],
+                ],
         ];
         $ob = $this->chartFactory->newPieChart($series);
 
@@ -805,7 +805,7 @@ class IndicateursController extends AbstractController
             if ($datas > 0) {
                 $categories[] = $mandat;
                 $data[] = ['y' => $datas, 'JEH' => $cumulsJEH[$mandat],
-                           'moyJEH' => ($datas - $cumulsFraisDossier[$mandat]) / $cumulsJEH[$mandat],
+                        'moyJEH' => ($datas - $cumulsFraisDossier[$mandat]) / $cumulsJEH[$mandat],
                 ];
             }
         }
@@ -1092,7 +1092,7 @@ class IndicateursController extends AbstractController
         $ob->tooltip->valueSuffix(' cotisants');
 
         return $this->render('Stat/Indicateurs/Indicateur.html.twig', [
-             'chart' => $ob,
+            'chart' => $ob,
         ]);
     }
 
@@ -1237,18 +1237,18 @@ class IndicateursController extends AbstractController
                     $mandats[1][]
                         = ['x' => $dateDebutDecale->getTimestamp() * 1000,
                            'y' => 0/* $cumuls[0] */ ,
-                           'name' => $etude->getReference($namingConvention) . ' + ' . $etude->getNom(),
-                           'date' => $dateDebutDecale->format('d/m/Y'),
-                           'prix' => $etude->getMontantHT(),
+                        'name' => $etude->getReference($namingConvention) . ' + ' . $etude->getNom(),
+                        'date' => $dateDebutDecale->format('d/m/Y'),
+                        'prix' => $etude->getMontantHT(),
                     ];
                 }
                 if ($addFin) {
                     $mandats[1][]
                         = ['x' => $dateFinDecale->getTimestamp() * 1000,
                            'y' => 0/* $cumuls[0] */ ,
-                           'name' => $etude->getReference($namingConvention) . ' - ' . $etude->getNom(),
-                           'date' => $dateDebutDecale->format('d/m/Y'),
-                           'prix' => $etude->getMontantHT(),
+                        'name' => $etude->getReference($namingConvention) . ' - ' . $etude->getNom(),
+                        'date' => $dateDebutDecale->format('d/m/Y'),
+                        'prix' => $etude->getMontantHT(),
                     ];
                 }
             }
@@ -1355,7 +1355,7 @@ class IndicateursController extends AbstractController
 
         $series = [['type' => 'pie', 'name' => 'Provenance du CA selon le type de client (tous mandats)',
                     'data' => $data, 'CA Total' => $chiffreDAffairesTotal,
-                   ],
+                ],
         ];
         $ob = $this->chartFactory->newPieChart($series);
 
@@ -1461,7 +1461,7 @@ class IndicateursController extends AbstractController
 
         $series = [['type' => 'pie', 'name' => 'Taux de fidélisation', 'data' => $data,
                     'Nombre de clients' => $nombreClient,
-                   ],
+                ],
         ];
         $ob = $this->chartFactory->newPieChart($series);
 
@@ -1507,7 +1507,7 @@ class IndicateursController extends AbstractController
 
         $series = [['type' => 'pie', 'name' => 'Provenance des études selon la source de prospection (tous mandats)',
                     'data' => $data, 'nombreClient' => $nombreClient,
-                   ],
+                ],
         ];
         $ob = $this->chartFactory->newPieChart($series);
 
@@ -1554,7 +1554,7 @@ class IndicateursController extends AbstractController
 
         $series = [['type' => 'pie', 'name' => 'Répartition du CA selon la source de prospection (tous mandats)',
                     'data' => $data, 'CA Total' => $chiffreDAffairesTotal,
-                   ],
+                ],
         ];
         $ob = $this->chartFactory->newPieChart($series);
 
