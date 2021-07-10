@@ -96,32 +96,6 @@
                         </th>
                     </tr>
                 </table>
-                <hr/>
-                <table class="table">
-                    <tr>
-                        <td colspan="2">
-                            <p>
-                                <strong>{{ 'dashboard.jeyser_utile'|trans({}, 'dashboard') }}</strong><br/>
-                                {{ 'dashboard.encourager_dev'|trans({}, 'dashboard') }}
-                                <a href="https://github.com/n7consulting/Incipio">{{ 'dashboard.github'|trans({}, 'dashboard') }}</a>.<br/>
-                                {{ 'dashboard.ca_coute_rien'|trans({}, 'dashboard') }}
-                            </p>
-                        </td>
-                    </tr>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <tr>
-                            <td colspan="2">
-                            {{ 'dashboard.jeyser'|trans({}, 'dashboard') }}
-                                <span id="version">{{ 'dashboard.version'|trans({}, 'dashboard') }}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" id="version-info">
-                            </td>
-                        </tr>
-                    {% endif %}
-
-                </table>
             </div>
         </div>
         <div class="row">
@@ -148,7 +122,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for comment in comments | reverse %}                   
+                        {% for comment in comments | reverse %}
                             <tr>
                                 <td>{{ comment.getAuthorName() }}</td>
                                 <td>{{ comment.body }}</td>
@@ -156,7 +130,7 @@
                             </tr>
                         {% endfor %}
                     </tbody>
-                    </table> 
+                    </table>
                 {% else %}
                     <h>{{ 'dashboard.aucun_commentaire' | trans({}, 'dashboard') }}</h>
                 {% endfor %}
@@ -164,6 +138,31 @@
         </div>
 {% include '@FullCalendar/Calendar/calendar.html.twig' %}
 
+<br>
+
+<table class="table">
+	<tr>
+		<td colspan="2">
+			<p>
+				<strong>{{ 'dashboard.jeyser_utile'|trans({}, 'dashboard') }}</strong><br/>
+				{{ 'dashboard.encourager_dev'|trans({}, 'dashboard') }}
+				<a href="https://github.com/n7consulting/Incipio">{{ 'dashboard.github'|trans({}, 'dashboard') }}</a>.<br/>
+				{{ 'dashboard.ca_coute_rien'|trans({}, 'dashboard') }}
+			</p>
+		</td>
+	</tr>
+	{% if is_granted('ROLE_ADMIN') %}
+		<tr>
+			<td colspan="2">
+				{{ 'dashboard.jeyser'|trans({}, 'dashboard') }}
+				<span id="version">{{ 'dashboard.version'|trans({}, 'dashboard') }}</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" id="version-info"></td>
+		</tr>
+	{% endif %}
+</table>
 {% endblock %}
 
 {% block javascript %}
