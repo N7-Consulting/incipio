@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block content_bundle %}
-
     <table id="control" class="table table-bordered">
         <tr>
-            <td><label for="checkbox-audit">{{ 'suivi.audit'|trans({}, 'project') }}</label>
-                <input id="checkbox-audit" type="checkbox" checked="checked" onchange="$('#content-3').toggle();"/></td>
+            <td><label for="checkbox-audit">{{ 'suivi.audit'|trans({}, 'project') }} {{ 'suivi.etudes_finies'|trans({}, 'project') }}</label>
+                <input id="checkbox-audit" type="checkbox" checked="checked" onchange="$('#content-audit').toggle();"/></td>
             <td><label for="checkbox-termi">{{ 'suivi.etudes_terminees'|trans({}, 'project') }}</label>
+                <input id="checkbox-termi" type="checkbox" onchange="$('#content-3').toggle();"/></td>
+            <td><label for="checkbox-termi">{{ 'suivi.etudes_finies'|trans({}, 'project') }}</label>
                 <input id="checkbox-termi" type="checkbox" onchange="$('#content-2').toggle();"/></td>
             <td><label for="checkbox-encou">{{ 'suivi.etudes_en_cours'|trans({}, 'project') }}</label>
                 <input id="checkbox-encou" type="checkbox" onchange="$('#content-1').toggle();"/></td>
@@ -28,15 +29,15 @@
 
     <div id="ganttChart" style="width: 100%; display:none;"></div>
 
-    {% set typeEtude = {"Etude en cours" : etudesEnCours, "Etudes Terminees" : etudesTerminees } %}
-    {% for label,etudes in typeEtude %}
+    {% for etudes in _etudes %}
+        {% set etu = etudes[0] ?? NULL %}
         <table id="content-{{ loop.index }}" class="table table-bordered table-striped" style="display:none;">
             <tr>
-                <th>{{ label }}</th>
+                <th>{{ etu != NULL ? etu.getStateIDToString(etu.stateID) | trans({}, 'project') : '' }}</th>
                 <th>{{ 'suivi.client'|trans({}, 'project') }}</th>
                 <th>{{ 'suivi.suiveur'|trans({}, 'project') }}</th>
                 <th>{{ 'suivi.intervenants'|trans({}, 'project') }}</th>
-                
+
             </tr>
             {% for etude in etudes %}
                 <tr>
@@ -72,7 +73,8 @@
         </table>
     {% endfor %}
 
-<table id="content-3" class="table table-bordered table-striped">
+{% if etudesAudit is not empty %}
+<table id="content-audit" class="table table-bordered table-striped">
     <thead>
     <tr>
         <th>
@@ -99,7 +101,7 @@
     </thead>
     <tbody>
 
-    {% for etude in etudesTerminees %}
+    {% for etude in etudesAudit %}
         <tr>
             <td>
                 <div>{{ etude.confidentiel ? '<span class="label label-danger">[CONFIDENTIEL]</span> ' }}<a
@@ -129,6 +131,9 @@
     {% endfor %}
     </tbody>
 </table>
+{% else %}
+    {{ 'suivi.aucune_etude_audit' | trans({}, 'project')}}
+{% endif %}
 {% endblock %}
 
 {% block javascript %}

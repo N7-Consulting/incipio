@@ -21,13 +21,13 @@ dashboard:
   comptes: Comptes
   commentaire_recent: Commentaires récents
   commentaire_recent_titre: Commentaires récents
-  connecte: Connecté en tant que 
+  connecte: Connecté en tant que
   contacts_clients: Contacts Client
   cotisations: Cotisations
   date: Date
   declaratif_tva: Déclaratif TVA
   deconnexion: Déconnexion
-  derniere_connection: Dernière connexion le 
+  derniere_connection: Dernière connexion le
   doctype_ajouter: Ajouter un Doctype
   documents: Documents
   documents_gestion: Gestion des Documents
@@ -116,8 +116,8 @@ dashboard:
   saisie_informations: Saisie des informations
   stock_doc : Archivage des documents
   suivi_etudes: Suivi d'Etude
-  stat:  Stats le 
-  suggestion: Envoyez vos suggestion à 
+  stat:  Stats le
+  suggestion: Envoyez vos suggestion à
   tableaux_suivi: Tableaux de Suivi
   tabProcess: Tableau des processus
   template: Template
@@ -125,5 +125,5 @@ dashboard:
   vie_privee: Vie privée
   version: 3.1.0
   vie_privee_gestion: Gestion de la vie privée
-  vu_ca: Vu CA
+  vue_ca: Vue CA
   voir_commentaire: Voir le fil de discussion

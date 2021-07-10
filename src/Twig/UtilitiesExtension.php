@@ -2,14 +2,15 @@
 
 namespace App\Twig;
 
-use Twig_SimpleFilter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class UtilitiesExtension extends \Twig_Extension
+class UtilitiesExtension extends AbstractExtension
 {
   public function getFilters()
   {
     return array(
-      new Twig_SimpleFilter(
+      new TwigFilter(
         'ucfirst',
         array($this, 'ucFirst'),
         array('needs_environment' => true)

@@ -9,8 +9,10 @@ use App\Entity\Project\Mission;
 use App\Entity\Project\ProcesVerbal;
 use App\Entity\Treso\Facture;
 use App\Entity\User\User;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class EtudeExtension extends \Twig_Extension
+class EtudeExtension extends AbstractExtension
 {
     // Pour utiliser les fonctions depuis twig
     public function getName()
@@ -22,24 +24,13 @@ class EtudeExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'getErrors' => new \Twig_Function('getErrors', [$this, 'getErrors']),
-            'getWarnings' => new \Twig_Function('getWarnings', [$this, 'getWarnings']),
-            'getInfos' => new \Twig_Function('getInfos', [$this, 'getInfos']),
-            'getEtatDoc' => new \Twig_Function('getEtatDoc', [$this, 'getEtatDoc']),
-            'getEtatFacture' => new \Twig_Function('getEtatFacture', [$this, 'getEtatFacture']),
-            'confidentielRefus' => new \Twig_Function('confidentielRefus', [$this, 'confidentielRefusTwig']),
-        ];
-    }
-
-    /***
-     *
-     * Juste un test
-     */
-    public function getFilters()
-    {
-        return [
-            'nbsp' => new \Twig_Filter('nonBreakingSpace', [$this, 'nonBreakingSpace']),
-            'string' => new \Twig_Filter('nonBreakingSpace', [$this, 'toString']),
+            'getErrors' => new TwigFunction('getErrors', [$this, 'getErrors']),
+            'getWarnings' => new TwigFunction('getWarnings', [$this, 'getWarnings']),
+            'getEtatDoc' => new TwigFunction('getEtatDoc', [$this, 'getEtatDoc']),
+            'getEtatFacture' => new TwigFunction('getEtatFacture', [$this, 'getEtatFacture']),
+            'getColor' => new TwigFunction('getColor', [$this, 'getColor']),
+            'getColorDoc' => new TwigFunction('getColorDoc', [$this, 'getColorDoc']),
+            'confidentielRefus' => new TwigFunction('confidentielRefus', [$this, 'confidentielRefusTwig']),
         ];
     }
 
@@ -465,6 +456,7 @@ class EtudeExtension extends \Twig_Extension
         return $warnings;
     }
 
+    // Never used and deprecated (CC and AP docs) but interesting... 2021
     public function getInfos(Etude $etude)
     {
         $infos = [];
@@ -577,7 +569,7 @@ class EtudeExtension extends \Twig_Extension
     }
 
     //Copie de getEtatDoc pour les factures. Les factures n'étendant pas Doctype, le relu, rédigé ...
-    // n'est pas pertinent. On ne teste donc que l'existence et loe versement.
+    // n'est pas pertinent. On ne teste donc que l'existence et le versement.
 
     /**
      * @param $doc
@@ -589,7 +581,7 @@ class EtudeExtension extends \Twig_Extension
         /** @var Facture $doc */
         if (null !== $doc) {
             $now = new \DateTime('now');
-            $dateDebutEtude = $doc->getEtude()->getCc()->getDateSignature();
+            $dateDebutEtude = $doc->getEtude()->getDateLancement();
             $ok = ($doc->getDateVersement() < $now && $doc->getDateVersement() > $dateDebutEtude ? 2 : 1);
         } else {
             $ok = 0;
@@ -613,5 +605,63 @@ class EtudeExtension extends \Twig_Extension
         }
 
         return null;
+    }
+
+    /**
+     * Avoir une couleur affichée cohérente sur l'ensemble du site
+     */
+    public function getColor(Etude $etude) {
+        switch ($etude->getStateID()) {
+            case Etude::ETUDE_STATE_ACCEPTEE:
+            case Etude::ETUDE_STATE_COURS:
+            case Etude::ETUDE_STATE_CLOTUREE:
+                $color = 'success';
+                break;
+            case Etude::ETUDE_STATE_AVORTEE:
+                $color = 'danger';
+                break;
+            case Etude::ETUDE_STATE_PAUSE:
+                $color = 'warning';
+                break;
+            case Etude::ETUDE_STATE_NEGOCIATION:
+            case Etude::ETUDE_STATE_FINIE:
+                $color = 'info';
+                break;
+            default:
+                $color = '';
+                break;
+        }
+
+        return 'alert-' . $color;
+    }
+
+    /**
+     * Avoir une couleur affichée cohérente sur l'ensemble du site
+     * Utilisé principalement dans Vu(e)CA
+     */
+    public function getColorDoc($doc) {
+
+        if ($doc instanceof Facture) {
+            $etat = $this->getEtatFacture($doc);
+        } else {
+            $etat = $this->getEtatDoc($doc);
+        }
+
+        switch ($etat) {
+            case 0:
+                $color = 'danger';
+                break;
+            case 1:
+                $color = 'warning';
+                break;
+            case 2:
+                $color = 'success';
+                break;
+            default:
+                $color = '';
+                break;
+        }
+
+        return $color;
     }
 }

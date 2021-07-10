@@ -481,15 +481,17 @@ class EtudeController extends AbstractController
 
         $etudesEnCours = $em->getRepository(Etude::class)
             ->findBy(['stateID' => Etude::ETUDE_STATE_COURS], ['mandat' => 'DESC', 'num' => 'DESC']);
+        $etudesFinies = $em->getRepository(Etude::class)
+            ->findBy(['stateID' => Etude::ETUDE_STATE_FINIE], ['mandat' => 'DESC', 'num' => 'DESC']);
         $etudesTerminees = $em->getRepository(Etude::class)
             ->findBy(['stateID' => Etude::ETUDE_STATE_CLOTUREE], ['mandat' => 'DESC', 'num' => 'DESC']);
-        $etudes = array_merge($etudesEnCours, $etudesTerminees);
+        $etudes = [$etudesEnCours, $etudesFinies, $etudesTerminees];
 
-        $ob = $chartManager->getGanttSuivi($etudes);
+        $ob = $chartManager->getGanttSuivi(array_merge($etudesEnCours, $etudesFinies, $etudesTerminees));
 
         return $this->render('Project/Etude/suiviQualite.html.twig', [
-            'etudesEnCours' => $etudesEnCours,
-            'etudesTerminees' => $etudesTerminees,
+            '_etudes' => $etudes,
+            'etudesAudit' => $etudesFinies, // Les études à auditer
             'chart' => $ob,
         ]);
     }
@@ -598,9 +600,21 @@ class EtudeController extends AbstractController
             ->getForm();
     }
 
+    private function getAdjascentKey($key, $hash = array(), $increment)
+    {
+        $keys = array_keys($hash);
+        $found_index = array_search($key, $keys);
+        if ($found_index === false) {
+            return false;
+        }
+        $newindex = $found_index + $increment;
+        // returns false if no result found
+        return ($newindex > 0 && $newindex < sizeof($hash)) ? $keys[$newindex] : false;
+    }
+
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="project_vu_ca", path="/suivi/ca/{id}", methods={"GET","HEAD"}, defaults={"id": "-1"})
+     * @Route(name="project_vue_ca", path="/suivi/ca/{id}", methods={"GET","HEAD"}, defaults={"id": ""})
      *
      * @param $id
      *
@@ -609,44 +623,37 @@ class EtudeController extends AbstractController
     public function vuCA($id, ChartManager $chartManager)
     {
         $em = $this->getDoctrine()->getManager();
+        $etudes = $em->getRepository(Etude::class)->findBeginningProjects();
 
+        // On trouve soit l'étude associée à l'id
         if ($id > 0) {
             $etude = $em->getRepository(Etude::class)->find($id);
         } else {
-            $etude = $em->getRepository(Etude::class)->findOneBy(['stateID' => Etude::ETUDE_STATE_COURS]);
+            $etude = array_values($etudes)[0];
         }
 
-        if (null === $etude) {
-            $etude = $em->getRepository(Etude::class)
-                ->findOneBy(['stateID' => Etude::ETUDE_STATE_NEGOCIATION]);
+        if (!$etudes) {
+            throw $this->createNotFoundException('Vous devez avoir au moins une étude en négociation, acceptée ou en cours pour accéder à cette page.');
         }
 
-        if (null === $etude) {
-            throw $this->createNotFoundException('Vous devez avoir au moins une étude de créée pour accéder à cette page.');
-        }
 
-        //Etudes En Négociation : stateID = 1
-        $etudesDisplayList = $em->getRepository(Etude::class)->getTwoStates([Etude::ETUDE_STATE_NEGOCIATION,
-                                                                             Etude::ETUDE_STATE_COURS,
-        ], ['mandat' => 'ASC', 'num' => 'ASC']);
-
-        if (!in_array($etude, $etudesDisplayList)) {
+        if (!in_array($etude, $etudes)) {
             throw $this->createNotFoundException('Etude incorrecte');
         }
 
         /* pagination management */
-        $currentEtudeId = array_search($etude, $etudesDisplayList);
-        $nextId = min(count($etudesDisplayList), $currentEtudeId + 1);
-        $previousId = max(0, $currentEtudeId - 1);
+        $currentKey = array_search($etude, $etudes);
+        $nextID = $etudes[$this->getAdjascentKey($currentKey, $etudes, +1)]->getId();
+        $prevID = $etudes[$this->getAdjascentKey($currentKey, $etudes, -1)]->getId();
 
         $ob = $chartManager->getGantt($etude, 'suivi');
 
         return $this->render('Project/Etude/vuCA.html.twig', [
-            'etude' => $etude,
             'chart' => $ob,
-            'nextID' => (null !== $etudesDisplayList[$nextId] ? $etudesDisplayList[$nextId]->getId() : 0),
-            'prevID' => (null !== $etudesDisplayList[$previousId] ? $etudesDisplayList[$previousId]->getId() : 0),
-            'etudesDisplayList' => $etudesDisplayList,
+            'nextID' => $nextID,
+            'prevID' => $prevID,
+            'etude' => $etude,
+            'etudes' => $etudes,
         ]);
     }
 }
