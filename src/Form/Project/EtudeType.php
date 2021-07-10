@@ -18,6 +18,7 @@ use App\Entity\Project\Etude;
 use App\Entity\Project\Cca;
 use App\Form\Personne\ProspectType;
 use App\Repository\Personne\PersonneRepository;
+use App\Repository\Project\CcaRepository;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2ChoiceType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -44,6 +45,9 @@ class EtudeType extends AbstractType
                 'class' => Cca::class,
                 'label' => 'suivi.cca',
                 'translation_domain' => 'project',
+                'query_builder' => function (CcaRepository $cr) {
+                    return $cr->findNotFinished();
+                },
                 'required' => false,
             ])
             ->add('knownProspect', CheckboxType::class, [
