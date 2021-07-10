@@ -64,7 +64,7 @@ class Cca extends DocType
 
     public function __toString()
     {
-        return $this->prospect->getNom() . ' - ' . $this->dateFin->format('d/m/Y');
+        return $this->getNom() . ' - ' . $this->dateFin->format('d/m/Y');
     }
 
     public function __construct()
