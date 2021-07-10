@@ -92,9 +92,9 @@ class IndicateursController extends AbstractController
         $tabDonneesAnnuel = $this->getDonnesBrutes( $em);
         $tabDonneesMensuel = $this->getDonneesBrutesMensuelles( $em);
 
-        $annees = ['Indicateur'];      
+        $annees = ['Indicateur'];
         for ($j = $this->anneeActuelle- 2  ; $j <= $this->anneeActuelle; ++$j) {
-            $annees[] = $j; 
+            $annees[] = $j;
         }
 
         $mois = ['Indicateur'];
@@ -104,13 +104,13 @@ class IndicateursController extends AbstractController
             $moisString = new \DateTime($this->anneeActuelle . '-' . $j . '-01');
             $moisString = $moisString->format('M');
             $mois[] = $moisString;
-        } 
+        }
         for ($j = 1   ; $j <= $moisInt; ++$j) {
             $moisString = new \DateTime($this->anneeActuelle . '-' . $j . '-01');
             $moisString = $moisString->format('M');
             $mois[] = $moisString;
-        } 
-        
+        }
+
 
         return $this->render(
             'Stat/Indicateurs/index.html.twig',
@@ -123,7 +123,7 @@ class IndicateursController extends AbstractController
         );
     }
     public function getDonneesEtudes(ObjectManager $em)
-    {   // Analyse des données sur les études, le chiffre d'affaire et les avenants. 
+    {   // Analyse des données sur les études, le chiffre d'affaire et les avenants.
 
         $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
         $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
@@ -144,13 +144,14 @@ class IndicateursController extends AbstractController
         foreach ($listDocs as $docs){
             foreach ($docs as $doc) {
                 $etude = $doc->getEtude();
-                $dateSignature = $doc->getDateSignature();
+                $dateSignature = $etude->getDateLancement();
+                if (!$dateSignature) continue;
                 $moisSignature = $dateSignature->format('M');
                 $avs = $etude->getAvs();
                 $avMissions = $etude->getAvMissions();
                 $phases = $etude->getPhases();
-                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID() || Etude::ETUDE_STATE_CLOTUREE == $etude->getStateID() ; 
-                // ETAT ACCEPTE?? 
+                $signee = Etude::ETUDE_STATE_COURS == $etude->getStateID() || Etude::ETUDE_STATE_FINIE == $etude->getStateID() || Etude::ETUDE_STATE_CLOTUREE == $etude->getStateID() ;
+                // ETAT ACCEPTE??
                 $mandat = $dateSignature->format('Y');
 
                 if ($dateSignature && $signee) {
@@ -209,7 +210,7 @@ class IndicateursController extends AbstractController
                                     else{
                                         $nombreAvsParMandat[$anneeAvenant][$moisAvenant] = 1;
                                         $types = $av ->getClauses();
-                                        foreach($types as $type){ 
+                                        foreach($types as $type){
                                             switch ($type) {
                                                 case 1: array_key_exists($moisAvenant, $avenantDelai[$anneeAvenant]) ? $avenantDelai[$anneeAvenant][$moisAvenant]++ : $avenantDelai[$anneeAvenant][$moisAvenant] = 1;
                                                     break;
@@ -226,7 +227,7 @@ class IndicateursController extends AbstractController
                                 else{
                                     $nombreAvsParMandat[$anneeAvenant][$moisAvenant] = 1;
                                     $types = $av ->getClauses();
-                                    foreach($types as $type){ 
+                                    foreach($types as $type){
                                         switch ($type) {
                                             case 1: $avenantDelai[$anneeAvenant][$moisAvenant] = 1;
                                                 break;
@@ -243,7 +244,7 @@ class IndicateursController extends AbstractController
                         }
                     }
 
-                    // Analyse du CA et nombre de JEH signés par mois 
+                    // Analyse du CA et nombre de JEH signés par mois
                     foreach($phases as $phase){
                         $anneePhase = $phase->getDateDebut()->format('Y');
                         $moisPhase = $phase->getDateDebut()->format('M');
@@ -275,7 +276,7 @@ class IndicateursController extends AbstractController
             $formations = $em->getRepository(Formation::class)->findAll();
             $nombrePresentFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de présents aux formations';
             $nombreFormations[$this->anneeActuelle]['Indicateur'] = 'Nombre de formations';
-     
+
             foreach ($formations as $formation) {
                 if ($formation->getDateDebut()) {
                     $mois= $formation->getDateDebut()->format('M');
@@ -341,7 +342,7 @@ class IndicateursController extends AbstractController
      * @Security("has_role('ROLE_CA')")
      * @Route(name="stat_donnees_brutes_mensuel", path="/admin/indicateurs/DonneesBrutes/Mensuelles", methods={"GET","HEAD"})
      * @return Response
-     * 
+     *
      */
     public function getDonneesBrutesMensuelles(ObjectManager $em)
     {
@@ -359,7 +360,7 @@ class IndicateursController extends AbstractController
                 if(array_key_exists($this->anneeActuelle, $donnee)){
                     $tabDonnees[] = $donnee[$this->anneeActuelle];
                 }
-                
+
             }
         }
         return $tabDonnees;
@@ -373,7 +374,7 @@ class IndicateursController extends AbstractController
      * @return Response
      */
     public function getDonnesBrutes(ObjectManager $em)
-    {   
+    {
         $tabDonnees = [];
 
         // Requêtes
@@ -391,9 +392,9 @@ class IndicateursController extends AbstractController
 
         // Somme des données mensuelles pour avoir le bilan annuelle
         foreach ($listeDonnees as $donnees) {
-            foreach ($donnees as $donnee) {            
+            foreach ($donnees as $donnee) {
                 $donneesAnnuelles = [];
-                $donneesAnnuelles['Indicateur'] = $donnee[$this->anneeActuelle]['Indicateur'];      
+                $donneesAnnuelles['Indicateur'] = $donnee[$this->anneeActuelle]['Indicateur'];
                 foreach ($donnee as $annee => $donneeMensuelles) {
                     $somme = 0;
                     foreach ($donneeMensuelles as $mois => $valeur) {
@@ -404,7 +405,7 @@ class IndicateursController extends AbstractController
                     $donneesAnnuelles[$annee] = $somme;
                 }
                 $tabDonnees[] = $donneesAnnuelles;
-            }            
+            }
         }
         return $tabDonnees;
     }
@@ -419,7 +420,7 @@ class IndicateursController extends AbstractController
      * @return Response
      */
     public function getRetardParMandat(Request $request, ObjectManager $em)
-    {   
+    {
         $nombreJoursParMandat = [];
         $nombreJoursAvecAvenantParMandat = [];
 
@@ -495,7 +496,7 @@ class IndicateursController extends AbstractController
         $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
         $listDocs = [$ccs, $ces, $bdc];
-        
+
         foreach ($listDocs as $docs) {
             foreach ($docs as $doc) {
                 $etude = $doc->getEtude();
@@ -559,7 +560,7 @@ class IndicateursController extends AbstractController
         $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
         $listDocs = [$ccs, $ces, $bdc];
-        
+
         foreach ($listDocs as $docs) {
             foreach ($docs as $doc) {
                 $etude = $doc->getEtude();
@@ -776,7 +777,7 @@ class IndicateursController extends AbstractController
         $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
         $listDocs = [$ccs, $ces, $bdc];
-        
+
         foreach ($listDocs as $docs) {
             foreach ($docs as $doc) {
                 $etude = $doc->getEtude();
@@ -861,7 +862,7 @@ class IndicateursController extends AbstractController
         $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
 
         $listDocs = [$ccs, $ces, $bdc];
-        
+
         if ($this->keyValueStore->exists('namingConvention')) {
             $namingConvention = $this->keyValueStore->get('namingConvention');
         } else {
