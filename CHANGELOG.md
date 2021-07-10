@@ -84,7 +84,8 @@ Lors de l'ajout d'une phase, le prix d'un JEH est automatiquement reporté et la
 
 - Ajout des nouveaux états pour une étude ;
 - Ajout des nouveaux documents d'étude ;
-- Documents non générés sont désormais cachés dans le tableau récapitulatif.
+- Documents non générés sont désormais cachés dans le tableau récapitulatif ;
+- Les audits se font désormais dans l'onglet Qualité (voir Qualité).
 
 ##### Contacts
 
@@ -110,13 +111,46 @@ La vue CA permet d'avoir un condensé d'informations pour chaque étude non term
 
 Ces boutons ne marchaient pas tous, ils sont désormais opérationnels.
 
-### R.F.P
+#### Suivi des problèmes
+
+Déplacé dans l'onglet Qualité (voir Qualité).
+
+### R.F.P. (Anciennement Formation)
+
+Cet onglet, plus complet, permet d'ajouter des documents de passation et les formations liées au R.F.P. afin d'avoir un archivage uniforme entre tous les pôles.
+
+- Ajout de passations liés à un pôle ;
+  - Upload de documents liés à une passation.
+- Ajout de formations ;
+  - Ajout de formations/participants ;
+  - Date de début/date de fin ;
+  - Upload de documents liés à une formation.
+- Monitoring des participants aux formations dispensées.
 
 ### Qualité
 
-### Administration
+#### Indicateurs
+
+- Affichage de données brutes récupérées automatiquement, soit mensuellement (12 derniers mois) soit par année (3 dernières années) ;
+- Les graphiques, classés par pôles, ont été déplacés ici.
+
+#### Gestion des processus
+
+Nouvel onglet permettant au pôle qualité une gestion plus centrale des processus.
+
+- Ajout d'un processus (Nom du processus / Pilote).
+  - Ajout de documents liés à ce processus.
+
+#### Suivi des problèmes
+
+C'est ici que la qualité va pouvoir auditer une étude lorsque cette dernière passe dans l'état "Finie".
+
+- Ajout d'un tableau (affiché par défaut) qui permet d'auditer les études finies (bouton Audit Etudes Finies) ;
+- Ajout d'un tableau qui affiche les études finies (bonton Etudes Finies).
 
 ### Archivage des documents
+
+*Cet onglet n'est pas terminé.*
 
 ### Divers
 
