@@ -17,6 +17,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
+use App\Entity\Personne\Personne;
+use App\Repository\Personne\PersonneRepository;
+
 
 use App\Entity\Publish\Document;
 
@@ -26,8 +30,18 @@ class ProcessType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, ['required' => true])
-            ->add('pilote', TextType::class, ['required' => true])
-            
+            ->add('pilote',
+            Select2EntityType::class,
+            [
+                'class' => Personne::class,
+                'label' => 'processus.pilote',
+                'translation_domain' => 'processus',
+                'choice_label' => 'prenomNom',
+                'query_builder' => function (PersonneRepository $pr) {
+                    return $pr->getMembreOnly();
+                },
+                'required' => true,
+            ])
             // ->add('template', FileType::class, [
             //     'required' => true,
             //     'label' => 'dashboard.template',
