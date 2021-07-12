@@ -88,7 +88,7 @@
         </tr>
         <!-- CONVENTION CADRE AGILE -->
         <tr class="docTabRow {{ etude.ccaActive or etude.cca is not none ? "" : "hidden" }}">
-            <th>{{ 'suivi.cca'|trans({}, 'project') }}</th>
+            <th>{{ 'suivi.convention_cadre_agile'|trans({}, 'project') }}</th>
             <td class="state">{{ 'suivi.incomplet'|trans({}, 'project') }}</td>
             <td>{{ form_widget(formSuivi.cca.redige) }}</td>
             <td>{{ form_widget(formSuivi.cca.relu) }}</td>

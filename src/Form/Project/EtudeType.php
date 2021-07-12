@@ -43,7 +43,7 @@ class EtudeType extends AbstractType
             ])
             ->add('cca', Select2EntityType::class, [
                 'class' => Cca::class,
-                'label' => 'suivi.cca',
+                'label' => 'suivi.convention_cadre_agile',
                 'translation_domain' => 'project',
                 'query_builder' => function (CcaRepository $cr) {
                     return $cr->findNotFinished();
