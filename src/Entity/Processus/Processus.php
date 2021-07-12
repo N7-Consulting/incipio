@@ -29,6 +29,14 @@ class Processus
      */
     private $nom;
 
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank
+     */
+    private $description;
+
     /**
      * @var Personne
      *
@@ -69,6 +77,30 @@ class Processus
     public function getPilote()
     {
         return $this->pilote;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     *
+     * @return Processus
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     /**

@@ -20,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use App\Entity\Personne\Personne;
 use App\Repository\Personne\PersonneRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 use App\Entity\Publish\Document;
@@ -41,7 +42,12 @@ class ProcessType extends AbstractType
                     return $pr->getMembreOnly();
                 },
                 'required' => true,
-            ]);
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'processus.description',
+                'translation_domain' => 'processus',
+                'required' => true,
+                'attr' => ['cols' => '100%', 'rows' => 5], ]);
     }
 
     public function getBlockPrefix()

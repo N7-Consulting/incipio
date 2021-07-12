@@ -4,6 +4,7 @@ processus:
   ajouter_doc :  Ajouter un Document
   confirmation_supprimer_processus: Etes-vous sûr de vouloir supprimer définitivement ce processus ?
   date_upload : Date du télechargement
+  description: Description
   documents: Documents associés
   gestion_proc: Gestion des processus
   modifier: Modifier le processus  
