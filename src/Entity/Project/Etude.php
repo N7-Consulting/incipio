@@ -350,21 +350,6 @@ class Etude
     private $newProspect;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $cdc;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $pc;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $qs;
-
-    /**
      * @Assert\Valid()
      * @ORM\OneToOne(targetEntity=Bdc::class, inversedBy="etude", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="SET NULL")
