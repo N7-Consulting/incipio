@@ -30,7 +30,7 @@ formation:
   formations_presence: Présence aux formations
   gestion_etude: Gestion d'études
   gestion_asso: Gestion associative
-  num_mandat: Numéro du mandat 
+  num_mandat: Numéro du mandat
   mandat: Mandat
   membres: membres
   membres_present: Membres Présents
@@ -49,6 +49,6 @@ formation:
   treso: Trésorerie
   formations_liste: Liste des formations
   formation_ajouter: Ajouter une formation
-  date_debut: Date de début
-  date_fin: Date de fin
+  date_heure_debut: Date et heure de début
+  date_heure_fin: Date et heure de fin
   lien_documents: Lien vers des documents externes
