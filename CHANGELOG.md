@@ -150,7 +150,9 @@ C'est ici que la qualité va pouvoir auditer une étude lorsque cette dernière 
 
 ### Archivage des documents
 
-*Cet onglet n'est pas terminé.*
+C'est sur ce nouvel onglet qu'on peut télécharger tous les documents (si les doctypes existent) de toutes les études.
+
+*NB: La partie trésorerie de cet onglet n'est pas terminé.*
 
 ### Divers
 
