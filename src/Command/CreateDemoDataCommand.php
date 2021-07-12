@@ -2,6 +2,9 @@
 
 namespace App\Command;
 
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use App\Entity\Comment\Thread;
+use App\Entity\Formation\Passation;
 use App\Entity\Formation\Formation;
 use App\Entity\Hr\Competence;
 use App\Entity\Personne\Employe;
@@ -36,6 +39,8 @@ class CreateDemoDataCommand extends Command
 
     const FILIERES = ['Hydro', 'Electronique', 'Telecoms', 'Automatique', 'Info'];
 
+    
+
     const FORMATIONS = [
         [
             'titre' => 'Présentaion orale',
@@ -46,6 +51,19 @@ class CreateDemoDataCommand extends Command
             'titre' => 'Formation Jeyser',
             'description' => 'Comment utiliser correctement Jeyser et utiliser toutes ses fonctionnalités.',
             'categorie' => 7,
+        ]
+    ];
+
+    const PASSATIONS = [
+        [
+            'titre' => 'Plan d\'action',
+            'description' => 'Comment réaliser et suivre un plan d\'action et le suivre durant le mandat.',
+            'categorie' => 1,
+        ],
+        [
+            'titre' => 'Identifiants et mot de passe',
+            'description' => 'Document contenant les identifiants et les mots de passe utilisés par le pôle.',
+            'categorie' => 4,
         ]
     ];
 
@@ -229,6 +247,7 @@ class CreateDemoDataCommand extends Command
         $this->createDocuments($output);
 
         $this->createFormation($output);
+        $this->createPassation($output);
 
         $output->writeln('Done.');
     }
@@ -497,28 +516,25 @@ class CreateDemoDataCommand extends Command
         return $mvp;
     }
 
-    /**
-     * 
-     *
-     * @return Formation
-     */
+
     private function createFormation(OutputInterface $output)
     {
         foreach (self::FORMATIONS as $formation) {
             $fo = new Formation();
 
-            $year1 = 2020;
+            $date = new \DateTime('now');
+            $year = $date->format('Y');
             $month = rand(1, 10);
             $day = rand(1, 27);
 
             $fo->setTitre($formation['titre']);
             $fo->setDescription($formation['description']);
 
-            $fo->setMandat($year1);
+            $fo->setMandat($year);
             $fo->setCategorie($formation['categorie']);
             
-            $fo->setDateDebut(new \DateTime($year1 . '-' . $month . '-' . $day . '8:0:0'));
-            $fo->setDateFin(new \DateTime($year1 . '-' . $month . '-' . $day. '9:0:0'));
+            $fo->setDateDebut(new \DateTime($year . '-' . $month . '-' . $day . ' 8:0:0'));
+            $fo->setDateFin(new \DateTime($year . '-' . $month . '-' . $day. ' 9:0:0'));
 
             $pe = new Personne();
             $prenom = self::PRENOM[array_rand(self::PRENOM)];
@@ -553,9 +569,26 @@ class CreateDemoDataCommand extends Command
             $this->em->persist($fo);
 
             $this->em->flush();
-            $output->writeln('Formations: Ok');
         }
+        $output->writeln('Formations: Ok');
+    }
 
+
+    private function createPassation(OutputInterface $output)
+    {
+        foreach (self::PASSATIONS as $passation) {
+            $pas = new Passation();
+
+            $pas->setTitre($passation['titre']);
+            $pas->setDescription($passation['description']);
+            $pas->setCategorie($passation['categorie']);
+            
+            $this->validateObject('New Passation', $pas);
+            $this->em->persist($pas);
+
+            $this->em->flush();
+        }
+        $output->writeln('Passations: Ok');
     }
 
     private function validateObject(string $point, $object)
