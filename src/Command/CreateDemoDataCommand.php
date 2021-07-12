@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use App\Entity\Comment\Thread;
 use App\Entity\Formation\Passation;
 use App\Entity\Formation\Formation;
+use App\Entity\Processus\Processus;
 use App\Entity\Hr\Competence;
 use App\Entity\Personne\Employe;
 use App\Entity\Personne\Filiere;
@@ -54,18 +55,17 @@ class CreateDemoDataCommand extends Command
         ]
     ];
 
-    // const PROCESSUS = [
-    //     [
-    //         'titre' => 'Présentaion orale',
-    //         'description' => 'Comment créer et présenter un diaporama.',
-    //         'categorie' => 1,
-    //     ],
-    //     [
-    //         'titre' => 'Formation Jeyser',
-    //         'description' => 'Comment utiliser correctement Jeyser et utiliser toutes ses fonctionnalités.',
-    //         'categorie' => 7,
-    //     ]
-    // ];
+    const PROCESSUS = [
+        [
+            'nom' => 'R.F.P',
+            'description' => 'Fiches de processus liées au R.F.P',
+            
+        ],
+        [
+            'nom' => 'Sécurité informatique',
+            'description' => 'Procédures à suivre lors d\'une attaque informatique',
+        ]
+    ];
 
     const PASSATIONS = [
         [
@@ -261,6 +261,7 @@ class CreateDemoDataCommand extends Command
 
         $this->createFormation($output);
         $this->createPassation($output);
+        $this->createProcessus($output);
 
         $output->writeln('Done.');
     }
@@ -603,6 +604,35 @@ class CreateDemoDataCommand extends Command
         }
         $output->writeln('Passations: Ok');
     }
+
+    private function createProcessus(OutputInterface $output)
+    {
+        foreach (self:: PROCESSUS as $processus) {
+            $pro = new Processus();
+
+            $pro->setNom($processus['nom']);
+            $pro->setDescription($processus['description']);
+
+            $pil = new Personne();
+            $prenom = self::PRENOM[array_rand(self::PRENOM)];
+            $nom = self::NOM[array_rand(self::NOM)];
+            $pil->setPrenom($prenom);
+            $pil->setNom($nom);
+            $pil->setEmail($prenom . '' . $nom . '@localhost.localdomain');
+            $pil->setMobile('0' . rand(111111111, 999999999));
+            $pil->setEmailEstValide(false);
+            $pil->setEstAbonneNewsletter(false);
+            $this->em->persist($pil);
+            $pro->setPilote($pil);
+            
+            $this->validateObject('New Processus', $pro);
+            $this->em->persist($pro);
+
+            $this->em->flush();
+        }
+        $output->writeln('Processus: Ok');
+    }
+
 
     private function validateObject(string $point, $object)
     {
