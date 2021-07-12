@@ -3,11 +3,18 @@
 namespace App\Twig;
 
 use App\Entity\Project\Mission;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class UtilitiesExtension extends AbstractExtension
 {
+  private $t;
+
+  public function __construct(TranslatorInterface $t) {
+      $this->t = $t;
+  }
+
   public function getFilters()
   {
     return array(
@@ -37,7 +44,7 @@ class UtilitiesExtension extends AbstractExtension
    */
   public function soberName($doc) {
     $string = '';
-    $dateSignature = $doc->getDateSignature() !== NULL ? $doc->getDateSignature()->format('d/m/y') : 'Non signé';
+    $dateSignature = $doc->getDateSignature() !== NULL ? $doc->getDateSignature()->format('d/m/y') : $this->t->trans('etude.non_signe', [], 'personne');
     $intervenant = $doc instanceof Mission ? $doc->getIntervenant() : '';
 
     $results = [
