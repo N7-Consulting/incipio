@@ -41,13 +41,7 @@ class ProcessType extends AbstractType
                     return $pr->getMembreOnly();
                 },
                 'required' => true,
-            ])
-            // ->add('template', FileType::class, [
-            //     'required' => true,
-            //     'label' => 'dashboard.template',
-            //     'translation_domain' => 'dashboard',
-            // ])
-            ;
+            ]);
     }
 
     public function getBlockPrefix()
@@ -58,7 +52,7 @@ class ProcessType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-             'data_class' => Processus::class,
+            'data_class' => Processus::class,
         ]);
     }
 }

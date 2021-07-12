@@ -45,10 +45,10 @@ class LoadDocTypeData extends Fixture
 
         //proces verbal de reception final
         $pvr = new Document();
-        $pvr->setName('etude1');
+        $pvr->setName('PVRF');
         $pvr->setPath('PVRF.docx');
-        $pvr->setPole('actico');
-        $pvr->setType('PVRF');
+        //$pvr->setPole('actico');
+        //$pvr->setType('PVRF');
         $pvr->setSize(17000);
         $manager->persist($pvr);
 

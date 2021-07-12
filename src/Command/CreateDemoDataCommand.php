@@ -54,6 +54,19 @@ class CreateDemoDataCommand extends Command
         ]
     ];
 
+    // const PROCESSUS = [
+    //     [
+    //         'titre' => 'Présentaion orale',
+    //         'description' => 'Comment créer et présenter un diaporama.',
+    //         'categorie' => 1,
+    //     ],
+    //     [
+    //         'titre' => 'Formation Jeyser',
+    //         'description' => 'Comment utiliser correctement Jeyser et utiliser toutes ses fonctionnalités.',
+    //         'categorie' => 7,
+    //     ]
+    // ];
+
     const PASSATIONS = [
         [
             'titre' => 'Plan d\'action',
