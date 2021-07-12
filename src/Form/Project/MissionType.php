@@ -14,9 +14,9 @@ namespace App\Form\Project;
 use App\Entity\Personne\Membre;
 use App\Entity\Project\Etude;
 use App\Entity\Project\Mission;
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\DateType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,16 +41,20 @@ class MissionType extends DocTypeType
             ])
             ->add(
                 'debutOm',
-                Datetype::class,
-                ['label' => 'Début du Récapitulatif de Mission',
-                'required' => true, 'widget' => 'single_text', 'format' => 'dd/MM/yyyy',
+                DateType::class,
+                [
+                    'label' => 'Début du Récapitulatif de Mission',
+                    'required' => true,
+                    'widget' => 'single_text',
                 ]
             )
             ->add(
                 'finOm',
                 DateType::class,
-                ['label' => 'Fin du Récapitulatif de Mission',
-                'required' => true, 'widget' => 'single_text', 'format' => 'dd/MM/yyyy',
+                [
+                    'label' => 'Fin du Récapitulatif de Mission',
+                    'required' => true,
+                    'widget' => 'single_text',
                 ]
             )
             ->add(

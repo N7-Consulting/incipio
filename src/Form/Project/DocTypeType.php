@@ -18,10 +18,10 @@ use App\Entity\Project\DocType;
 use App\Entity\Project\Mission;
 use App\Form\Personne\EmployeType;
 use App\Repository\Personne\PersonneRepository;
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\DateType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -99,12 +99,11 @@ class DocTypeType extends AbstractType
 
         $builder->add(
             'dateSignature',
-            DateType::class,
+            TypeDateType::class,
             [
                 'label' => 'suivi.date_signature_document',
                 'translation_domain' => 'project',
                 'required' => false,
-                'format' => 'dd/MM/yyyy',
                 'widget' => 'single_text',
                 'attr' => ['autocomplete' => 'off'],
             ]

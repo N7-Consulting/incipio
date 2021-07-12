@@ -3,8 +3,8 @@
 namespace App\Form\Project;
 
 use App\Entity\Project\Cca;
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\DateType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +17,6 @@ class SubCcaType extends AbstractType
                 'label' => 'suivi.date_fin',
                 'translation_domain' => 'project',
                 'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
                 'required' => true,
             ]);
     }

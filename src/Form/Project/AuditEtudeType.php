@@ -12,10 +12,8 @@
 namespace App\Form\Project;
 
 use App\Entity\Project\Etude;
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\DateType as GenemuDateType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,16 +25,18 @@ class AuditEtudeType extends AbstractType
         $builder
             ->add(
                 'auditDate',
-                GenemuDateType::class,
-                ['label' => 'Date de l\'audit', 'widget' => 'single_text', 'format' => 'dd/MM/yyyy',
-                 'required' => false,
+                DateType::class,
+                [
+                    'label' => 'Date de l\'audit',
+                    'widget' => 'single_text',
+                    'required' => false,
                 ])
             ->add(
                 'auditType',
                 AuditType::class,
-                ['label' => 'Etat de l\'audit', 
+                ['label' => 'Etat de l\'audit',
                 'required' => true,
-                'choices' => array_flip(Etude::getAuditTypeChoice()), 
+                'choices' => array_flip(Etude::getAuditTypeChoice()),
                 ]
             )
             ->add('auditCommentaires', TextareaType::class, [
