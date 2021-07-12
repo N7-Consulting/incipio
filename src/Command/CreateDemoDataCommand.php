@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Formation\Formation;
 use App\Entity\Hr\Competence;
 use App\Entity\Personne\Employe;
 use App\Entity\Personne\Filiere;
@@ -34,6 +35,19 @@ class CreateDemoDataCommand extends Command
     const PRENOM = ['Alexandre', 'Paul', 'Thomas', 'Raphaël', 'Camille', 'Inès', 'Emma', 'Gabriel', 'Antoine', 'Louis', 'Victor', 'Maxime', 'Hugo', 'Louise', 'Marie', 'Sarah', 'Arthur', 'Clara', 'Lea', 'Alice', 'Lucas', 'Jules', 'Chloe', 'Elsa', 'Manon'];
 
     const FILIERES = ['Hydro', 'Electronique', 'Telecoms', 'Automatique', 'Info'];
+
+    const FORMATIONS = [
+        [
+            'titre' => 'Présentaion orale',
+            'description' => 'Comment créer et présenter un diaporama.',
+            'categorie' => 1,
+        ],
+        [
+            'titre' => 'Formation Jeyser',
+            'description' => 'Comment utiliser correctement Jeyser et utiliser toutes ses fonctionnalités.',
+            'categorie' => 7,
+        ]
+    ];
 
     const ETUDES = [
         [
@@ -213,6 +227,8 @@ class CreateDemoDataCommand extends Command
 
         //manage AP, CC & PVR
         $this->createDocuments($output);
+
+        $this->createFormation($output);
 
         $output->writeln('Done.');
     }
@@ -479,6 +495,67 @@ class CreateDemoDataCommand extends Command
         $this->membres[] = $mvp;
 
         return $mvp;
+    }
+
+    /**
+     * 
+     *
+     * @return Formation
+     */
+    private function createFormation(OutputInterface $output)
+    {
+        foreach (self::FORMATIONS as $formation) {
+            $fo = new Formation();
+
+            $year1 = 2020;
+            $month = rand(1, 10);
+            $day = rand(1, 27);
+
+            $fo->setTitre($formation['titre']);
+            $fo->setDescription($formation['description']);
+
+            $fo->setMandat($year1);
+            $fo->setCategorie($formation['categorie']);
+            
+            $fo->setDateDebut(new \DateTime($year1 . '-' . $month . '-' . $day . '8:0:0'));
+            $fo->setDateFin(new \DateTime($year1 . '-' . $month . '-' . $day. '9:0:0'));
+
+            $pe = new Personne();
+            $prenom = self::PRENOM[array_rand(self::PRENOM)];
+            $nom = self::NOM[array_rand(self::NOM)];
+            $pe->setPrenom($prenom);
+            $pe->setNom($nom);
+            $pe->setEmail($prenom . '' . $nom . '@localhost.localdomain');
+            $pe->setMobile('0' . rand(111111111, 999999999));
+            $pe->setEmailEstValide(false);
+            $pe->setEstAbonneNewsletter(false);
+            $this->validateObject('New Personne', $pe);
+            $this->em->persist($pe);
+            $formateur[] = $pe;
+
+            $pep = new Personne();
+            $prenom = self::PRENOM[array_rand(self::PRENOM)];
+            $nom = self::NOM[array_rand(self::NOM)];
+            $pep->setPrenom($prenom);
+            $pep->setNom($nom);
+            $pep->setEmail($prenom . '' . $nom . '@localhost.localdomain');
+            $pep->setMobile('0' . rand(111111111, 999999999));
+            $pep->setEmailEstValide(false);
+            $pep->setEstAbonneNewsletter(false);
+            $this->validateObject('New présent', $pep);
+            $this->em->persist($pep);
+            $membre[] = $pep;
+
+            $fo->setFormateurs($formateur);
+            $fo->setMembresPresents($membre);
+            
+            $this->validateObject('New Formation', $fo);
+            $this->em->persist($fo);
+
+            $this->em->flush();
+            $output->writeln('Formations: Ok');
+        }
+
     }
 
     private function validateObject(string $point, $object)
