@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\Project\Mission;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -15,6 +16,7 @@ class UtilitiesExtension extends AbstractExtension
         array($this, 'ucFirst'),
         array('needs_environment' => true)
       ),
+      new TwigFilter('soberName', [$this, 'soberName']),
     );
   }
 
@@ -26,5 +28,34 @@ class UtilitiesExtension extends AbstractExtension
       return sprintf('%s%s', $prefix, $suffix);
     }
     return ucfirst(strtolower($string));
+  }
+
+  /**
+   * Mainly used in Archivage tab.
+   * Return a sober string then __toString() method in DocTypes.
+   * @return string
+   */
+  public function soberName($doc) {
+    $string = '';
+    $dateSignature = $doc->getDateSignature() !== NULL ? $doc->getDateSignature()->format('d/m/y') : 'Non signé';
+    $intervenant = $doc instanceof Mission ? $doc->getIntervenant() : '';
+
+    $results = [
+      'Ce' => $dateSignature,
+      'Cca' => $dateSignature,
+      'Bdc' => $dateSignature,
+      'Av' =>  $dateSignature,
+      'ProcesVerbal' => $dateSignature,
+      'Mission' => $intervenant,
+    ];
+
+    foreach ($results as $subclass => $res) {
+      $class = 'App\Entity\Project\\' . $subclass;
+      if ($doc instanceof $class) {
+        $string = $res;
+        break;
+      }
+    }
+    return $string;
   }
 }
