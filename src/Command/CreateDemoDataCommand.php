@@ -24,6 +24,7 @@ use App\Entity\Project\ProcesVerbal;
 use App\Entity\Treso\Compte;
 use App\Entity\Treso\Facture;
 use App\Entity\Treso\FactureDetail;
+use App\Service\Project\EtudeManager;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Console\Command\Command;
@@ -170,7 +171,7 @@ class CreateDemoDataCommand extends Command
     const ETUDES = [
         [
             'nom' => '604GLA-BdC1',
-            'description' => 'Realisation site web',
+            'description' => 'Realisation site web statique',
             'statut' => Etude::ETUDE_STATE_FINIE,
             'nbrJEH' => 9,
             'duree' => 5,
@@ -179,7 +180,7 @@ class CreateDemoDataCommand extends Command
         ],
         [
             'nom' => '604GLA-BdC2',
-            'description' => 'Realisation site web',
+            'description' => 'Implantation partie backend au site',
             'statut' => Etude::ETUDE_STATE_ACCEPTEE,
             'nbrJEH' => 17,
             'duree' => 10,
@@ -252,6 +253,9 @@ class CreateDemoDataCommand extends Command
     /** @var ValidatorInterface */
     private $validator;
 
+    /** @var EtudeManager */
+    private $etudeManager;
+
     /** @var Membre[] */
     private $membres = [];
 
@@ -276,11 +280,12 @@ class CreateDemoDataCommand extends Command
     /** @var Competence[] */
     private $competences = [];
 
-    public function __construct(ObjectManager $em, ValidatorInterface $validator)
+    public function __construct(ObjectManager $em, ValidatorInterface $validator, EtudeManager $etudeManager)
     {
         parent::__construct();
         $this->em = $em;
         $this->validator = $validator;
+        $this->etudeManager = $etudeManager;
     }
 
     /**
@@ -309,7 +314,7 @@ class CreateDemoDataCommand extends Command
         $this->createEtudes($output);
 
         //manage AP, CC & PVR
-        $this->createDocuments($output);
+        // $this->createDocuments($output);
 
         $this->createFormation($output);
         $this->createPassation($output);
@@ -429,16 +434,20 @@ class CreateDemoDataCommand extends Command
     {
         foreach (self::ETUDES as $etude) {
             $e = new Etude();
+            $mandatDefault = $this->etudeManager->getMaxMandat();
             // hack with 581IMU, to have some decent stats on welcome page
-            $mandat = ('581IMU-BdC1' === $etude['nom'] ? date('Y') : rand(intval(date('Y')) - 3, intval(date('Y'))));
-            $month = rand(1, 10);
-            $day = rand(1, 30);
+            $mandat = ('581IMU-BdC1' === $etude['nom'] ? $mandatDefault - 1 : $mandatDefault);
+            $randomDate = new DateTime(date('Y') . '-' . rand(1,10) . '-' . rand(1, 30));
+            if ($etude['nom'] === '581IMU-BdC1')
+                $randomDate->modify('-365days');
             $e->setMandat($mandat);
             $e->setNom($etude['nom']);
             $e->setDescription($etude['description']);
-            $e->setDateCreation(new \DateTime($mandat . '-' . $month . '-' . $day));
+            $e->setDateCreation($randomDate);
             $e->setStateID($etude['statut']);
             $e->setAcompte(true);
+            $e->setCeActive(true); // Valeur par défaut depuis Jeyser 4.0.0, les AP et CC ne sont plus utilisées.
+            $e->setCcaActive(array_key_exists('cca', $etude));
             $e->setPourcentageAcompte(0.3);
             $e->setFraisDossier(90);
             $e->setPresentationProjet('Presentation ' . $etude['description']);
@@ -472,7 +481,7 @@ class CreateDemoDataCommand extends Command
                 $ph->setPrixJEH(340);
                 $ph->setTitre('phase ' . $i);
                 $ph->setDelai(intval(($etude['duree'] * 7) / $k) - $i);
-                $ph->setDateDebut(new \DateTime($mandat . '-' . $month . '-' . $day));
+                $ph->setDateDebut($randomDate);
                 $this->validateObject('New Phase ' . $i, $ph);
                 $this->em->persist($ph);
             }
@@ -487,7 +496,7 @@ class CreateDemoDataCommand extends Command
             $e->setSuiveurQualite($this->membres[array_rand($this->membres)]->getPersonne());
 
             //manage intervenant
-            if ($etude['statut'] > Etude::ETUDE_STATE_NEGOCIATION && $etude['statut'] < Etude::ETUDE_STATE_AVORTEE) {
+            if ($etude['statut'] !== Etude::ETUDE_STATE_NEGOCIATION &&  $etude['statut'] !== Etude::ETUDE_STATE_ACCEPTEE && $etude['statut'] !== Etude::ETUDE_STATE_AVORTEE) {
                 //manage developper
                 $mdev = $this->createMembre(self::PRENOM[array_rand(self::PRENOM)], self::NOM[array_rand(self::NOM)], $mandat + 1);
                 $this->em->persist($mdev);
@@ -499,9 +508,9 @@ class CreateDemoDataCommand extends Command
                 $mi->setSignataire2($mdev->getPersonne());
                 $mi->setSignataire1($this->president->getPersonne());
                 $mi->setEtude($e);
-                $mi->setDateSignature(new \DateTime($mandat . '-' . $month . '-' . $day));
-                $mi->setDebutOm(new \DateTime($mandat . '-' . $month . '-' . $day));
-                $mi->setFinOm(new \DateTime($mandat . '-' . ($month + 1) . '-' . $day));
+                $mi->setDateSignature($randomDate);
+                $mi->setDebutOm($randomDate);
+                $mi->setFinOm($randomDate->modify('+30days'));
                 $mi->setAvancement(rand(10, 95));
                 $mi->setIntervenant($mdev);
                 $this->validateObject('New Mission', $mi);
