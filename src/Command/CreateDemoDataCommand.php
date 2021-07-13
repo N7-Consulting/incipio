@@ -15,6 +15,7 @@ use App\Entity\Personne\Poste;
 use App\Entity\Personne\Prospect;
 use App\Entity\Project\Ap;
 use App\Entity\Project\Cc;
+use App\Entity\Project\Cca;
 use App\Entity\Project\Etude;
 use App\Entity\Project\GroupePhases;
 use App\Entity\Project\Mission;
@@ -23,6 +24,7 @@ use App\Entity\Project\ProcesVerbal;
 use App\Entity\Treso\Compte;
 use App\Entity\Treso\Facture;
 use App\Entity\Treso\FactureDetail;
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -145,80 +147,101 @@ class CreateDemoDataCommand extends Command
     ];
 
     CONST CCA = [
-
+        [
+            'nom' => '604GLA',
+            'prospect' => 'Gladiator Consulting',
+            'dateSignature' => '-70 days',
+            'dateFin' => '+300 days',
+        ],
+        [
+            'nom' => '605BLA',
+            'prospect' => 'Blackwater',
+            'dateSignature' => '-50 days',
+            'dateFin' => '+20 days',
+        ],
+        [
+            'nom' => '581IMU',
+            'prospect' => 'Imuka',
+            'dateSignature' => '-200 days',
+            'dateFin' => '-25 days',
+        ],
     ];
 
     const ETUDES = [
         [
-            'nom' => '315GLA',
+            'nom' => '604GLA-BdC1',
             'description' => 'Realisation site web',
-            'statut' => Etude::ETUDE_STATE_NEGOCIATION,
+            'statut' => Etude::ETUDE_STATE_FINIE,
             'nbrJEH' => 9,
             'duree' => 5,
-            'dateCC' => 'ok',
+            'cca' => '604GLA',
             'prospect' => 'Gladiator Consulting',
         ],
         [
-            'nom' => '316BLA',
+            'nom' => '604GLA-BdC2',
+            'description' => 'Realisation site web',
+            'statut' => Etude::ETUDE_STATE_ACCEPTEE,
+            'nbrJEH' => 17,
+            'duree' => 10,
+            'cca' => '604GLA',
+            'prospect' => 'Gladiator Consulting',
+        ],
+        [
+            'nom' => '605BLA-BdC1',
             'description' => 'Electronique avancee',
             'statut' => Etude::ETUDE_STATE_COURS,
             'nbrJEH' => 5,
             'duree' => 3,
-            'dateCC' => 'ok',
+            'cca' => '605BLA',
             'prospect' => 'Blackwater',
         ],
         [
-            'nom' => '317IMU',
+            'nom' => '581IMU-BdC1',
             'description' => 'Design Base de donnes',
             'statut' => Etude::ETUDE_STATE_CLOTUREE,
             'nbrJEH' => 8,
             'duree' => 4,
-            'dateCC' => 'ok',
+            'cca' => '581IMU',
             'prospect' => 'Imuka',
         ],
         [
-            'nom' => '319UNI',
+            'nom' => '602UNI',
             'description' => 'Conception Radar recul',
-            'statut' => Etude::ETUDE_STATE_CLOTUREE,
+            'statut' => Etude::ETUDE_STATE_FINIE,
             'nbrJEH' => 12,
             'duree' => 8,
-            'dateCC' => 'ok',
             'prospect' => 'Universal rad',
         ],
         [
-            'nom' => '320TEK',
+            'nom' => '615TEK',
             'description' => 'Refactorisation code Java',
             'statut' => Etude::ETUDE_STATE_COURS,
             'nbrJEH' => 10,
             'duree' => 8,
-            'dateCC' => 'ok',
             'prospect' => 'Teknik studio',
         ],
         [
-            'nom' => '321DUV',
+            'nom' => '616DUV',
             'description' => 'Calcul de flux thermique',
-            'statut' => Etude::ETUDE_STATE_COURS,
+            'statut' => Etude::ETUDE_STATE_NEGOCIATION,
             'nbrJEH' => 9,
             'duree' => 4,
-            'dateCC' => 'ok',
             'prospect' => 'Duvilcolor',
         ],
         [
-            'nom' => '322NIL',
+            'nom' => '618NIL',
             'description' => 'Application Android',
             'statut' => Etude::ETUDE_STATE_NEGOCIATION,
             'nbrJEH' => 8,
             'duree' => 12,
-            'dateCC' => 'ok',
             'prospect' => 'Nilsen Industries',
         ],
         [
-            'nom' => '323PRR',
+            'nom' => '622PRR',
             'description' => 'Etude de faisabilite',
             'statut' => Etude::ETUDE_STATE_PAUSE,
             'nbrJEH' => 4,
             'duree' => 4,
-            'dateCC' => 'ok',
             'prospect' => 'PRR',
         ],
     ];
@@ -282,7 +305,7 @@ class CreateDemoDataCommand extends Command
         $this->createMembres($output);
 
         $this->createProspects($output);
-
+        $this->createCcas($output);
         $this->createEtudes($output);
 
         //manage AP, CC & PVR
@@ -367,6 +390,8 @@ class CreateDemoDataCommand extends Command
             $emp->setProspect($p);
             $p->addEmploye($emp);
             $emp->setPersonne($pe);
+            $this->validateObject('New Prospect', $p);
+            $this->validateObject('New Employe', $emp);
             $this->em->persist($emp->getPersonne());
             $this->em->persist($emp);
             $this->em->persist($p);
@@ -376,15 +401,36 @@ class CreateDemoDataCommand extends Command
         }
 
         $this->em->flush();
-        $output->writeln('Prospect: Ok');
+        $output->writeln('Prospects: Ok');
+    }
+
+    private function createCcas(OutputInterface $output)
+    {
+        foreach (self::CCA as $cca) {
+            $dateSignature = new DateTime();
+            $dateFin = new DateTime();
+
+            $c = new Cca();
+            $c->setNom($cca['nom']);
+            $c->setProspect($this->prospects[$cca['prospect']]);
+            $c->setDateSignature($dateSignature->modify($cca['dateSignature']));
+            $c->setDateFin($dateFin->modify($cca['dateFin']));
+
+            $this->validateObject('New Cca', $c);
+            $this->em->persist($c);
+            $this->ccas[$cca['nom']] = $c;
+        }
+
+        $this->em->flush();
+        $output->writeln('Ccas: Ok');
     }
 
     private function createEtudes(OutputInterface $output)
     {
         foreach (self::ETUDES as $etude) {
             $e = new Etude();
-            // hack with 317IMU, to have some decent stats on welcome page
-            $mandat = ('317IMU' === $etude['nom'] ? date('Y') : rand(intval(date('Y')) - 3, intval(date('Y'))));
+            // hack with 581IMU, to have some decent stats on welcome page
+            $mandat = ('581IMU-BdC1' === $etude['nom'] ? date('Y') : rand(intval(date('Y')) - 3, intval(date('Y'))));
             $month = rand(1, 10);
             $day = rand(1, 30);
             $e->setMandat($mandat);
