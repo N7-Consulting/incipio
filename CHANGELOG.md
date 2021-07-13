@@ -173,3 +173,4 @@ C'est sur ce nouvel onglet qu'on peut télécharger tous les documents (si les d
     - EtatDocuments.html.twig, affiche l'état d'une liste de documents ;
     - Intervenants.html.twig, affiche sous forme de boutons l'ensemble des intervenants d'une étude ;
     - Et bien d'autres.
+- Mise à jour des fixtures (demo_data) avec nouvelles features.
