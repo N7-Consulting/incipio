@@ -2,8 +2,6 @@
 
 namespace App\Command;
 
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use App\Entity\Comment\Thread;
 use App\Entity\Formation\Passation;
 use App\Entity\Formation\Formation;
 use App\Entity\Processus\Processus;
@@ -40,8 +38,6 @@ class CreateDemoDataCommand extends Command
 
     const FILIERES = ['Hydro', 'Electronique', 'Telecoms', 'Automatique', 'Info'];
 
-    
-
     const FORMATIONS = [
         [
             'titre' => 'Présentaion orale',
@@ -59,7 +55,7 @@ class CreateDemoDataCommand extends Command
         [
             'nom' => 'R.F.P',
             'description' => 'Fiches de processus liées au R.F.P',
-            
+
         ],
         [
             'nom' => 'Sécurité informatique',
@@ -80,6 +76,78 @@ class CreateDemoDataCommand extends Command
         ]
     ];
 
+    // L'ordre importe! cf ETUDES.
+    const PROSPECT = [
+        [
+            'entreprise' => 'Gladiator Consulting',
+            'adresse' => '3 rue du chene noir',
+            'codePostal' => 33100,
+            'ville' => 'Toulouse',
+            'entite' => 2,
+            'email' => 'contact@glad.fr',
+        ],
+        [
+            'entreprise' => 'Blackwater',
+            'adresse' => '1020 5th Avenue',
+            'codePostal' => 92200,
+            'ville' => 'Neuilly',
+            'entite' => 3,
+            'email' => 'hello@black.ninja',
+        ],
+        [
+            'entreprise' => 'Imuka',
+            'adresse' => 'Kuruma San',
+            'codePostal' => 91000,
+            'ville' => 'Evry',
+            'entite' => 4,
+            'email' => 'contact@imuka.jp',
+        ],
+        [
+            'entreprise' => 'Universal rad',
+            'adresse' => '2 rue Marie Curie',
+            'codePostal' => 35000,
+            'ville' => 'Rennes',
+            'entite' => 5,
+            'email' => 'contact@univ.radar',
+        ],
+        [
+            'entreprise' => 'Teknik studio',
+            'adresse' => '10 impasse sunderland',
+            'codePostal' => 35000,
+            'ville' => 'Rennes',
+            'entite' => 6,
+            'email' => 'contact@teknik.paris',
+        ],
+        [
+            'entreprise' => 'Duvilcolor',
+            'adresse' => '600 la pyrennene',
+            'codePostal' => 33100,
+            'ville' => 'Labege',
+            'entite' => 4,
+            'email' => 'contact@duvilcol.or',
+        ],
+        [
+            'entreprise' => 'Nilsen Industries',
+            'adresse' => '2 rue saint-louis',
+            'codePostal' => 31000,
+            'ville' => 'Bordeaux',
+            'entite' => 7,
+            'email' => 'contact@nislen.com',
+        ],
+        [
+            'entreprise' => 'PRR',
+            'adresse' => 'PRR',
+            'codePostal' => 35000,
+            'ville' => 'Rennes',
+            'entite' => 4,
+            'email' => 'contact@prr.cn',
+        ],
+    ];
+
+    CONST CCA = [
+
+    ];
+
     const ETUDES = [
         [
             'nom' => '315GLA',
@@ -88,13 +156,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 9,
             'duree' => 5,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'Gladiator Consulting',
-                'adresse' => '3 rue du chene noir',
-                'codePostal' => 33100,
-                'ville' => 'Toulouse',
-                'entite' => 2,
-                'email' => 'contact@glad.fr',
-            ],
+            'prospect' => 'Gladiator Consulting',
         ],
         [
             'nom' => '316BLA',
@@ -103,13 +165,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 5,
             'duree' => 3,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'Blackwater',
-                'adresse' => '1020 5th Avenue',
-                'codePostal' => 92200,
-                'ville' => 'Neuilly',
-                'entite' => 3,
-                'email' => 'hello@black.ninja',
-            ],
+            'prospect' => 'Blackwater',
         ],
         [
             'nom' => '317IMU',
@@ -118,13 +174,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 8,
             'duree' => 4,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'Imuka',
-                'adresse' => 'Kuruma San',
-                'codePostal' => 91000,
-                'ville' => 'Evry',
-                'entite' => 4,
-                'email' => 'contact@imuka.jp',
-            ],
+            'prospect' => 'Imuka',
         ],
         [
             'nom' => '319UNI',
@@ -133,13 +183,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 12,
             'duree' => 8,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'Universal rad',
-                'adresse' => '2 rue Marie Curie',
-                'codePostal' => 35000,
-                'ville' => 'Rennes',
-                'entite' => 5,
-                'email' => 'contact@univ.radar',
-            ],
+            'prospect' => 'Universal rad',
         ],
         [
             'nom' => '320TEK',
@@ -148,13 +192,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 10,
             'duree' => 8,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'Teknik studio',
-                'adresse' => '10 impasse sunderland',
-                'codePostal' => 35000,
-                'ville' => 'Rennes',
-                'entite' => 6,
-                'email' => 'contact@teknik.paris',
-            ],
+            'prospect' => 'Teknik studio',
         ],
         [
             'nom' => '321DUV',
@@ -163,13 +201,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 9,
             'duree' => 4,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'Duvilcolor',
-                'adresse' => '600 la pyrennene ',
-                'codePostal' => 33100,
-                'ville' => 'Labege',
-                'entite' => 4,
-                'email' => 'contact@duvilcol.or',
-            ],
+            'prospect' => 'Duvilcolor',
         ],
         [
             'nom' => '322NIL',
@@ -178,13 +210,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 8,
             'duree' => 12,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'Nilsen Industries',
-                'adresse' => '2 rue saint-louis',
-                'codePostal' => 31000,
-                'ville' => 'Bordeaux',
-                'entite' => 7,
-                'email' => 'contact@nislen.com',
-            ],
+            'prospect' => 'Nilsen Industries',
         ],
         [
             'nom' => '323PRR',
@@ -193,13 +219,7 @@ class CreateDemoDataCommand extends Command
             'nbrJEH' => 4,
             'duree' => 4,
             'dateCC' => 'ok',
-            'prospect' => ['entreprise' => 'PRR',
-                'adresse' => 'PRR',
-                'codePostal' => 35000,
-                'ville' => 'Rennes',
-                'entite' => 4,
-                'email' => 'contact@prr.cn',
-            ],
+            'prospect' => 'PRR',
         ],
     ];
 
@@ -212,6 +232,13 @@ class CreateDemoDataCommand extends Command
     /** @var Membre[] */
     private $membres = [];
 
+    /** @var Prospect[] */
+    private $prospects = [];
+
+    /** @var Cca[] */
+    private $ccas = [];
+
+    /** @var Etude[] */
     private $etudes = [];
 
     /** @var Membre */
@@ -253,6 +280,8 @@ class CreateDemoDataCommand extends Command
 
         $this->createFilieres($output);
         $this->createMembres($output);
+
+        $this->createProspects($output);
 
         $this->createEtudes($output);
 
@@ -314,6 +343,42 @@ class CreateDemoDataCommand extends Command
         $output->writeln('President & VP: Ok');
     }
 
+    private function createProspects(OutputInterface $output)
+    {
+        foreach (self::PROSPECT as $prospect) {
+            $p = new Prospect();
+            $p->setNom($prospect['entreprise']);
+            $p->setAdresse($prospect['adresse']);
+            $p->setCodePostal($prospect['codePostal']);
+            $p->setVille($prospect['ville']);
+            $p->setEntite($prospect['entite']);
+
+            $pe = new Personne();
+            $pe->setPrenom(self::PRENOM[array_rand(self::PRENOM)]); //whitespace explode : not perfect but better than nothing
+            $pe->setNom(self::NOM[array_rand(self::NOM)]);
+            $pe->setEmailEstValide(true);
+            $pe->setEstAbonneNewsletter(false);
+            $pe->setEmail($prospect['email']);
+            $pe->setAdresse($prospect['adresse']);
+            $pe->setCodePostal($prospect['codePostal']);
+            $pe->setVille($prospect['ville']);
+
+            $emp = new Employe();
+            $emp->setProspect($p);
+            $p->addEmploye($emp);
+            $emp->setPersonne($pe);
+            $this->em->persist($emp->getPersonne());
+            $this->em->persist($emp);
+            $this->em->persist($p);
+
+
+            $this->prospects[$prospect['entreprise']] = $p;
+        }
+
+        $this->em->flush();
+        $output->writeln('Prospect: Ok');
+    }
+
     private function createEtudes(OutputInterface $output)
     {
         foreach (self::ETUDES as $etude) {
@@ -333,6 +398,7 @@ class CreateDemoDataCommand extends Command
             $e->setPresentationProjet('Presentation ' . $etude['description']);
             $e->setDescriptionPrestation('Describe what we will do here');
             $e->setSourceDeProspection(rand(1, 10));
+            $e->setProspect($this->prospects[$etude['prospect']]);
             $e->setPC("3");
             $this->validateObject('New Etude', $e);
             $this->em->persist($e);
@@ -340,33 +406,6 @@ class CreateDemoDataCommand extends Command
             if (null !== $c) {
                 $c->addEtude($e);
             }
-
-            /* Prospect management */
-            $p = new Prospect();
-            $p->setNom($etude['prospect']['entreprise']);
-            $p->setAdresse($etude['prospect']['adresse']);
-            $p->setCodePostal($etude['prospect']['codePostal']);
-            $p->setVille($etude['prospect']['ville']);
-            $p->setEntite($etude['prospect']['entite']);
-
-            $pe = new Personne();
-            $pe->setPrenom(self::PRENOM[array_rand(self::PRENOM)]); //whitespace explode : not perfect but better than nothing
-            $pe->setNom(self::NOM[array_rand(self::NOM)]);
-            $pe->setEmailEstValide(true);
-            $pe->setEstAbonneNewsletter(false);
-            $pe->setEmail($etude['prospect']['email']);
-            $pe->setAdresse($etude['prospect']['adresse']);
-            $pe->setCodePostal($etude['prospect']['codePostal']);
-            $pe->setVille($etude['prospect']['ville']);
-
-            $emp = new Employe();
-            $emp->setProspect($p);
-            $p->addEmploye($emp);
-            $emp->setPersonne($pe);
-            $this->em->persist($emp->getPersonne());
-            $this->em->persist($emp);
-            $this->em->persist($p);
-            $e->setProspect($p);
 
             //create phases
             $g = new GroupePhases(); //default group
@@ -546,9 +585,9 @@ class CreateDemoDataCommand extends Command
 
             $fo->setMandat($year);
             $fo->setCategorie($formation['categorie']);
-            
+
             $fo->setDateDebut(new \DateTime($year . '-' . $month . '-' . $day . ' 8:0:0'));
-            $fo->setDateFin(new \DateTime($year . '-' . $month . '-' . $day. ' 9:0:0'));
+            $fo->setDateFin(new \DateTime($year . '-' . $month . '-' . $day . ' 9:0:0'));
 
             $pe = new Personne();
             $prenom = self::PRENOM[array_rand(self::PRENOM)];
@@ -578,7 +617,7 @@ class CreateDemoDataCommand extends Command
 
             $fo->setFormateurs($formateur);
             $fo->setMembresPresents($membre);
-            
+
             $this->validateObject('New Formation', $fo);
             $this->em->persist($fo);
 
@@ -596,7 +635,7 @@ class CreateDemoDataCommand extends Command
             $pas->setTitre($passation['titre']);
             $pas->setDescription($passation['description']);
             $pas->setCategorie($passation['categorie']);
-            
+
             $this->validateObject('New Passation', $pas);
             $this->em->persist($pas);
 
@@ -607,7 +646,7 @@ class CreateDemoDataCommand extends Command
 
     private function createProcessus(OutputInterface $output)
     {
-        foreach (self:: PROCESSUS as $processus) {
+        foreach (self::PROCESSUS as $processus) {
             $pro = new Processus();
 
             $pro->setNom($processus['nom']);
@@ -624,7 +663,7 @@ class CreateDemoDataCommand extends Command
             $pil->setEstAbonneNewsletter(false);
             $this->em->persist($pil);
             $pro->setPilote($pil);
-            
+
             $this->validateObject('New Processus', $pro);
             $this->em->persist($pro);
 
