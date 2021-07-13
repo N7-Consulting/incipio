@@ -26,13 +26,16 @@
 							{{doc}}
 						</th>
 					{% endfor %}
+					<th>
+						{{ 'suivi.liste_doc'|trans({}, 'project') }}
+					</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for etude in etudes | filter(etude => not confidentielRefus(etude, app.user, is_granted('ROLE_CA'))) | reverse %}
 				<tr>
 					<td>
-						{{ etude.nom }}
+						<a href="{{ path('project_etude_voir', {'nom': etude.nom}) }}">{{ etude.nom }}</a>
 					</td>
 					{% for etudeAttr, nomDoc in docEtude %}
 					<td>
@@ -54,6 +57,14 @@
 							{% endfor %}
 							</td>
 							{% endfor %}
+							{# On récupère tous les documents uploadés pour cette étude #}
+							<td>
+								{% for relatedDocument in etude.relatedDocuments %}
+								{% set doc = relatedDocument.document %}
+								<a href="{{ path('publish_document_voir', {'id': doc.id}) }} "><span class="fa fa-download"></span></a>
+								{{ doc.name }} - {{ doc.uptime | date('d/m/Y') }}
+								{% endfor %}
+							</td>
 					</tr>
 				{% endfor %}
 				</tbody>
