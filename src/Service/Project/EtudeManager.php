@@ -206,7 +206,7 @@ class EtudeManager
         if ($value) {
             return $value['mandat'];
         } else {
-            return 0;
+            return date('Y') - $this->anneeCreation;
         }
     }
 
