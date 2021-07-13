@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpKernel\KernelInterface;
+use App\Entity\Personne\Personne;
 
 /**
  * @ORM\Entity(repositoryClass=ProcessusRepository::class)
@@ -28,8 +29,19 @@ class Processus
      */
     private $nom;
 
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank
+     */
+    private $description;
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Personne
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personne\Personne", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $pilote;
 
@@ -57,12 +69,48 @@ class Processus
         return $this;
     }
 
-    public function getPilote(): ?string
+    /**
+     * Get pilote.
+     *
+     * @return Personne
+     */
+    public function getPilote()
     {
         return $this->pilote;
     }
 
-    public function setPilote(string $pilote): self
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     *
+     * @return Processus
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Set pilote.
+     *
+     * @param Personne $pilote
+     *
+     * @return Processus
+     */
+    public function setPilote(?Personne $pilote)
     {
         $this->pilote = $pilote;
 

@@ -16,8 +16,8 @@
             <p>
                 {{ 'suivi.rien_entre'|trans({}, 'project') }}
                 {{ mandatMax - loop.index0 }}
-                et
-                {{ anneeCreation }}.
+                {{ 'suivi.et_le_premier_mandat'|trans({}, 'project') }}
+								({{ anneeCreation }})
             </p>
 	    {% endif %}
     {% endfor %}

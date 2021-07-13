@@ -40,9 +40,9 @@
 			</thead>
       <tbody>
 			{% for i, cca in ccas %}
-        {# On affiche en orange la ligne si la convention arrive bientôt à son terme (30 jours) #}
+        {# On affiche en orange la ligne si la convention arrive bientôt à son terme (1 mois) et en rouge si elle est terminée #}
         {% set echeance = date(cca.dateFin).diff(date("now")) %}
-        <tr class="{{ echeance.y == 0 and echeance.m  < 1 ? "warning" : echeance.invert ? : "danger" }}">
+        <tr class="{{ not echeance.invert ? "danger" : echeance.y == 0 and echeance.m  < 1 ? "warning" }}">
 					<td>{{ cca.nom }}</td>
 					<td>{{ cca.dateSignature | date('d/m/Y')}}</td>
 					<td>{{ cca.dateFin | date('d/m/Y')}}</td>

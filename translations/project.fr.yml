@@ -147,6 +147,7 @@ suivi:
   du: Du
   duree: Durée
   employe_ajouter: Ajouter un employé
+  et_le_premier_mandat: et le premier mandat
   en_cours: En cours
   en_negociation: En négociation
   en_pause: En pause
@@ -321,7 +322,7 @@ suivi:
   resume: Résumé
   retour: Retour
   retour_liste: Retour à la liste
-  rien_entre: Rien entre
+  rien_entre: Rien entre le mandat
   rm: RM
   rm_date: Date du RM
   rm_enregistrer: Enregistrer le Récapitulatif de Mission

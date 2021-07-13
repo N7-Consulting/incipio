@@ -19,6 +19,7 @@
                 <tr>
                     <th>{{'processus.nom_process'|trans({}, 'processus')}}</th>
                     <th>{{'processus.pilote'|trans({}, 'processus')}}</th>
+                    <th>{{'processus.description'|trans({}, 'processus')}}</th>
                     <th>{{'processus.documents'|trans({}, 'processus')}}</th>
                 </tr>
                 </thead>
@@ -30,6 +31,7 @@
                             <td>{{process.nom}}</a></td>
                         {% endif %} 
                         <td>{{process.pilote}} </td>
+                        <td>{{process.description}} </td>
                         <td><a href="{{ path('voir_doc_processus',{'id': process.id})}} "><span class="fa fa-eye"> ({{ process.relatedDocuments | length }})</a></td>
                     </tr>
                 {% endfor %}
