@@ -13,8 +13,8 @@ use App\Entity\Personne\Membre;
 use App\Entity\Personne\Personne;
 use App\Entity\Personne\Poste;
 use App\Entity\Personne\Prospect;
-use App\Entity\Project\Ap;
-use App\Entity\Project\Cc;
+use App\Entity\Project\Bdc;
+use App\Entity\Project\Ce;
 use App\Entity\Project\Cca;
 use App\Entity\Project\Etude;
 use App\Entity\Project\GroupePhases;
@@ -25,6 +25,7 @@ use App\Entity\Treso\Compte;
 use App\Entity\Treso\Facture;
 use App\Entity\Treso\FactureDetail;
 use App\Service\Project\EtudeManager;
+use DateInterval;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Console\Command\Command;
@@ -313,8 +314,8 @@ class CreateDemoDataCommand extends Command
         $this->createCcas($output);
         $this->createEtudes($output);
 
-        //manage AP, CC & PVR
-        // $this->createDocuments($output);
+        // Manage CE, BDC, FA, RM, PV and their states
+        $this->createDocuments($output);
 
         $this->createFormation($output);
         $this->createPassation($output);
@@ -423,7 +424,7 @@ class CreateDemoDataCommand extends Command
 
             $this->validateObject('New Cca', $c);
             $this->em->persist($c);
-            $this->ccas[$cca['nom']] = $c;
+            $this->ccas[$cca['prospect']] = $c;
         }
 
         $this->em->flush();
@@ -439,7 +440,7 @@ class CreateDemoDataCommand extends Command
             $mandat = ('581IMU-BdC1' === $etude['nom'] ? $mandatDefault - 1 : $mandatDefault);
             $randomDate = new DateTime(date('Y') . '-' . rand(1,10) . '-' . rand(1, 30));
             if ($etude['nom'] === '581IMU-BdC1')
-                $randomDate->modify('-365days');
+                $randomDate = (new DateTime())->modify('-365 days');
             $e->setMandat($mandat);
             $e->setNom($etude['nom']);
             $e->setDescription($etude['description']);
@@ -447,7 +448,10 @@ class CreateDemoDataCommand extends Command
             $e->setStateID($etude['statut']);
             $e->setAcompte(true);
             $e->setCeActive(true); // Valeur par défaut depuis Jeyser 4.0.0, les AP et CC ne sont plus utilisées.
-            $e->setCcaActive(array_key_exists('cca', $etude));
+            if(array_key_exists('cca', $etude)) {
+                $e->setCcaActive(true);
+                $e->setCca($this->ccas[$etude['prospect']]);
+            }
             $e->setPourcentageAcompte(0.3);
             $e->setFraisDossier(90);
             $e->setPresentationProjet('Presentation ' . $etude['description']);
@@ -497,24 +501,27 @@ class CreateDemoDataCommand extends Command
 
             //manage intervenant
             if ($etude['statut'] !== Etude::ETUDE_STATE_NEGOCIATION &&  $etude['statut'] !== Etude::ETUDE_STATE_ACCEPTEE && $etude['statut'] !== Etude::ETUDE_STATE_AVORTEE) {
-                //manage developper
-                $mdev = $this->createMembre(self::PRENOM[array_rand(self::PRENOM)], self::NOM[array_rand(self::NOM)], $mandat + 1);
-                $this->em->persist($mdev);
-                if (null !== $c && !$c->getMembres()->contains($mdev)) {
-                    $c->addMembre($mdev);
-                }
+                $k = rand(1, 4);
+                for ($i = 0; $i < $k; ++$i) {
+                    $mdev = $this->createMembre(self::PRENOM[array_rand(self::PRENOM)], self::NOM[array_rand(self::NOM)], $mandat + 1);
+                    $this->em->persist($mdev);
+                    if (null !== $c && !$c->getMembres()->contains($mdev)) {
+                        $c->addMembre($mdev);
+                    }
 
-                $mi = new Mission();
-                $mi->setSignataire2($mdev->getPersonne());
-                $mi->setSignataire1($this->president->getPersonne());
-                $mi->setEtude($e);
-                $mi->setDateSignature($randomDate);
-                $mi->setDebutOm($randomDate);
-                $mi->setFinOm($randomDate->modify('+30days'));
-                $mi->setAvancement(rand(10, 95));
-                $mi->setIntervenant($mdev);
-                $this->validateObject('New Mission', $mi);
-                $this->em->persist($mi);
+                    $mi = new Mission();
+                    $mi->setSignataire2($mdev->getPersonne());
+                    $mi->setSignataire1($this->president->getPersonne());
+                    $mi->setEtude($e);
+                    $mi->setDateSignature($randomDate);
+                    $mi->setDebutOm($randomDate);
+                    $mi->setFinOm((new DateTime($randomDate->format('Y-m-d')))->modify('+30 days'));
+                    $mi->setAvancement(rand(10, 95));
+                    $mi->setIntervenant($mdev);
+                    $this->validateObject('New Mission', $mi);
+                    $e->addMission($mi);
+                    $this->em->persist($mi);
+                }
             }
 
             $this->etudes[$etude['nom']] = $e;
@@ -527,68 +534,147 @@ class CreateDemoDataCommand extends Command
     private function createDocuments(OutputInterface $output)
     {
         /** @var Etude $etude */
-        foreach ($this->etudes as $key => $etude) {
-            if ($etude->getStateID() > Etude::ETUDE_STATE_NEGOCIATION) {
-                $ap = new Ap();
-                $ap->setEtude($etude);
-                $etude->setAp($ap);
-                $ap->setDateSignature($etude->getDateCreation());
-                $ap->setSignataire1($this->president->getPersonne());
-                $ap->setContactMgate($this->vp->getPersonne());
-                /** @var Employe $emp */
-                $emp = $etude->getProspect()->getEmployes()[0];
-                $ap->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
-                $ap->setNbrDev(rand(1, 2));
-                $this->validateObject('New AP', $ap);
-                $this->em->persist($ap);
-
-                $cc = new Cc();
-                $cc->setDateSignature($etude->getDateCreation());
-                $cc->setSignataire1($this->president->getPersonne());
-                $cc->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
-                $etude->setCc($cc);
-                $this->validateObject('New CC', $cc);
-                $this->em->persist($cc);
-
-                if ($etude->getStateID() > Etude::ETUDE_STATE_NEGOCIATION && $etude->getStateID() < Etude::ETUDE_STATE_AVORTEE) {
-                    $pv = new ProcesVerbal();
-                    $pv->setEtude($etude);
-                    $endDate = clone $etude->getDateCreation();
-                    $pv->setDateSignature($endDate->modify('+1 month'));
-                    $pv->setSignataire1($this->president->getPersonne());
-                    $pv->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
-                    $pv->setType('pvr');
-                    $this->validateObject('New PVRF', $pv);
-                    $this->em->persist($pv);
-                }
-
-                if (Etude::ETUDE_STATE_CLOTUREE == $etude->getStateID()) {
-                    $compteAcompte = 419100;
-
-                    $fa = new Facture();
-                    $fa->setType(Facture::TYPE_VENTE_ACCOMPTE);
-                    $fa->setObjet('Facture d\'acompte sur l\'étude ' . $etude->getReference('nom') . ', correspondant au règlement de ' . (($etude->getPourcentageAcompte() * 100)) . ' % de l’étude.');
-                    $fa->setExercice($etude->getDateCreation()->format('Y'));
-                    $fa->setNumero(1);
-                    $fa->setEtude($etude);
-                    $fa->setBeneficiaire($etude->getProspect());
-                    $endDate = clone $etude->getDateCreation();
-                    $fa->setDateEmission($endDate->modify('+1 month'));
-
-                    $detail = new FactureDetail();
-                    $detail->setCompte($this->em->getRepository(Compte::class)->findOneBy(['numero' => $compteAcompte]));
-                    $detail->setFacture($fa);
-                    $fa->addDetail($detail);
-                    $detail->setDescription('Acompte de ' . ($etude->getPourcentageAcompte() * 100) . ' % sur l\'étude ' . $etude->getReference());
-                    $detail->setMontantHT($etude->getPourcentageAcompte() * $etude->getMontantHT());
-                    $detail->setTauxTVA(20);
-                    $this->validateObject('new FA', $fa);
-                    $this->em->persist($fa);
-                }
+        foreach ($this->etudes as $k => $etude) {
+            $etatDoc = 0; // Entre 0 et 4, pour décider de l'état d'un document (rédigé, relu, etc). Si > 4, état max.
+            switch ($etude->getStateID()) {
+                case ETUDE::ETUDE_STATE_CLOTUREE:
+                    $etatDoc = 4;
+                case Etude::ETUDE_STATE_FINIE:
+                    $etatDoc = $etatDoc == 0 ? rand(2,4) : $etatDoc;
+                    // ! Procès verbal
+                    $this->createProcesVerbal($etude, $etatDoc);
+                case Etude::ETUDE_STATE_COURS:
+                    $etatDoc = $etatDoc == 0 ? rand(1,4) : $etatDoc + 10;
+                case Etude::ETUDE_STATE_ACCEPTEE:
+                    $etatDoc = $etatDoc == 0 ? rand(0,3) : $etatDoc;
+                    // ! Facture d'acompte
+                    $this->createFactureAcompte($etude);
+                    // ! Missions
+                    $this->setEtatRMs($etude, $etatDoc);
+                case Etude::ETUDE_STATE_NEGOCIATION:
+                    $etatDoc = $etatDoc == 0 ? rand(0,4) : $etatDoc + 10;
+                case Etude::ETUDE_STATE_PAUSE:
+                case Etude::ETUDE_STATE_AVORTEE:
+                    // ! BdC ou CE
+                    $this->createBonCommande($etude, $etatDoc);
+                    $this->createConventionEtude($etude, $etatDoc);
+                default:
+                    break;
             }
         }
         $this->em->flush();
         $output->writeln('Documents: Ok');
+    }
+
+    private function etatDoc($doc, $etatDoc) {
+        switch ($etatDoc) {
+            default:
+            case 4:
+                $doc->setReceptionne(true);
+            case 3:
+                $doc->setEnvoye(true);
+            case 2:
+                $doc->setRelu(true);
+            case 1:
+                $doc->setRedige(true);
+            case 0:
+                break;
+        }
+    }
+
+    private function setEtatRMs($etude, $etatDoc)
+    {
+        foreach ($etude->getMissions() as $k => $mission) {
+            $this->etatDoc($mission, $etatDoc);
+        }
+    }
+
+    /** Used within createDocuments */
+    private function createConventionEtude(Etude $etude, $etatDoc) {
+        if (!$etude->getCcaActive()) {
+            $emp = $etude->getProspect()->getEmployes()[0];
+
+            $ce = new Ce();
+            $ce->setDateSignature($etude->getDateCreation());
+            $ce->setSignataire1($this->president->getPersonne());
+            $ce->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
+
+            // Set etat document
+            $this->etatDoc($ce, $etatDoc);
+
+            $etude->setCe($ce);
+
+            $this->validateObject('New Ce', $ce);
+            $this->em->persist($ce);
+        }
+    }
+
+    /** Used within createDocuments */
+    private function createBonCommande(Etude $etude, $etatDoc) {
+        if ($etude->getCcaActive()) {
+            $emp = $etude->getProspect()->getEmployes()[0];
+
+            $bdc = new Bdc();
+            $bdc->setDateSignature($etude->getDateCreation());
+            $bdc->setSignataire1($this->president->getPersonne());
+            $bdc->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
+
+            // Set etat document
+            $this->etatDoc($bdc, $etatDoc);
+
+            $etude->setBdc($bdc);
+
+            $this->validateObject('New Bdc', $bdc);
+            $this->em->persist($bdc);
+        }
+    }
+
+    /** Used within createDocuments */
+    private function createProcesVerbal(Etude $etude, $etatDoc)
+    {
+        $emp = $etude->getProspect()->getEmployes()[0];
+
+        $pv = new ProcesVerbal();
+        $pv->setEtude($etude);
+        $endDate = clone $etude->getDateCreation();
+        $pv->setDateSignature($endDate->modify('+1 month'));
+        $pv->setSignataire1($this->president->getPersonne());
+        $pv->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
+
+        // Set etat document
+        $this->etatDoc($pv, $etatDoc);
+
+        $pv->setType('pvr');
+
+        $this->validateObject('New PVRF', $pv);
+        $this->em->persist($pv);
+    }
+
+    /** Used within createDocuments */
+    private function createFactureAcompte(Etude $etude)
+    {
+        $compteAcompte = 419100;
+
+        $fa = new Facture();
+        $fa->setType(Facture::TYPE_VENTE_ACCOMPTE);
+        $fa->setObjet('Facture d\'acompte sur l\'étude ' . $etude->getReference('nom') . ', correspondant au règlement de ' . (($etude->getPourcentageAcompte() * 100)) . ' % de l’étude.');
+        $fa->setExercice($etude->getDateCreation()->format('Y'));
+        $fa->setNumero(1);
+        $fa->setEtude($etude);
+        $fa->setBeneficiaire($etude->getProspect());
+        $endDate = clone $etude->getDateCreation();
+        $fa->setDateEmission($endDate->modify('+1 month'));
+
+        $detail = new FactureDetail();
+        $detail->setCompte($this->em->getRepository(Compte::class)->findOneBy(['numero' => $compteAcompte]));
+        $detail->setFacture($fa);
+        $fa->addDetail($detail);
+        $detail->setDescription('Acompte de ' . ($etude->getPourcentageAcompte() * 100) . ' % sur l\'étude ' . $etude->getReference());
+        $detail->setMontantHT($etude->getPourcentageAcompte() * $etude->getMontantHT());
+        $detail->setTauxTVA(20);
+
+        $this->validateObject('New FA', $fa);
+        $this->em->persist($fa);
     }
 
     /**
