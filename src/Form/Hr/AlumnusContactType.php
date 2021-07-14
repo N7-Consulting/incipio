@@ -38,6 +38,16 @@ class AlumnusContactType extends AbstractType
                 ]
             )
             ->add(
+                'alumnus',
+                Select2EntityType::class,
+                [
+                    'label' => 'Alumnus contacté',
+                    'class' => Personne::class,
+                    'choice_label' => 'prenomNom',
+                    'required' => true,
+                ]
+            )
+            ->add(
                 'date',
                 TypeDateType::class,
                 ['label' => 'Date du contact', 'required' => true, 'widget' => 'single_text']

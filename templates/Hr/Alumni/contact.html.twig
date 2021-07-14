@@ -33,8 +33,9 @@
 			{% for contact in contacts %}
 				<tr>
 					<td>
-						{# <a href="{{ path('project_clientcontact_modifier', {'id': contact.id}) }}">{{ 'suivi.contact'|trans({}, 'project') }}
-							n°{{etude.clientContacts | length - loop.index0}}</a> #}
+						<a href="{{ path('alumni_contact_modifier', {'id': contact.id}) }}">{{ 'rh.contact'|trans({}, 'rh') }}
+							{# n°{{etude.clientContacts | length - loop.index0}}</a> #}
+							{{ contact.alumnus.PrenomNom }}</a>
 					</td>
 					<td>
 						{{contact.date | date("d/m/Y") }}
