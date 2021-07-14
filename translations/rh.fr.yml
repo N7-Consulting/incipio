@@ -3,6 +3,8 @@ rh:
   aucune_competence: Pas (encore !) de competences
   contacts : Contacts
   contact : Contact
+  contact_enregistrer: Enregistrer le contact
+  contact_nouveau_enregistrer: Enregistrer le nouveau contact
   contact_alumni: Contacts avec les alumni
   contact_alumni_ajouter: Ajouter un contact
   detail: Détails
