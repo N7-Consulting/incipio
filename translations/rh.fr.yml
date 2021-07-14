@@ -1,5 +1,7 @@
 rh:
   alumni_ajouter: Ajouter un alumnus
+  alumnus_supprimer: Supprimer cet alumnus
+  alumnus_supprimer_confirm: Voulez-vous vraiment supprimer cet alumnus?
   alumnus: Alumnus
   ajouter_competence: Ajouter une compétence
   aucune_competence: Pas (encore !) de competences

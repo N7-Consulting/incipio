@@ -146,4 +146,65 @@ class AlumniController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="alumnus_modifier", path="/hr/alumnus/modifier/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return RedirectResponse|Response
+     */
+    public function modifierAlumnus(Request $request, Alumnus $alumnus, EtudePermissionChecker $permChecker)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(AlumnusType::class, $alumnus);
+
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->flush();
+                $this->addFlash('success', 'Alumnus modifié');
+
+                return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
+            }
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
+        }
+        $deleteForm = $this->createDeleteFormAlumnus($alumnus);
+
+        return $this->render('Hr/Alumni/modifier.html.twig', [
+            'form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'alumnus' => $alumnus,
+        ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="alumnus_delete", path="/hr/alumnus/supprimer/{id}", methods={"GET","HEAD","POST"})
+     *
+     * @return RedirectResponse
+     */
+    public function deleteAlumnus(Alumnus $alumnus, Request $request, EtudePermissionChecker $permChecker)
+    {
+        $form = $this->createDeleteForm($alumnus);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->remove($alumnus);
+            $em->flush();
+            $this->addFlash('success', 'Alumnus supprimé');
+        }
+        return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
+    }
+
+    private function createDeleteFormAlumnus(Alumnus $alumnus)
+    {
+        return $this->createFormBuilder(['id' => $alumnus->getId()])
+            ->add('id', HiddenType::class)
+            ->getForm();
+    }
 }
