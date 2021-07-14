@@ -1,4 +1,4 @@
-{# Formulaire d'ajout d'un alumnus #}
+{# Formulaire d'ajout d'un contact avec un alumnus #}
 
 {{ form_start(form) }}
 
@@ -7,7 +7,7 @@
         <th>{{ form_label(form.faitPar) }}</th>
         <td>{{ form_widget(form.faitPar) }}</td>
     </tr>
-    {# <tr>
+    <tr>
         <th>{{ form_label(form.alumnus) }}</th>
         <td>{{ form_widget(form.alumnus) }}</td>
     </tr>
@@ -26,7 +26,7 @@
     <tr>
         <th>{{ form_label(form.moyenContact) }}</th>
         <td>{{ form_widget(form.moyenContact) }}</td>
-    </tr> #}
+    </tr>
 </table>
 {{ form_widget(form) }}
 

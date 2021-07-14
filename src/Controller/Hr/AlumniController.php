@@ -37,11 +37,11 @@ class AlumniController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route(name="project_alumnuscontact_ajouter", path="/rh/alumnuscontact/ajouter/{id}", methods={"GET","HEAD","POST"})
+     * @Route(name="project_alumnuscontact_ajouter", path="/rh/alumnuscontact/ajouter", methods={"GET","HEAD","POST"})
      *
      * @return RedirectResponse|Response
      */
-    public function add(Request $request, Personne $alumnus, EtudePermissionChecker $permChecker)
+    public function add(Request $request, EtudePermissionChecker $permChecker)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -50,10 +50,10 @@ class AlumniController extends AbstractController
         $formHandler = new AlumnusContactHandler($form, $request, $em);
 
         if ($formHandler->process()) {
-            return $this->redirectToRoute('gestion_alumni');
+            return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
         }
 
-        return $this->render('Hr/Alumni/ajouter.html.twig', [
+        return $this->render('Hr/Alumni/Contact/ajouter.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -83,7 +83,7 @@ class AlumniController extends AbstractController
         }
         $deleteForm = $this->createDeleteForm($alumnusContact);
 
-        return $this->render('Hr/Alumni/modifier.html.twig', [
+        return $this->render('Hr/Alumni/Contact/modifier.html.twig', [
             'form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
             'alumnusContact' => $alumnusContact,
@@ -119,4 +119,26 @@ class AlumniController extends AbstractController
             ->getForm();
     }
 
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route(name="alumnus_ajouter", path="/rh/alumnus/ajouter", methods={"GET","HEAD","POST"})
+     *
+     * @return RedirectResponse|Response
+     */
+    public function addAlumnus(Request $request, EtudePermissionChecker $permChecker)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $alumnus = new Alumnus();
+        $form = $this->createForm(AlumnusType::class, $alumnus);
+        $formHandler = new AlumnusHandler($form, $request, $em);
+
+        if ($formHandler->process()) {
+            return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
+        }
+
+        return $this->render('Hr/Alumni/ajouter.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
