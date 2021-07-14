@@ -17,6 +17,9 @@ use App\Service\Project\EtudePermissionChecker;
 use App\Entity\Hr\AlumnusContact;
 use App\Form\Hr\AlumnusContactType;
 use App\Form\Hr\AlumnusContactHandler;
+use App\Entity\Hr\Alumnus;
+use App\Form\Hr\AlumnusType;
+use App\Form\Hr\AlumnusHandler;
 
 
 class AlumniController extends AbstractController

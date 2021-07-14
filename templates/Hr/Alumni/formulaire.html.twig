@@ -4,8 +4,8 @@
 
 <table class="table table-bordered table-striped standard">
     <tr>
-        <th>{{ form_label(form.faitPar) }}</th>
-        <td>{{ form_widget(form.faitPar) }}</td>
+        <th>{{ form_label(form.commentaire) }}</th>
+        <td>{{ form_widget(form.commentaire) }}</td>
     </tr>
     {# <tr>
         <th>{{ form_label(form.alumnus) }}</th>
@@ -42,7 +42,7 @@
         {{ form_end(form) }}
     </div>
 
-    {% if delete_form is defined and delete_form is not none %}
+    {# {% if delete_form is defined and delete_form is not none %}
         <div class="col-md-3 col-sm-5 col-xs-6">
             <form class="bootbox-confirm"
                 data-content="{{ 'rh.contact_client_supprimer_confirm'|trans({}, 'rh') }}"
@@ -53,7 +53,7 @@
                 </button>
             </form>
         </div>
-    {% endif %}
+    {% endif %} #}
 
 </div>
 
