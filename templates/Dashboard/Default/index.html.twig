@@ -106,10 +106,8 @@
             </div>
             <div class="col-md-6">
                 <h4>{{ 'dashboard.commentaire_recent_titre' | trans({}, 'dashboard') }}</h4>
-                {% set i = 0 %}
                 {% for etude, comments in commentsParEtude %}
-                    {% set i = i + 1 %}
-                    <table class="display dataTable table table-bordered table-striped dt-responsive "> {# à rajouter pour avoir le nombre de commentaires par étude limité : id= "commentTable{{i}}" #}
+                    <table class="display dataTable table table-bordered table-striped dt-responsive ">
                     <thead>
                         <tr>
                                 <th colspan="2">{{ 'suivi.etude.etude'|trans({}, 'project') }} {{ etude }}</th>
@@ -371,18 +369,6 @@ Archivage des documents</h3>
     <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
-
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function () {
-            for (j =1; j < 100; j++){
-                $('#commentTable'+j).dataTable({
-                "bPaginate": true,
-                "iDisplayLength": 10,
-                "aaSorting": [[1, 'desc']],
-            });
-            }
-        });
-    </script>
 
     {# <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> #}
     <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>

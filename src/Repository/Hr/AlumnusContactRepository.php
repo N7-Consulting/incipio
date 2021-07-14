@@ -19,32 +19,27 @@ class AlumnusContactRepository extends ServiceEntityRepository
         parent::__construct($registry, AlumnusContact::class);
     }
 
-    // /**
-    //  * @return AlumnusContact[] Returns an array of AlumnusContact objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return array
+     */
+    public function findAllByAlumnus()
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->_em->createQueryBuilder();
+        $query = $qb->select('f')->from(AlumnusContact::class, 'f')
+            ->orderBy('f.id', 'asc');
+        $entities = $query->getQuery()->getResult();
 
-    /*
-    public function findOneBySomeField($value): ?AlumnusContact
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $contactsParAlumnus = [];
+        /** @var AlumnusContact $AlumnusContact */
+        foreach ($entities as $contact) {
+            $nom = $contact->getAlumnus()->getPrenomNom();
+            if (array_key_exists($nom, $contactsParAlumnus)) {
+                $contactsParAlumnus[$nom][] = $contact;
+            } else {
+                $contactsParAlumnus[$nom] = [$contact];
+            }
+        }       
+
+        return $contactsParAlumnus;
     }
-    */
 }

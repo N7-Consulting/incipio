@@ -26,11 +26,12 @@ class AlumniController extends AbstractController
      * @Route(name="gestion_alumni", path="/rh/alumni", methods={"GET","HEAD"})
      */
     public function index()
-    {
-        $contacts = $this->getDoctrine()->getManager()->getRepository(AlumnusContact::class)->findAll();
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $contactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByAlumnus();
 
         return $this->render('Hr/Alumni/index.html.twig', [
-            'contacts' => $contacts,
+            'contactsParAlumnus' => $contactsParAlumnus,
         ]);
     }
 
@@ -45,7 +46,6 @@ class AlumniController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $Alumnuscontact = new AlumnusContact();
-        $Alumnuscontact->setAlumnus($alumnus);
         $form = $this->createForm(AlumnusContactType::class, $Alumnuscontact);
         $formHandler = new AlumnusContactHandler($form, $request, $em);
 
@@ -55,7 +55,6 @@ class AlumniController extends AbstractController
 
         return $this->render('Hr/Alumni/ajouter.html.twig', [
             'form' => $form->createView(),
-            // 'etude' => $etude,
         ]);
     }
 
@@ -78,7 +77,7 @@ class AlumniController extends AbstractController
                 $em->flush();
                 $this->addFlash('success', 'Contact modifié');
 
-                return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contacts']);
+                return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
             }
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
@@ -88,7 +87,6 @@ class AlumniController extends AbstractController
             'form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
             'alumnusContact' => $alumnusContact,
-            //'etude' => $etude,
         ]);
     }
 
@@ -111,8 +109,7 @@ class AlumniController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Contact client supprimé');
         }
-
-        return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contacts']);
+        return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
     }
 
     private function createDeleteForm(AlumnusContact $contact)

@@ -1,4 +1,4 @@
-{# Formulaire d'ajout d'un contact client #}
+{# Formulaire d'ajout d'un contact avec un alumnus #}
 
 {{ form_start(form) }}
 
@@ -45,8 +45,8 @@
     {% if delete_form is defined and delete_form is not none %}
         <div class="col-md-3 col-sm-5 col-xs-6">
             <form class="bootbox-confirm"
-                  data-content="{{ 'rh.contact_client_supprimer_confirm'|trans({}, 'rh') }}"
-                  action="{{ path('alumnus_contact_delete', { 'id': alumnusContact.id }) }}" method="post">
+                data-content="{{ 'rh.contact_client_supprimer_confirm'|trans({}, 'rh') }}"
+                action="{{ path('alumnus_contact_delete', { 'id': alumnusContact.id }) }}" method="post">
                 {{ form_widget(delete_form) }}
                 <button class="btn btn-danger">
                     {{ 'rh.contact_client_supprimer' |trans({}, 'rh') }}
