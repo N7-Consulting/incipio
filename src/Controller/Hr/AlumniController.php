@@ -187,7 +187,7 @@ class AlumniController extends AbstractController
      */
     public function deleteAlumnus(Alumnus $alumnus, Request $request, EtudePermissionChecker $permChecker)
     {
-        $form = $this->createDeleteForm($alumnus);
+        $form = $this->createDeleteFormAlumnus($alumnus);
 
         $form->handleRequest($request);
 

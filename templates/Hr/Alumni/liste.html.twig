@@ -21,7 +21,7 @@
 					<a href="{{ path('alumnus_modifier', {'id': alumnus.id}) }}">{{  alumnus.personne ? alumnus.personne }}</a>
 				</td>
 				<td>
-					<a href="{{ path('personne_membre_voir', {'id': alumnus.id}) }}">voir</a>
+					<a href="{{ path('personne_membre_voir', {'id': alumnus.id}) }}"><span class="fa fa-eye"></a>
 				</td>
 				<td>
 					{{alumnus.lienLinkedIn}}

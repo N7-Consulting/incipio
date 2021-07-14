@@ -1,5 +1,8 @@
 rh:
   alumni_ajouter: Ajouter un alumnus
+  alumnus_enregistrer: Enregistrer l'alumnus
+  alumnus_nouveau_enregistrer: Enregistrer un nouvel alumnus
+  alumnus_modifier: Modifier l'alumnus
   alumnus_supprimer: Supprimer cet alumnus
   alumnus_supprimer_confirm: Voulez-vous vraiment supprimer cet alumnus?
   alumnus: Alumnus

@@ -30,9 +30,9 @@
     <div class="col-md-3 col-sm-5 col-xs-6">
         <button type="submit" class="btn btn-success">
             {% if form.vars.data.id %}
-                {{ 'rh.contact_enregistrer'|trans({}, 'rh') }}
+                {{ 'rh.alumnus_enregistrer'|trans({}, 'rh') }}
             {% else %}
-                {{ 'rh.contact_nouveau_enregistrer'|trans({}, 'rh') }}
+                {{ 'rh.alumnus_nouveau_enregistrer'|trans({}, 'rh') }}
             {% endif %}
         </button>
         {{ form_end(form) }}
