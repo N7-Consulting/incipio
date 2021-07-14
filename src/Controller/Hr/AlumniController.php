@@ -27,10 +27,10 @@ class AlumniController extends AbstractController
      */
     public function index()
     {
-        $entities = $this->getDoctrine()->getManager()->getRepository(Competence::class)->findBy([], ['nom' => 'asc']);
+        $contacts = $this->getDoctrine()->getManager()->getRepository(AlumnusContact::class)->findAll();
 
         return $this->render('Hr/Alumni/index.html.twig', [
-            //'competences' => $entities,
+            'contacts' => $contacts,
         ]);
     }
 
@@ -45,7 +45,7 @@ class AlumniController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $Alumnuscontact = new AlumnusContact();
-        //$Alumnuscontact->setAlumnus($alumnus);
+        $Alumnuscontact->setAlumnus($alumnus);
         $form = $this->createForm(AlumnusContactType::class, $Alumnuscontact);
         $formHandler = new AlumnusContactHandler($form, $request, $em);
 

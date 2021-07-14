@@ -3,10 +3,16 @@ rh:
   aucune_competence: Pas (encore !) de competences
   contacts : Contacts
   contact : Contact
+  date : Date
   contact_enregistrer: Enregistrer le contact
   contact_nouveau_enregistrer: Enregistrer le nouveau contact
   contact_alumni: Contacts avec les alumni
   contact_alumni_ajouter: Ajouter un contact
   detail: Détails
+  fait_par: Fait par
   gestion_alumni: Gestion des alumni
   liste_competence: Liste des compétences
+  objet: Objet
+  pas_de_contact : Aucun contact enregistré
+  resume : Résumé
+  type: Type
