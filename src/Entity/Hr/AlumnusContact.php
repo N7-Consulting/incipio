@@ -3,6 +3,8 @@
 namespace App\Entity\Hr;
 
 use App\Repository\Hr\AlumnusContactRepository;
+use App\Entity\Comment\Thread;
+use App\Entity\Personne\Personne;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,13 +35,13 @@ class AlumnusContact
      */
     private $faitPar;
 
-    /**
-     * @var Thread
-     *
-     * @ORM\OneToOne(targetEntity="App\Entity\Comment\Thread",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $thread;
+    // /**
+    //  * @var Thread
+    //  *
+    //  * @ORM\OneToOne(targetEntity="App\Entity\Comment\Thread",cascade={"persist"})
+    //  * @ORM\JoinColumn(nullable=true)
+    //  */
+    // private $thread;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
