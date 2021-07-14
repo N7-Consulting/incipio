@@ -130,10 +130,19 @@
     <!-- RESSOURCES HUMAINES -->
     {% if is_granted('ROLE_SUIVEUR') %}
         <li>
-            <a href="{{ path('hr_competence_homepage') }}">
-                <i class="icon-mini fa fa-users"></i>
+            <a href="#">
+                <i class="icon-mini fa fa-usd"></i>
                 <span class="nav-label">{{ 'dashboard.rh_competences'| trans }}</span>
+                <i class="fa fa-angle-left pull-right"></i>
             </a>
+            <ul class="treeview-menu">
+                <li><a href="{{ path('hr_competence_homepage') }}">
+                <span class="fa fa-globe"></span> {{ 'dashboard.gestion_consultant'| trans }}</a></li>
+            </ul>
+            <ul class="treeview-menu">
+                <li><a href="{{ path('gestion_alumni') }}">
+                <span class="fa fa-tasks"></span> {{ 'dashboard.gestion_alumni'| trans }}</a></li>
+            </ul>
         </li>
     {% endif %}
 

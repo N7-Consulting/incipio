@@ -69,6 +69,8 @@ dashboard:
   formations_voir: Voir les formations
   github: Github
   gestion_associative: Gestion Associative
+  gestion_consultant: Gestion des consultants
+  gestion_alumni: Gestion des alumni
   gestion_doc: Gestion des documents
   gestion_utilisateurs_clients: Gestion des Clients et des Utilisateurs
   generation_doc: Génération de document
