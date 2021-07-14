@@ -23,7 +23,7 @@ class AlumnusType extends AbstractType
                 'personne',
                 Select2EntityType::class,
                 [
-                    'label' => 'Alumnus contacté',
+                    'label' => 'Alumnus',
                     'class' => Personne::class,
                     'choice_label' => 'prenomNom',
                     'required' => true,

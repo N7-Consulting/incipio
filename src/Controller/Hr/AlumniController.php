@@ -32,9 +32,11 @@ class AlumniController extends AbstractController
     {   
         $em = $this->getDoctrine()->getManager();
         $contactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByAlumnus();
+        $alumni = $em->getRepository(Alumnus::class)->findAll();
 
         return $this->render('Hr/Alumni/index.html.twig', [
             'contactsParAlumnus' => $contactsParAlumnus,
+            'alumni' => $alumni,
         ]);
     }
 

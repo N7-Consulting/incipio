@@ -61,11 +61,6 @@ class AlumnusContactType extends AbstractType
             ->add('moyenContact', MoyenContactType::class, ['label' => 'Contact effectué par']);
     }
 
-    // public function getBlockPrefix()
-    // {
-    //     return 'project_clientcontacttype';
-    // }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

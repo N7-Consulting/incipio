@@ -26,6 +26,9 @@ class Alumnus
     /**
      * @var Personne
      *
+     * @ORM\OneToOne(targetEntity="App\Entity\Personne\Personne")
+     * @ORM\JoinColumn(nullable=true)
+     * 
      */
     private $personne;
 
@@ -75,7 +78,7 @@ class Alumnus
     /**
      * Set personne.
      *
-     * @param string $personne
+     * @param Personne $personne
      *
      * @return Alumnus
      */
