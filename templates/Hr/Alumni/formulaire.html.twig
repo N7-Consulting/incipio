@@ -4,12 +4,24 @@
 
 <table class="table table-bordered table-striped standard">
     <tr>
-        <th>{{ form_label(form.commentaire) }}</th>
-        <td>{{ form_widget(form.commentaire) }}</td>
-    </tr>
-    <tr>
         <th>{{ form_label(form.personne) }}</th>
         <td>{{ form_widget(form.personne) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.lienLinkedIn) }}</th>
+        <td>{{ form_widget(form.lienLinkedIn) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.secteurActuel) }}</th>
+        <td>{{ form_widget(form.secteurActuel) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.posteActuel) }}</th>
+        <td>{{ form_widget(form.posteActuel) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.commentaire) }}</th>
+        <td>{{ form_widget(form.commentaire) }}</td>
     </tr>
 </table>
 {{ form_widget(form) }}

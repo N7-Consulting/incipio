@@ -40,6 +40,21 @@ class Alumnus
      */
     private $commentaire;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lienLinkedIn;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $secteurActuel;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $posteActuel;
+
 
     /**
      * Get id.
@@ -97,5 +112,41 @@ class Alumnus
     public function getPersonne()
     {
         return $this->personne;
+    }
+
+    public function getLienLinkedIn(): ?string
+    {
+        return $this->lienLinkedIn;
+    }
+
+    public function setLienLinkedIn(?string $lienLinkedIn): self
+    {
+        $this->lienLinkedIn = $lienLinkedIn;
+
+        return $this;
+    }
+
+    public function getSecteurActuel(): ?string
+    {
+        return $this->secteurActuel;
+    }
+
+    public function setSecteurActuel(?string $secteurActuel): self
+    {
+        $this->secteurActuel = $secteurActuel;
+
+        return $this;
+    }
+
+    public function getPosteActuel(): ?string
+    {
+        return $this->posteActuel;
+    }
+
+    public function setPosteActuel(string $posteActuel): self
+    {
+        $this->posteActuel = $posteActuel;
+
+        return $this;
     }
 }

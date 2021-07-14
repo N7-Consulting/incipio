@@ -1,6 +1,6 @@
 rh:
-  ancien_poste: Ancien poste
   alumni_ajouter: Ajouter un alumnus
+  alumnus: Alumnus
   ajouter_competence: Ajouter une compétence
   aucune_competence: Pas (encore !) de competences
   contacts : Contacts
@@ -20,18 +20,17 @@ rh:
   detail: Détails
   fait_par: Fait par
   gestion_alumni: Gestion des alumni
+  information: Fiche d'information
   liste_competence: Liste des compétences
   lien_linkedin: Lien LinkedIn
   liste : Liste des alumni
   objet: Objet
   pas_de_contact : Aucun contact enregistré
-  promotion: Promotion
-  poste: Poste
-  mail: Mail
+  poste_entreprise : Poste en entreprise actuel
+  secteur_entrepise: Secteur d'activité actuel
   nom: Nom
   resume : Résumé
   type: Type
-  tel: Télephone
 
 
 
