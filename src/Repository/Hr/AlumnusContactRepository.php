@@ -26,7 +26,7 @@ class AlumnusContactRepository extends ServiceEntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
         $query = $qb->select('f')->from(AlumnusContact::class, 'f')
-            ->orderBy('f.id', 'asc');
+            ->orderBy('f.date', 'desc');
         $entities = $query->getQuery()->getResult();
 
         $contactsParAlumnus = [];
