@@ -39,7 +39,6 @@ class AlumnusContactRepository extends ServiceEntityRepository
                 $contactsParAlumnus[$nom] = [$contact];
             }
         }       
-
         return $contactsParAlumnus;
     }
 
