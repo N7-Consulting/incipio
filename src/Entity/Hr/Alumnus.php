@@ -24,9 +24,9 @@ class Alumnus
     protected $id;
 
     /**
-     * @var Personne
+     * @var Membre
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Personne\Personne")
+     * @ORM\OneToOne(targetEntity="App\Entity\Personne\Membre")
      * @ORM\JoinColumn(nullable=true)
      * 
      */
@@ -80,7 +80,7 @@ class Alumnus
     /**
      * Set personne.
      *
-     * @param Personne $personne
+     * @param Membre $personne
      *
      * @return Alumnus
      */
@@ -94,7 +94,7 @@ class Alumnus
     /**
      * Get personne.
      *
-     * @return Personne
+     * @return Membre
      */
     public function getPersonne()
     {

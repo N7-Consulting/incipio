@@ -6,6 +6,7 @@ use App\Entity\Formation\Passation;
 use App\Entity\Formation\Formation;
 use App\Entity\Processus\Processus;
 use App\Entity\Hr\Competence;
+use App\Entity\Hr\Alumnus;
 use App\Entity\Personne\Employe;
 use App\Entity\Personne\Filiere;
 use App\Entity\Personne\Mandat;
@@ -41,6 +42,15 @@ class CreateDemoDataCommand extends Command
     const PRENOM = ['Alexandre', 'Paul', 'Thomas', 'Raphaël', 'Camille', 'Inès', 'Emma', 'Gabriel', 'Antoine', 'Louis', 'Victor', 'Maxime', 'Hugo', 'Louise', 'Marie', 'Sarah', 'Arthur', 'Clara', 'Lea', 'Alice', 'Lucas', 'Jules', 'Chloe', 'Elsa', 'Manon'];
 
     const FILIERES = ['Hydro', 'Electronique', 'Telecoms', 'Automatique', 'Info'];
+
+    const ALUMNI = [
+        [
+            'commentaire' => 'L\'alumnus est interessé par notre proposition de parrainage. ',
+            'lienLinkedIn' => 'https://fr.linkedin.com/',
+            'secteurActuel' => 'Informatique',
+            'posteActuel' => 'Chef de projet'
+        ]
+    ];
 
     const FORMATIONS = [
         [
@@ -320,6 +330,7 @@ class CreateDemoDataCommand extends Command
         $this->createFormation($output);
         $this->createPassation($output);
         $this->createProcessus($output);
+        $this->createAlumni($output);
 
         $output->writeln('Done.');
     }
@@ -783,6 +794,30 @@ class CreateDemoDataCommand extends Command
             $this->em->flush();
         }
         $output->writeln('Passations: Ok');
+    }
+
+    private function createAlumni(OutputInterface $output)
+    {
+        foreach (self::ALUMNI as $alumnus) {
+            $al = new Alumnus();
+
+            $al->setCommentaire($alumnus['commentaire']);
+            $al->setLienLinkedIn($alumnus['lienLinkedIn']);
+            $al->setSecteurActuel($alumnus['secteurActuel']);
+            $al->setPosteActuel($alumnus['posteActuel']);
+
+            $date = new \DateTime('now');
+            $promotion = $date->format('Y') + 3;
+
+            $pe = $this->createMembre(self::PRENOM[array_rand(self::PRENOM)], self::NOM[array_rand(self::NOM)], $promotion);
+            $al->setPersonne($pe);
+
+            $this->validateObject('New Alumnus', $al);
+            $this->em->persist($al);
+
+            $this->em->flush();
+        }
+        $output->writeln('Alumni: Ok');
     }
 
     private function createProcessus(OutputInterface $output)
