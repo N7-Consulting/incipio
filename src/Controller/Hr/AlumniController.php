@@ -32,10 +32,12 @@ class AlumniController extends AbstractController
     {   
         $em = $this->getDoctrine()->getManager();
         $contactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByAlumnus();
+        $dernierContactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByDernierContact();
         $alumni = $em->getRepository(Alumnus::class)->findAll();
 
         return $this->render('Hr/Alumni/index.html.twig', [
             'contactsParAlumnus' => $contactsParAlumnus,
+            'dernierContactsParAlumnus' => $dernierContactsParAlumnus,
             'alumni' => $alumni,
         ]);
     }
@@ -50,8 +52,8 @@ class AlumniController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $Alumnuscontact = new AlumnusContact();
-        $form = $this->createForm(AlumnusContactType::class, $Alumnuscontact);
+        $alumnusContact = new AlumnusContact();
+        $form = $this->createForm(AlumnusContactType::class, $alumnusContact);
         $formHandler = new AlumnusContactHandler($form, $request, $em);
 
         if ($formHandler->process()) {

@@ -32,7 +32,7 @@ class AlumnusContactRepository extends ServiceEntityRepository
         $contactsParAlumnus = [];
         /** @var AlumnusContact $AlumnusContact */
         foreach ($entities as $contact) {
-            $nom = $contact->getAlumnus()->getPersonne()->getPrenomNom();
+            $nom = $contact->getAlumnus()->getPersonne()->getPersonne()->getPrenomNom();
             if (array_key_exists($nom, $contactsParAlumnus)) {
                 $contactsParAlumnus[$nom][] = $contact;
             } else {
@@ -41,5 +41,30 @@ class AlumnusContactRepository extends ServiceEntityRepository
         }       
 
         return $contactsParAlumnus;
+    }
+
+    /**
+     * @return array
+     */
+    public function findAllByDernierContact()
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $query = $qb->select('f')->from(AlumnusContact::class, 'f')
+            ->orderBy('f.id', 'asc');
+        $entities = $query->getQuery()->getResult();
+
+        $dernierContactParAlumnus = [];
+        /** @var AlumnusContact $AlumnusContact */
+        foreach ($entities as $contact) {
+            $nom = $contact->getAlumnus()->getPersonne()->getPersonne()->getPrenomNom();
+            if (array_key_exists($nom, $dernierContactParAlumnus)) {
+                if ($dernierContactParAlumnus[$nom] < $contact->getDate()) {
+                    $dernierContactParAlumnus[$nom] = $contact->getDate();
+                }
+            } else {
+                $dernierContactParAlumnus[$nom] = $contact->getDate();
+            }
+        }       
+        return $dernierContactParAlumnus;
     }
 }
