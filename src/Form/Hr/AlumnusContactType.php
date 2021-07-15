@@ -11,6 +11,7 @@
 
 namespace App\Form\Hr;
 
+use App\Entity\Hr\Alumnus;
 use App\Entity\Personne\Personne;
 use App\Entity\Hr\AlumnusContact;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
@@ -42,8 +43,8 @@ class AlumnusContactType extends AbstractType
                 Select2EntityType::class,
                 [
                     'label' => 'Alumnus contacté',
-                    'class' => Personne::class,
-                    'choice_label' => 'prenomNom',
+                    'class' => Alumnus::class,
+                    'choice_label' => 'personne.prenomNom',
                     'required' => true,
                 ]
             )

@@ -32,7 +32,7 @@ class AlumnusContactRepository extends ServiceEntityRepository
         $contactsParAlumnus = [];
         /** @var AlumnusContact $AlumnusContact */
         foreach ($entities as $contact) {
-            $nom = $contact->getAlumnus()->getPrenomNom();
+            $nom = $contact->getAlumnus()->getPersonne()->getPrenomNom();
             if (array_key_exists($nom, $contactsParAlumnus)) {
                 $contactsParAlumnus[$nom][] = $contact;
             } else {

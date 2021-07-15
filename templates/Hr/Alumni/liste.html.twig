@@ -24,7 +24,7 @@
 					<a href="{{ path('personne_membre_voir', {'id': alumnus.id}) }}"><span class="fa fa-eye"></a>
 				</td>
 				<td>
-					{{alumnus.lienLinkedIn}}
+					<a href ="{{ alumnus.lienLinkedIn }}">{{  alumnus.lienLinkedIn ?  'rh.voir_profil'|trans({}, 'rh') }} </a>
 				</td>
 				<td>
 					{{alumnus.secteurActuel}}

@@ -5,6 +5,7 @@ namespace App\Entity\Hr;
 use App\Repository\Hr\AlumnusContactRepository;
 use App\Entity\Comment\Thread;
 use App\Entity\Personne\Personne;
+use App\Entity\Hr\Alumnus;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,9 +21,9 @@ class AlumnusContact
     private $id;
 
     /**
-     * @var Personne
+     * @var Alumnus
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personne\Personne")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hr\Alumnus")
      * @ORM\JoinColumn(nullable=false)
      */
     private $alumnus;
@@ -94,7 +95,7 @@ class AlumnusContact
     /**
      * Get alumnus.
      *
-     * @return Personne
+     * @return Alumnus
      */
     public function getAlumnus()
     {
@@ -105,7 +106,7 @@ class AlumnusContact
      *
      * @return AlumnusContact
      */
-    public function setAlumnus(Personne $alumnus)
+    public function setAlumnus(Alumnus $alumnus)
     {
         $this->alumnus = $alumnus;
 
