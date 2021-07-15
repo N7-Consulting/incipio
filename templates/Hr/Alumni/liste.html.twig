@@ -33,7 +33,7 @@
 					{{alumnus.posteActuel}}
 				</td>
 				<td>
-					{% if dernierContactsParAlumnus[alumnus.personne.personne.prenomNom] %}
+					{% if dernierContactsParAlumnus[alumnus.personne.personne.prenomNom] is defined %}
 						{{dernierContactsParAlumnus[alumnus.personne.personne.prenomNom]|date('d/m/Y')}}
 					{% endif %}
 					
