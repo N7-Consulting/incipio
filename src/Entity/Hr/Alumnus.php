@@ -35,8 +35,7 @@ class Alumnus
     /**
      * @var string
      *
-     * @ORM\Column(name="commentaire", type="text")
-     * @Assert\NotBlank
+     * @ORM\Column(name="commentaire", type="string", nullable=true)
      */
     private $commentaire;
 
@@ -51,7 +50,7 @@ class Alumnus
     private $secteurActuel;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $posteActuel;
 
@@ -66,26 +65,14 @@ class Alumnus
         return $this->id;
     }
 
-    /**
-     * Set commentaire.
-     *
-     * @param string $commentaire
-     *
-     * @return Alumnus
-     */
-    public function setCommentaire($commentaire)
+    public function setCommentaire(?string $commentaire): self
     {
         $this->commentaire = $commentaire;
 
         return $this;
     }
 
-    /**
-     * Get commentaire.
-     *
-     * @return string
-     */
-    public function getCommentaire()
+    public function getCommentaire(): ?string
     {
         return $this->commentaire;
     }
@@ -143,7 +130,7 @@ class Alumnus
         return $this->posteActuel;
     }
 
-    public function setPosteActuel(string $posteActuel): self
+    public function setPosteActuel(?string $posteActuel): self
     {
         $this->posteActuel = $posteActuel;
 

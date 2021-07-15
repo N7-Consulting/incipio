@@ -5,7 +5,7 @@
 <table class="table table-bordered table-striped standard">
     <tr>
         <th>{{ form_label(form.personne) }}</th>
-        <td>{{ form_widget(form.personne) }}</td>
+        <td>{{ form_widget(form.personne) }}{{ form_errors(form.personne) }}</td>
     </tr>
     <tr>
         <th>{{ form_label(form.lienLinkedIn) }}</th>
