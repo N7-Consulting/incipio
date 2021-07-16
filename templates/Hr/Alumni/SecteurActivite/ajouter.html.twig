@@ -1,27 +1,27 @@
-{% extends "Personne/layout.html.twig" %}
+{% extends "Hr/layout.html.twig" %}
 
 {% block title %}
-    {{ 'filiere.ajouter_filiere'|trans({}, 'personne') }} {{ parent() }}
+    {{ 'rh.secteur_activite_ajouter'|trans({}, 'rh') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'filiere.ajouter_filiere'|trans({}, 'personne') }}
+    {{ 'rh.secteur_activite_ajouter'|trans({}, 'rh') }}
 {% endblock %}
 
-{% block breadcrumb %}
+{# {% block breadcrumb %}
     <ul class="breadcrumb no-margin pull-right">
         <li><a href="{{ path('personne_poste_homepage') }}">{{ 'dashboard.postes_filieres'|trans({}, 'dashboard') }}</a></li>
         <li class="active">{{ 'filiere.ajouter_filiere'|trans({}, 'personne') }}</li>
     </ul>
-{% endblock %}
+{% endblock %} #}
 
 {% block content_bundle %}
     <div class="table-responsive content">
         {{ form_start(form) }}
         <table class="table table-bordered table-striped">
             <tr>
-                <th>{{ form_label(form.nom) }}</th>
-                <td>{{ form_widget(form.nom) }} {{ form_errors(form.nom) }}</td>
+                <th>{{ form_label(form.intitule) }}</th>
+                <td>{{ form_widget(form.intitule) }} {{ form_errors(form.intitule) }}</td>
             </tr>
             <tr>
                 <th>{{ form_label(form.description) }}</th>
@@ -36,7 +36,7 @@
                             {{ form_end(form) }}
                         </div>
                     </div>
-               </td>
+                </td>
             </tr>
         </table>
     </div>

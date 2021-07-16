@@ -11,6 +11,7 @@
 
 namespace App\Controller\Personne;
 
+use App\Entity\Hr\SecteurActivite;
 use App\Entity\Personne\Filiere;
 use App\Entity\Personne\Poste;
 use App\Form\Personne\PosteType;
@@ -69,10 +70,12 @@ class PosteController extends AbstractController
 
         $postes = $em->getRepository(Poste::class)->findAll();
         $filieres = $em->getRepository(Filiere::class)->findAll();
+        $secteurActivite = $em->getRepository(SecteurActivite::class)->findAll();
 
         return $this->render('Personne/Poste/index.html.twig', [
             'postes' => $postes,
             'filieres' => $filieres,
+            'secteurActivite' => $secteurActivite,
         ]);
     }
 
