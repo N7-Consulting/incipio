@@ -12,6 +12,7 @@
 namespace App\Entity\Personne;
 
 use App\Entity\Comment\Thread;
+use App\Entity\Hr\SecteurActivite;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
@@ -63,6 +64,19 @@ class Prospect extends Adressable
      * @Assert\Choice(callback = "getEntiteChoiceAssert")
      */
     private $entite;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mail;
+
+    /**
+     * @var SecteurActivite
+     * @Assert\NotNull()
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hr\SecteurActivite")
+     */
+    private $secteurActivite;
 
     /**
      * Get id.
@@ -193,6 +207,18 @@ class Prospect extends Adressable
         return $this;
     }
 
+    public function getSecteurActivite(): ?SecteurActivite
+    {
+        return $this->secteurActivite;
+    }
+
+    public function setSecteurActivite(?SecteurActivite $secteurActivite): self
+    {
+        $this->secteurActivite = $secteurActivite;
+
+        return $this;
+    }
+
     /**
      * Get entite.
      *
@@ -230,5 +256,17 @@ class Prospect extends Adressable
         $tab = $this->getEntiteChoice();
 
         return $tab[$this->entite];
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(?string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
     }
 }
