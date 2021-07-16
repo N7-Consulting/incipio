@@ -12,9 +12,11 @@
 
 {% block content_bundle %}        
 {# Liste of SecteurActivite #}
-<h2>{{ 'rh.secteur_activite'|trans({}, 'rh') }}</h2
-<a href="{{ path('secteur_activite_ajouter') }}" class="btn btn-info">
-</a>
+<div>
+    <h2>{{ 'rh.secteur_activite'|trans({}, 'rh') }}</h2>
+    <a href="{{ path('secteur_activite_ajouter') }}" class="btn btn-info">{{ 'rh.secteur_activite_ajouter'|trans({}, 'rh') }}</a>
+</div>
+</br>
 
             <table class="table table-striped">
                 <tbody>

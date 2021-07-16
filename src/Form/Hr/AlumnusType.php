@@ -3,8 +3,7 @@
 namespace App\Form\Hr;
 
 use App\Entity\Hr\Alumnus;
-use App\Entity\Hr\SecteurActivite;
-use App\Entity\Personne\Personne;
+use App\Entity\Personne\SecteurActivite;
 use App\Entity\Personne\Membre;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Component\Form\AbstractType;

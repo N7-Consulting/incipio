@@ -3,7 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Formation\Passation;
-use App\Entity\Hr\SecteurActivite;
+use App\Entity\Personne\SecteurActivite;
 use App\Entity\Formation\Formation;
 use App\Entity\Processus\Processus;
 use App\Entity\Hr\Competence;

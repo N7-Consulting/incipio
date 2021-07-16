@@ -12,7 +12,7 @@
 namespace App\Entity\Personne;
 
 use App\Entity\Comment\Thread;
-use App\Entity\Hr\SecteurActivite;
+use App\Entity\Personne\SecteurActivite;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
@@ -74,7 +74,7 @@ class Prospect extends Adressable
      * @var SecteurActivite
      * @Assert\NotNull()
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Hr\SecteurActivite")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personne\SecteurActivite")
      */
     private $secteurActivite;
 

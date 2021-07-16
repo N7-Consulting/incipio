@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Personne\Personne;
+use App\Entity\Personne\SecteurActivite;
 
 /**
  * @ORM\Table()
@@ -48,7 +49,7 @@ class Alumnus
      * @var SecteurActivite
      * @Assert\NotNull()
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Hr\SecteurActivite")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personne\SecteurActivite")
      */
     private $secteurActuel;
 

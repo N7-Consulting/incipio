@@ -7,7 +7,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Hr\SecteurActivite;
+use App\Entity\Personne\SecteurActivite;
 use App\Entity\Personne\Filiere;
 use App\Entity\Personne\Poste;
 use Doctrine\Bundle\FixturesBundle\Fixture;

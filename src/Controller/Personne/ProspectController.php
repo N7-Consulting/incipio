@@ -11,8 +11,8 @@
 
 namespace App\Controller\Personne;
 
-use App\Entity\Hr\SecteurActivite;
-use App\Form\Hr\SecteurActiviteType;
+use App\Entity\Personne\SecteurActivite;
+use App\Form\Personne\SecteurActiviteType;
 use App\Entity\Personne\Employe;
 use App\Entity\Personne\Prospect;
 use App\Entity\Project\Etude;

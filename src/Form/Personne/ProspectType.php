@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Hr\SecteurActivite;
+use App\Entity\Personne\SecteurActivite;
 
 class ProspectType extends AbstractType
 {

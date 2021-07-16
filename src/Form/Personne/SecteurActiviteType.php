@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Form\Hr;
+namespace App\Form\Personne;
 
-use App\Entity\Hr\SecteurActivite;
+use App\Entity\Personne\SecteurActivite;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
