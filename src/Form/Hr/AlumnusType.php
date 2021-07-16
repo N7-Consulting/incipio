@@ -3,6 +3,7 @@
 namespace App\Form\Hr;
 
 use App\Entity\Hr\Alumnus;
+use App\Entity\Hr\SecteurActivite;
 use App\Entity\Personne\Personne;
 use App\Entity\Personne\Membre;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
@@ -23,8 +24,13 @@ class AlumnusType extends AbstractType
             ->add('lienLinkedIn', TextareaType::class,
                 ['required' => false, 'label' => 'Lien LinkedIn', 'attr' => ['cols' => '100%', 'rows' => 2]]
             )
-            ->add('secteurActuel', TextareaType::class,
-                ['required' => false,'label' => 'Secteur d\'activité actuel', 'attr' => ['cols' => '100%', 'rows' => 2]]
+            ->add('secteurActuel', Select2EntityType::class,
+                [
+                    'label' => 'Secteur d\'activité actuel',
+                    'class' => SecteurActivite::class,
+                    'choice_label' => 'intitule',
+                    'required' => false,
+                ]
             )
             ->add('posteActuel', TextareaType::class,
                 ['required' => false, 'label' => 'Poste en entreprise actuel', 'attr' => ['cols' => '100%', 'rows' => 2]]

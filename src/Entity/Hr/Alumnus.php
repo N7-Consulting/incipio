@@ -45,7 +45,10 @@ class Alumnus
     private $lienLinkedIn;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var SecteurActivite
+     * @Assert\NotNull()
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hr\SecteurActivite")
      */
     private $secteurActuel;
 
@@ -113,12 +116,12 @@ class Alumnus
         return $this;
     }
 
-    public function getSecteurActuel(): ?string
+    public function getSecteurActuel(): ?SecteurActivite
     {
         return $this->secteurActuel;
     }
 
-    public function setSecteurActuel(?string $secteurActuel): self
+    public function setSecteurActuel(?SecteurActivite $secteurActuel): self
     {
         $this->secteurActuel = $secteurActuel;
 
