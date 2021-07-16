@@ -1,18 +1,11 @@
 {% extends "Personne/layout.html.twig" %}
 
 {% block title %}
-    {{ 'filiere.modifier_filiere'|trans({}, 'personne') }} {{ parent() }}
+        {{ 'prospect.secteur_activite'|trans({}, 'personne') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'filiere.modifier_filiere'|trans({}, 'personne') }}
-{% endblock %}
-
-{% block breadcrumb %}
-    <ul class="breadcrumb no-margin pull-right">
-        <li><a href="{{ path('personne_poste_homepage') }}">{{ 'dashboard.postes_filieres'|trans({}, 'dashboard') }}</a></li>
-        <li class="active">{{ 'filiere.modifier_filiere'|trans({}, 'personne') }}</li>
-    </ul>
+        {{ 'prospect.secteur_activite'|trans({}, 'personne') }}
 {% endblock %}
 
 {% block content_bundle %}
@@ -20,8 +13,8 @@
         {{ form_start(form) }}
         <table class="table table-bordered table-striped">
             <tr>
-                <th>{{ form_label(form.nom) }}</th>
-                <td>{{ form_widget(form.nom) }} {{ form_errors(form.nom) }}</td>
+                <th>{{ form_label(form.intitule) }}</th>
+                <td>{{ form_widget(form.intitule) }} {{ form_errors(form.intitule) }}</td>
             </tr>
             <tr>
                 <th>{{ form_label(form.description) }}</th>
@@ -37,10 +30,10 @@
                         </div>
                         <div class="col-md-2 col-xs-4">
                             <form class="bootbox-confirm inline"
-                                  data-content="{{ 'filiere.confirmation_supprimer_filiere'|trans({}, 'personne') }}"
-                                  action="{{ path('personne_filiere_supprimer', { 'id': form.vars.value.id }) }}" method="post">
+                                data-content="{{ 'prospect.confirmation_supprimer_secteur'|trans({}, 'personne') }}"
+                                action="{{ path('secteur_activite_supprimer', { 'id': form.vars.value.id }) }}" method="post">
                                 {{ form_widget(delete_form) }}
-                                <button class="btn btn-danger">{{ 'filiere.supprimer_filiere'|trans({}, 'personne') }}</button>
+                                <button class="btn btn-danger">{{ 'prospect.supprimer_secteur'|trans({}, 'personne') }}</button>
                             </form>
                         </div>
                     </div>

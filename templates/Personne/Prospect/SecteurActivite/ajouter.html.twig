@@ -1,19 +1,12 @@
-{% extends "Hr/layout.html.twig" %}
+{% extends "Personne/layout.html.twig" %}
 
 {% block title %}
-    {{ 'rh.secteur_activite_ajouter'|trans({}, 'rh') }} {{ parent() }}
+    {{ 'prospect.secteur_activite'|trans({}, 'personne') }} {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'rh.secteur_activite_ajouter'|trans({}, 'rh') }}
+    {{ 'prospect.secteur_activite'|trans({}, 'personne') }}
 {% endblock %}
-
-{# {% block breadcrumb %}
-    <ul class="breadcrumb no-margin pull-right">
-        <li><a href="{{ path('personne_poste_homepage') }}">{{ 'dashboard.postes_filieres'|trans({}, 'dashboard') }}</a></li>
-        <li class="active">{{ 'filiere.ajouter_filiere'|trans({}, 'personne') }}</li>
-    </ul>
-{% endblock %} #}
 
 {% block content_bundle %}
     <div class="table-responsive content">
