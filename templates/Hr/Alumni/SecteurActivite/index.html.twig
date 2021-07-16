@@ -1,0 +1,35 @@
+{# Liste of SecteurActivite #}
+
+<h2>{{ 'rh.secteur_activite'|trans({}, 'rh') }}</h2>
+
+<a href="{{ path('secteur_activite_ajouter') }}" class="btn btn-info">
+    {{ 'rh.secteur_activite_ajouter'|trans({}, 'rh') }}
+</a>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>{{ 'rh.secteur_activite'|trans({}, 'rh') }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for secteur in secteurActivite %}
+        {% if loop.index0 % 2 == 0 or loop.first %}
+            <tr>
+        {% endif %}
+        <td>
+            {# <a href="{{ path('personne_filiere_modifier', {'id': filiere.id}) }}">
+                <i class="fa fa-pencil"></i> #}
+                {{ secteur.intitule }}
+            </a>
+        </td>
+        {% if loop.index0 % 2 == 1 or loop.last %}
+            </tr>
+        {% endif %}
+    {% else %}
+        <tr>
+            <td>{{ 'rh.secteur_liste_vide'|trans({}, 'rh') }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
