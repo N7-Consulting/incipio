@@ -26,8 +26,7 @@
 						{{contact.date | date("d/m/Y") }}
 					</td>
 					<td>
-						{{ contact.faitPar.PrenomNom }}
-					</td>
+						{% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  contact.faitPar} %}					</td>
 					<td>
 						{{ contact.objet }}
 					</td>
