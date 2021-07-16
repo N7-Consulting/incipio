@@ -12,7 +12,9 @@
         <td>{{ form_widget(form.lienLinkedIn) }}</td>
     </tr>
     <tr>
-        <th>{{ form_label(form.secteurActuel) }}</th>
+        <th>{{ form_label(form.secteurActuel) }}
+            <span class="badge badge-default" data-toggle="tooltip" title="{{ 'prospect.prospect_tooltip'|trans({}, 'personne') }}">?</span>
+        </th>
         <td>{{ form_widget(form.secteurActuel) }}</td>
     </tr>
     <tr>
