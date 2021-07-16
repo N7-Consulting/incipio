@@ -232,14 +232,16 @@ class Prospect extends Adressable
     public static function getEntiteChoice()
     {
         return [
-            1 => 'Particulier',
-            2 => 'Association',
-            3 => 'TPE (moins de 20 salariés)',
-            4 => 'PME / ETI (plus de 20 salariés)',
-            5 => 'Grand Groupe',
-            6 => 'Ecole',
-            7 => 'Administration',
-            8 => 'Junior-Entreprise',
+            1 => 'TPE (Très Petite Entreprise - de 10 salariés)',
+            2 => 'PME (Petite ou Moyenne Entreprise, 10 - 250 salariés)',
+            3 => 'ETI (Entreprise de Taille Intermédiaire, 250 - 5000 salariés)',
+            4 => 'Grand groupes (+ 5000 salariés)',
+            5 => 'Ecole',
+            6 => 'Administrations Publiques (Mairie, Régions, Département, Cci, Ecole, Laboratoire, Association)',
+            7 => 'Junior-Entreprise',
+            8 => 'Particulier',
+            9 => 'Association',
+            10 => 'Startup / Indépendant(e)'
             ];
     }
 
