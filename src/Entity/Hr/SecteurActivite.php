@@ -32,7 +32,7 @@ class SecteurActivite
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * 
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
@@ -62,7 +62,7 @@ class SecteurActivite
      *
      * @param string $intitule
      *
-     * @return Poste
+     * @return SecteurActivite
      */
     public function setIntitule($intitule)
     {
@@ -72,26 +72,19 @@ class SecteurActivite
     }
 
     /**
-     * Get description.
-     *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * Set description.
-     *
      * @param string $description
-     *
-     * @return Poste
      */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
