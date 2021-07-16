@@ -117,6 +117,7 @@ dashboard:
   rh_competences: RH & compétences
   saisie_informations: Saisie des informations
   archivage_doc : Archivage des documents
+  secteur_activite: Secteurs d'activité
   suivi_etudes: Suivi d'Etude
   stat:  Stats le
   suggestion: Envoyez vos suggestion à

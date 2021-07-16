@@ -12,10 +12,8 @@
 namespace App\Controller\Personne;
 
 use App\Entity\Personne\Filiere;
-use App\Entity\Hr\SecteurActivite;
 use App\Entity\Personne\Membre;
 use App\Form\Personne\FiliereType;
-use App\Form\Hr\SecteurActiviteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -26,36 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FiliereController extends AbstractController
 {
-    /**
-     * @Route(name="secteur_activite_ajouter", path="/secteur/activite/add", methods={"GET","HEAD","POST"})
-     *
-     * @return RedirectResponse|Response
-     */
-    public function ajouterSecteur(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $secteur = new SecteurActivite();
-
-        $form = $this->createForm(SecteurActiviteType::class, $secteur);
-
-        if ('POST' == $request->getMethod()) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $em->persist($secteur);
-                $em->flush();
-                $this->addFlash('success', 'Secteur ajouté');
-
-                return $this->redirectToRoute('personne_poste_homepage');
-            }
-        }
-
-        return $this->render('Hr/Alumni/SecteurActivite/ajouter.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
     /**
      * @Security("has_role('ROLE_ADMIN')")
      * @Route(name="personne_filiere_ajouter", path="/filiere/add", methods={"GET","HEAD","POST"})
