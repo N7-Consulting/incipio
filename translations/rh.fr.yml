@@ -35,7 +35,7 @@ rh:
   secteur_entrepise: Secteur d'activité actuel
   nom: Nom
   resume : Résumé
-  secteur_activite: Secteur d'activité
+  secteur_activite: Secteurs d'activité
   secteur_activite_ajouter : Ajouter un secteur d'activité
   secteur_liste_vide: Aucun secteur d'activité de l'entreprise n'est enregistré
   type: Type

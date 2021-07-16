@@ -4,26 +4,19 @@
     {{ 'prospect.secteur_activite'|trans({}, 'personne') }} {{ parent() }}
 {% endblock %}
 
-{# {% block breadcrumb %}
+{% block breadcrumb %}
     <ul class="breadcrumb no-margin pull-right">
-        <li class="active">{{ 'dashboard.postes_filieres'|trans({}, 'dashboard') }}</li>
+        <li class="active">{{ 'prospect.secteur_activite'|trans({}, 'personne') }}</li>
     </ul>
-{% endblock %} #}
+{% endblock %}
 
 {% block content_bundle %}        
 {# Liste of SecteurActivite #}
-<h2>{{ 'rh.secteur_activite'|trans({}, 'rh') }}</h2>
-
+<h2>{{ 'rh.secteur_activite'|trans({}, 'rh') }}</h2
 <a href="{{ path('secteur_activite_ajouter') }}" class="btn btn-info">
-    {{ 'rh.secteur_activite_ajouter'|trans({}, 'rh') }}
 </a>
 
             <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>{{ 'rh.secteur_activite'|trans({}, 'rh') }}</th>
-                </tr>
-                </thead>
                 <tbody>
                 {% for secteur in secteurActivite %}
                     {% if loop.index0 % 2 == 0 or loop.first %}

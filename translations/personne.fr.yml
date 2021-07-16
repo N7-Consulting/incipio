@@ -148,7 +148,7 @@ prospect:
     nombre_employe: Nombre d'employés
     type: Type de prospect
     mail : Mail
-  secteur_activite : Secteur d'activité
+  secteur_activite : Secteurs d'activité
   confirmation_supprimer_secteur: Voulez-vous vraiment supprimer ce secteur d'activité?
   supprimer_secteur: Supprimer le secteur d'activité
   commentaires: Commentaires
