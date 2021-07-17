@@ -20,7 +20,7 @@
 				<tr>
 					<td>
 						<a href="{{ path('alumni_contact_modifier', {'id': contact.id}) }}">{{ 'rh.contact'|trans({}, 'rh') }}
-								n°{{loop.index0}}</a>
+								n°{{loop.index0 +1}}</a>
 					</td>
 					<td>
 						{{contact.date | date("d/m/Y") }}
