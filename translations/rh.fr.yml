@@ -8,6 +8,7 @@ rh:
   alumnus: Alumnus
   ajouter_competence: Ajouter une compétence
   aucune_competence: Pas (encore !) de competences
+  competnece_ajouter : Ajouter une compétence
   contacts : Contacts
   contact : Contact
   contact_client_supprimer: Supprimer
