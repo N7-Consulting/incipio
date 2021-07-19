@@ -8,11 +8,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Personne\Personne;
 use App\Entity\Personne\SecteurActivite;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\Personne\PersonneRepository")
+ * 
+ * @UniqueEntity("personne")
  */
+ 
 class Alumnus
 {
     /**
@@ -27,8 +31,9 @@ class Alumnus
     /**
      * @var Membre
      *
+     * 
      * @ORM\OneToOne(targetEntity="App\Entity\Personne\Membre")
-     * @ORM\JoinColumn(nullable=true)
+     * 
      * 
      */
     private $personne;
