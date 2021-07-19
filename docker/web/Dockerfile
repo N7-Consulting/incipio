@@ -9,7 +9,8 @@ RUN buildDeps=" \
         zlib1g-dev \
         libzip-dev \
         bzip2 \
-        wget\
+        wget \
+        libfreetype6-dev \
     " \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -17,6 +18,9 @@ RUN buildDeps=" \
         libicu63 \
         zlib1g \
         libzip4 \
+        libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
         libonig-dev \
         git \
         fontconfig \
@@ -27,18 +31,22 @@ RUN buildDeps=" \
     && ln -sf /usr/local/bin/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin \
     && phantomjs --version \
     && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         intl \
         mbstring \
         pdo_mysql \
         zip \
+        gd \
     && apt-get purge -y --auto-remove $buildDeps \
     && pecl install \
         apcu-$APCU_VERSION \
     && docker-php-ext-enable --ini-name 05-opcache.ini \
         opcache \
     && docker-php-ext-enable --ini-name 20-apcu.ini \
-        apcu
+        apcu \
+    && docker-php-ext-enable --ini-name 25-gd.ini \
+        gd
 
 # Apache config
 RUN a2enmod rewrite headers
