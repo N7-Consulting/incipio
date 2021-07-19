@@ -47,7 +47,6 @@ class Alumnus
 
     /**
      * @var SecteurActivite
-     * @Assert\NotNull()
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personne\SecteurActivite")
      */
