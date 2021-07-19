@@ -138,11 +138,18 @@ class AlumniController extends AbstractController
 
         $alumnus = new Alumnus();
         $form = $this->createForm(AlumnusType::class, $alumnus);
-        $formHandler = new AlumnusHandler($form, $request, $em);
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
 
-        if ($formHandler->process()) {
-            return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
-        }
+            if ($form->isValid()) {
+                $em->persist($alumnus);
+                $em->flush();
+                $this->addFlash('success', 'Alumnus enregistré');
+
+                return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
+            }
+            $this->addFlash('danger', 'Le formulaire contient des erreurs.');
+        }        
 
         return $this->render('Hr/Alumni/ajouter.html.twig', [
             'form' => $form->createView(),
