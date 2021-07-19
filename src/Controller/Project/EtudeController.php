@@ -420,14 +420,14 @@ class EtudeController extends AbstractController
                     (string) (2 * $id),
                     HiddenType::class,
                     ['label' => 'refEtude',
-                     'data' => $etude->getReference($namingConvention),
+                        'data' => $etude->getReference($namingConvention),
                     ]
                 )
                     ->add(
                         (string) (2 * $id + 1),
                         TextareaType::class,
                         ['label' => $etude->getReference($namingConvention),
-                         'required' => false, 'data' => $etude->getStateDescription(),
+                            'required' => false, 'data' => $etude->getStateDescription(),
                         ]
                     );
                 ++$id;
