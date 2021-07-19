@@ -656,7 +656,7 @@ class CreateDemoDataCommand extends Command
         // Set etat document
         $this->etatDoc($pv, $etatDoc);
 
-        $pv->setType('pvr');
+        $etude->setPvr($pv);
 
         $this->validateObject('New PVRF', $pv);
         $this->em->persist($pv);

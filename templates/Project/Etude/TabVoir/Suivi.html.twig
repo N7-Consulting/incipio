@@ -138,7 +138,7 @@
         {% endfor %}
         {% endif %}
         <!--PROCES VERBAUX -->
-        {% if etude.procesVerbaux is not empty %}
+        {% if etude.pvis is not empty %}
         <tr>
             <th colspan="8">{{ 'suivi.proces_verbaux'|trans({}, 'project') }}</th>
         </tr>
@@ -152,9 +152,8 @@
                 <td>{{ form_widget(pvi.receptionne) }}</td>
             </tr>
         {% endfor %}
-        {# On test si il y a un PVRF parmis les PV #}
-        {% for pv in etude.procesVerbaux if pv.type == 'pvr' %}
-        <tr class="docTabRow">
+        {% endif %}
+        <tr class="docTabRow {{ etude.pvr is not none ? "": "hidden" }}">
             <th>{{ 'suivi.pvr'|trans({}, 'project') }}</th>
             <td class="state">{{ 'suivi.incomplet'|trans({}, 'project') }}</td>
             <td>{{ form_widget(formSuivi.pvr.redige) }}</td>
@@ -162,8 +161,6 @@
             <td>{{ form_widget(formSuivi.pvr.envoye) }}</td>
             <td>{{ form_widget(formSuivi.pvr.receptionne) }}</td>
         </tr>
-        {% endfor %}
-        {% endif %}
     </tbody>
 </table>
 
