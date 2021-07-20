@@ -15,7 +15,7 @@
             {{ form_label(form.cca) }}
             {{ form_errors(form.cca) }}
         </th>
-        <td>{{ form_widget(form.cca) }}</td>
+        <td>{{ form_widget(form.cca, {'attr': {'class': 'select2'}}) }}</td>
     </tr>
     <tr>
         <th>
@@ -103,7 +103,7 @@
     </tr>
     <tr>
         <th>{{ form_label(form.domaineCompetence) }} {{ form_errors(form.domaineCompetence) }}</th>
-        <td>{{ form_widget(form.domaineCompetence) }}</td>
+        <td>{{ form_widget(form.domaineCompetence, {'attr': {'class': 'select2'}}) }}</td>
     </tr>
     <tr>
         <th>{{ form_label(form.sourceDeProspection) }} {{ form_errors(form.sourceDeProspection) }}</th>
@@ -156,6 +156,8 @@
             object.show();
 
             // Unfortunately, it's needed for correct display...
+            // With {'attr': {'class': 'select2'}} in widget, it's better, but not
+            // until user has first selected a CCA
             object.find('.select2').css('width', '100%');
     }
 
