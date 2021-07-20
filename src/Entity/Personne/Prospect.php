@@ -72,7 +72,7 @@ class Prospect extends Adressable
 
     /**
      * @var SecteurActivite
-     * @Assert\NotNull()
+     * 
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personne\SecteurActivite")
      */
