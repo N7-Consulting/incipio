@@ -4,8 +4,13 @@
     {{ 'dashboard.ev_modifier'|trans({}, 'dashboard') }}
 {% endblock %}
 
+{% block breadcrumb_active %}
+    {{ 'dashboard.ev_modifier'|trans({}, 'dashboard') }}
+{% endblock %}
+
 {% block content_bundle %}
     <a href="{{ path('booking_index') }}" class="pull-right btn btn-primary">{{ 'dashboard.ev_voir'|trans({}, 'dashboard') }}</a>
+    <br><br>
 
     {{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
     <br>
