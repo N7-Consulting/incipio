@@ -1,12 +1,12 @@
 {% extends 'Project/layout.html.twig' %}
 
 {% block title %}
-	{{ 'dashboard.cca'|trans({}, 'dashboard') }}
+	{{ cca.nom }}
 	{{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-	{{ 'dashboard.cca'|trans({}, 'dashboard') }}
+	{{ cca.nom }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -17,65 +17,81 @@
 {% endblock %}
 
 {% block breadcrumb_active %}
-	{{ 'dashboard.cca'|trans({}, 'dashboard') }}
+	{{ cca.nom }}
 {% endblock %}
 
+{% block breadcrumb_items %}
+	{{parent()}}
+	<li>
+		<a href="{{ path('project_cca_index') }}">{{ 'dashboard.cca'|trans({}, 'dashboard') }}</a>
+	</li>
+{% endblock %}
 
 {% block content_bundle %}
+	{% set echeance = date(cca.dateFin).diff(date("now")) %}
 
-	<div id="myTabContent" class="tab-content">
-		<a class="btn btn-default" href="{{ path('project_cca_ajouter') }}" style="color: #3c8dbc;">
-			<span class="fa fa-pencil"></span>
-			{{ 'suivi.cca_ajouter'|trans({}, 'project') }}
-		</a>
+	<table class="display dataTable table table-bordered table-striped dt-responsive">
+		<tr>
+			<th>
+				{{ 'suivi.version'|trans({}, 'project') }}
+			</th>
+			<td>
+				{{ cca.version }}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				{{ 'suivi.cca_nom'|trans({}, 'project') }}
+			</th>
+			<td>
+				{{ cca.nom }}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				{{ 'suivi.prospect'|trans({}, 'project') }}
+			</th>
+			<td>
+				{{ cca.prospect.nom }}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				{{ 'suivi.doc_type_form.signataire_junior'|trans({}, 'project') }}
+			</th>
+			<td>
+				{{ cca.signataire1 ? cca.signataire1.prenomNom : '/' }}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				{{ 'suivi.signataire_client'|trans({}, 'project') }}
+			</th>
+			<td>
+				{{ cca.signataire2 ? cca.signataire2.prenomNom : '/' }}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				{{ 'suivi.date_signature' | trans({}, 'project') }}
+			</th>
+			<td>
+				{{ cca.dateSignature | date('d/m/Y')}}
+			</td>
+		</tr>
+		<tr class="{{ not echeance.invert ? "danger" : echeance.y == 0 and echeance.m  < 1 ? "warning" }}">
+			<th>
+				{{ 'suivi.date_fin' | trans({}, 'project') }}
+			</th>
+			<td>
+				{{ cca.dateFin | date('d/m/Y')}}
+			</td>
+		</tr>
+	</table>
 
-		<table class="display dataTable table table-bordered table-striped dt-responsive" id="ccatable">
-			<thead>
-				<tr>
-					<th>{{ 'suivi.cca_nom'|trans({}, 'project') }}</th>
-					<th>{{ 'suivi.date_signature' | trans({}, 'project') }}</th>
-					<th>{{ 'suivi.date_fin' | trans({}, 'project') }}</th>
-					<th>{{ 'suivi.action' | trans({}, 'project') }}</th>
-				</tr>
-			</thead>
-      <tbody>
-			{% for i, cca in ccas %}
-        {# On affiche en orange la ligne si la convention arrive bientôt à son terme (1 mois) et en rouge si elle est terminée #}
-        {% set echeance = date(cca.dateFin).diff(date("now")) %}
-        <tr class="{{ not echeance.invert ? "danger" : echeance.y == 0 and echeance.m  < 1 ? "warning" }}">
-					<td>{{ cca.nom }}</td>
-					<td>{{ cca.dateSignature | date('d/m/Y')}}</td>
-					<td>{{ cca.dateFin | date('d/m/Y')}}</td>
-					<td>
-            <a href="{{ path('project_cca_bdc', {'id' : cca.id }) }}">
-              <span>BDC ({{nbBdc[i]}})</span>&nbsp<i class="fa fa-eye"></i>
-            </a>
-						&nbsp
-						<a href="{{ path('project_cca_modifier', {'id' : cca.id }) }}">
-							<i class="fa fa-pencil"></i>
-						</a>
-					</td>
-				</tr>
-			{% endfor %}
-      </tbody>
-		</table>
-	</div>
+	{% include "Project/Cca/_bdcs.html.twig" %}
 {% endblock %}
 
 {% block javascript %}
 	{{ parent() }}
-	<script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
-	<script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
-	<script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
-
-	<script type="text/javascript" charset="utf-8">
-			$(document).ready(function () {
-		$('#ccatable').dataTable({
-		"bPaginate": true,
-		"bSort": true,
-		"order": [],
-		});
-	});
-	</script>
 {% endblock %}

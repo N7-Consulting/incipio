@@ -300,6 +300,7 @@ suivi:
   proces_verbal_supprimer_confirmation: Etes-vous sûr de vouloir supprimer définitivement ce PV ?
   proces_verbaux: Procès-verbaux
   propales_non_abouties_texte: Propales n'ayant pas abouti à la signature d'une convention client
+  prospect: Prospect
   prospect_ajouter: Ajouter un Prospect
   précédent: Précédent
   pvi: PVRI

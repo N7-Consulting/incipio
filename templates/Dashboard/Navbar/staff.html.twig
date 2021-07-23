@@ -70,7 +70,7 @@
             <ul class="treeview-menu">
                 <li><a href="{{ path('project_etude_homepage') }}"><span class="fa fa-list"></span> {{ 'dashboard.etudes_voir'| trans }}</a></li>
                 <li><a href="{{ path('project_etude_ajouter') }}"><span class="fa fa-plus"></span> {{ 'dashboard.etude_creer'| trans }}</a></li>
-                <li><a href="{{ path('project_cca_voir') }}"><span class="fa fa-briefcase"></span>{{ 'dashboard.cca_voir'| trans }}</a></li>
+                <li><a href="{{ path('project_cca_index') }}"><span class="fa fa-briefcase"></span>{{ 'dashboard.cca_voir'| trans }}</a></li>
 
                 <li class="divider"></li>
                 {% if is_granted('ROLE_CA') %}

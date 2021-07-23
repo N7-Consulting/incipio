@@ -19,11 +19,11 @@ class CcaController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
-     * @Route("/suivi/cca", name="project_cca_voir")
+     * @Route("/suivi/cca", name="project_cca_index")
      *
      * @return RedirectResponse|Response
      */
-    public function voir(): Response
+    public function index(): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -44,10 +44,25 @@ class CcaController extends AbstractController
             }
             $nbBdc[] = $nb;
         }
-        return $this->render('Project/Cca/voir.html.twig', [
+        return $this->render('Project/Cca/index.html.twig', [
             'controller_name' => 'CcaController',
             'ccas' => $ccas,
             'nbBdc' => $nbBdc,
+        ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Route("/suivi/cca/voir/{id}", name="project_cca_voir")
+     *
+     * @return RedirectResponse|Response
+     */
+    public function voir(Cca $cca): Response
+    {
+        return $this->render('Project/Cca/voir.html.twig', [
+            'controller_name' => 'CcaController',
+            'bdcs' => $this->getBdcs($cca),
+            'cca' => $cca,
         ]);
     }
 
@@ -59,14 +74,15 @@ class CcaController extends AbstractController
      */
     public function voirBdc(Cca $cca): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $nomProspect = $cca->getProspect()->getNom();
-        $bdcs = $em->getRepository(Bdc::class)->findAllByCca($cca->getId());
         return $this->render('Project/Cca/bdcs.html.twig', [
             'controller_name' => 'CcaController',
-            'bdcs' => $bdcs,
-            'prospect' => $nomProspect
+            'cca' => $cca,
+            'bdcs' => $this->getBdcs($cca),
         ]);
+    }
+
+    private function getBdcs(Cca $cca) {
+        return $this->getDoctrine()->getManager()->getRepository(Bdc::class)->findAllByCca($cca->getId());
     }
 
     /**
@@ -91,7 +107,7 @@ class CcaController extends AbstractController
             $this->addFlash('success', 'Convention Cadre Agile avec ' . $nomProspect . ' bien supprimée');
         }
 
-        return $this->redirectToRoute('project_cca_voir');
+        return $this->redirectToRoute('project_cca_index');
     }
 
     private function createDeleteForm(Cca $cca)
@@ -175,7 +191,7 @@ class CcaController extends AbstractController
                 $docTypeManager->checkSaveNewEmploye($cca);
                 $em->flush();
 
-                return $this->redirectToRoute('project_cca_voir');
+                return $this->redirectToRoute('project_cca_index');
             }
         }
 
