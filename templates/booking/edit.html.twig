@@ -4,6 +4,10 @@
     {{ 'dashboard.ev_modifier'|trans({}, 'dashboard') }}
 {% endblock %}
 
+{% block breadcrum_active %}
+    {{ 'dashboard.ev_modifier'|trans({}, 'dashboard') }}
+{% endblock %}
+
 {% block content_bundle %}
     <a href="{{ path('booking_index') }}" class="pull-right btn btn-primary">{{ 'dashboard.ev_voir'|trans({}, 'dashboard') }}</a>
 
