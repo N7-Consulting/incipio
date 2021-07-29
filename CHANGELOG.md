@@ -33,7 +33,7 @@ Le dashboard a connu deux nouvelles fonctionnalités majeures, ainsi qu'une upda
 Un nouvel onglet permet de lister les alumni.
 Lorsque un membre est crée (ou modifié) et que des informations portant sur l'alumnus sont complétées, le membre est affiché dans la liste des alumnis.
 
-Cela permet de rajouter et consulter des informations propres aux alumnis (poste en entreprise, secteur d'activité, contacts...), que les utilisateurs peuvent rajouter au fil du temps sur Jeyser.
+Cela permet de rajouter et consulter des informations propres aux alumni (poste en entreprise, secteur d'activité, contacts...), que les utilisateurs peuvent rajouter au fil du temps sur Jeyser.
 
 ### Suivi d'étude
 
@@ -169,7 +169,7 @@ Cette méthode permet de charger des données plus rapidement qu'en remplissant 
 Cette importation se fait en trois temps:
 - Télechargement d'un fichier excel type à compléter
 - Mise en ligne du document avec les informations nécessaires
-- Migrations des données et résultats de l'importation
+- Migrations des données et résultats de l'importation.
 
 ### Divers
 
