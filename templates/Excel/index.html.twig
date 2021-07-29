@@ -1,0 +1,82 @@
+{% extends "Excel/layout.html.twig" %}
+
+{% block title %}
+{{ 'excel.import'|trans({}, 'excel') }} - {{ parent() }}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'excel.import'|trans({}, 'excel') }}
+{% endblock %}
+
+{% block content_bundle %}
+
+<h> {{ 'excel.presentation'|trans({}, 'excel') }}</h></br>
+<h> {{ 'excel.presentation_0'|trans({}, 'excel') }}</h></br>
+<h> {{ 'excel.presentation_1'|trans({}, 'excel') }}</h>
+<h> {{ 'excel.presentation_2'|trans({}, 'excel') }}</h></br>
+<h> {{ 'excel.presentation_3'|trans({}, 'excel') }}</h></br></br>
+
+<h4>{{ 'excel.etape'|trans({}, 'excel') }} 1</h4></br>
+<p> {{ 'excel.etape1'|trans({}, 'excel') }}</p>
+<div class="box-header with-border">
+        <a href="{{ path('bdd_type', {'fileNameType': fileNameType}) }}" class="pull-right btn btn-primary">
+        {{ 'excel.telecharger'|trans({}, 'excel') }}</a>
+</div>
+
+<h4>{{ 'excel.etape'|trans({}, 'excel') }} 2</h4></br>
+<p> {{ 'excel.etape2'|trans({}, 'excel') }}:</p></br>
+<p> {{ 'excel.etape2_1'|trans({}, 'excel') }}</p>
+<p> {{ 'excel.etape2_2'|trans({}, 'excel') }}</p>
+<p> {{ 'excel.etape2_3'|trans({}, 'excel') }}</p></br>
+
+
+<h4>{{ 'excel.etape'|trans({}, 'excel') }} 3</h4></br>
+<p> {{ 'excel.etape3'|trans({}, 'excel') }}</p>
+<p> {{ 'excel.etape3_1'|trans({}, 'excel') }}</p>
+<div class="box-header with-border">
+        <a href="{{ path('upload_fichier_excel',{'fileName': fileName, 'classe': classe, 'fileNameType': fileNameType}) }}" class="pull-right btn btn-primary">
+        {{ 'excel.mettre_en_ligne'|trans({}, 'excel') }}</a></a>
+</div>
+
+<h4>{{ 'excel.etape'|trans({}, 'excel') }} 4</h4></br>
+<p> {{ 'excel.etape4'|trans({}, 'excel') }}</p>
+<div class="box-header with-border">
+        <a href="{{ path('migrations', {'fileName':fileName, 'classe': classe} ) }}" class="pull-right btn btn-primary">
+        {{ 'excel.importer'|trans({}, 'excel') }}</a></a>
+</div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        // keep tab opened through refresh
+        $(document).ready(function () {
+            // show active tab on reload
+            if (location.hash !== '') {
+                var tabSelect = $('a[href="' + location.hash + '"]');
+                var url = tabSelect.attr('data-url');
+                var div = $(location.hash);
+                if (div !== undefined) {
+                    div.load(url, function (result) {
+                        return result
+                    });
+                }
+                tabSelect.tab('show');
+            }
+
+            // remember the hash in the URL without jumping
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var url = $(this).attr("data-url");
+                var href = this.hash;
+
+                if (history.pushState) {
+                    history.pushState(null, null, '#' + $(e.target).attr('href').substr(1));
+                } else {
+                    location.hash = '#' + $(e.target).attr('href').substr(1);
+                }
+            });
+        });
+
+        {% include 'Project/Etude/Tools/Avancement.js.twig' %}
+    </script>
+{% endblock %}

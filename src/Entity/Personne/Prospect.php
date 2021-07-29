@@ -12,7 +12,6 @@
 namespace App\Entity\Personne;
 
 use App\Entity\Comment\Thread;
-use App\Entity\Personne\SecteurActivite;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
@@ -71,10 +70,10 @@ class Prospect extends Adressable
     private $mail;
 
     /**
-     * @var SecteurActivite
-     * 
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personne\SecteurActivite")
+     * @ORM\Column(name="secteurActivite", type="integer", nullable=true)
+     * @Assert\Choice(callback = "getSecteurChoiceAssert")
      */
     private $secteurActivite;
 
@@ -212,16 +211,63 @@ class Prospect extends Adressable
         return $this;
     }
 
-    public function getSecteurActivite(): ?SecteurActivite
+    /**
+     * Get secteur.
+     *
+     * @return string
+     */
+    public function getSecteurActivite()
     {
         return $this->secteurActivite;
     }
 
-    public function setSecteurActivite(?SecteurActivite $secteurActivite): self
+    /**
+     * Set secteur.
+     * @param string $secteur
+     * @return Prospect
+     */
+    public function setSecteurActivite($secteurActivite)
     {
         $this->secteurActivite = $secteurActivite;
 
         return $this;
+    }
+
+    public static function getSecteurChoice()
+    {
+        return [
+            1 => 'Aéronautique',
+            2 => 'BTP',
+            3 => 'Développement Durable',
+            4 => 'Conseil / Service',
+            5 => 'Informatique et Télécommunication',
+            6 => 'Agro-Alimentaire',
+            7 => 'Informatique',
+            8 => 'Spatial',
+            9 => 'Energies',
+            10 => 'Loisir / Culture / Restauration / Hôtellerie',
+            11 => 'Finance / Banque / Assurance',
+            12 => 'Commerce',
+            13 => 'Enseignement',
+            14 => 'Immobilier / Logement',
+            15 => 'Transports',
+            16 => 'Tourisme  / Voyage'
+        ];
+    }
+    
+    public static function getSecteurChoiceAssert()
+    {
+        return array_keys(self::getSecteurChoice());
+    }
+    
+    public function getSecteurToString()
+    {
+        if (!$this->secteurActivite) {
+            return '';
+        }
+        $tab = $this->getSecteurChoice();
+    
+        return $tab[$this->secteurActivite];
     }
 
     /**
@@ -237,7 +283,7 @@ class Prospect extends Adressable
     public static function getEntiteChoice()
     {
         return [
-            1 => 'TPE (Très Petite Entreprise - de 10 salariés)',
+            1 => 'TPE (Très Petite Entreprise moins de 10 salariés)',
             2 => 'PME (Petite ou Moyenne Entreprise, 10 - 250 salariés)',
             3 => 'ETI (Entreprise de Taille Intermédiaire, 250 - 5000 salariés)',
             4 => 'Grand groupes (+ 5000 salariés)',
@@ -249,6 +295,18 @@ class Prospect extends Adressable
             10 => 'Startup / Indépendant(e)'
             ];
     }
+
+    // public static function entiteExist($choix, $cle)
+    // {
+    //     foreach (self::getEntiteChoice() as $num=>$entite){
+            
+    //         if (strcmp($choix, $entite) == 0){
+    //             $cle = $num; 
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     public static function getEntiteChoiceAssert()
     {

@@ -77,6 +77,7 @@ generique:
   enregistrer: Enregistrer
   supprimer: Supprimer
 membre:
+  alumni : Alumnus
   affichage_membre: Affichage d'un membre
   ajout_membre: Ajout d'un membre
   modification_membre: Modification d'un membre
@@ -149,7 +150,6 @@ prospect:
     nombre_employe: Nombre d'employés
     type: Type de prospect
     mail : Mail
-  prospect_tooltip :  Vous pouvez ajouter un choix dans le sous-onglet "Secteurs d'activité"
   secteur_activite : Secteurs d'activité
   confirmation_supprimer_secteur: Voulez-vous vraiment supprimer ce secteur d'activité?
   supprimer_secteur: Supprimer le secteur d'activité

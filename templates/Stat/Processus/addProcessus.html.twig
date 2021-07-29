@@ -1,4 +1,4 @@
-{% extends "Stat/layout.html.twig" %}
+{% extends "Stat/Processus/layout.html.twig" %}
 
 {% block title %}
     {{ 'processus.ajouter_process'|trans({}, 'processus') }} - {{ parent() }}
@@ -7,6 +7,11 @@
 {% block content_title %}
     {{ 'processus.ajouter_process'|trans({}, 'processus') }}
 {% endblock %}
+
+{% block breadcrumb_active %}
+    {{ 'processus.ajouter_process'|trans({}, 'processus') }}
+{% endblock %}
+
 
 {% block content_bundle %}   
             <div class="table-responsive content">

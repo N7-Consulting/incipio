@@ -1,11 +1,15 @@
-{% extends "Stat/layout.html.twig" %}
+{% extends "Stat/Processus/layout.html.twig" %}
 
 {% block title %}
-    {{ 'processus.ajouter_process'|trans({}, 'processus') }} - {{ parent() }}
+    {{ 'processus.modifier_process'|trans({}, 'processus') }} - {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'processus.ajouter_process'|trans({}, 'processus') }}
+    {{ 'processus.modifier_process'|trans({}, 'processus') }}
+{% endblock %}
+
+{% block breadcrumb_active %}
+    {{ 'processus.modifier_process'|trans({}, 'processus') }}
 {% endblock %}
 
 {% block content_bundle %}   
@@ -41,7 +45,5 @@
                         </td>
                     </tr>
                 </table>
-        </div>
-  
             </div>
 {% endblock %}
