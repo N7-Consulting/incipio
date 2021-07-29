@@ -50,7 +50,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 class ExcelController extends AbstractController 
 {
     /**
-     * @Security("has_role('ROLE_SUIVEUR')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route(name="excel_index", path="/import/excel/{fileName},{classe},{fileNameType}", methods={"GET","HEAD"})
      */
     public function excelIndex($fileName, $classe, $fileNameType)
