@@ -6,7 +6,7 @@ processus:
   date_upload : Date du télechargement
   description: Description
   documents: Documents associés
-  documents_nb: Nombre de documents associés
+  documents_nb: Nombre de documents
   gestion_proc: Gestion des processus
   modifier: Modifier le processus 
   modifier_process: Modifier le processus 
