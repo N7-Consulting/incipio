@@ -285,6 +285,7 @@ class MembreController extends AbstractController
                 $membre->getPersonne()->setUser(null);
             }
             $membre->setPersonne(null);
+            $membre->setAlumnus(null);
             //est-ce qu'on supprime la personne aussi ?
 
             $em->remove($membre);

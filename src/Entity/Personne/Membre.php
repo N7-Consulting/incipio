@@ -58,9 +58,10 @@ class Membre implements AnonymizableInterface
     /**
      * @Assert\Valid()
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", inversedBy="personne", 
-     *                                                                    cascade={"persist", "merge", "remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", mappedBy="personne", 
+     *                                                                    cascade={"persist", "remove"},
+     *                                                                   orphanRemoval=true)
+     * 
      */
     private $alumnus;
 

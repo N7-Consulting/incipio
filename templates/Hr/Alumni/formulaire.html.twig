@@ -1,7 +1,4 @@
 {# Formulaire d'ajout d'un alumnus #}
-
-{{ form_start(form) }}
-
 <table class="table table-bordered table-striped standard">
     <tr>
         <th>{{ form_label(form.alumnus.lienLinkedIn) }}</th>
@@ -20,7 +17,7 @@
         <td>{{ form_widget(form.alumnus.commentaire) }}{{ form_errors(form.alumnus.commentaire) }}</td>
     </tr>
 </table>
-{{ form_widget(form) }}
+
 
 
 

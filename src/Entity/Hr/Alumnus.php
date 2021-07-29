@@ -31,8 +31,8 @@ class Alumnus
 
     /**
      * @var Membre
-     * @ORM\OneToOne(targetEntity="App\Entity\Personne\Membre", mappedBy="alumnus", cascade={"persist", "merge", "remove"})
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="App\Entity\Personne\Membre", inversedBy="alumnus", cascade={"persist"} )
+     * @ORM\JoinColumn(nullable=true)
      * 
      */
     private $personne;
