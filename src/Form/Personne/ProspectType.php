@@ -20,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Personne\SecteurActivite;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class ProspectType extends AbstractType
 {
@@ -33,19 +34,18 @@ class ProspectType extends AbstractType
                 ['choices' => array_flip(Prospect::getEntiteChoice()), 'required' => false]
             )
             ->add('adresse', TextareaType::class, ['required' => false])
-            ->add('codepostal', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Code Postal']])
-            ->add('ville', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Ville']])
-            ->add('pays', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Pays']])
+            ->add('codepostal', TextType::class, ['required' => false])
+            ->add('ville', TextType::class, ['required' => false])
+            ->add('pays', TextType::class, ['required' => false])
             ->add('secteurActivite', Select2EntityType::class,
             [
-                'label' => 'Secteur d\'activité actuel',
                 'class' => SecteurActivite::class,
                 'choice_label' => 'intitule',
                 'required' => false,
             ]
             )
-            ->add('mail', TextareaType::class,
-                ['required' => false, 'label' => 'Mail', 'attr' => ['cols' => '100%', 'rows' => 1]]
+            ->add('mail', EmailType::class,
+                ['required' => false]
             );
     }
 
