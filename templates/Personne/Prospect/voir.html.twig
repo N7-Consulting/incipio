@@ -23,7 +23,12 @@
 {% endblock %}
 
 {% block content_bundle %}
-    <h2>{{ prospect.nom }}</h2>
+    <h2>
+        {{ prospect.nom }}
+        {% for tag in prospect.tags %}
+            <span class="badge">{{ tag }}</span>
+        {% endfor %}
+    </h2>
     <em><h4>{{ 'prospect.champs.type'|trans({}, 'personne') }} : {{ prospect.EntiteToString }}</h4></em>
     <h4>{{ 'prospect.champs.adresse'|trans({}, 'personne') }} : {{ prospect.adresse }}
         <br>
@@ -119,4 +124,3 @@
         });
     </script>
 {% endblock %}
-

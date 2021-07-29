@@ -143,6 +143,7 @@ prospect:
   affichage_prospect: Affichage d'un prospect
   ajouter_prospect: Ajouter un prospect
   champs:
+    tags: Tags
     adresse: Adresse
     nom: Nom
     nombre_employe: Nombre d'employés

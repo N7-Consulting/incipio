@@ -29,38 +29,9 @@
             {{ 'suivi.etude_form.prospect_nouveau'|trans({}, 'project') }}
         </th>
     </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.nom) }} {{ form_errors(form.newProspect.nom) }}</th>
-        <td>{{ form_widget(form.newProspect.nom) }}</td>
-    </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.entite) }} {{ form_errors(form.newProspect.entite) }}</th>
-        <td>{{ form_widget(form.newProspect.entite) }}</td>
-    </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.adresse) }} {{ form_errors(form.newProspect.adresse) }}</th>
-        <td>{{ form_widget(form.newProspect.adresse) }}</td>
-    </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.codepostal) }} {{ form_errors(form.newProspect.codepostal) }}</th>
-        <td>{{ form_widget(form.newProspect.codepostal) }}</td>
-    </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.ville) }} {{ form_errors(form.newProspect.ville) }}</th>
-        <td>{{ form_widget(form.newProspect.ville) }}</td>
-    </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.pays) }} {{ form_errors(form.newProspect.pays) }}</th>
-        <td>{{ form_widget(form.newProspect.pays) }}</td>
-    </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.mail) }} {{ form_errors(form.newProspect.mail) }}</th>
-        <td>{{ form_widget(form.newProspect.mail) }}</td>
-    </tr>
-    <tr>
-        <th>{{ form_label(form.newProspect.secteurActivite) }} {{ form_errors(form.newProspect.secteurActivite) }}</th>
-        <td>{{ form_widget(form.newProspect.secteurActivite) }}</td>
-    </tr>
+
+    {% include "Personne/Prospect/formulaire.html.twig" with {'form':  form.newProspect, 'tagsHidden': 'hidden'} %}
+
     <tr>
         <th id="{{ form.newProspect.vars.id }}_block" colspan="2" class="success">
             {{ 'suivi.etude_l'|trans({}, 'project') }}

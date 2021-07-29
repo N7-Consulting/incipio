@@ -20,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Personne\SecteurActivite;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class ProspectType extends AbstractType
@@ -42,8 +43,16 @@ class ProspectType extends AbstractType
                 'class' => SecteurActivite::class,
                 'choice_label' => 'intitule',
                 'required' => false,
-            ]
-            )
+            ])
+            ->add('tags', CollectionType::class,
+            [
+                'label' => 'prospect.champs.tags',
+                'translation_domain' => 'personne',
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+            ])
             ->add('mail', EmailType::class,
                 ['required' => false]
             );
