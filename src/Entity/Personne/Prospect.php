@@ -78,6 +78,11 @@ class Prospect extends Adressable
     private $secteurActivite;
 
     /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $tags = [];
+
+    /**
      * Get id.
      *
      * @return int
@@ -326,6 +331,18 @@ class Prospect extends Adressable
     public function setMail(?string $mail): self
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?array $tags): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }
