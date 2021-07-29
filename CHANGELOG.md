@@ -28,6 +28,13 @@ Le dashboard a connu deux nouvelles fonctionnalités majeures, ainsi qu'une upda
 - CA clôturé = études finies + études terminées ;
 - L'heure d'actualisation affichée est celle de Paris.
 
+### Gestion Associative
+
+Un nouvel onglet permet de lister les alumni.
+Lorsque un membre est crée (ou modifié) et que des informations portant sur l'alumnus sont complétées, le membre est affiché dans la liste des alumnis.
+
+Cela permet de rajouter et consulter des informations propres aux alumnis (poste en entreprise, secteur d'activité, contacts...), que les utilisateurs peuvent rajouter au fil du temps sur Jeyser.
+
 ### Suivi d'étude
 
 Le suivi d'étude étant le fer de lance d'une junior, un soin particulier a été apporté à cette onglet.
@@ -153,6 +160,16 @@ C'est ici que la qualité va pouvoir auditer une étude lorsque cette dernière 
 C'est sur ce nouvel onglet qu'on peut télécharger tous les documents (si les doctypes existent) de toutes les études.
 
 *NB: La partie trésorerie de cet onglet n'est pas terminé.*
+
+### Exportation des données depuis un fichier Excel
+
+Depuis les onglets "Liste des prospects" et "Lister les alumnis", un bouton permet aux administrateurs de Jeyser d'importer des données depuis un fichier Excel.
+Cette méthode permet de charger des données plus rapidement qu'en remplissant les formulaires de Jeyser, puisqu'il suffit de remplir un tableau Excel.
+
+Cette importation se fait en trois temps:
+- Télechargement d'un fichier excel type à compléter
+- Mise en ligne du document avec les informations nécessaires
+- Migrations des données et résultats de l'importation
 
 ### Divers
 
