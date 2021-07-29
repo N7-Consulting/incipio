@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class ProspectType extends AbstractType
 {
@@ -38,9 +39,7 @@ class ProspectType extends AbstractType
             ->add('secteurActivite', ChoiceType::class,
             ['choices' => array_flip(Prospect::getSecteurChoice()), 'required' => false]
             )
-            ->add('mail', TextareaType::class,
-                ['required' => false, 'label' => 'Mail', 'attr' => ['cols' => '100%', 'rows' => 1]]
-            );
+            ->add('mail', EmailType::class, ['label' => 'form.email', 'translation_domain' => 'FOSUserBundle']);
     }
 
     public function getBlockPrefix()
