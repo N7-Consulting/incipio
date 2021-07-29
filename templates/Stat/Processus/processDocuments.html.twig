@@ -1,4 +1,4 @@
-{% extends "Stat/layout.html.twig" %}
+{% extends "Stat/Processus/layout.html.twig" %}
 
 {% block title %}
     {{ 'processus.documents'|trans({}, 'processus') }} - {{ parent() }}
@@ -6,6 +6,10 @@
 
 {% block content_title %}
     {{ 'processus.process'|trans({}, 'processus') }}: {{ processus.nom }}
+{% endblock %}
+
+{% block breadcrumb_active %}
+    {{ 'processus.process'|trans({}, 'processus') }}
 {% endblock %}
 
 {% block content_bundle %}

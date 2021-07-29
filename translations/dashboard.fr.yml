@@ -70,7 +70,7 @@ dashboard:
   github: Github
   gestion_associative: Gestion Associative
   gestion_consultant: Gestion des consultants
-  gestion_alumni: Gestion des alumni
+  gestion_alumni: Lister les alumni
   gestion_doc: Gestion des documents
   gestion_utilisateurs_clients: Gestion des Clients et des Utilisateurs
   generation_doc: Génération de document
@@ -115,6 +115,7 @@ dashboard:
   passation_voir : Documents de passation
   passation_ajouter : Ajouter une passation
   rh_competences: RH & compétences
+  rh_alumni: Liste des Alumni
   saisie_informations: Saisie des informations
   archivage_doc : Archivage des documents
   secteur_activite: Secteurs d'activité

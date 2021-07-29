@@ -24,6 +24,10 @@
 {% endblock %}
 
 {% block content_bundle %}
+    <div class="box-header with-border">
+        <a href="{{ path('excel_index', {'fileName': fileName, 'classe': classe, 'fileNameType': fileNameType}) }}" class="pull-right btn btn-warning">
+        {{ 'excel.import'|trans({}, 'excel')}}</a>
+    </div>
     <table class="table table-bordered table-striped dataTable dt-responsive text-left" id="listeProspects" role="grid" width="100%">
         <thead>
         <tr>
@@ -43,7 +47,7 @@
                 <td>{{ prospect.entiteToString }}</td>
                 <td>{{ prospect.ville }}, {{ prospect.adresse }}</td>
                 <td>{{ prospect.mail }}</td>
-                <td>{{ prospect.secteurActivite }}</td>
+                <td>{{ prospect.secteurToString }}</td>
                 <td>{{ prospect.employes | length }}</td>
             </tr>
         {% endfor %}

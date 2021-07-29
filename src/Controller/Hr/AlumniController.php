@@ -2,6 +2,9 @@
 
 namespace App\Controller\Hr;
 
+
+
+use App\Entity\Personne\Filiere;
 use App\Entity\Hr\Competence;
 use App\Entity\Personne\Personne;
 use App\Entity\Project\Etude;
@@ -20,6 +23,8 @@ use App\Form\Hr\AlumnusContactHandler;
 use App\Entity\Hr\Alumnus;
 use App\Form\Hr\AlumnusType;
 use App\Form\Hr\AlumnusHandler;
+use App\Entity\Personne\Membre;
+use App\Entity\Excel\CreerDataAlumni;
 
 
 class AlumniController extends AbstractController
@@ -33,12 +38,15 @@ class AlumniController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $contactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByAlumnus();
         $dernierContactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByDernierContact();
-        $alumni = $em->getRepository(Alumnus::class)->findAll();
+        $alumni = $em->getRepository(Alumnus::class)->findAllByAlumni($em);
 
         return $this->render('Hr/Alumni/index.html.twig', [
             'contactsParAlumnus' => $contactsParAlumnus,
             'dernierContactsParAlumnus' => $dernierContactsParAlumnus,
             'alumni' => $alumni,
+            'classe' => CreerDataAlumni::class,
+            'fileName' => 'BDDAlumni.xlsx',
+            'fileNameType' => 'BDDAlumniType.xlsx',
         ]);
     }
 
@@ -175,7 +183,7 @@ class AlumniController extends AbstractController
                 $em->flush();
                 $this->addFlash('success', 'Alumnus modifié');
 
-                return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
+                return $this->redirectToRoute('gestion_alumni');
             }
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
@@ -202,12 +210,11 @@ class AlumniController extends AbstractController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
             $em->remove($alumnus);
             $em->flush();
             $this->addFlash('success', 'Alumnus supprimé');
         }
-        return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
+        return $this->redirectToRoute('gestion_alumni');
     }
 
     private function createDeleteFormAlumnus(Alumnus $alumnus)

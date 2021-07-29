@@ -1,4 +1,4 @@
-{% extends "Formation/layout.html.twig" %}
+{% extends "Formation/Passations/layout.html.twig" %}
 
 {% block content_title %}
     {{ 'formation.document_passation'|trans({}, 'formation') }}
@@ -26,7 +26,7 @@
             <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
             <th>{{ 'formation.date_upload'|trans({}, 'formation') }}</th>
             {% if is_granted('ROLE_CA') %} 
-                <th>{{ 'formation.documents'|trans({}, 'formation') }}</th>
+                <th>{{ 'formation.action'|trans({}, 'formation') }}</th>
             {% endif %}
 
         </tr>

@@ -226,6 +226,9 @@ class DocumentController extends AbstractController
             if (array_key_exists('passation', $options)) {
                 $relatedDocument->setPassation($options['passation']);
             }
+            if (array_key_exists('excel', $options)) {
+                $document->setPath('BDDAlumni.xlsx');
+            }
         }
 
         $form = $this->createForm(DocumentType::class, $document, $options);
@@ -235,7 +238,6 @@ class DocumentController extends AbstractController
             
             if ($form->isValid()) {
                 $documentManager->uploadDocument($document, null, $deleteIfExist);
-
                 return false;
             }
         }
@@ -286,4 +288,6 @@ class DocumentController extends AbstractController
         $em->remove($doc);
         $em->flush();
     }
+
+    
 }

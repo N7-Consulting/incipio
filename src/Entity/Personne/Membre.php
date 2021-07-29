@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Hr\Alumnus;
 
 /**
  * @ORM\Table()
@@ -53,6 +54,15 @@ class Membre implements AnonymizableInterface
      * @ORM\JoinColumn(nullable=true)
      */
     private $personne;
+
+    /**
+     * @Assert\Valid()
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", inversedBy="personne", 
+     *                                                                    cascade={"persist", "merge", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $alumnus;
 
     /**
      * @var \DateTime
@@ -299,6 +309,33 @@ class Membre implements AnonymizableInterface
     public function getPersonne()
     {
         return $this->personne;
+    }
+
+    /**
+     * Set alumnus.
+     *
+     * @param Alumnus $alumnus
+     *
+     * @return Membre
+     */
+    public function setAlumnus(Alumnus $alumnus = null)
+    {
+        if (null !== $alumnus) {
+            $alumnus->setPersonne($this);
+        }
+        $this->alumnus = $alumnus;
+
+        return $this;
+    }
+
+    /**
+     * Get alumnus.
+     *
+     * @return Alumnus
+     */
+    public function getAlumnus()
+    {
+        return $this->alumnus;
     }
 
     /**

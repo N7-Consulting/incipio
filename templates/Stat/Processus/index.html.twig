@@ -1,4 +1,4 @@
-{% extends "Stat/layout.html.twig" %}
+{% extends "Stat/Processus/layout.html.twig" %}
 
 {% block title %}
     {{ 'processus.tab_process'|trans({}, 'processus') }} - {{ parent() }}
@@ -8,11 +8,12 @@
     {{ 'processus.tab_process'|trans({}, 'processus') }}
 {% endblock %}
 
+
 {% block content_bundle %}
     <div id="myTabContent" class="tab-content">
-    <div class="box-header with-border">
-        <a href="{{ path('ajouter_processus') }}" class="pull-right btn btn-primary">{{ 'processus.ajouter_process'|trans({}, 'processus') }}</a>
-    </div>
+            <div class="box-header with-border">
+                <a href="{{ path('ajouter_processus') }}" class="pull-right btn btn-primary">{{ 'processus.ajouter_process'|trans({}, 'processus') }}</a>
+            </div>
 
             <table class="display dataTable table table-bordered table-striped dt-responsive" >
                 <thead>

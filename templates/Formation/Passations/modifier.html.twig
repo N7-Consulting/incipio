@@ -1,17 +1,11 @@
-{% extends "Formation/layout.html.twig" %}
+{% extends "Formation/Passations/layout.html.twig" %}
 
 {% block content_title %}
     {{ 'formation.passation_modifier'|trans({}, 'formation') }}
 {% endblock %}
 
-{% block breadcrumb_items %}
-    <li>
-        <a href="{{ path('passation_voir', {'id': passation.id}) }}">{{ passation.titre }}</a>
-    </li>
-{% endblock %}
-
 {% block breadcrumb_active %}
-    {{ 'formation.modifier'|trans({}, 'formation') }}
+    {{ 'formation.passation_modifier'|trans({}, 'formation') }}
 {% endblock %}
 
 {% block content_bundle %}
