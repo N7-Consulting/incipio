@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Entity\Formation\Passation;
-use App\Entity\Personne\SecteurActivite;
 use App\Entity\Formation\Formation;
 use App\Entity\Processus\Processus;
 use App\Entity\Hr\Competence;
@@ -809,18 +808,10 @@ class CreateDemoDataCommand extends Command
             $date = new \DateTime('now');
             $promotion = $date->format('Y') + 3;
 
-            $pe = $this->createMembre(self::PRENOM[array_rand(self::PRENOM)], self::NOM[array_rand(self::NOM)], $promotion);
-            $al->setPersonne($pe);
-
-            $secteur = new SecteurActivite();
-            $secteur->setIntitule($alumnus['secteurActuel']);
-            $secteur->setDescription('à compléter');
-            $this->validateObject('New secteur', $secteur);
-            $this->em->persist($secteur);
-            $al->setSecteurActuel($secteur);
-
-            $this->validateObject('New Alumnus', $al);
             $this->em->persist($al);
+
+            $pe = $this->createMembre(self::PRENOM[array_rand(self::PRENOM)], self::NOM[array_rand(self::NOM)], $promotion);
+            $pe->setAlumnus($al);
 
             $this->em->flush();
         }

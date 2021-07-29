@@ -1,0 +1,46 @@
+{% extends "Hr/layout.html.twig" %}
+
+{% block title %}
+{{ 'excel.resultat'|trans({}, 'excel') }} - {{ parent() }}
+{% endblock %}
+
+{% block content_title %}
+    {{ 'excel.resultat'|trans({}, 'excel') }}
+{% endblock %}
+
+{% block content_bundle %}
+    <div>
+        {% if error %}
+            <h3>{{ 'excel.error'|trans({}, 'excel') }}</h3>
+                {% for messages in error %}
+                    {% for message in messages %} 
+                            - {{ message }}</br>
+                    {% endfor %}
+                {% endfor %}
+{# Afficher quelles données ont étées importées si il y a eu des erreurs #}
+             {% if succes %}
+                <h3>{{ 'excel.succes'|trans({}, 'excel') }}</h3>
+                    {% for messages in succes %}
+                        {% for message in messages %} 
+                                - {{ message }} </br>
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <h3>{{ 'excel.no_succes'|trans({}, 'excel') }}</h3>
+                {% endif %}
+        {% else %}
+            {{ 'excel.no_error'|trans({}, 'excel') }}
+        {% endif %}
+    </div>
+
+    <div>
+        {% if danger %}
+            <h3>{{ 'excel.danger'|trans({}, 'excel') }}</h3>
+                {% for messages in danger %}
+                    {% for message in messages %} 
+                            - {{ message }}</br>
+                    {% endfor %}
+                {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

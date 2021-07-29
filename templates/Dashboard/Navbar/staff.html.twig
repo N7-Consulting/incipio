@@ -36,6 +36,8 @@
                 <li><a href="{{ path('personne_intervenants_homepage') }}"><span
                                 class="fa fa-usd"></span> {{ 'dashboard.intervenants_lister'| trans }}
                     </a></li>
+                <li><a href="{{ path('gestion_alumni') }}">
+                <span class="fa fa-tasks"></span> {{ 'dashboard.gestion_alumni'| trans }}</a></li>
                 <li><a href="{{ path('personne_membre_impayes') }}"><span
                                 class="fa fa-euro"></span> {{ 'dashboard.impayes_lister'| trans }}</a>
                 </li>
@@ -106,10 +108,6 @@
                                 class="fa fa-list"></span> {{ 'dashboard.prospects_voir'| trans }}</a>
                 </li>
                 <li>
-                    <a href="{{ path('secteur_activite_voir') }}"><span
-                                class="fa fa-list"></span> {{ 'dashboard.secteur_activite'| trans }}</a>
-                </li>
-                <li>
                     <a href="{{ path('personne_prospect_ajouter') }}"><span
                                 class="fa fa-plus"></span> {{ 'dashboard.prospect_ajouter'| trans }}</a>
                 </li>
@@ -134,17 +132,9 @@
     <!-- RESSOURCES HUMAINES -->
     {% if is_granted('ROLE_SUIVEUR') %}
         <li>
-            <a href="#">
-                <i class="icon-mini fa fa-usd"></i>
+            <a href="{{ path('hr_competence_homepage') }}"
                 <span class="nav-label">{{ 'dashboard.rh_competences'| trans }}</span>
-                <i class="fa fa-angle-left pull-right"></i>
             </a>
-            <ul class="treeview-menu">
-                <li><a href="{{ path('hr_competence_homepage') }}">
-                <span class="fa fa-globe"></span> {{ 'dashboard.gestion_consultant'| trans }}</a></li>
-                <li><a href="{{ path('gestion_alumni') }}">
-                <span class="fa fa-tasks"></span> {{ 'dashboard.gestion_alumni'| trans }}</a></li>
-            </ul>
         </li>
     {% endif %}
 

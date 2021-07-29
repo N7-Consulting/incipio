@@ -23,7 +23,7 @@ class AlumnusContact
     /**
      * @var Alumnus
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Hr\Alumnus")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hr\Alumnus", inversedBy="alumnusContact", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $alumnus;
@@ -35,14 +35,6 @@ class AlumnusContact
      * @ORM\JoinColumn(nullable=false)
      */
     private $faitPar;
-
-    // /**
-    //  * @var Thread
-    //  *
-    //  * @ORM\OneToOne(targetEntity="App\Entity\Comment\Thread",cascade={"persist"})
-    //  * @ORM\JoinColumn(nullable=true)
-    //  */
-    // private $thread;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -111,28 +103,6 @@ class AlumnusContact
         $this->alumnus = $alumnus;
 
         return $this;
-    }
-
-    /**
-     * Set thread.
-     *
-     * @return ClientContact
-     */
-    public function setThread(Thread $thread)
-    {
-        $this->thread = $thread;
-
-        return $this;
-    }
-
-    /**
-     * Get thread.
-     *
-     * @return Thread
-     */
-    public function getThread()
-    {
-        return $this->thread;
     }
     
     public function getId(): ?int

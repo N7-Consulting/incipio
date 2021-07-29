@@ -1,12 +1,16 @@
+
 <div class="box-header with-border">
-        <a href="{{ path('alumnus_ajouter') }}" class="pull-right btn btn-primary">{{ 'rh.alumni_ajouter'|trans({}, 'rh') }}</a>
+    {% if is_granted('ROLE_CA') %} 
+        <h>{{ 'rh.liste_alumni_titre'|trans({}, 'rh')}}</h>
+		<a href="{{ path('excel_index', {'fileName':fileName, 'classe': classe, 'fileNameType': fileNameType}) }}" class="pull-right btn btn-warning">
+        {{ 'excel.import'|trans({}, 'excel')}}</a>
+	{% endif %}
 </div>
 
 <table class="display dataTable table table-bordered table-striped dt-responsive" id ="listeAlumni"> 
         <thead>
                 <tr>
-                    <th>{{ 'rh.alumnus'|trans({}, 'rh') }}</th>
-					<th>{{ 'rh.information'|trans({}, 'rh') }}</th> 
+                    <th>{{ 'rh.alumnus'|trans({}, 'rh') }}</th> 
 					<th>{{ 'rh.lien_linkedin'|trans({}, 'rh') }}</th>
 					<th>{{ 'rh.secteur_entrepise'|trans({}, 'rh') }}</th>
                     <th>{{ 'rh.poste_entreprise'|trans({}, 'rh') }}</th>
@@ -18,16 +22,13 @@
         {% for alumnus in alumni %}  
 			<tr>
 				<td>
-					<a href="{{ path('alumnus_modifier', {'id': alumnus.id}) }}">{{  alumnus.personne ? alumnus.personne }}</a>
-				</td>
-				<td>
-					<a href="{{ path('personne_membre_voir', {'id': alumnus.personne.id}) }}"><span class="fa fa-eye"></a>
+					<a href="{{ path('personne_membre_voir', {'id': alumnus.personne.id}) }}">{{  alumnus.personne ? alumnus.personne }}</a>
 				</td>
 				<td>
 					<a href ="{{ alumnus.lienLinkedIn }}">{{  alumnus.lienLinkedIn ?  'rh.voir_profil'|trans({}, 'rh') }} </a>
 				</td>
 				<td>
-					{{alumnus.secteurActuel}}
+					{{alumnus.secteurToString}}
 				</td>
 				<td>
 					{{alumnus.posteActuel}}

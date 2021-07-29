@@ -22,7 +22,7 @@ class DocumentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, ['label' => 'Nom du fichier (optionnel)', 'required' => false])
+        $builder->add('name', TextType::class, ['label' => 'Nom du fichier', 'required' => false])
                 ->add('file', FileType::class, ['label' => 'Fichier', 'required' => true, 'attr' => ['cols' => '100%', 'rows' => 5]]);
         if ($options['etude'] || $options['etudiant'] || $options['prospect']) {
             $builder->add('relation', RelatedDocumentType::class, [
@@ -49,6 +49,7 @@ class DocumentType extends AbstractType
             'prospect' => null,
             'processus' => null,
             'formation' => null,
+            'option' => null,
         ]);
     }
 }
