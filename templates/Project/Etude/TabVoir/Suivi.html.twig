@@ -88,7 +88,7 @@
         </tr>
         <!-- CONVENTION ETUDE -->
         <tr class="docTabRow {{ etude.ceActive and etude.ce is not null ? "": "hidden" }}">
-            <th>{{ etude.ccaActive ? 'suivi.convention_etude'|trans({}, 'project') : 'suivi.bon_de_commande'|trans({}, 'project') }}</th>
+            <th>{{ etude.ccaActive ? 'suivi.bon_de_commande'|trans({}, 'project') : 'suivi.convention_etude'|trans({}, 'project') }}</th>
             <td class="state">{{ 'suivi.incomplet'|trans({}, 'project') }}</td>
             <td>{{ form_widget(formSuivi.ce.redige) }}</td>
             <td>{{ form_widget(formSuivi.ce.relu) }}</td>
