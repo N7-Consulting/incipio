@@ -2,7 +2,7 @@
 
 {# CE / BDC #}
 {% if etude.ccaActive %}
-  <span class="label label-{{ getColorDoc(etude.bdc) }}">{{ 'suivi.bdc'|trans({}, 'project') }}</span>
+  <span class="label label-{{ getColorDoc(etude.ce) }}">{{ 'suivi.bdc'|trans({}, 'project') }}</span>
 {% else %}
   <span class="label label-{{ getColorDoc(etude.ce) }}">{{ 'suivi.ce'|trans({}, 'project') }}</span>
 {% endif %}
