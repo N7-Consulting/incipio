@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Entity\Personne\Membre;
 use App\Entity\Project\DocType;
+use App\Entity\Project\Ce;
 use App\Entity\Project\Etude;
 use App\Entity\Project\Mission;
 use App\Entity\Project\ProcesVerbal;
@@ -68,68 +69,17 @@ class EtudeExtension extends AbstractExtension
          **************************************************/
 
         // CCA > BDC
-        if ($etude->getCca() && $etude->getBdc()) {
+        if ($etude->getCca() && $etude->getCe()) {
             if (
-                null !== $etude->getBdc()->getDateSignature() && $etude->getCca()->getDateSignature() > $etude->getBdc()
-                ->getDateSignature()
+                null !== $etude->getCe()->getDateSignature()
+                && $etude->getCca()->getDateSignature() > $etude->getCe()->getDateSignature()
+                && $etude->getCe()->getType() === Ce::TYPE_BDC
             ) {
                 $error = [
                     'titre' => 'CCA, BDC - Date de signature : ',
                     'message' => 'La date de signature de la Convention Cadre Agile doit être antérieure ou égale à la date de signature du Bon de Commande.',
                 ];
                 array_push($errors, $error);
-            }
-        }
-
-        // BDC > RM
-        if ($etude->getBdc()) {
-            foreach ($etude->getMissions() as $mission) {
-                if (
-                    null !== $mission->getDateSignature() && $etude->getBdc()
-                    ->getDateSignature() > $mission->getDateSignature()
-                ) {
-                    $error = [
-                        'titre' => 'RM, BDC  - Date de signature : ',
-                        'message' => 'La date de signature du Bon de Commande doit être antérieure ou égale à la date de signature des récapitulatifs de mission.',
-                    ];
-                    array_push($errors, $error);
-                    break;
-                }
-            }
-        }
-
-        // BDC > PVRI
-        if ($etude->getBdc()) {
-            /** @var ProcesVerbal $pvi */
-            foreach ($etude->getPvis() as $pvi) {
-                if (
-                    null !== $pvi->getDateSignature() && $etude->getBdc()
-                    ->getDateSignature() >= $pvi->getDateSignature()
-                ) {
-                    $error = [
-                        'titre' => 'PVRIS, BDC  - Date de signature : ',
-                        'message' => 'La date de signature du Bon de Commande doit être antérieure à la date de signature des PVRIS.',
-                    ];
-                    array_push($errors, $error);
-                    break;
-                }
-            }
-        }
-
-        // BDC > FI
-        if ($etude->getBdc()) {
-            foreach ($etude->getFactures() as $FactureVente) {
-                if (
-                    null !== $FactureVente->getDateEmission() && $etude->getBdc()
-                    ->getDateSignature() > $FactureVente->getDateEmission()
-                ) {
-                    $error = [
-                        'titre' => 'Factures, BDC  - Date de signature : ',
-                        'message' => 'La date de signature du Bon de Commande doit être antérieure à la date de signature des Factures.',
-                    ];
-                    array_push($errors, $error);
-                    break;
-                }
             }
         }
 
@@ -208,8 +158,7 @@ class EtudeExtension extends AbstractExtension
             if (isset($pviAnterieur)) {
                 if (null !== $pvi->getDateSignature() && $pvi->getDateSignature() < $pviAnterieur->getDateSignature()) {
                     $error = [
-                        'titre' => 'PVRIS - Date de signature : ', 'message' => 'La date de signature du PVRI1 doit être antérieure à celle du PVRI2 et ainsi de suite.
-           ',
+                        'titre' => 'PVRIS - Date de signature : ', 'message' => 'La date de signature du PVRI1 doit être antérieure à celle du PVRI2 et ainsi de suite.',
                     ];
                     array_push($errors, $error);
                     break;
@@ -354,8 +303,6 @@ class EtudeExtension extends AbstractExtension
             $doc = $etude->getCc();
         elseif ($etude->getCe())
             $doc = $etude->getCe();
-        elseif ($etude->getBdc())
-            $doc = $etude->getBdc();
 
         if ($doc) {
             foreach ($etude->getPhases() as $phase) {
