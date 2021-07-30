@@ -45,7 +45,7 @@
 </table>
 
 {# Progression des documents #}
-{% set afficher = etude.ap or etude.cc or etude.ce or etude.cca or etude.bdc or (etude.missions is not empty or etude.avs is not empty or etude.procesVerbaux is not empty) %}
+{% set afficher = etude.ap or etude.cc or etude.ce or etude.cca or (etude.missions is not empty or etude.avs is not empty or etude.procesVerbaux is not empty) %}
 
 <table class="table table-striped table-bordered {{ afficher ? "" : "hidden" }}" onclick="docStateChange();">
     <thead>
@@ -77,15 +77,6 @@
             <td>{{ form_widget(formSuivi.cc.envoye) }}</td>
             <td>{{ form_widget(formSuivi.cc.receptionne) }}</td>
         </tr>
-        <!-- CONVENTION ETUDE -->
-        <tr class="docTabRow {{ etude.ceActive and not etude.ccaActive and etude.ce is not null ? "": "hidden" }}">
-            <th>{{ 'suivi.convention_etude'|trans({}, 'project') }}</th>
-            <td class="state">{{ 'suivi.incomplet'|trans({}, 'project') }}</td>
-            <td>{{ form_widget(formSuivi.ce.redige) }}</td>
-            <td>{{ form_widget(formSuivi.ce.relu) }}</td>
-            <td>{{ form_widget(formSuivi.ce.envoye) }}</td>
-            <td>{{ form_widget(formSuivi.ce.receptionne) }}</td>
-        </tr>
         <!-- CONVENTION CADRE AGILE -->
         <tr class="docTabRow {{ etude.ccaActive or etude.cca is not none ? "" : "hidden" }}">
             <th>{{ 'suivi.convention_cadre_agile'|trans({}, 'project') }}</th>
@@ -95,14 +86,14 @@
             <td>{{ form_widget(formSuivi.cca.envoye) }}</td>
             <td>{{ form_widget(formSuivi.cca.receptionne) }}</td>
         </tr>
-        <!-- BON DE COMMANDE -->
-        <tr class="docTabRow {{ etude.ccaActive and etude.bdc is not null ? "" : "hidden" }}">
-            <th>{{ 'suivi.bon_de_commande'|trans({}, 'project') }}</th>
+        <!-- CONVENTION ETUDE -->
+        <tr class="docTabRow {{ etude.ceActive and etude.ce is not null ? "": "hidden" }}">
+            <th>{{ etude.ccaActive ? 'suivi.convention_etude'|trans({}, 'project') : 'suivi.bon_de_commande'|trans({}, 'project') }}</th>
             <td class="state">{{ 'suivi.incomplet'|trans({}, 'project') }}</td>
-            <td>{{ form_widget(formSuivi.bdc.redige) }}</td>
-            <td>{{ form_widget(formSuivi.bdc.relu) }}</td>
-            <td>{{ form_widget(formSuivi.bdc.envoye) }}</td>
-            <td>{{ form_widget(formSuivi.bdc.receptionne) }}</td>
+            <td>{{ form_widget(formSuivi.ce.redige) }}</td>
+            <td>{{ form_widget(formSuivi.ce.relu) }}</td>
+            <td>{{ form_widget(formSuivi.ce.envoye) }}</td>
+            <td>{{ form_widget(formSuivi.ce.receptionne) }}</td>
         </tr>
         <!--RECAPITULATIFS DE MISSION -->
         {% if etude.missions is not empty %}
