@@ -17,7 +17,6 @@ use App\Entity\Personne\Mandat;
 use App\Entity\Personne\Membre;
 use App\Entity\Project\Cc;
 use App\Entity\Project\Ce;
-use App\Entity\Project\Bdc;
 use App\Entity\Project\Etude;
 use App\Entity\Project\Mission;
 use App\Entity\Treso\BV;
@@ -32,7 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Webmozart\KeyValueStore\Api\KeyValueStore;
-use App\Entity\Project\DocType;
 
 class IndicateursController extends AbstractController
 {
@@ -125,11 +123,7 @@ class IndicateursController extends AbstractController
     public function getDonneesEtudes(ObjectManager $em)
     {   // Analyse des données sur les études, le chiffre d'affaire et les avenants.
 
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
-
-        $listDocs = [$ccs, $ces, $bdc];
+        $listDocs = $this->getDocs($em);
 
         $nombreEtudesParMandat[$this->anneeActuelle]['Indicateur'] = 'Nombre d\'études signées';
         $nombreAvsParMandat[2021]['Indicateur'] = 'Nombre d\'avenants total';
@@ -424,11 +418,7 @@ class IndicateursController extends AbstractController
         $nombreJoursParMandat = [];
         $nombreJoursAvecAvenantParMandat = [];
 
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
-
-        $listDocs = [$ccs, $ces, $bdc];
+        $listDocs = $this->getDocs($em);
 
         foreach ($listDocs as $docs) {
             foreach ($docs as $doc) {
@@ -491,11 +481,7 @@ class IndicateursController extends AbstractController
     {
         $nombreEtudesParMandat = [];
 
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
-
-        $listDocs = [$ccs, $ces, $bdc];
+        $listDocs = $this->getDocs($em);
 
         foreach ($listDocs as $docs) {
             foreach ($docs as $doc) {
@@ -555,11 +541,7 @@ class IndicateursController extends AbstractController
         $nombreEtudesAvecAvenantParMandat = [];
         $nombreAvsParMandat = [];
 
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
-
-        $listDocs = [$ccs, $ces, $bdc];
+        $listDocs = $this->getDocs($em);
 
         foreach ($listDocs as $docs) {
             foreach ($docs as $doc) {
@@ -772,11 +754,7 @@ class IndicateursController extends AbstractController
         $cumulsJEH = [];
         $cumulsFraisDossier = [];
 
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
-
-        $listDocs = [$ccs, $ces, $bdc];
+        $listDocs = $this->getDocs($em);
 
         foreach ($listDocs as $docs) {
             foreach ($docs as $doc) {
@@ -857,11 +835,7 @@ class IndicateursController extends AbstractController
      */
     public function getCA(Request $request, ObjectManager $em)
     {
-        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
-        $ces = $em->getRepository(Ce::class)->findBy([], ['dateSignature' => 'asc']);
-        $bdc = $em->getRepository(Bdc::class)->findBy([], ['dateSignature' => 'asc']);
-
-        $listDocs = [$ccs, $ces, $bdc];
+        $listDocs = $this->getDocs($em);
 
         if ($this->keyValueStore->exists('namingConvention')) {
             $namingConvention = $this->keyValueStore->get('namingConvention');
@@ -1646,6 +1620,14 @@ class IndicateursController extends AbstractController
         return $this->render('Stat/Indicateurs/Indicateur.html.twig', [
             'chart' => $ob,
         ]);
+    }
+
+    private function getDocs(ObjectManager $em) : array {
+        $ccs = $em->getRepository(Cc::class)->findBy([], ['dateSignature' => 'asc']);
+        $ces = $em->getRepository(Ce::class)->findBy(['type' => Ce::TYPE_CE], ['dateSignature' => 'asc']);
+        $bdc = $em->getRepository(Ce::class)->findBy(['type' => Ce::TYPE_BDC], ['dateSignature' => 'asc']);
+
+        return [$ccs, $ces, $bdc];
     }
 
 }
