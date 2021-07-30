@@ -3,7 +3,6 @@ suivi:
   a_recontacter_le: A recontacter le
   acces_rapide: Accès Rapide
   accueil: Accueil
-  acceptee: Acceptée
   acompte: Acompte
   action: Action
   ajouter: Ajouter
@@ -208,7 +207,6 @@ suivi:
   etudes_avortees: Etudes Avortées
   etudes_cloturees: Etudes Clôturées
   etudes_en_cours: Etudes en Cours
-  etudes_acceptees: Etudes Acceptées
   etudes_finies: Etudes Finies
   etudes_list_retour: Retour à la liste des études
   etudes_negociations: Etudes en Négociation

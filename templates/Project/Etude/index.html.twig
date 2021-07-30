@@ -13,11 +13,6 @@
             {# En négociation #}
             <li><a href="#nego" data-toggle="tab">{{ 'suivi.etudes_negociations'|trans({}, 'project') }}
                     ({{ etudesEnNegociation | length }})</a></li>
-            {# Acceptées #}
-            {% if etudesAcceptees | length %}
-            <li><a href="#acceptees" data-toggle="tab">{{ 'suivi.etudes_acceptees'|trans({}, 'project') }}
-                    ({{ etudesAcceptees | length }})</a></li>
-            {% endif %}
             {# En Cours #}
             <li class="active"><a href="#cours" data-toggle="tab">{{ 'suivi.etudes_en_cours'|trans({}, 'project') }}
                     ({{ etudesEnCours | length }})</a></li>
@@ -43,9 +38,6 @@
     <div class="tab-content">
         <div class="tab-pane" id="nego" style="min-height: 400px;">
             {% include "Project/Etude/Tab/EtudesEnNegociation.html.twig" with  {'etudesEnNegociation':  etudesEnNegociation} %}
-        </div>
-        <div class="tab-pane" id="acceptees" style="min-height: 400px;">
-            {% include "Project/Etude/Tab/EtudesAcceptees.html.twig" with  {'etudesAcceptees':  etudesAcceptees} %}
         </div>
         <div class="tab-pane active" id="cours" style="min-height: 400px;">
             {% include "Project/Etude/Tab/EtudesEnCours.html.twig" with  {'etudesEnCours':  etudesEnCours} %}

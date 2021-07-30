@@ -75,10 +75,6 @@ class EtudeController extends AbstractController
         $etudesFinies = $em->getRepository(Etude::class)
             ->getPipeline(['stateID' => Etude::ETUDE_STATE_FINIE], ['mandat' => 'DESC', 'num' => 'DESC']);
 
-        //Etudes acceptée : stateID = 7
-        $etudesAcceptees = $em->getRepository(Etude::class)
-            ->getPipeline(['stateID' => Etude::ETUDE_STATE_ACCEPTEE], ['mandat' => 'DESC', 'num' => 'DESC']);
-
         //Etudes Terminees et Avortees Chargée en Ajax dans getEtudesAsyncAction
         //On push des arrays vides pour avoir les menus déroulants
         $etudesTermineesParMandat = [];
@@ -96,7 +92,6 @@ class EtudeController extends AbstractController
             'etudesEnCours' => $etudesEnCours,
             'etudesEnPause' => $etudesEnPause,
             'etudesFinies' => $etudesFinies,
-            'etudesAcceptees' => $etudesAcceptees,
             'etudesTermineesParMandat' => $etudesTermineesParMandat,
             'etudesAvorteesParMandat' => $etudesAvorteesParMandat,
             'anneeCreation' => $anneeCreation,

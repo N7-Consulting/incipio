@@ -559,7 +559,6 @@ class EtudeExtension extends AbstractExtension
      */
     public function getColor(Etude $etude) {
         switch ($etude->getStateID()) {
-            case Etude::ETUDE_STATE_ACCEPTEE:
             case Etude::ETUDE_STATE_COURS:
             case Etude::ETUDE_STATE_CLOTUREE:
                 $color = 'success';

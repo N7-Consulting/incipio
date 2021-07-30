@@ -91,9 +91,7 @@ class DashboardController extends AbstractController
 
         $statsStore->set('ca_negociation', $etudeRepository->getCaByState(Etude::ETUDE_STATE_NEGOCIATION));
 
-        $caEnCours = $etudeRepository->getCaByState(Etude::ETUDE_STATE_ACCEPTEE)
-                    + $etudeRepository->getCaByState(Etude::ETUDE_STATE_COURS);
-        $statsStore->set('ca_encours', $caEnCours);
+        $statsStore->set('ca_encours', $etudeRepository->getCaByState(Etude::ETUDE_STATE_COURS));
 
         $caCloture = $etudeRepository->getCaByState(Etude::ETUDE_STATE_FINIE)
             + $etudeRepository->getCaByState(Etude::ETUDE_STATE_CLOTUREE);

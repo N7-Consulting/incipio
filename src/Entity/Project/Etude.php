@@ -45,14 +45,11 @@ class Etude
     public const ETUDE_STATE_AVORTEE = 5;
 
     // Etude non clôturée (entre en cours et clôturée)
+    // i.e. non auditée par le pôle qualité
     public const ETUDE_STATE_FINIE = 6;
-
-    // Etude non commencée (entre en négociation et en cours)
-    public const ETUDE_STATE_ACCEPTEE = 7;
 
     public const ETUDE_STATE_ARRAY = [
         self::ETUDE_STATE_NEGOCIATION => 'suivi.en_negociation',
-        self::ETUDE_STATE_ACCEPTEE => 'suivi.acceptee',
         self::ETUDE_STATE_COURS => 'suivi.en_cours',
         self::ETUDE_STATE_FINIE => 'suivi.finie',
         self::ETUDE_STATE_CLOTUREE => 'suivi.cloturee',

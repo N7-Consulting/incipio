@@ -145,9 +145,8 @@ class EtudeRepository extends EntityRepository
         $qb = $this->_em->createQueryBuilder();
         $qb->select('e')
             ->from(Etude::class, 'e')
-            ->where('e.stateID = :stateNegociate or e.stateID= :stateAccepted or e.stateID= :stateCurrent')
+            ->where('e.stateID = :stateNegociate or e.stateID= :stateCurrent')
             ->setParameter('stateNegociate', Etude::ETUDE_STATE_NEGOCIATION)
-            ->setParameter('stateAccepted', Etude::ETUDE_STATE_ACCEPTEE)
             ->setParameter('stateCurrent', Etude::ETUDE_STATE_COURS)
             ->OrderBy('e.stateID');
         $query = $qb->getQuery();

@@ -190,7 +190,7 @@ class CreateDemoDataCommand extends Command
         [
             'nom' => '604GLA-BdC2',
             'description' => 'Implantation partie backend au site',
-            'statut' => Etude::ETUDE_STATE_ACCEPTEE,
+            'statut' => Etude::ETUDE_STATE_COURS,
             'nbrJEH' => 17,
             'duree' => 10,
             'cca' => '604GLA',
@@ -509,7 +509,7 @@ class CreateDemoDataCommand extends Command
             $e->setSuiveurQualite($this->membres[array_rand($this->membres)]->getPersonne());
 
             //manage intervenant
-            if ($etude['statut'] !== Etude::ETUDE_STATE_NEGOCIATION &&  $etude['statut'] !== Etude::ETUDE_STATE_ACCEPTEE && $etude['statut'] !== Etude::ETUDE_STATE_AVORTEE) {
+            if ($etude['statut'] !== Etude::ETUDE_STATE_NEGOCIATION && $etude['statut'] !== Etude::ETUDE_STATE_AVORTEE) {
                 $k = rand(1, 4);
                 for ($i = 0; $i < $k; ++$i) {
                     $mdev = $this->createMembre(self::PRENOM[array_rand(self::PRENOM)], self::NOM[array_rand(self::NOM)], $mandat + 1);
@@ -554,8 +554,6 @@ class CreateDemoDataCommand extends Command
                     $this->createProcesVerbal($etude, $etatDoc);
                 case Etude::ETUDE_STATE_COURS:
                     $etatDoc = $etatDoc == 0 ? rand(1,4) : $etatDoc + 10;
-                case Etude::ETUDE_STATE_ACCEPTEE:
-                    $etatDoc = $etatDoc == 0 ? rand(0,3) : $etatDoc;
                     // ! Facture d'acompte
                     $this->createFactureAcompte($etude);
                     // ! Missions
