@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * BdC and Ce (still named Ce for backward compatibility)
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Project\CeRepository")
  */
 class Ce extends DocType
 {
