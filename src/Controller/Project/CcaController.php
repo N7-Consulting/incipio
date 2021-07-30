@@ -3,7 +3,7 @@
 namespace App\Controller\Project;
 
 use App\Entity\Project\Cca;
-use App\Entity\Project\Bdc;
+use App\Entity\Project\Ce;
 use App\Form\Project\CcaType;
 use App\Form\Project\SubCcaType;
 use DateTime;
@@ -29,7 +29,7 @@ class CcaController extends AbstractController
 
         $ccas = $em->getRepository(Cca::class)->findAll();
         // On veut récupérer leur nombre pour l'afficher entre parenthèses
-        $bdcs = $em->getRepository(Bdc::class)->findAll();
+        $bdcs = $em->getRepository(Ce::class)->findBy(['type' => Ce::TYPE_BDC]);
 
         $nbBdc = [];
         foreach ($ccas as $cca) {
@@ -82,7 +82,7 @@ class CcaController extends AbstractController
     }
 
     private function getBdcs(Cca $cca) {
-        return $this->getDoctrine()->getManager()->getRepository(Bdc::class)->findAllByCca($cca->getId());
+        return $this->getDoctrine()->getManager()->getRepository(Ce::class)->findAllByCca($cca->getId());
     }
 
     /**
