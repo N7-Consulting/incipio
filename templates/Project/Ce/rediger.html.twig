@@ -1,13 +1,22 @@
 {% extends "Project/layout.html.twig" %}
 
-{% set tab= "tab3" %}
+{% set tab = "tab3" %}
 
 {% block title %}
-    {{ 'suivi.ce_rediger'|trans({}, 'project') }} {{ parent() }}
+    {% if ce.type == constant('\\App\\Entity\\Project\\Ce::TYPE_BDC') %}
+        {{ 'suivi.bdc_rediger'|trans({}, 'project') }}
+    {% else %}
+        {{ 'suivi.ce_rediger'|trans({}, 'project') }}
+    {% endif %}
+    {{ parent() }}
 {% endblock %}
 
 {% block content_title %}
-    {{ 'suivi.ce_rediger'|trans({}, 'project') }}
+    {% if ce.type == constant('\\App\\Entity\\Project\\Ce::TYPE_BDC') %}
+        {{ 'suivi.bdc_rediger'|trans({}, 'project') }}
+    {% else %}
+        {{ 'suivi.ce_rediger'|trans({}, 'project') }} {{ parent() }}
+    {% endif %}
 {% endblock %}
 
 {% block content_bundle %}
