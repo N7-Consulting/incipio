@@ -31,8 +31,6 @@ final class Version20210705134349 extends AbstractMigration
         $this->addSql('ALTER TABLE AvMission DROP FOREIGN KEY FK_87698F23E2904019');
         $this->addSql('DROP INDEX UNIQ_87698F23E2904019 ON AvMission');
         $this->addSql('ALTER TABLE AvMission DROP thread_id');
-        $this->addSql('DROP INDEX UNIQ_59751EFDE2904019 ON Bdc');
-        $this->addSql('ALTER TABLE Bdc DROP thread_id');
         $this->addSql('ALTER TABLE Cc DROP FOREIGN KEY FK_4E363EDBE2904019');
         $this->addSql('DROP INDEX UNIQ_4E363EDBE2904019 ON Cc');
         $this->addSql('ALTER TABLE Cc DROP thread_id');
@@ -63,8 +61,6 @@ final class Version20210705134349 extends AbstractMigration
         $this->addSql('ALTER TABLE AvMission ADD thread_id VARCHAR(255) CHARACTER SET utf8 DEFAULT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE AvMission ADD CONSTRAINT FK_87698F23E2904019 FOREIGN KEY (thread_id) REFERENCES Thread (id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_87698F23E2904019 ON AvMission (thread_id)');
-        $this->addSql('ALTER TABLE Bdc ADD thread_id VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_59751EFDE2904019 ON Bdc (thread_id)');
         $this->addSql('ALTER TABLE Cc ADD thread_id VARCHAR(255) CHARACTER SET utf8 DEFAULT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE Cc ADD CONSTRAINT FK_4E363EDBE2904019 FOREIGN KEY (thread_id) REFERENCES Thread (id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_4E363EDBE2904019 ON Cc (thread_id)');
