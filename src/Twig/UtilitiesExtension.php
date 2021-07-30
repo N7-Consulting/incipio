@@ -50,7 +50,6 @@ class UtilitiesExtension extends AbstractExtension
     $results = [
       'Ce' => $dateSignature,
       'Cca' => $dateSignature,
-      'Bdc' => $dateSignature,
       'Av' =>  $dateSignature,
       'ProcesVerbal' => $dateSignature,
       'Mission' => $intervenant,
