@@ -36,7 +36,7 @@
 				{{ 'suivi.version'|trans({}, 'project') }}
 			</th>
 			<td>
-				{{ cca.version }}
+				{{ cca.version ? cca.version : '/' }}
 			</td>
 		</tr>
 		<tr>
