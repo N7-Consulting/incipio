@@ -15,7 +15,6 @@ use App\Entity\Project\Ap;
 use App\Entity\Project\Cc;
 use App\Entity\Project\Ce;
 use App\Entity\Project\Cca;
-use App\Entity\Project\Bdc;
 use App\Entity\Project\Etude;
 use App\Entity\Project\ProcesVerbal;
 use Symfony\Component\Form\AbstractType;
@@ -83,17 +82,7 @@ class SuiviEtudeType extends AbstractType
                     'label' => false,
                     'translation_domain' => 'project',
                     'data_class' => Cca::class
-                ]
-            )
-            ->add(
-                'bdc',
-                DocTypeSuiviType::class,
-                [
-                    'label' => false,
-                    'translation_domain' => 'project',
-                    'data_class' => Bdc::class
-                ]
-            );
+                ]);
         $builder->add(
             'missions',
             CollectionType::class,
