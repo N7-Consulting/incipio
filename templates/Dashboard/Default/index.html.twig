@@ -1,76 +1,81 @@
 {# Page d'accueil de Jeyser  #}
-
 {% extends "Dashboard/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.fontAwesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css">
+{% endblock %}
+
 {% block content_bundle %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <table class="table">
                     {% if stats is not empty and (is_granted('ROLE_SUIVEUR') or is_granted('ROLE_TRESO')) %}
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="CA potentiel via les études actuellement en négociation">?</span>
-                                CA en négociation
+                                title="CA potentiel via les études actuellement en négociation">?</span>
+                                {{ 'dashboard.ca_nego'|trans({}, 'dashboard') }}
                             </th>
                             <td>{{ stats.ca_negociation }} €</td>
                         </tr>
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="CA potentiel via les études actuellement en cours de réalisation">?</span>
-                                CA en cours
+                                title="CA potentiel via les études actuellement en cours de réalisation">?</span>
+                                {{ 'dashboard.ca_cours'|trans({}, 'dashboard') }}
                             </th>
                             <td>{{ stats.ca_encours }} €</td>
                         </tr>
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="CA des études cloturées sur le mandat {{ 'now' | date('Y') }}">?</span>
-                                CA cloturé par le mandat {{ 'now' | date('Y') }}
+                                title="CA des études cloturées sur le mandat {{ 'now' | date('Y') }}">?</span>
+                                {{ 'dashboard.ca_cloture'|trans({}, 'dashboard') }} {{ 'now' | date('Y') }}
                             </th>
                             <td>{{ stats.ca_cloture }} €</td>
                         </tr>
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="Somme des factures de vente émises (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
-                                CA facturé par le mandat {{ 'now' | date('Y') }}
+                                title="Somme des factures de vente émises (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
+                                {{ 'dashboard.ca_facture'|trans({}, 'dashboard') }} {{ 'now' | date('Y') }}
                             </th>
                             <td>{{ stats.ca_facture ? stats.ca_facture : 0 }} €</td>
                         </tr>
                         <tr>
                             <th>
                             <span class="badge badge-default" data-toggle="tooltip"
-                                  title="Somme des factures de vente payées par le client (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
-                                CA payé sur le mandat {{ 'now' | date('Y') }}
+                                title="Somme des factures de vente payées par le client (associées à une étude du mandat {{ 'now' | date('Y') }})">?</span>
+                                {{ 'dashboard.ca_paye'|trans({}, 'dashboard') }} {{ 'now' | date('Y') }} {{ 'now' | date('Y') }}
                             </th>
                             <td>{{ stats.ca_paye ? stats.ca_paye : 0 }} €</td>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                Stats le {{ stats.expiration|date('d/m/Y H:i') }}
+                                {{ 'dashboard.stat'|trans({}, 'dashboard') }} {{ stats.expiration|date('d/m/Y H:i') }}
                             </td>
                         </tr>
                     {% endif %}
                     <tr>
-                        <th>Envoyez vos suggestions à <br><a href="mailto:{{ technical_to }}">{{ technical_to }}</a>
+                        <th> {{ 'dashboard.suggestion'|trans({}, 'dashboard') }} <br><a href="mailto:{{ technical_to }}">{{ technical_to }}</a>
                         </th>
                         <td></td>
                     </tr>
 
                 </table>
             </div>
-            <div class="col-md-4 xs-hidden">
-                <!-- One day, maybe, a calendar ... -->
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <table class="table">
                     <tr>
-                        <th colspan="2">Informations</th>
+                        <th colspan="2">{{ 'dashboard.info'|trans({}, 'dashboard') }}</th>
                     </tr>
                     <tr>
-                        <td>Connecté en tant que</td>
+                        <td>{{ 'dashboard.connecte'|trans({}, 'dashboard') }}</td>
                         <th>
                             {{ app.user.username }}
                             <a href="{{ path('fos_user_security_logout') }}" class="pull-right">
@@ -79,11 +84,11 @@
                         </th>
                     </tr>
                     <tr>
-                        <td>Dernière connexion le</td>
+                        <td>{{ 'dashboard.derniere_connection'|trans({}, 'dashboard') }}</td>
                         <th>{{ app.user.lastLogin ? app.user.lastLogin | date ('d M Y') }}</th>
                     </tr>
                     <tr>
-                        <td>Permissions</td>
+                        <td>{{ 'dashboard.permissions'|trans({}, 'dashboard') }}</td>
                         <th>
                             {% for role in app.user.roles %}
                                 <span class="badge badge-default">{{ role }}</span>
@@ -91,34 +96,72 @@
                         </th>
                     </tr>
                 </table>
-                <hr/>
-                <table class="table">
-                    <tr>
-                        <td colspan="2">
-                            <p>
-                                <strong>Vous trouvez Jeyser utile à votre Junior ?</strong><br/>
-                                Encouragez le développement en donnant une étoile sur
-                                <a href="https://github.com/n7consulting/Incipio">Github</a>.<br/>
-                                Ca ne vous coute rien et ça nous fera très plaisir.
-                            </p>
-                        </td>
-                    </tr>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <tr>
-                            <td colspan="2">
-                                Jeyser <span id="version">3.1.0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" id="version-info">
-                            </td>
-                        </tr>
-                    {% endif %}
-
-                </table>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-md-6">
+                {% include '@FullCalendar/Calendar/calendar.html.twig' %}
+            <br>
+            <a href="{{ path('booking_new')}}" class="btn btn-primary">{{ 'dashboard.ev_ajouter'|trans({}, 'dashboard') }}</a>
+            </div>
+            <div class="col-md-6">
+                <h4>{{ 'dashboard.commentaire_recent_titre' | trans({}, 'dashboard') }}</h4>
+                {% for etude, comments in commentsParEtude %}
+                    <table class="display dataTable table table-bordered table-striped dt-responsive ">
+                    <thead>
+                        <tr>
+                                <th colspan="2">{{ 'suivi.etude.etude'|trans({}, 'project') }} {{ etude }}</th>
+                                <th><a href="{{ path('project_etude_voir', {'nom': etude, '_fragment': 'tab6'}) }}">{{ 'dashboard.voir_commentaire'|trans({}, 'dashboard') }}</a></th>
+                        </tr>
+                        <tr>
+                            <th>{{ 'dashboard.membres'|trans({}, 'dashboard') }}</th>
+                            <th>{{ 'dashboard.commentaire_recent'|trans({}, 'dashboard') }}</th>
+                            <th>{{ 'dashboard.date'|trans({}, 'dashboard') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment in comments | reverse %}
+                            <tr>
+                                <td>{{ comment.getAuthorName() }}</td>
+                                <td>{{ comment.body }}</td>
+                                <td>{{ comment.createdAt | date("d/m/y") }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+                {% else %}
+                    <h>{{ 'dashboard.aucun_commentaire' | trans({}, 'dashboard') }}</h>
+                {% endfor %}
+            </div>
+        </div>
+{% include '@FullCalendar/Calendar/calendar.html.twig' %}
+
+<br>
+
+<table class="table">
+	<tr>
+		<td colspan="2">
+			<p>
+				<strong>{{ 'dashboard.jeyser_utile'|trans({}, 'dashboard') }}</strong><br/>
+				{{ 'dashboard.encourager_dev'|trans({}, 'dashboard') }}
+				<a href="https://github.com/n7consulting/Incipio">{{ 'dashboard.github'|trans({}, 'dashboard') }}</a>.<br/>
+				{{ 'dashboard.ca_coute_rien'|trans({}, 'dashboard') }}
+			</p>
+		</td>
+	</tr>
+	{% if is_granted('ROLE_ADMIN') %}
+		<tr>
+			<td colspan="2">
+				{{ 'dashboard.jeyser'|trans({}, 'dashboard') }}
+				<span id="version">{{ 'dashboard.version'|trans({}, 'dashboard') }}</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" id="version-info"></td>
+		</tr>
+	{% endif %}
+</table>
+
 {% endblock %}
 
 {% block javascript %}
@@ -130,4 +173,41 @@
             displayVersionMessage();
         </script>
     {% endif %}
+
+    <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
+
+    {# <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> #}
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/locale/fr.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#calendar-holder").fullCalendar({
+                eventSources: [
+                    {
+                        url: "{{ path('fullcalendar_load_events') }}",
+                        type: "POST",
+                        data: {
+                            filters: {},
+                        },
+                        error: function () {
+                            // alert("There was an error while fetching FullCalendar!");
+                        }
+                    }
+                ],
+                header: {
+                    center: "title",
+                    left: "prev,next today",
+                    right: "month,agendaWeek,agendaDay"
+                },
+                lazyFetching: true,
+                locale: "fr",
+                navLinks: true, // can click day/week names to navigate views
+            });
+        });
+    </script>
 {% endblock %}

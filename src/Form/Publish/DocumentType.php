@@ -24,13 +24,13 @@ class DocumentType extends AbstractType
     {
         $builder->add('name', TextType::class, ['label' => 'Nom du fichier', 'required' => false])
                 ->add('file', FileType::class, ['label' => 'Fichier', 'required' => true, 'attr' => ['cols' => '100%', 'rows' => 5]]);
-        if ($options['etude'] || $options['etudiant'] || $options['prospect'] || $options['formation']) {
+        if ($options['etude'] || $options['etudiant'] || $options['prospect']) {
             $builder->add('relation', RelatedDocumentType::class, [
                 'label' => '',
                 'etude' => $options['etude'],
                 'etudiant' => $options['etudiant'],
                 'prospect' => $options['prospect'],
-                'formation' => $options['formation'], ]);
+                ]);
         }
     }
 
@@ -45,8 +45,11 @@ class DocumentType extends AbstractType
             'data_class' => Document::class,
             'etude' => null,
             'etudiant' => null,
+            'passation' => null,
             'prospect' => null,
+            'processus' => null,
             'formation' => null,
+            'option' => null,
         ]);
     }
 }

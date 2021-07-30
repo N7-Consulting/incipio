@@ -12,12 +12,15 @@
 namespace App\Form\Personne;
 
 use App\Entity\Personne\Prospect;
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class ProspectType extends AbstractType
 {
@@ -33,7 +36,23 @@ class ProspectType extends AbstractType
             ->add('adresse', TextareaType::class, ['required' => false])
             ->add('codepostal', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Code Postal']])
             ->add('ville', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Ville']])
-            ->add('pays', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Pays']]);
+            ->add('pays', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Pays']])
+            ->add('secteurActivite', ChoiceType::class,
+            ['choices' => array_flip(Prospect::getSecteurChoice()), 'required' => false]
+            )
+            ->add('mail', EmailType::class, ['label' => 'form.email', 'translation_domain' => 'FOSUserBundle'])
+            ->add('tags', CollectionType::class,
+            [
+                'label' => 'prospect.champs.tags',
+                'translation_domain' => 'personne',
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+            ])
+            ->add('mail', EmailType::class,
+                ['required' => false]
+            );
     }
 
     public function getBlockPrefix()

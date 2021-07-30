@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Excel\CreerDataProspect;
 
 class ProspectController extends AbstractController
 {
@@ -71,9 +72,12 @@ class ProspectController extends AbstractController
 
         return $this->render('Personne/Prospect/index.html.twig', [
             'prospects' => $entities,
+            'classe' => CreerDataProspect::class,
+            'fileName' => 'BDDProspect.xlsx',
+            'fileNameType' => 'BDDProspectType.xlsx'
         ]);
     }
-
+    
     /**
      * @Security("has_role('ROLE_SUIVEUR')")
      * @Route(name="personne_prospect_voir", path="/prospect/voir/{id}", methods={"GET","HEAD"})

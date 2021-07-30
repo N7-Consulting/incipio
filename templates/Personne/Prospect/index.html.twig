@@ -24,13 +24,23 @@
 {% endblock %}
 
 {% block content_bundle %}
+    {% if is_granted('ROLE_CA') %} 
+        <div class="box-header with-border">
+            <a href="{{ path('excel_index', {'fileName': fileName, 'classe': classe, 'fileNameType': fileNameType}) }}" class="pull-right btn btn-warning">
+            {{ 'excel.import'|trans({}, 'excel')}}</a>
+        </div>
+    {% endif %}
+    
     <table class="table table-bordered table-striped dataTable dt-responsive text-left" id="listeProspects" role="grid" width="100%">
         <thead>
         <tr>
             <th>{{ 'prospect.champs.nom'|trans({}, 'personne') }}</th>
             <th>{{ 'prospect.champs.type'|trans({}, 'personne') }}</th>
             <th>{{ 'prospect.champs.adresse'|trans({}, 'personne') }}</th>
+            <th>{{ 'prospect.champs.mail'|trans({}, 'personne') }}</th>
+            <th>{{ 'prospect.secteur_activite'|trans({}, 'personne') }}</th>
             <th>{{ 'prospect.champs.nombre_employe'|trans({}, 'personne') }}</th>
+            <th>{{ 'prospect.champs.tags'|trans({}, 'personne') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -40,7 +50,14 @@
                 </td>
                 <td>{{ prospect.entiteToString }}</td>
                 <td>{{ prospect.ville }}, {{ prospect.adresse }}</td>
+                <td>{{ prospect.mail }}</td>
+                <td>{{ prospect.secteurToString }}</td>
                 <td>{{ prospect.employes | length }}</td>
+                <td>
+                    {% for tag in prospect.tags %}
+                        <span class="badge">{{ tag }}</span>
+                    {% endfor %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -69,4 +86,3 @@
         });
     </script>
 {% endblock %}
-

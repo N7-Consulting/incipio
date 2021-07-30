@@ -80,6 +80,16 @@ class Document
      */
     private $file;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pole;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type;
+
     public function __toString()
     {
         return 'Document ' . $this->getId() . ' ' . $this->path;
@@ -103,8 +113,10 @@ class Document
     {
         if (null !== $this->file) {
             // do whatever you want to generate a unique name
-            $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename . '.' . $this->file->guessExtension();
+            if (null == $this->path) {
+                $filename = sha1(uniqid(mt_rand(), true));
+                $this->path = $filename . '.' . $this->file->guessExtension();
+            }
             $this->size = filesize($this->file);
         }
         $this->uptime = new \DateTime();
@@ -335,6 +347,30 @@ class Document
     public function setProjectDir($projectDir)
     {
         $this->projectDir = $projectDir;
+
+        return $this;
+    }
+
+    public function getPole(): ?string
+    {
+        return $this->pole;
+    }
+
+    public function setPole(?string $pole): self
+    {
+        $this->pole = $pole;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

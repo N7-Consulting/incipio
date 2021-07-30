@@ -1,24 +1,106 @@
-            <tr>
-                <th>{{ form_label(form.nom) }}</th>
-                <td>{{ form_widget(form.nom) }} {{ form_errors(form.nom) }}</td>
-            </tr>
-            <tr>
-                <th>{{ form_label(form.entite) }}</th>
-                <td>{{ form_widget(form.entite) }} {{ form_errors(form.entite) }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'champs.adresse'|trans({}, 'personne') }}</th>
-                <td> {{ form_widget(form.adresse,{ 'attr': {'cols': '30', 'rows':'2'} }) }} {{ form_errors(form.adresse) }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'champs.code_postal'|trans({}, 'personne') }}</th>
-                <td>{{ form_widget(form.codepostal) }} {{ form_errors(form.codepostal) }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'champs.ville'|trans({}, 'personne') }}</th>
-                <td>{{ form_widget(form.ville) }} {{ form_errors(form.ville) }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'champs.pays'|trans({}, 'personne') }}</th>
-                <td>{{ form_widget(form.pays) }} {{ form_errors(form.pays) }}</td>
-            </tr>
+{% set tagsClass = tagsHidden ?? '' %}
+<tr>
+    <th>{{ form_label(form.nom) }}</th>
+    <td>{{ form_widget(form.nom) }} {{ form_errors(form.nom) }}</td>
+</tr>
+<tr>
+    <th>{{ form_label(form.entite) }}</th>
+    <td>{{ form_widget(form.entite) }} {{ form_errors(form.entite) }}</td>
+</tr>
+<tr>
+    <th>{{ 'champs.adresse'|trans({}, 'personne') }}</th>
+    <td> {{ form_widget(form.adresse,{ 'attr': {'cols': '30', 'rows':'2'} }) }} {{ form_errors(form.adresse) }}</td>
+</tr>
+<tr>
+    <th>{{ 'champs.code_postal'|trans({}, 'personne') }}</th>
+    <td>{{ form_widget(form.codepostal) }} {{ form_errors(form.codepostal) }}</td>
+</tr>
+<tr>
+    <th>{{ 'champs.ville'|trans({}, 'personne') }}</th>
+    <td>{{ form_widget(form.ville) }} {{ form_errors(form.ville) }}</td>
+</tr>
+<tr>
+    <th>{{ 'champs.pays'|trans({}, 'personne') }}</th>
+    <td>{{ form_widget(form.pays) }} {{ form_errors(form.pays) }}</td>
+</tr>
+<tr>
+    <th>{{ 'champs.mail'|trans({}, 'personne') }}</th>
+    <td>{{ form_widget(form.mail) }} {{ form_errors(form.mail) }}</td>
+</tr>
+<tr>
+    <th>{{ 'prospect.secteur_activite'|trans({}, 'personne') }}
+    <span class="badge badge-default" data-toggle="tooltip" title="{{ 'prospect.prospect_tooltip'|trans({}, 'personne') }}">?</span>
+    </th>
+    <td>{{ form_widget(form.secteurActivite) }} {{ form_errors(form.secteurActivite) }}</td>
+</tr>
+<tr class="{{ tagsClass }}">
+    <th colspan="2"><a href="#" id="addTags">+</a>
+        {{ form_label(form.tags) }}
+        {{ form_errors(form.tags) }}
+    </th>
+</tr>
+<tr class="{{ tagsClass }}">
+    <td colspan="2">
+        <div class="row tags" id="tags"
+                data-prototype="{{ form_widget(form.tags.vars.prototype) | e }}">
+            {% for membre in form.tags %}
+                <div class="col-md-4" id="membre">
+                    <span>{# delete button #}</span>
+                    {{ form_widget(membre) }}
+                </div>
+            {% endfor %}
+            {% do form.tags.setRendered %}
+        </div>
+    </td>
+</tr>
+
+<script type="text/javascript">
+    // Récupère le div qui contient la collection de tags
+    var collectionHolderMembres = $('#tags');
+    var $addMembreButton = $("#addTags");
+
+    function triggerJavascript(type, id) {
+        $field = $('select#{{ form.tags.vars.id }}_' + id);
+    }
+
+    jQuery(document).ready(function () {
+        var j = 0;
+        $("div#membre").each(function () {
+            addDeleteButton(this);
+        });
+
+
+        $addMembreButton.on('click', function (e) {
+            e.preventDefault();
+            addTagForm(collectionHolderMembres, j, 'membre');
+            j++;
+        });
+    });
+
+    function addTagForm(collectionHolder, i, type) {
+        // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
+        var prototype = collectionHolder.attr('data-prototype');
+
+        // Remplace '__name__' dans le HTML du prototype par un nombre basé sur
+        // la longueur de la collection courante
+        var id = collectionHolderMembres.children().length;
+        var newForm = prototype.replace(/__name__/g, id);
+        newForm = '<div class="col-md-4" id="' + type + i + '"><span></span> ' + newForm + '</div>';
+
+        // Affiche le formulaire dans la page dans un li, avant le lien "ajouter un tag"
+        var $newForm = collectionHolder.append(newForm);
+        addDeleteButton($('#' + type + i));
+        triggerJavascript(type, id);
+    }
+
+    function addDeleteButton(tag) {
+
+        var deleteButton =  $('<button class="btn btn-danger" id="myButtonDelete">X</button>');
+        $(tag).children().first().append(deleteButton);
+
+        deleteButton.on('click', function (e) {
+            e.preventDefault();
+            tag.remove();
+        });
+    }
+</script>
