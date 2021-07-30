@@ -58,7 +58,9 @@ class CeController extends AbstractController
                 $docTypeManager->checkSaveNewEmploye($etude->getCe());
                 $em->flush();
 
-                $this->addFlash('success', 'CE modifiée');
+                $message = $type === Ce::TYPE_BDC ? 'BDC modifié' : 'CE modifiée';
+                $this->addFlash('success', $message);
+
                 if ($request->get('phases')) {
                     return $this->redirectToRoute('project_phases_modifier', ['id' => $etude->getId()]);
                 }
@@ -69,6 +71,7 @@ class CeController extends AbstractController
 
         return $this->render('Project/Ce/rediger.html.twig', [
             'form' => $form->createView(),
+            'ce' => $ce,
             'etude' => $etude,
         ]);
     }
