@@ -54,7 +54,6 @@ class DocTypeType extends AbstractType
                         'Convention Cadre Agile' => TraitementController::DOCTYPE_CONVENTION_CADRE_AGILE,
                         'Bon de Commande' => TraitementController::DOCTYPE_BON_COMMANDE,
                         'Questionnaire Satisfaction' => TraitementController::DOCTYPE_QUESTIONNAIRE_SATISFACTION,
-                        'Descriptif de mission' => TraitementController::DOCTYPE_DESCRIPTIF_MISSION,
                         'Fiche de suivi d\'étude' => TraitementController::DOCTYPE_SUIVI_ETUDE,
                         'Avenant' => TraitementController::DOCTYPE_AVENANT,
                         'Procès verbal de recette intermédiaire' => TraitementController::DOCTYPE_PROCES_VERBAL_INTERMEDIAIRE,

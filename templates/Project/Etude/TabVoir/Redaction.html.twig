@@ -233,22 +233,14 @@
                     <tr>
                         <td colspan="2">
                             {% include "Project/Etude/Buttons/Intervenant.html.twig" with  {'mission' : mission, 'etude' : etude} %}
+                            &nbsp
+                            <a href="{{ path('publish_publiposter',
+                            { 'templateName' : constant('\\App\\Controller\\Publish\\TraitementController::DOCTYPE_RECAPITULATIF_MISSION'),
+                                'rootName' : constant('\\App\\Controller\\Publish\\TraitementController::ROOTNAME_MISSION'),
+                                'rootObject_id' : mission.id}) }}">
+                            <span class="fa fa-arrow-circle-down"></span> {{ 'suivi.rm'|trans({}, 'project') }}
+                            </a>
                         </td>
-                    </tr>
-                    <tr>
-                        <td><a href="{{ path('publish_publiposter',
-                                { 'templateName' : constant('\\App\\Controller\\Publish\\TraitementController::DOCTYPE_RECAPITULATIF_MISSION'),
-                                    'rootName' : constant('\\App\\Controller\\Publish\\TraitementController::ROOTNAME_MISSION'),
-                                    'rootObject_id' : mission.id}) }}">
-                                <span class="fa fa-arrow-circle-down"></span> {{ 'suivi.rm'|trans({}, 'project') }}
-                            </a></td>
-                        <td><a href="{{ path('publish_publiposter',
-                                { 'templateName' : constant('\\App\\Controller\\Publish\\TraitementController::DOCTYPE_DESCRIPTIF_MISSION'),
-                                    'rootName' : constant('\\App\\Controller\\Publish\\TraitementController::ROOTNAME_MISSION'),
-                                    'rootObject_id' : mission.id}) }}">
-                                <span class="fa fa-arrow-circle-down"></span> {{ 'suivi.dm'|trans({}, 'project') }}
-                            </a></td>
-                    </tr>
                     <tr>
                         <th>{{ 'suivi.rm_date'|trans({}, 'project') }}</th>
 

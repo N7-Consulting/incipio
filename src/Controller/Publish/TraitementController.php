@@ -60,8 +60,6 @@ class TraitementController extends AbstractController
 
     const DOCTYPE_RECAPITULATIF_MISSION = 'RM';
 
-    const DOCTYPE_DESCRIPTIF_MISSION = 'DM';
-
     const DOCTYPE_CONVENTION_ETUDIANT = 'CE';
 
     const DOCTYPE_BULLETIN_ADHESION = 'BA';
@@ -254,12 +252,6 @@ class TraitementController extends AbstractController
         $chemin = $this->getDoctypeAbsolutePathFromName($templateName, $debug);
 
         $templatesXMLtraite = $this->traiterTemplates($chemin, $rootName, $rootObject);
-
-        // Si DM on prend la ref de RM et ont remplace RM par DM
-        if (self::DOCTYPE_DESCRIPTIF_MISSION == $templateName) {
-            $templateName = 'RM';
-            $isDM = true;
-        }
 
         if (self::ROOTNAME_ETUDE == $rootName && $rootObject->getReference()) {
             if ($this->keyValueStore->exists('namingConvention')) {
