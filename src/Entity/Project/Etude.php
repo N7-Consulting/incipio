@@ -351,20 +351,13 @@ class Etude
 
     /**
      * @Assert\Valid()
-     * @ORM\OneToOne(targetEntity=Bdc::class, inversedBy="etude", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    private $bdc;
-
-    /**
-     * @Assert\Valid()
      * @ORM\ManyToOne(targetEntity=Cca::class, inversedBy="etudes", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $cca;
 
     /**
-     * @var bool est-ce que l'étude utilise la CCa/BdC ? Ce booléen sert à forcer
+     * @var bool est-ce que l'étude utilise la CCa/BdC ?
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $ccaActive;
@@ -480,15 +473,11 @@ class Etude
      */
     public function getDateLancement()
     {
-        if ($this->ce) {// Réel
+        // Réel
+        if ($this->ce)
             return $this->ce->getDateSignature();
-        }
-        if ($this->bdc) {// Réel
-            return $this->bdc->getDateSignature();
-        }
-        if ($this->cc) { // Réel
+        if ($this->cc)
             return $this->cc->getDateSignature();
-        }
 
         // Théorique
         $dateDebut = [];
@@ -1834,22 +1823,6 @@ class Etude
     public function setQs(?string $qs): self
     {
         $this->qs = $qs;
-
-        return $this;
-    }
-
-    public function getBdc(): ?Bdc
-    {
-        return $this->bdc;
-    }
-
-    public function setBdc(?Bdc $bdc = null): self
-    {
-        if (null !== $bdc) {
-            $bdc->setEtude($this);
-        }
-
-        $this->bdc = $bdc;
 
         return $this;
     }
