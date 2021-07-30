@@ -515,7 +515,6 @@ class EtudeController extends AbstractController
         $cc = null !== $etude->getCc();
         $ce = null !== $etude->getCe();
         $cca = null !== $etude->getCca();
-        $bdc = null !== $etude->getBdc();
 
         $formSuivi = $this->createForm(SuiviEtudeType::class, $etude);
         $formSuivi->handleRequest($request);
@@ -538,8 +537,6 @@ class EtudeController extends AbstractController
             $etude->setCe();
         if (!$cca)
             $etude->setCca();
-        if (!$bdc)
-            $etude->setBdc();
 
 
         $em->persist($etude);
