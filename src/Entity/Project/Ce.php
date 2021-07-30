@@ -68,6 +68,9 @@ class Ce extends DocType
 
     /**
      * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThanOrEqual(1)
+     *
      * @ORM\Column(type="smallint")
      */
     private $type;
@@ -196,11 +199,23 @@ class Ce extends DocType
         return $this->deonto;
     }
 
+    /**
+     * Get type.
+     *
+     * @return int
+     */
     public function getType(): ?int
     {
         return $this->type;
     }
 
+    /**
+     * Set type.
+     *
+     * @param int $type 0 => CE | 1 => BDC
+     *
+     * @return Facture
+     */
     public function setType(int $type): self
     {
         $this->type = $type;
