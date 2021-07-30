@@ -14,7 +14,6 @@ use App\Entity\Personne\Membre;
 use App\Entity\Personne\Personne;
 use App\Entity\Personne\Poste;
 use App\Entity\Personne\Prospect;
-use App\Entity\Project\Bdc;
 use App\Entity\Project\Ce;
 use App\Entity\Project\Cca;
 use App\Entity\Project\Etude;
@@ -26,7 +25,6 @@ use App\Entity\Treso\Compte;
 use App\Entity\Treso\Facture;
 use App\Entity\Treso\FactureDetail;
 use App\Service\Project\EtudeManager;
-use DateInterval;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Console\Command\Command;
@@ -567,8 +565,7 @@ class CreateDemoDataCommand extends Command
                 case Etude::ETUDE_STATE_PAUSE:
                 case Etude::ETUDE_STATE_AVORTEE:
                     // ! BdC ou CE
-                    $this->createBonCommande($etude, $etatDoc);
-                    $this->createConventionEtude($etude, $etatDoc);
+                    $this->createDocEtude($etude, $etatDoc);
                 default:
                     break;
             }
@@ -601,43 +598,24 @@ class CreateDemoDataCommand extends Command
     }
 
     /** Used within createDocuments */
-    private function createConventionEtude(Etude $etude, $etatDoc) {
-        if (!$etude->getCcaActive()) {
-            $emp = $etude->getProspect()->getEmployes()[0];
+    private function createDocEtude(Etude $etude, $etatDoc) {
+        $type = $etude->getCcaActive() ? Ce::TYPE_BDC : Ce::TYPE_CE;
 
-            $ce = new Ce();
-            $ce->setDateSignature($etude->getDateCreation());
-            $ce->setSignataire1($this->president->getPersonne());
-            $ce->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
+        $emp = $etude->getProspect()->getEmployes()[0];
 
-            // Set etat document
-            $this->etatDoc($ce, $etatDoc);
+        $ce = new Ce();
+        $ce->setType($type);
+        $ce->setDateSignature($etude->getDateCreation());
+        $ce->setSignataire1($this->president->getPersonne());
+        $ce->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
 
-            $etude->setCe($ce);
+        // Set etat document
+        $this->etatDoc($ce, $etatDoc);
 
-            $this->validateObject('New Ce', $ce);
-            $this->em->persist($ce);
-        }
-    }
+        $etude->setCe($ce);
 
-    /** Used within createDocuments */
-    private function createBonCommande(Etude $etude, $etatDoc) {
-        if ($etude->getCcaActive()) {
-            $emp = $etude->getProspect()->getEmployes()[0];
-
-            $bdc = new Bdc();
-            $bdc->setDateSignature($etude->getDateCreation());
-            $bdc->setSignataire1($this->president->getPersonne());
-            $bdc->setSignataire2(null !== $emp ? $emp->getPersonne() : null);
-
-            // Set etat document
-            $this->etatDoc($bdc, $etatDoc);
-
-            $etude->setBdc($bdc);
-
-            $this->validateObject('New Bdc', $bdc);
-            $this->em->persist($bdc);
-        }
+        $this->validateObject('New Ce', $ce);
+        $this->em->persist($ce);
     }
 
     /** Used within createDocuments */
