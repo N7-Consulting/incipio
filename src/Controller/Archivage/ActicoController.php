@@ -54,7 +54,6 @@ class ActicoController extends AbstractController
         return [
             'ce' => $this->translator->trans('suivi.ce', [], 'project'),
             'cca' => $this->translator->trans('suivi.cca', [], 'project'),
-            'bdc' => $this->translator->trans('suivi.bdc', [], 'project'),
             'avs' => $this->translator->trans('suivi.av', [], 'project'),
             'pvis' =>$this->translator->trans('suivi.pvi', [], 'project'),
             'pvr' => $this->translator->trans('suivi.pvr', [], 'project'),

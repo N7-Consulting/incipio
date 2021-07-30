@@ -50,6 +50,10 @@
 						{% else %}
 							{# On tombe dans ce cas là si on a pas une collection d'objets (eg: une unique convention) ou si la collection est vide. On évite ce dernier cas. #}
 							{% if docs is not empty %}
+								{# On traite le cas d'une CE/BDC (puisque c'est la même entité mais pas le même chemin pour la génération) #}
+								{% if etudeAttr == 'ce' and docs.type == constant('\\App\\Entity\\Project\\Ce::TYPE_BDC') %}
+									{% set etudeAttr = 'bdc' %}
+								{% endif %}
 								<a href="/Documents/Publiposter/{{ publipostage[etudeAttr] }}/{{docs.id}}">
 									<span class="fa fa-download">&nbsp</a>
 									<span>{{docs | soberName}}</span>
