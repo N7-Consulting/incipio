@@ -1,0 +1,23 @@
+{# Formulaire d'ajout d'un alumnus #}
+<table class="table table-bordered table-striped standard">
+    <tr>
+        <th>{{ form_label(form.alumnus.lienLinkedIn) }}</th>
+        <td>{{ form_widget(form.alumnus.lienLinkedIn) }} {{ form_errors(form.alumnus.lienLinkedIn) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.alumnus.secteurActuel) }}</th>
+        <td>{{ form_widget(form.alumnus.secteurActuel) }}{{ form_errors(form.alumnus.secteurActuel) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.alumnus.posteActuel) }}</th>
+        <td>{{ form_widget(form.alumnus.posteActuel) }}{{ form_errors(form.alumnus.posteActuel) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.alumnus.commentaire) }}</th>
+        <td>{{ form_widget(form.alumnus.commentaire) }}{{ form_errors(form.alumnus.commentaire) }}</td>
+    </tr>
+</table>
+
+
+
+

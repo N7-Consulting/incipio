@@ -14,19 +14,20 @@ namespace App\Form\Personne;
 use App\Entity\Hr\Competence;
 use App\Entity\Personne\Filiere;
 use App\Entity\Personne\Membre;
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\DateType as GenemuDateType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2CountryType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\Hr\AlumnusType;
 
 class MembreType extends AbstractType
 {
@@ -34,6 +35,7 @@ class MembreType extends AbstractType
     {
         $builder
             ->add('personne', PersonneType::class, ['label' => ' ', 'user' => true])
+            ->add('alumnus', AlumnusType::class, ['label' => ' '])
             ->add(
                 'identifiant',
                 TextType::class,
@@ -46,9 +48,11 @@ class MembreType extends AbstractType
             ->add('promotion', IntegerType::class, ['label' => 'Promotion', 'required' => false])
             ->add(
                 'dateDeNaissance',
-                GenemuDateType::class,
-                ['label' => 'Date de naissance (jj/mm/aaaa)', 'widget' => 'single_text', 'format' => 'dd/MM/yyyy',
-                 'required' => false,
+                DateType::class,
+                [
+                    'label' => 'Date de naissance',
+                    'widget' => 'single_text',
+                    'required' => false,
                 ]
             )
             ->add('lieuDeNaissance', TextType::class, ['label' => 'Lieu de naissance', 'required' => false])
@@ -72,9 +76,11 @@ class MembreType extends AbstractType
             ])
             ->add(
                 'dateConventionEleve',
-                GenemuDateType::class,
-                ['label' => 'Date de Signature de la Convention Elève', 'format' => 'dd/MM/yyyy', 'required' => false,
-                 'widget' => 'single_text',
+                DateType::class,
+                [
+                    'label' => 'Date de Signature de la Convention Elève',
+                    'required' => false,
+                    'widget' => 'single_text',
                 ]
             )
             ->add('photo', FileType::class, [
