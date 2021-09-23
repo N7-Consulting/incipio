@@ -14,6 +14,7 @@ namespace App\Form\Personne;
 use App\Entity\Hr\Competence;
 use App\Entity\Personne\Filiere;
 use App\Entity\Personne\Membre;
+use App\Form\Hr\AlumnusType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2CountryType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -27,7 +28,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\Hr\AlumnusType;
 
 class MembreType extends AbstractType
 {

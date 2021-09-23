@@ -3,13 +3,10 @@
 namespace App\Repository\Hr;
 
 use App\Entity\Hr\Alumnus;
+use App\Entity\Personne\Membre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Personne\Membre;
 
-/**
- * 
- * */
 class AlumnusRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -20,17 +17,12 @@ class AlumnusRepository extends ServiceEntityRepository
     /**
      * @return array
      */
-    public function findAllByAlumni($em)
+    public function findAllByAlumni()
     {
-        $membres = $em->getRepository(Membre::class)->findAll();
+        $qb = $this->_em->createQueryBuilder();
+        $query = $qb->select('m')->from(Membre::class, 'm')
+            ->innerJoin('m.alumnus', 'mi');
 
-        $alumni = [];
-
-        foreach ($membres as $membre) {
-            if ($membre->getAlumnus()) {
-                $alumni[] = $membre->getAlumnus();
-            } 
-        }       
-        return $alumni;
+        return $query->getQuery()->getResult();
     }
 }

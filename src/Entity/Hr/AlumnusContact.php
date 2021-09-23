@@ -2,10 +2,8 @@
 
 namespace App\Entity\Hr;
 
-use App\Repository\Hr\AlumnusContactRepository;
-use App\Entity\Comment\Thread;
 use App\Entity\Personne\Personne;
-use App\Entity\Hr\Alumnus;
+use App\Repository\Hr\AlumnusContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,7 +54,6 @@ class AlumnusContact
      */
     private $moyenContact;
 
-
     public function __construct()
     {
         $this->date = new \DateTime('now');
@@ -93,6 +90,7 @@ class AlumnusContact
     {
         return $this->alumnus;
     }
+
     /**
      * Set alumnus.
      *
@@ -104,7 +102,7 @@ class AlumnusContact
 
         return $this;
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;

@@ -2,6 +2,7 @@
 
 namespace App\Repository\Hr;
 
+use App\Entity\Hr\Alumnus;
 use App\Entity\Hr\AlumnusContact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,48 +23,13 @@ class AlumnusContactRepository extends ServiceEntityRepository
     /**
      * @return array
      */
-    public function findAllByAlumnus()
+    public function findAll()
     {
         $qb = $this->_em->createQueryBuilder();
-        $query = $qb->select('f')->from(AlumnusContact::class, 'f')
-            ->orderBy('f.date', 'desc');
-        $entities = $query->getQuery()->getResult();
+        $query = $qb->select('c')->from(Alumnus::class, 'c')
+            ->innerJoin('c.alumnusContact', 'mi')
+            ->orderBy('mi.date', 'asc');
 
-        $contactsParAlumnus = [];
-        /** @var AlumnusContact $AlumnusContact */
-        foreach ($entities as $contact) {
-            $nom = $contact->getAlumnus()->getPersonne()->getPersonne()->getPrenomNom();
-            if (array_key_exists($nom, $contactsParAlumnus)) {
-                $contactsParAlumnus[$nom][] = $contact;
-            } else {
-                $contactsParAlumnus[$nom] = [$contact];
-            }
-        }       
-        return $contactsParAlumnus;
-    }
-
-    /**
-     * @return array
-     */
-    public function findAllByDernierContact()
-    {
-        $qb = $this->_em->createQueryBuilder();
-        $query = $qb->select('f')->from(AlumnusContact::class, 'f')
-            ->orderBy('f.id', 'asc');
-        $entities = $query->getQuery()->getResult();
-
-        $dernierContactParAlumnus = [];
-        /** @var AlumnusContact $AlumnusContact */
-        foreach ($entities as $contact) {
-            $nom = $contact->getAlumnus()->getPersonne()->getPersonne()->getPrenomNom();
-            if (array_key_exists($nom, $dernierContactParAlumnus)) {
-                if ($dernierContactParAlumnus[$nom] < $contact->getDate()) {
-                    $dernierContactParAlumnus[$nom] = $contact->getDate();
-                }
-            } else {
-                $dernierContactParAlumnus[$nom] = $contact->getDate();
-            }
-        }       
-        return $dernierContactParAlumnus;
+        return $query->getQuery()->getResult();
     }
 }

@@ -6,6 +6,7 @@ rh:
   alumnus_supprimer: Supprimer cet alumnus
   alumnus_supprimer_confirm: Voulez-vous vraiment supprimer cet alumnus?
   alumnnus_tooltip: Vous pouvez ajouter un alumnus en complétant la partie "Alumnus" du formulaire pour modifier un membre (depuis l'onglet "Lister les membres").
+  alumnus: Alumnus
   ajouter_competence: Ajouter une compétence
   aucune_competence: Pas (encore !) de competences
   competence_ajouter : Ajouter une compétence
