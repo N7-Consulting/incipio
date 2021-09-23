@@ -30,7 +30,7 @@ class MandatType extends AbstractType
                 [
                     'label' => 'Date de début',
                     'required' => false,
-                    'widget' => 'single_text'
+                    'widget' => 'single_text',
                 ]
             )
             ->add(
@@ -39,7 +39,7 @@ class MandatType extends AbstractType
                 [
                     'label' => 'Date de Fin',
                     'required' => false,
-                    'widget' => 'single_text'
+                    'widget' => 'single_text',
                 ]
             )
             ->add(

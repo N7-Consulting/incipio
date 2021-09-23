@@ -25,22 +25,21 @@
 					<a href="{{ path('personne_membre_voir', {'id': alumnus.personne.id}) }}">{{  alumnus.personne ? alumnus.personne }}</a>
 				</td>
 				<td>
-					<a href ="{{ alumnus.lienLinkedIn }}">{{  alumnus.lienLinkedIn ?  'rh.voir_profil'|trans({}, 'rh') }} </a>
+					<a href ="{{ alumnus.alumnus.lienLinkedIn }}">{{  alumnus.alumnus.lienLinkedIn ?  'rh.voir_profil'|trans({}, 'rh') }} </a>
 				</td>
 				<td>
-					{{alumnus.secteurToString}}
+					{{alumnus.alumnus.secteurToString}}
 				</td>
 				<td>
-					{{alumnus.posteActuel}}
+					{{alumnus.alumnus.posteActuel}}
 				</td>
 				<td>
-					{% if dernierContactsParAlumnus[alumnus.personne.personne.prenomNom] is defined %}
-						{{dernierContactsParAlumnus[alumnus.personne.personne.prenomNom]|date('d/m/Y')}}
-					{% endif %}
-					
+				{% if alumnus.alumnus.alumnusContact is not empty %} 
+					{{alumnus.alumnus.alumnusContact[0].date|date('d/m/Y')}}
+				{% endif %} 	
 				</td>
 				<td>
-					{{alumnus.commentaire | nl2br}}
+					{{alumnus.alumnus.commentaire | nl2br}}
 				</td>
 			</tr>
 		{% endfor %}

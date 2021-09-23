@@ -2,13 +2,13 @@
 
 namespace App\Controller\Hr;
 
-
-
-use App\Entity\Personne\Filiere;
-use App\Entity\Hr\Competence;
-use App\Entity\Personne\Personne;
-use App\Entity\Project\Etude;
-use App\Form\Hr\CompetenceType;
+use App\Entity\Excel\CreerDataAlumni;
+use App\Entity\Hr\Alumnus;
+use App\Entity\Hr\AlumnusContact;
+use App\Form\Hr\AlumnusContactHandler;
+use App\Form\Hr\AlumnusContactType;
+use App\Form\Hr\AlumnusType;
+use App\Service\Project\EtudePermissionChecker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -16,16 +16,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\Project\EtudePermissionChecker;
-use App\Entity\Hr\AlumnusContact;
-use App\Form\Hr\AlumnusContactType;
-use App\Form\Hr\AlumnusContactHandler;
-use App\Entity\Hr\Alumnus;
-use App\Form\Hr\AlumnusType;
-use App\Form\Hr\AlumnusHandler;
-use App\Entity\Personne\Membre;
-use App\Entity\Excel\CreerDataAlumni;
-
 
 class AlumniController extends AbstractController
 {
@@ -34,15 +24,13 @@ class AlumniController extends AbstractController
      * @Route(name="gestion_alumni", path="/rh/alumni", methods={"GET","HEAD"})
      */
     public function index()
-    {   
+    {
         $em = $this->getDoctrine()->getManager();
-        $contactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByAlumnus();
-        $dernierContactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAllByDernierContact();
+        $contactsParAlumnus = $em->getRepository(AlumnusContact::class)->findAll();
         $alumni = $em->getRepository(Alumnus::class)->findAllByAlumni($em);
 
         return $this->render('Hr/Alumni/index.html.twig', [
             'contactsParAlumnus' => $contactsParAlumnus,
-            'dernierContactsParAlumnus' => $dernierContactsParAlumnus,
             'alumni' => $alumni,
             'classe' => CreerDataAlumni::class,
             'fileName' => 'BDDAlumni.xlsx',
@@ -124,6 +112,7 @@ class AlumniController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Contact client supprimé');
         }
+
         return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
     }
 
@@ -157,7 +146,7 @@ class AlumniController extends AbstractController
                 return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);
             }
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
-        }        
+        }
 
         return $this->render('Hr/Alumni/ajouter.html.twig', [
             'form' => $form->createView(),
@@ -214,6 +203,7 @@ class AlumniController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Alumnus supprimé');
         }
+
         return $this->redirectToRoute('gestion_alumni');
     }
 

@@ -11,6 +11,7 @@
 
 namespace App\Entity\Personne;
 
+use App\Entity\Hr\Alumnus;
 use App\Entity\Hr\Competence;
 use App\Entity\Project\Mission;
 use App\Entity\Publish\Document;
@@ -20,7 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Hr\Alumnus;
 
 /**
  * @ORM\Table()
@@ -58,10 +58,9 @@ class Membre implements AnonymizableInterface
     /**
      * @Assert\Valid()
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", mappedBy="personne", 
+     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", mappedBy="personne",
      *                                                                    cascade={"persist", "remove"},
      *                                                                   orphanRemoval=true)
-     * 
      */
     private $alumnus;
 

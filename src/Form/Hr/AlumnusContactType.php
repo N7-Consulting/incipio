@@ -12,9 +12,9 @@
 namespace App\Form\Hr;
 
 use App\Entity\Hr\Alumnus;
-use App\Entity\Personne\Membre;
-use App\Entity\Personne\Personne;
 use App\Entity\Hr\AlumnusContact;
+use App\Entity\Personne\Personne;
+use App\Form\Project\MoyenContactType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
@@ -22,7 +22,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\Project\MoyenContactType;
 
 class AlumnusContactType extends AbstractType
 {

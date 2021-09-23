@@ -2,22 +2,15 @@
 
 namespace App\Entity\Hr;
 
-use App\Entity\User\User;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Personne\Personne;
 use App\Entity\Personne\Membre;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Repository\Hr\AlumnusRepository;
+use App\Entity\Personne\Personne;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\Hr\AlumnusRepository")
- * 
- * 
  */
- 
 class Alumnus
 {
     /**
@@ -33,7 +26,6 @@ class Alumnus
      * @var Membre
      * @ORM\OneToOne(targetEntity="App\Entity\Personne\Membre", inversedBy="alumnus", cascade={"persist"} )
      * @ORM\JoinColumn(nullable=true)
-     * 
      */
     private $personne;
 
@@ -67,7 +59,6 @@ class Alumnus
      * @Assert\Choice(callback = "getSecteurChoiceAssert")
      */
     private $secteurActuel;
-
 
     /**
      * Get id.
@@ -118,13 +109,11 @@ class Alumnus
     /**
      * Add contacts.
      *
-     * @return Alumnus
+     * @return AlumnusContact
      */
-    public function addAlumnusContact(AlumnusContact $alumnusContact)
+    public function getAlumnusContact()
     {
-        $this->alumnusContact[] = $alumnusContact;
-
-        return $this;
+        return $this->alumnusContact;
     }
 
     /**
@@ -134,6 +123,7 @@ class Alumnus
     {
         $this->alumnusContact->removeElement($alumnusContact);
     }
+
     public function getLienLinkedIn(): ?string
     {
         return $this->lienLinkedIn;
@@ -158,7 +148,9 @@ class Alumnus
 
     /**
      * Set secteur.
+     *
      * @param string $secteur
+     *
      * @return Alumnus
      */
     public function setSecteurActuel($secteurActuel)
@@ -186,22 +178,22 @@ class Alumnus
             13 => 'Enseignement',
             14 => 'Immobilier / Logement',
             15 => 'Transports',
-            16 => 'Tourisme  / Voyage'
+            16 => 'Tourisme  / Voyage',
         ];
     }
-    
+
     public static function getSecteurChoiceAssert()
     {
         return array_keys(self::getSecteurChoice());
     }
-    
+
     public function getSecteurToString()
     {
         if (!$this->secteurActuel) {
             return '';
         }
         $tab = $this->getSecteurChoice();
-    
+
         return $tab[$this->secteurActuel];
     }
 
