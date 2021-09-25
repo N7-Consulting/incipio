@@ -59,4 +59,4 @@ services:
     Monolog\Processor\WebProcessor:
         tags: ['monolog.processor']
 
-    App\EventSubscriber\CalendarSubscriber:
+    App\EventListener\CalendarSubscriber:
