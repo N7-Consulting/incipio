@@ -12,16 +12,15 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210907064258 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
         $this->addSql('ALTER TABLE Etude DROP FOREIGN KEY FK_DC1F8620FBAA5D8E');
         $this->addSql('ALTER TABLE RelatedDocument DROP FOREIGN KEY FK_E28BFD666893B9E9');
         $this->addSql('ALTER TABLE RelatedDocument DROP FOREIGN KEY FK_E28BFD66A55629DC');
@@ -65,11 +64,10 @@ final class Version20210907064258 extends AbstractMigration
         $this->addSql('ALTER TABLE RepartitionJEH DROP phase_id');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
         $this->addSql('ALTER TABLE AlumnusContact DROP FOREIGN KEY FK_F79B05CE8A6FD59C');
         $this->addSql('CREATE TABLE Cca (id INT AUTO_INCREMENT NOT NULL, signataire1_id INT DEFAULT NULL, signataire2_id INT DEFAULT NULL, prospect_id INT NOT NULL, version INT DEFAULT NULL, redige TINYINT(1) DEFAULT NULL, relu TINYINT(1) DEFAULT NULL, spt1 TINYINT(1) DEFAULT NULL, spt2 TINYINT(1) DEFAULT NULL, dateSignature DATETIME DEFAULT NULL, envoye TINYINT(1) DEFAULT NULL, receptionne TINYINT(1) DEFAULT NULL, generer INT DEFAULT NULL, dateFin DATE NOT NULL, nom VARCHAR(50) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, UNIQUE INDEX UNIQ_F9F883216C6E55B5 (nom), INDEX IDX_F9F88321D5A42B2D (signataire2_id), INDEX IDX_F9F88321D182060A (prospect_id), INDEX IDX_F9F88321C71184C3 (signataire1_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE Passation (id INT AUTO_INCREMENT NOT NULL, categorie INT NOT NULL, titre VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, description LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
