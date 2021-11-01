@@ -26,7 +26,9 @@
 						{{contact.date | date("d/m/Y") }}
 					</td>
 					<td>
-						{% include "Project/Etude/Buttons/Suiveur.html.twig" with  {'suiveur':  contact.faitPar} %}					</td>
+						<a href="{{ path('personne_membre_voir', {'id': contact.faitPar.id}) }}">
+						{{ contact.faitPar }}</a>
+					</td>
 					<td>
 						{{ contact.objet }}
 					</td>
