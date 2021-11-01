@@ -40,17 +40,18 @@ class AlumnusContact
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=128)
      */
     private $objet;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     * @ORM\Column(name="contenu", type="text")
      */
     private $contenu;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=64)
      */
     private $moyenContact;
 

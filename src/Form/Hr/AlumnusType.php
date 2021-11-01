@@ -26,14 +26,6 @@ class AlumnusType extends AbstractType
             ->add('posteActuel', TextareaType::class,
                 ['required' => false, 'label' => 'Poste en entreprise actuel', 'attr' => ['cols' => '100%', 'rows' => 2]]
             )
-            // ->add('personne',Select2EntityType::class,
-            //     [
-            //         'label' => 'Alumnus',
-            //         'class' => Membre::class,
-            //         'choice_label' => 'personne.prenomNom',
-            //         'required' => true,
-            //     ]
-            // )
             ;
     }
 
