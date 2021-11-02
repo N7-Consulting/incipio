@@ -2,7 +2,7 @@
 
 namespace App\Entity\Hr;
 
-use App\Entity\Personne\Personne;
+use App\Entity\Personne\Membre;
 use App\Repository\Hr\AlumnusContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,9 +27,9 @@ class AlumnusContact
     private $alumnus;
 
     /**
-     * @var Personne
+     * @var Membre
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personne\Personne")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personne\Membre")
      * @ORM\JoinColumn(nullable=false)
      */
     private $faitPar;
@@ -65,7 +65,7 @@ class AlumnusContact
      *
      * @return AlumnusContact
      */
-    public function setFaitPar(Personne $faitPar)
+    public function setFaitPar(Membre $faitPar)
     {
         $this->faitPar = $faitPar;
 
@@ -75,7 +75,7 @@ class AlumnusContact
     /**
      * Get faitPar.
      *
-     * @return Personne
+     * @return Membre
      */
     public function getFaitPar()
     {
