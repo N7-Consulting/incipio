@@ -21,8 +21,12 @@ class AlumnusRepository extends ServiceEntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
         $query = $qb->select('m')->from(Membre::class, 'm')
-            ->innerJoin('m.alumnus', 'mi');
-
+            ->innerJoin('m.alumnus', 'mi')
+            ->where('mi.lienLinkedIn IS NOT NULL')
+            ->orWhere('mi.secteurActuel IS NOT NULL')
+            ->orWhere('mi.posteActuel IS NOT NULL')
+            ->orWhere('mi.commentaire IS NOT NULL')
+            ;
         return $query->getQuery()->getResult();
     }
 }
