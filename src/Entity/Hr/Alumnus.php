@@ -5,13 +5,15 @@ namespace App\Entity\Hr;
 use App\Entity\Personne\Membre;
 use App\Entity\Personne\Personne;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Personne\AnonymizableInterface;
 
 /**
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\Hr\AlumnusRepository")
  */
-class Alumnus
+class Alumnus implements AnonymizableInterface
 {
     /**
      * @var int
@@ -33,16 +35,19 @@ class Alumnus
      * @var string
      *
      * @ORM\Column(name="commentaire", type="string", nullable=true)
+     * @Groups({"gdpr"})
      */
     private $commentaire;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"gdpr"})
      */
     private $lienLinkedIn;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"gdpr"})
      */
     private $posteActuel;
 
@@ -57,6 +62,7 @@ class Alumnus
      *
      * @ORM\Column(name="secteurActuel", type="integer", nullable=true)
      * @Assert\Choice(callback = "getSecteurChoiceAssert")
+     * @Groups({"gdpr"})
      */
     private $secteurActuel;
 
@@ -207,5 +213,18 @@ class Alumnus
         $this->posteActuel = $posteActuel;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function anonymize(): void
+    {
+        
+        $this->commentaire = ' ';
+        $this->posteActuel = null;
+        $this->lienLinkedIn = ' ';
+        $this->secteurActuel = null;
+        
     }
 }
