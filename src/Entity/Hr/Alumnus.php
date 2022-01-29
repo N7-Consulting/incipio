@@ -35,7 +35,6 @@ class Alumnus implements AnonymizableInterface
      * @var string
      *
      * @ORM\Column(name="commentaire", type="string", nullable=true)
-     * @Groups({"gdpr"})
      */
     private $commentaire;
 
@@ -221,9 +220,9 @@ class Alumnus implements AnonymizableInterface
     public function anonymize(): void
     {
         
-        $this->commentaire = ' ';
+        $this->commentaire = null;
         $this->posteActuel = null;
-        $this->lienLinkedIn = ' ';
+        $this->lienLinkedIn = null;
         $this->secteurActuel = null;
         
     }

@@ -315,6 +315,7 @@ class Membre implements AnonymizableInterface
      * Set alumnus.
      *
      * @param Alumnus $alumnus
+     * @Groups({"gdpr"})
      *
      * @return Membre
      */
