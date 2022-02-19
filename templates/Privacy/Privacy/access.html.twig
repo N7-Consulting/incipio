@@ -116,7 +116,7 @@
 
         {% endif %}
         {% if personne.employe is not null %}
-            <div class="col-md-6 col-xs-12">            
+            <div class="col-md-6 col-xs-12">
                 <ul>
                     <li>
                         <strong>Poste:</strong> {{ personne.employe.poste }}
@@ -131,6 +131,23 @@
                                 {{ personne.employe.prospect.pays }}
                             </li>
                         </ul>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+        {% set al = personne.membre.alumnus %}
+        {% if al.lienLinkedIn is not null or al.posteActuel is not null or al.secteurActuel is not null %}
+            <div class="col-md-6 col-xs-12">
+                <h4>{{ 'rh.alumnus'|trans({}, 'rh') }}</h4>
+                <ul>
+                    <li>
+                        <strong>LinkedIn:</strong> {{ al.lienLinkedIn }}
+                    </li>
+                    <li>
+                        <strong>Poste:</strong> {{ al.posteActuel }}
+                    </li>
+                    <li>
+                        <strong>Secteur:</strong> {{ al.secteurActuel }}
                     </li>
                 </ul>
             </div>
@@ -168,4 +185,3 @@
         {% endif %}
     </div>
 {% endblock %}
-

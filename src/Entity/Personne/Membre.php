@@ -56,7 +56,7 @@ class Membre implements AnonymizableInterface
 
     /**
      * @Assert\Valid()
-     *
+     * @Groups({"gdpr"})
      * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", mappedBy="membre",
      *                                                                    cascade={"persist", "remove"},
      *                                                                   orphanRemoval=true)
@@ -231,6 +231,10 @@ class Membre implements AnonymizableInterface
         $this->formatPaiement = null;
         $this->securiteSociale = null;
         $this->commentaire = null;
+
+        if (null !== $this->alumnus) {
+            $this->alumnus->anonymize();
+        }
 
         /* remove non critical (business related) relations */
         /** @var Competence $c */

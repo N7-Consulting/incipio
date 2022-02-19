@@ -223,5 +223,9 @@ class Alumnus implements AnonymizableInterface
         $this->posteActuel = null;
         $this->lienLinkedIn = null;
         $this->secteurActuel = null;
+
+        foreach ($this->alumnusContact as $contact) {
+            $this->removeAlumnusContact($contact);
+        }
     }
 }
