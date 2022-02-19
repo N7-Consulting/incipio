@@ -4,10 +4,10 @@
 
 {% if contactsParAlumnus | length %}
 	{% for contacts in contactsParAlumnus %}
-		<table class="display dataTable table table-bordered table-striped dt-responsive "> 
+		<table class="display dataTable table table-bordered table-striped dt-responsive ">
             <thead>
                 <tr>
-                    <th>{{ 'rh.contact_avec_alumnus'|trans({}, 'rh') }} {{ contacts.personne.personne.PrenomNom }}</th>
+                    <th>{{ 'rh.contact_avec_alumnus'|trans({}, 'rh') }} {{ contacts.membre }}</th>
 					<th>{{ 'rh.date'|trans({}, 'rh') }}</th>
 					<th>{{ 'rh.fait_par'|trans({}, 'rh') }}</th>
 					<th>{{ 'rh.objet'|trans({}, 'rh') }}</th>
@@ -21,7 +21,7 @@
 					<td>
 						<a href="{{ path('alumni_contact_modifier', {'id': contact.id}) }}">{{ 'rh.contact'|trans({}, 'rh') }}
 								n°{{loop.index0 +1}}</a>
-					</td> 
+					</td>
 					<td>
 						{{contact.date | date("d/m/Y") }}
 					</td>
@@ -42,7 +42,7 @@
 			{% endfor %}
 			</tbody>
 	</table>
-	{% endfor %}	
+	{% endfor %}
 {% else %}
 	{{ 'rh.pas_de_contact'|trans({}, 'rh') }}
 {% endif %}

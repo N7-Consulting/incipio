@@ -44,7 +44,7 @@ class AlumnusContactType extends AbstractType
                 [
                     'label' => 'Alumnus contacté',
                     'class' => Alumnus::class,
-                    'choice_label' => 'personne.personne.prenomNom',
+                    'choice_label' => 'membre.personne.prenomNom',
                     'required' => true,
                 ]
             )

@@ -110,7 +110,7 @@ class AlumniController extends AbstractController
 
             $em->remove($contact);
             $em->flush();
-            $this->addFlash('success', 'Contact client supprimé');
+            $this->addFlash('success', 'Contact alumnus supprimé');
         }
 
         return $this->redirectToRoute('gestion_alumni', ['_fragment' => 'contact']);

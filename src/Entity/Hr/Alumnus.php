@@ -3,7 +3,6 @@
 namespace App\Entity\Hr;
 
 use App\Entity\Personne\Membre;
-use App\Entity\Personne\Personne;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,7 +28,7 @@ class Alumnus implements AnonymizableInterface
      * @ORM\OneToOne(targetEntity="App\Entity\Personne\Membre", inversedBy="alumnus", cascade={"persist"} )
      * @ORM\JoinColumn(nullable=true)
      */
-    private $personne;
+    private $membre;
 
     /**
      * @var string
@@ -88,27 +87,27 @@ class Alumnus implements AnonymizableInterface
     }
 
     /**
-     * Set personne.
+     * Set membre.
      *
-     * @param Membre $personne
+     * @param Membre $membre
      *
      * @return Alumnus
      */
-    public function setPersonne(Membre $personne = null)
+    public function setMembre(Membre $membre = null)
     {
-        $this->personne = $personne;
+        $this->membre = $membre;
 
         return $this;
     }
 
     /**
-     * Get personne.
+     * Get membre.
      *
      * @return Membre
      */
-    public function getPersonne()
+    public function getMembre()
     {
-        return $this->personne;
+        return $this->membre;
     }
 
     /**
@@ -219,11 +218,10 @@ class Alumnus implements AnonymizableInterface
      */
     public function anonymize(): void
     {
-        
+
         $this->commentaire = null;
         $this->posteActuel = null;
         $this->lienLinkedIn = null;
         $this->secteurActuel = null;
-        
     }
 }

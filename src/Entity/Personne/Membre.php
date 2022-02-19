@@ -14,7 +14,6 @@ namespace App\Entity\Personne;
 use App\Entity\Hr\Alumnus;
 use App\Entity\Hr\Competence;
 use App\Entity\Project\Mission;
-use App\Entity\Publish\Document;
 use App\Entity\Publish\RelatedDocument;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -58,7 +57,7 @@ class Membre implements AnonymizableInterface
     /**
      * @Assert\Valid()
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", mappedBy="personne",
+     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", mappedBy="membre",
      *                                                                    cascade={"persist", "remove"},
      *                                                                   orphanRemoval=true)
      */
@@ -322,7 +321,7 @@ class Membre implements AnonymizableInterface
     public function setAlumnus(Alumnus $alumnus = null)
     {
         if (null !== $alumnus) {
-            $alumnus->setPersonne($this);
+            $alumnus->setMembre($this);
         }
         $this->alumnus = $alumnus;
 
