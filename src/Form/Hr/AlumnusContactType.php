@@ -54,8 +54,10 @@ class AlumnusContactType extends AbstractType
                 ['label' => 'Date du contact', 'required' => true, 'widget' => 'single_text']
             )
             ->add('objet', TextType::class, ['label' => 'Objet'])
-            ->add('contenu', TextareaType::class,
-                ['label' => 'Résumé du contact','required' => false, 'attr' => ['cols' => '100%', 'rows' => 5,'maxlength' => 255]]
+            ->add(
+                'contenu',
+                TextareaType::class,
+                ['label' => 'Résumé du contact', 'required' => true, 'attr' => ['cols' => '100%', 'rows' => 5]]
             )
             ->add('moyenContact', MoyenContactType::class, ['label' => 'Contact effectué par']);
     }
