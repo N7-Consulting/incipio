@@ -2,11 +2,11 @@
 
 namespace App\Entity\Hr;
 
+use App\Entity\Personne\AnonymizableInterface;
 use App\Entity\Personne\Membre;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Personne\AnonymizableInterface;
 
 /**
  * @ORM\Table()
@@ -218,7 +218,6 @@ class Alumnus implements AnonymizableInterface
      */
     public function anonymize(): void
     {
-
         $this->commentaire = null;
         $this->posteActuel = null;
         $this->lienLinkedIn = null;

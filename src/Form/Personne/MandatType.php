@@ -51,7 +51,7 @@ class MandatType extends AbstractType
                     'choice_label' => 'intitule',
                     'required' => true,
                 ]
-            ); //ajout de la condition "requis" pour éviter la corruption de la liste des membres par manque d'intitulé.
+            ); // ajout de la condition "requis" pour éviter la corruption de la liste des membres par manque d'intitulé.
     }
 
     public function getBlockPrefix()

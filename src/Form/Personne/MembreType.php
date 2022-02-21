@@ -66,7 +66,7 @@ class MembreType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
-                'by_reference' => false, //indispensable cf doc
+                'by_reference' => false, // indispensable cf doc
             ])
             ->add('competences', Select2EntityType::class, [
                 'class' => Competence::class,

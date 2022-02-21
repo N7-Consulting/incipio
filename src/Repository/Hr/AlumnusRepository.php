@@ -27,6 +27,7 @@ class AlumnusRepository extends ServiceEntityRepository
             ->orWhere('mi.posteActuel IS NOT NULL')
             ->orWhere('mi.commentaire IS NOT NULL')
             ;
+
         return $query->getQuery()->getResult();
     }
 }
