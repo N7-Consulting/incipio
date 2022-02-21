@@ -180,3 +180,66 @@
                         {% endif %}
                     </div>
                 </div>
+
+                {% if membre.alumnus|length > 0 and (membre.alumnus.lienLinkedIn|length > 0 or
+                    membre.alumnus.commentaire|length > 0 or 
+                    membre.alumnus.posteActuel|length > 0 or 
+                    membre.alumnus.secteurActuel|length > 0 )
+                 %}
+                    <div class="row">
+                        <div class="col-md-5 col-xs-12">
+                            <div class="box box-solid">
+                                    <div class="box box-default box-solid">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">{{ 'membre.alumni'|trans({}, 'personne') }}</h3>
+                                        </div>
+                                        <div class="box-body">
+                                            <table class="table table-bordered table-striped">
+                                                <tr>
+                                                    <td>{{'rh.lien_linkedin'|trans({}, 'rh')}}: {{ membre.alumnus.lienLinkedIn  }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{'rh.secteur_activite'|trans({}, 'rh')}}: {{ membre.alumnus.secteurToString  }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{'rh.poste_entreprise'|trans({}, 'rh')}}: {{ membre.alumnus.posteActuel  }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{'rh.commentaires'|trans({}, 'rh')}}: {{ membre.alumnus.commentaire  }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                        {% if membre.alumnus.alumnusContact|length > 0 %}
+                            <div class="col-md-7 col-xs-12">
+                                <div class="box box-solid">
+                                    <div class="box box-default box-solid">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">{{ 'rh.contact_alumnus'|trans({}, 'rh') }}</h3>
+                                        </div>
+                                        {% for contact in membre.alumnus.alumnusContact %}
+                                        <table class="table table-bordered table-striped">
+                                            <tr>
+                                                <td>{{'rh.fait_par'|trans({}, 'rh')}}: {{  contact.faitPar }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'rh.date'|trans({}, 'rh')}}: {{ contact.date | date("d/m/Y") }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'rh.objet'|trans({}, 'rh')}}: {{ contact.objet  }}</td>
+                                            </tr>                                                
+                                            <tr>
+                                                <td>{{'rh.resume'|trans({}, 'rh')}}: {{ contact.contenu | nl2br }}</td>
+                                            </tr>
+                                        </table>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                 

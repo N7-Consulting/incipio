@@ -1,0 +1,70 @@
+
+{# <div class="box-header with-border">
+    {% if is_granted('ROLE_CA') %} 
+        <h>{{ 'rh.liste_alumni_titre'|trans({}, 'rh')}}</h>
+		<a href="{{ path('excel_index', {'fileName':fileName, 'classe': classe, 'fileNameType': fileNameType}) }}" class="pull-right btn btn-warning">
+        {{ 'excel.import'|trans({}, 'excel')}}</a>
+	{% endif %}
+</div> #}
+
+<table class="display dataTable table table-bordered table-striped dt-responsive" id ="listeAlumni"> 
+        <thead>
+                <tr>
+                    <th>{{ 'rh.alumnus'|trans({}, 'rh') }}</th> 
+					<th>{{ 'rh.lien_linkedin'|trans({}, 'rh') }}</th>
+					<th>{{ 'rh.secteur_entrepise'|trans({}, 'rh') }}</th>
+                    <th>{{ 'rh.poste_entreprise'|trans({}, 'rh') }}</th>
+                    <th>{{ 'rh.dernier_contact'|trans({}, 'rh') }}</th>
+                    <th>{{ 'rh.commentaires'|trans({}, 'rh') }}</th>
+            </tr>
+        </thead>
+	<tbody>
+        {% for alumnus in alumni %}  
+			<tr>
+				<td>
+					<a href="{{ path('personne_membre_voir', {'id': alumnus.id}) }}">{{  alumnus.personne ? alumnus.personne }}</a>
+				</td>
+				<td>
+					<a href ="{{ alumnus.alumnus.lienLinkedIn }}">{{  alumnus.alumnus.lienLinkedIn ?  'rh.voir_profil'|trans({}, 'rh') }} </a>
+				</td>
+				<td>
+					{{alumnus.alumnus.secteurToString}}
+				</td>
+				<td>
+					{{alumnus.alumnus.posteActuel}}
+				</td>
+				<td>
+				{% if alumnus.alumnus.alumnusContact is not empty %} 
+					{{alumnus.alumnus.alumnusContact[0].date|date('d/m/Y')}}
+				{% endif %} 	
+				</td>
+				<td>
+					{{alumnus.alumnus.commentaire | nl2br}}
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% block javascript %}
+
+		<script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+		<script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
+		<script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
+		<script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
+
+
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function () {
+				$('#listeAlumni').dataTable({
+					"bPaginate": true,
+					"iDisplayLength": 10,
+					"aaSorting": [
+					[1, 'desc']
+					]
+				});
+			});
+		</script>
+	{% endblock %}
+
+

@@ -11,9 +11,9 @@
 
 namespace App\Entity\Personne;
 
+use App\Entity\Hr\Alumnus;
 use App\Entity\Hr\Competence;
 use App\Entity\Project\Mission;
-use App\Entity\Publish\Document;
 use App\Entity\Publish\RelatedDocument;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -53,6 +53,15 @@ class Membre implements AnonymizableInterface
      * @ORM\JoinColumn(nullable=true)
      */
     private $personne;
+
+    /**
+     * @Assert\Valid()
+     * @Groups({"gdpr"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Hr\Alumnus", mappedBy="membre",
+     *                                                                    cascade={"persist", "remove"},
+     *                                                                   orphanRemoval=true)
+     */
+    private $alumnus;
 
     /**
      * @var \DateTime
@@ -223,6 +232,10 @@ class Membre implements AnonymizableInterface
         $this->securiteSociale = null;
         $this->commentaire = null;
 
+        if (null !== $this->alumnus) {
+            $this->alumnus->anonymize();
+        }
+
         /* remove non critical (business related) relations */
         /** @var Competence $c */
         foreach ($this->competences as $c) {
@@ -299,6 +312,34 @@ class Membre implements AnonymizableInterface
     public function getPersonne()
     {
         return $this->personne;
+    }
+
+    /**
+     * Set alumnus.
+     *
+     * @param Alumnus $alumnus
+     * @Groups({"gdpr"})
+     *
+     * @return Membre
+     */
+    public function setAlumnus(Alumnus $alumnus = null)
+    {
+        if (null !== $alumnus) {
+            $alumnus->setMembre($this);
+        }
+        $this->alumnus = $alumnus;
+
+        return $this;
+    }
+
+    /**
+     * Get alumnus.
+     *
+     * @return Alumnus
+     */
+    public function getAlumnus()
+    {
+        return $this->alumnus;
     }
 
     /**

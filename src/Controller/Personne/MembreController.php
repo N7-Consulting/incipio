@@ -192,7 +192,7 @@ class MembreController extends AbstractController
 
                 return $this->redirectToRoute('personne_membre_voir', ['id' => $membre->getId()]);
             }
-            //form invalid
+            // form invalid
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
@@ -253,7 +253,7 @@ class MembreController extends AbstractController
 
                 return $this->redirectToRoute('personne_membre_voir', ['id' => $membre->getId()]);
             }
-            //form invalid
+            // form invalid
             $this->addFlash('danger', 'Le formulaire contient des erreurs.');
         }
 
@@ -285,7 +285,8 @@ class MembreController extends AbstractController
                 $membre->getPersonne()->setUser(null);
             }
             $membre->setPersonne(null);
-            //est-ce qu'on supprime la personne aussi ?
+            $membre->setAlumnus(null);
+            // est-ce qu'on supprime la personne aussi ?
 
             $em->remove($membre);
             $em->flush();
